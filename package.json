@@ -1,15 +1,28 @@
 {
-  "name": "rest-express",
+  "name": "vueai",
   "version": "1.0.0",
   "type": "module",
   "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
     "dev": "tsx server/index.ts",
     "build": "vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
     "start": "NODE_ENV=production node dist/index.js",
     "check": "tsc",
     "db:push": "drizzle-kit push --force --config=./drizzle.config.ts",
-    "db:seed": "tsx db/seed.ts"
+    "db:seed": "tsx db/seed.ts",
+    "build:packages": "npm run build --workspaces",
+    "build:core": "npm run build --workspace @reachbrt/vueai-core",
+    "build:chatbot": "npm run build --workspace @reachbrt/vueai-chatbot",
+    "build:autosuggest": "npm run build --workspace @reachbrt/vueai-autosuggest",
+    "build:smartform": "npm run build --workspace @reachbrt/vueai-smartform",
+    "clean": "npm run clean --workspaces",
+    "test": "npm run test --workspaces",
+    "lint": "npm run lint --workspaces",
+    "publish:packages": "npm run build:packages && npm publish --access public --workspace @reachbrt/vueai-core && npm publish --access public --workspace @reachbrt/vueai-chatbot && npm publish --access public --workspace @reachbrt/vueai-autosuggest && npm publish --access public --workspace @reachbrt/vueai-smartform"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.37.0",
@@ -94,14 +107,19 @@
     "@types/react-dom": "^18.3.1",
     "@types/ws": "^8.5.13",
     "@vitejs/plugin-react": "^4.3.2",
+    "@vitejs/plugin-vue": "^5.2.3",
     "autoprefixer": "^10.4.20",
     "drizzle-kit": "^0.27.1",
     "esbuild": "^0.24.0",
+    "eslint": "^8.56.0",
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.14",
+    "tsup": "^8.0.0",
     "tsx": "^4.19.1",
     "typescript": "5.6.3",
-    "vite": "^5.4.9"
+    "vite": "^5.4.9",
+    "vite-plugin-dts": "^4.5.3",
+    "vitest": "^1.0.0"
   },
   "optionalDependencies": {
     "bufferutil": "^4.0.8"

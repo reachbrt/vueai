@@ -1,41 +1,56 @@
 <img src="vueai-logo.svg" alt="VueAI Logo" width="300" height="120" />
 
-# VueAI Monorepo
+# VueAI
 
 A modular AI-powered Vue.js component suite including:
-- **@vueai/chatbot** – Multi-provider AI chat widget
-- **@vueai/autosuggest** – Smart autosuggest with semantic ranking
-- **@vueai/smartform** – AI-enhanced forms with dynamic validation
+- **@reachbrt/vueai-core** – Core AI functionality for Vue.js components
+- **@reachbrt/vueai-chatbot** – Multi-provider AI chat widget
+- **@reachbrt/vueai-autosuggest** – Smart autosuggest with semantic ranking
+- **@reachbrt/vueai-smartform** – AI-enhanced forms with dynamic validation
+
+## 📦 Installation
+
+```bash
+# Install the core package
+npm install @reachbrt/vueai-core
+
+# Install component packages as needed
+npm install @reachbrt/vueai-chatbot
+npm install @reachbrt/vueai-autosuggest
+npm install @reachbrt/vueai-smartform
+
+# Or install all packages at once
+npm install @reachbrt/vueai-core @reachbrt/vueai-chatbot @reachbrt/vueai-autosuggest @reachbrt/vueai-smartform
+```
 
 ---
 
-## 🏗️ Monorepo Structure
+## 🏗️ Structure
 ```
-vueai-monorepo/
+vueai/
 ├── packages/
-│   ├── chatbot/
-│   ├── autosuggest/
-│   ├── smartform/
-│   └── core/        # Shared AI functionality
-│       ├── src/
-│       │   ├── ai-client.ts
-│       │   └── providers/
-│       │       ├── openai.ts
-│       │       ├── claude.ts
-│       │       ├── gemini.ts
-│       │       ├── huggingface.ts
-│       │       ├── ollama.ts
-│       │       ├── deepseek.ts
-│       │       └── fallback.ts
-├── .bit/            # Bit config (if using Bit)
-└── workspace.json   # Lerna/Bit workspace
+│   ├── core/           # @reachbrt/vueai-core
+│   │   ├── src/
+│   │   │   ├── index.ts
+│   │   │   └── providers/
+│   │   │       ├── openai.ts
+│   │   │       ├── claude.ts
+│   │   │       ├── gemini.ts
+│   │   │       ├── huggingface.ts
+│   │   │       ├── ollama.ts
+│   │   │       ├── deepseek.ts
+│   │   │       └── fallback.ts
+│   ├── chatbot/        # @reachbrt/vueai-chatbot
+│   ├── autosuggest/    # @reachbrt/vueai-autosuggest
+│   └── smartform/      # @reachbrt/vueai-smartform
+└── package.json        # Root package.json with workspace configuration
 ```
 
 ---
 
 ## 📦 Packages
 
-### @vueai/chatbot
+### @reachbrt/vueai-chatbot
 - Multi-provider support (OpenAI, Claude, Gemini, HuggingFace, Ollama, DeepSeek)
 - Automatic fallback when API keys aren't available
 - Streaming responses with Markdown support
@@ -55,9 +70,9 @@ vueai-monorepo/
         <option value="deepseek">DeepSeek</option>
       </select>
     </div>
-    
-    <AiChatWindow 
-      :apiConfig="{ provider, apiKey, model }" 
+
+    <AiChatWindow
+      :apiConfig="{ provider, apiKey, model }"
       :systemPrompt="'You are a helpful assistant'"
     />
   </div>
@@ -65,7 +80,7 @@ vueai-monorepo/
 
 <script setup>
 import { ref, computed } from 'vue';
-import { AiChatWindow } from '@vueai/chatbot';
+import { AiChatWindow } from '@reachbrt/vueai-chatbot';
 
 const provider = ref('openai');
 const apiKey = computed(() => import.meta.env[`VITE_${provider.value.toUpperCase()}_API_KEY`] || '');
@@ -88,7 +103,7 @@ function resetConversation() {
 </script>
 ```
 
-### @vueai/autosuggest
+### @reachbrt/vueai-autosuggest
 - AI-powered results with semantic sort
 - Multi-provider support with automatic fallback
 - Contextual suggestions based on domain
@@ -106,7 +121,7 @@ function resetConversation() {
         <option value="ollama">Ollama</option>
         <option value="deepseek">DeepSeek</option>
       </select>
-      
+
       <span v-if="provider === 'ollama'">
         Using local Ollama. No API key needed.
       </span>
@@ -114,9 +129,9 @@ function resetConversation() {
         Works without API keys using fallback provider.
       </span>
     </div>
-    
+
     <input v-model="query" @input="search" placeholder="Search..." />
-    
+
     <ul v-if="suggestions.length > 0">
       <li v-for="item in suggestions" :key="item.text">
         {{ item.text }}
@@ -128,7 +143,7 @@ function resetConversation() {
 
 <script setup>
 import { ref, computed } from 'vue';
-import { useAutosuggest } from '@vueai/autosuggest';
+import { useAutosuggest } from '@reachbrt/vueai-autosuggest';
 
 const query = ref('');
 const provider = ref('openai');
@@ -156,30 +171,30 @@ function getModelForProvider(provider) {
 </script>
 ```
 
-### @vueai/smartform
+### @reachbrt/vueai-smartform
 - AI-powered validation + dynamic healing
 - Multi-provider support with automatic fallback
 - Intelligent form field suggestions
 
 ```vue
 <template>
-  <SmartForm 
-    :schema="formSchema" 
+  <SmartForm
+    :schema="formSchema"
     :provider="provider"
-    @submit="handleSubmit" 
+    @submit="handleSubmit"
   />
 </template>
 
 <script setup>
 import { ref } from 'vue';
-import { SmartForm } from '@vueai/smartform';
+import { SmartForm } from '@reachbrt/vueai-smartform';
 
 const provider = ref('openai'); // Supports all AI providers with fallback
 
 const formSchema = ref({
-  email: { 
-    type: 'email', 
-    aiValidation: true, 
+  email: {
+    type: 'email',
+    aiValidation: true,
     selfHeal: true,
     suggestions: true
   },
@@ -198,12 +213,12 @@ function handleSubmit(data) {
 
 ---
 
-## 🧠 @vueai/core Shared AI Engine
+## 🧠 @reachbrt/vueai-core Shared AI Engine
 
 Our core package provides a unified interface for working with multiple AI providers, complete with an automatic fallback mechanism that ensures your components work even without API keys.
 
 ```ts
-import { AIClient } from '@vueai/core';
+import { AIClient } from '@reachbrt/vueai-core';
 
 // Create a client with your preferred provider
 const client = new AIClient({
@@ -236,7 +251,7 @@ All VueAI components include an intelligent fallback system when API keys aren't
 
 - Automatically detects missing API keys
 - Provides simulated responses that match the expected shape
-- Generates semantically reasonable suggestions 
+- Generates semantically reasonable suggestions
 - Delivers smooth user experience during development
 - Works with all supported providers seamlessly
 
@@ -261,8 +276,17 @@ test('sends messages', async () => {
 
 ## 🚀 Build & Publish
 ```bash
-npm run build
-npm publish --access public --workspace @vueai/chatbot
+# Build all packages
+npm run build:packages
+
+# Publish packages
+npm publish --access public --workspace @reachbrt/vueai-core
+npm publish --access public --workspace @reachbrt/vueai-chatbot
+npm publish --access public --workspace @reachbrt/vueai-autosuggest
+npm publish --access public --workspace @reachbrt/vueai-smartform
+
+# Or use the publish script
+npm run publish:packages
 ```
 
 ---
@@ -286,11 +310,11 @@ npm publish --access public --workspace @vueai/chatbot
 MIT © 2025 Bharatkumar Subramanian
 
 ## 👤 Author & Maintainer
-**Bharatkumar Subramanian**  
-Email: recxahbrt@gmail.com  
-GitHub: [github.com/bharatkumarsubramanian](https://github.com/bharatkumarsubramanian)
+**Bharatkumar Subramanian**
+Email: reachbrt@gmail.com
+GitHub: [github.com/reachbrt](https://github.com/reachbrt)
 
 ---
 
 ## 🤖 Want to Contribute?
-Submit issues, suggest features, or fork the monorepo to build your own AI UI components!
+Submit issues, suggest features, or fork the repo build your own AI UI components!
