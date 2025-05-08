@@ -1,6 +1,6 @@
 {
   "name": "@aivue/autosuggest",
-  "version": "1.1.1",
+  "version": "1.1.0",
   "description": "AI-powered suggestion components for Vue.js",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -8,15 +8,6 @@
   "files": [
     "dist"
   ],
-  "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
-    "lint": "eslint \"src/**/*.{ts,vue}\"",
-    "clean": "rm -rf dist",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "prepublishOnly": "npm run build"
-  },
   "keywords": [
     "vue",
     "ai",
@@ -41,7 +32,7 @@
     "access": "public"
   },
   "peerDependencies": {
-    "@aivue/core": "^1.1.1",
+    "@aivue/core": "^1.1.0",
     "vue": "^2.6.0 || ^3.0.0"
   },
   "devDependencies": {

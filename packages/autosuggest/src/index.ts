@@ -1,18 +1,14 @@
 // AI-powered suggestion components for Vue.js
 import { App } from 'vue';
-import {
-  AIClient,
-  createCompatComponent,
-  registerCompatComponent,
-  createCompatPlugin
-} from '@aivue/core';
+import { AIClient } from '@aivue/core';
 import AutosuggestComponent from './components/Autosuggest.vue';
-import { useAutosuggest as useAutosuggestComposable } from './composables/useAutosuggest';
+import useAutosuggestComposable from './composables/useAutosuggest';
 
-// Export types
+// Export suggestion item type
 export interface SuggestionItem {
   text: string;
   score: number;
+  metadata?: Record<string, any>;
 }
 
 export interface AutosuggestOptions {
@@ -23,6 +19,13 @@ export interface AutosuggestOptions {
   context?: string;
   onError?: ((error: Error) => void) | null;
 }
+
+// Import Vue compatibility utilities from core
+const {
+  createCompatComponent,
+  registerCompatComponent,
+  createCompatPlugin
+} = require('@aivue/core');
 
 // Export components with compatibility layer
 export const Autosuggest = createCompatComponent(AutosuggestComponent);
@@ -37,22 +40,6 @@ export const AutosuggestPlugin = createCompatPlugin({
 
 // Export composables
 export const useAutosuggest = useAutosuggestComposable;
-
-// Re-export Vue compatibility utilities from core
-export {
-  vueVersion,
-  isOlderVue3,
-  createNode,
-  compatCreateElementBlock,
-  compatCreateElementVNode,
-  compatNormalizeClass,
-  createCompatComponent,
-  registerCompatComponent,
-  createCompatPlugin,
-  installCompatPlugin,
-  createReactiveState,
-  createCompatRef
-} from '@aivue/core';
 
 // Default export
 export default {

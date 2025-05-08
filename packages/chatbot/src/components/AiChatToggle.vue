@@ -1,8 +1,8 @@
 <template>
   <div class="ai-chat-toggle" :class="{ 'ai-chat-toggle--open': isOpen, 'ai-chat-toggle--bottom': position === 'bottom', 'ai-chat-toggle--top': position === 'top' }">
     <!-- Toggle Button -->
-    <button 
-      class="ai-chat-toggle__button" 
+    <button
+      class="ai-chat-toggle__button"
       @click="toggleChat"
       :aria-label="isOpen ? 'Close chat' : 'Open chat'"
       :title="isOpen ? 'Close chat' : 'Open chat'"
@@ -23,13 +23,13 @@
         </slot>
       </span>
     </button>
-    
+
     <!-- Chat Window Container -->
     <div v-show="isOpen" class="ai-chat-toggle__window">
       <div class="ai-chat-toggle__header" v-if="title">
         <h3 class="ai-chat-toggle__title">{{ title }}</h3>
-        <button 
-          class="ai-chat-toggle__close" 
+        <button
+          class="ai-chat-toggle__close"
           @click="toggleChat"
           aria-label="Close chat"
         >
@@ -39,7 +39,7 @@
           </svg>
         </button>
       </div>
-      
+
       <!-- Actual Chat Window Component -->
       <div class="ai-chat-toggle__content">
         <AiChatWindow
@@ -81,7 +81,7 @@ export default defineComponent({
       type: String,
       default: 'Chat with AI'
     },
-    
+
     // Provider configuration (either client or provider is required)
     client: {
       type: Object as PropType<AIClient>,
@@ -99,7 +99,7 @@ export default defineComponent({
       type: String,
       default: null
     },
-    
+
     // Pass all AiChatWindow props
     placeholder: {
       type: String,
@@ -128,15 +128,29 @@ export default defineComponent({
     persistenceKey: {
       type: String,
       default: null
+    },
+
+    // Demo mode
+    demoMode: {
+      type: Boolean,
+      default: false
+    },
+    demoResponses: {
+      type: Object as PropType<Record<string, string>>,
+      default: () => ({
+        'hello': 'Hello! I\'m a demo AI assistant. How can I help you today?',
+        'help': 'I can help you with various tasks. Just ask me a question!',
+        'features': 'This chatbot component supports markdown, code highlighting, streaming responses, and more!'
+      })
     }
   },
   emits: ['toggle', 'message-sent', 'response-received', 'error'],
   setup(props, { emit, slots }) {
     const isOpen = ref(props.defaultOpen);
-    
+
     // Check if we should use the default chat window or a custom one via slot
     const useDefaultChat = computed(() => !slots.default);
-    
+
     // Prepare props to pass to AiChatWindow
     const chatProps = computed(() => {
       const result: Record<string, any> = {
@@ -146,9 +160,11 @@ export default defineComponent({
         streaming: props.streaming,
         theme: props.theme,
         showAvatars: props.showAvatars,
-        persistenceKey: props.persistenceKey
+        persistenceKey: props.persistenceKey,
+        demoMode: props.demoMode,
+        demoResponses: props.demoResponses
       };
-      
+
       // Add provider configuration
       if (props.client) {
         result.client = props.client;
@@ -157,21 +173,21 @@ export default defineComponent({
         if (props.apiKey) result.apiKey = props.apiKey;
         if (props.model) result.model = props.model;
       }
-      
+
       return result;
     });
-    
+
     // Toggle chat window
     const toggleChat = () => {
       isOpen.value = !isOpen.value;
       emit('toggle', isOpen.value);
     };
-    
+
     // Watch for changes to defaultOpen prop
     watch(() => props.defaultOpen, (newValue) => {
       isOpen.value = newValue;
     });
-    
+
     return {
       isOpen,
       toggleChat,

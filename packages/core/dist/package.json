@@ -1,52 +1,43 @@
 {
-  "name": "@aivue/autosuggest",
-  "version": "1.1.1",
-  "description": "AI-powered suggestion components for Vue.js",
+  "name": "@aivue/core",
+  "version": "1.1.0",
+  "description": "Core AI functionality for Vue.js components",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
-  "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
-    "lint": "eslint \"src/**/*.{ts,vue}\"",
-    "clean": "rm -rf dist",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "prepublishOnly": "npm run build"
-  },
   "keywords": [
     "vue",
     "ai",
-    "autosuggest",
-    "autocomplete",
-    "suggestions",
-    "ui",
-    "components"
+    "core",
+    "openai",
+    "claude",
+    "gemini",
+    "huggingface",
+    "ollama",
+    "deepseek"
   ],
-  "author": "reachbrt",
+  "author": "Bharatkumar Subramanian <reachbrt@gmail.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/reachbrt/vueai.git",
-    "directory": "packages/autosuggest"
+    "directory": "packages/core"
   },
   "homepage": "https://github.com/reachbrt/vueai#readme",
   "bugs": {
     "url": "https://github.com/reachbrt/vueai/issues"
   },
   "publishConfig": {
-    "access": "public"
+    "registry": "https://npm.pkg.github.com/"
   },
   "peerDependencies": {
-    "@aivue/core": "^1.1.1",
     "vue": "^2.6.0 || ^3.0.0"
   },
   "devDependencies": {
     "@types/node": "^20.16.0",
-    "@vitejs/plugin-vue": "^5.0.0",
     "eslint": "^8.56.0",
     "tsup": "^8.0.0",
     "typescript": "^5.3.0",
@@ -54,7 +45,6 @@
     "vue": "^3.5.0"
   },
   "dependencies": {
-    "@aivue/core": "^1.0.1",
-    "vue": "^3.0.0"
+    "eventsource-parser": "^1.1.1"
   }
 }
