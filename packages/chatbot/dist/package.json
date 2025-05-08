@@ -29,16 +29,6 @@
     "README.md",
     "CHANGELOG.md"
   ],
-  "scripts": {
-    "build": "npm run clean && vite build && npm run postbuild",
-    "dev": "vite build --watch",
-    "lint": "eslint \"src/**/*.{ts,vue}\"",
-    "clean": "rm -rf dist",
-    "test": "vitest run --config ./vitest.config.ts",
-    "test:watch": "vitest --config ./vitest.config.ts",
-    "prepublishOnly": "npm run build",
-    "postbuild": "cp -r src/components dist/components && cp -r src/composables dist/composables && cp -r src/utils dist/utils"
-  },
   "keywords": [
     "vue",
     "ai",

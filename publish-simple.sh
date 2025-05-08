@@ -84,8 +84,8 @@ done
 echo -e "${GREEN}All packages have been published to npm and GitHub!${NC}"
 
 # Create git tag for the release
-echo -e "${YELLOW}Creating git tag for release v1.1.3...${NC}"
-git tag v1.1.3
-git push origin v1.1.3
+echo -e "${YELLOW}Creating git tag for release v1.1.4...${NC}"
+git tag v1.1.4
+git push origin v1.1.4
 
 echo -e "${GREEN}Done! Don't forget to create a release on GitHub.${NC}"
