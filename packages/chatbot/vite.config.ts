@@ -29,7 +29,7 @@ export default defineConfig({
       },
     },
     outDir: 'dist',
-    emptyOutDir: true,
+    emptyOutDir: false, // Changed to false to prevent clearing the dist directory
     sourcemap: true,
   },
 });
