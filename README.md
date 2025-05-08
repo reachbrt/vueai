@@ -296,6 +296,7 @@ npm run publish:packages
 ---
 
 ## 📚 Docs & Demo
+- [Documentation Wiki](https://github.com/reachbrt/vueai/wiki)
 - Storybook
 - Nuxt/Vite templates
 - AI playgrounds with multi-provider support
@@ -321,4 +322,4 @@ GitHub: [github.com/reachbrt](https://github.com/reachbrt)
 ---
 
 ## 🤖 Want to Contribute?
-Submit issues, suggest features, or fork the repo build your own AI UI components!
+Check out our [Contributing Guide](https://github.com/reachbrt/vueai/wiki/Contributing) to get started. Submit issues, suggest features, or fork the repo to build your own AI UI components!
