@@ -8,7 +8,6 @@ export declare const utils: {
     formatMarkdown: typeof formatMarkdown;
 };
 export declare const AiChatPlugin: any;
-export { vueVersion, isOlderVue3, createNode, compatCreateElementBlock, compatCreateElementVNode, compatNormalizeClass, createCompatComponent, registerCompatComponent, createCompatPlugin, installCompatPlugin, createReactiveState, createCompatRef } from '@aivue/core';
 declare const _default: {
     AiChatWindow: any;
     AiChatToggle: any;

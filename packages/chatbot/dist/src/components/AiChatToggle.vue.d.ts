@@ -59,6 +59,18 @@ declare const _default: import("vue").DefineComponent<import("vue").ExtractPropT
         type: StringConstructor;
         default: null;
     };
+    demoMode: {
+        type: BooleanConstructor;
+        default: boolean;
+    };
+    demoResponses: {
+        type: PropType<Record<string, string>>;
+        default: () => {
+            hello: string;
+            help: string;
+            features: string;
+        };
+    };
 }>, {
     isOpen: import("vue").Ref<boolean, boolean>;
     toggleChat: () => void;
@@ -122,6 +134,18 @@ declare const _default: import("vue").DefineComponent<import("vue").ExtractPropT
         type: StringConstructor;
         default: null;
     };
+    demoMode: {
+        type: BooleanConstructor;
+        default: boolean;
+    };
+    demoResponses: {
+        type: PropType<Record<string, string>>;
+        default: () => {
+            hello: string;
+            help: string;
+            features: string;
+        };
+    };
 }>> & Readonly<{
     onError?: ((...args: any[]) => any) | undefined;
     "onMessage-sent"?: ((...args: any[]) => any) | undefined;
@@ -132,6 +156,8 @@ declare const _default: import("vue").DefineComponent<import("vue").ExtractPropT
     systemPrompt: string;
     streaming: boolean;
     persistenceKey: string;
+    demoMode: boolean;
+    demoResponses: Record<string, string>;
     provider: AIProvider;
     apiKey: string;
     model: string;
@@ -176,6 +202,18 @@ declare const _default: import("vue").DefineComponent<import("vue").ExtractPropT
             proxyUrl: {
                 type: StringConstructor;
                 default: string;
+            };
+            demoMode: {
+                type: BooleanConstructor;
+                default: boolean;
+            };
+            demoResponses: {
+                type: PropType<Record<string, string>>;
+                default: () => {
+                    hello: string;
+                    help: string;
+                    features: string;
+                };
             };
             title: {
                 type: StringConstructor;
@@ -259,6 +297,8 @@ declare const _default: import("vue").DefineComponent<import("vue").ExtractPropT
             systemPrompt: string;
             streaming: boolean;
             persistenceKey: string;
+            demoMode: boolean;
+            demoResponses: Record<string, string>;
             useProxy: boolean;
             proxyUrl: string;
             provider: AIProvider;
@@ -319,6 +359,18 @@ declare const _default: import("vue").DefineComponent<import("vue").ExtractPropT
             proxyUrl: {
                 type: StringConstructor;
                 default: string;
+            };
+            demoMode: {
+                type: BooleanConstructor;
+                default: boolean;
+            };
+            demoResponses: {
+                type: PropType<Record<string, string>>;
+                default: () => {
+                    hello: string;
+                    help: string;
+                    features: string;
+                };
             };
             title: {
                 type: StringConstructor;
@@ -398,6 +450,8 @@ declare const _default: import("vue").DefineComponent<import("vue").ExtractPropT
             systemPrompt: string;
             streaming: boolean;
             persistenceKey: string;
+            demoMode: boolean;
+            demoResponses: Record<string, string>;
             useProxy: boolean;
             proxyUrl: string;
             provider: AIProvider;
@@ -455,6 +509,18 @@ declare const _default: import("vue").DefineComponent<import("vue").ExtractPropT
         proxyUrl: {
             type: StringConstructor;
             default: string;
+        };
+        demoMode: {
+            type: BooleanConstructor;
+            default: boolean;
+        };
+        demoResponses: {
+            type: PropType<Record<string, string>>;
+            default: () => {
+                hello: string;
+                help: string;
+                features: string;
+            };
         };
         title: {
             type: StringConstructor;
@@ -538,6 +604,8 @@ declare const _default: import("vue").DefineComponent<import("vue").ExtractPropT
         systemPrompt: string;
         streaming: boolean;
         persistenceKey: string;
+        demoMode: boolean;
+        demoResponses: Record<string, string>;
         useProxy: boolean;
         proxyUrl: string;
         provider: AIProvider;

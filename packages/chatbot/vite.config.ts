@@ -25,11 +25,6 @@ export default defineConfig({
           '@aivue/core': 'AiVueCore',
           'markdown-it': 'MarkdownIt',
           'uuid': 'uuid'
-        },
-        preserveModules: true,
-        preserveModulesRoot: 'src',
-        entryFileNames: (chunkInfo) => {
-          return `[name].js`;
         }
       },
     },

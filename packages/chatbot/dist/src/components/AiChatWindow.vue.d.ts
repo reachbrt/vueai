@@ -66,6 +66,18 @@ declare const __VLS_component: import("vue").DefineComponent<import("vue").Extra
         type: StringConstructor;
         default: string;
     };
+    demoMode: {
+        type: BooleanConstructor;
+        default: boolean;
+    };
+    demoResponses: {
+        type: PropType<Record<string, string>>;
+        default: () => {
+            hello: string;
+            help: string;
+            features: string;
+        };
+    };
     title: {
         type: StringConstructor;
         default: string;
@@ -172,6 +184,18 @@ declare const __VLS_component: import("vue").DefineComponent<import("vue").Extra
         type: StringConstructor;
         default: string;
     };
+    demoMode: {
+        type: BooleanConstructor;
+        default: boolean;
+    };
+    demoResponses: {
+        type: PropType<Record<string, string>>;
+        default: () => {
+            hello: string;
+            help: string;
+            features: string;
+        };
+    };
     title: {
         type: StringConstructor;
         default: string;
@@ -250,6 +274,8 @@ declare const __VLS_component: import("vue").DefineComponent<import("vue").Extra
     systemPrompt: string;
     streaming: boolean;
     persistenceKey: string;
+    demoMode: boolean;
+    demoResponses: Record<string, string>;
     useProxy: boolean;
     proxyUrl: string;
     provider: AIProvider;
