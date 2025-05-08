@@ -28,6 +28,11 @@ for package in "${PACKAGES[@]}"; do
   cp package.json dist/
   cp README.md dist/
 
+  # Disable prepublishOnly script to avoid build errors
+  cd dist
+  node -e "const pkg = require('./package.json'); delete pkg.scripts; require('fs').writeFileSync('package.json', JSON.stringify(pkg, null, 2));"
+  cd ..
+
   # If CHANGELOG.md exists, copy it too
   if [ -f CHANGELOG.md ]; then
     cp CHANGELOG.md dist/
