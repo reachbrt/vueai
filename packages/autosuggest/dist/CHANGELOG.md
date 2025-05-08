@@ -1,19 +1,12 @@
 # Changelog
 
-All notable changes to the @aivue/smartform package will be documented in this file.
-
-## [1.1.1] - 2023-07-20
-
-### Fixed
-- Fixed compatibility with the updated core package
-- Improved error handling for API calls
-- Fixed component registration issues
+All notable changes to the @aivue/autosuggest package will be documented in this file.
 
 ## [1.1.0] - 2023-07-15
 
 ### Added
 - Vue 2 compatibility: The package now works with both Vue 2.6+ and Vue 3.x
-- New `SmartFormPlugin` for easy global component registration
+- New `AutosuggestPlugin` for easy global component registration
 - Re-export of Vue compatibility utilities from @aivue/core
 
 ### Changed
@@ -25,5 +18,5 @@ All notable changes to the @aivue/smartform package will be documented in this f
 
 ### Added
 - Initial release with support for Vue 3
-- SmartForm component placeholder
-- useSmartForm composable placeholder
+- Autosuggest component
+- useAutosuggest composable

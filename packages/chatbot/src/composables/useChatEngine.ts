@@ -26,6 +26,10 @@ export interface ChatOptions {
   persistenceKey?: string | null;
   maxMessages?: number;
 
+  // Demo mode
+  demoMode?: boolean;
+  demoResponses?: Record<string, string>;
+
   // Proxy options for security
   useProxy?: boolean;
   proxyUrl?: string;
@@ -89,6 +93,8 @@ export function useChatEngine(options: ChatOptions): ChatEngineReturn {
     streaming = true,
     persistenceKey = null,
     maxMessages = 100,
+    demoMode = false,
+    demoResponses = {},
     useProxy = false,
     proxyUrl = '/api/chat',
     onError = null,
@@ -204,6 +210,68 @@ export function useChatEngine(options: ChatOptions): ChatEngineReturn {
           .map(({ role, content }) => ({ role, content }))
       ];
 
+      // Check if we're in demo mode
+      if (demoMode) {
+        // Generate a demo response
+        let demoResponse = "I'm a demo AI assistant. This is a simulated response.";
+
+        // Check if we have a matching demo response
+        const userMessageLower = userMessage.content.toLowerCase();
+        for (const [key, response] of Object.entries(demoResponses)) {
+          if (userMessageLower.includes(key.toLowerCase())) {
+            demoResponse = response;
+            break;
+          }
+        }
+
+        if (streaming) {
+          // Simulate streaming for demo mode
+          const assistantMessage: Message = {
+            role: 'assistant',
+            content: '',
+            id: uuidv4(),
+            timestamp: new Date()
+          };
+          messages.value.push(assistantMessage);
+
+          let streamedContent = '';
+          const streamResponse = async () => {
+            for (const char of demoResponse) {
+              await new Promise(resolve => setTimeout(resolve, 20));
+              streamedContent += char;
+              assistantMessage.content = streamedContent;
+            }
+            isLoading.value = false;
+            if (onResponseReceived) {
+              onResponseReceived(assistantMessage);
+            }
+            if (persistenceKey) {
+              saveMessagesToLocalStorage();
+            }
+          };
+
+          streamResponse();
+          return;
+        } else {
+          // Non-streaming demo mode
+          const assistantMessage: Message = {
+            role: 'assistant',
+            content: demoResponse,
+            id: uuidv4(),
+            timestamp: new Date()
+          };
+          messages.value.push(assistantMessage);
+          isLoading.value = false;
+          if (onResponseReceived) {
+            onResponseReceived(assistantMessage);
+          }
+          if (persistenceKey) {
+            saveMessagesToLocalStorage();
+          }
+          return;
+        }
+      }
+
       if (streaming) {
         // For streaming responses
         let responseContent = '';
@@ -220,6 +288,7 @@ export function useChatEngine(options: ChatOptions): ChatEngineReturn {
         const callbacks: StreamCallbacks = {
           onStart: () => {
             // Message already added above
+            console.log('Stream started');
           },
           onToken: (token: string) => {
             // Update the last message with the new token
@@ -231,6 +300,7 @@ export function useChatEngine(options: ChatOptions): ChatEngineReturn {
           },
           onComplete: (completeText: string) => {
             isLoading.value = false;
+            console.log('Stream completed');
 
             // Call onResponseReceived callback if provided
             if (onResponseReceived) {
@@ -239,8 +309,14 @@ export function useChatEngine(options: ChatOptions): ChatEngineReturn {
                 onResponseReceived(lastMessage);
               }
             }
+
+            // Save to localStorage if persistenceKey is provided
+            if (persistenceKey) {
+              saveMessagesToLocalStorage();
+            }
           },
           onError: (err: Error) => {
+            console.error('Stream error:', err);
             error.value = err;
             isLoading.value = false;
             if (onError) onError(err);

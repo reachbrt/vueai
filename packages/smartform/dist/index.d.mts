@@ -1,3 +1,5 @@
+export { compatCreateElementBlock, compatCreateElementVNode, compatNormalizeClass, createCompatComponent, createCompatPlugin, createCompatRef, createNode, createReactiveState, installCompatPlugin, isOlderVue3, registerCompatComponent, vueVersion } from '@aivue/core';
+
 interface SmartFormSchema {
     [field: string]: {
         type: string;
@@ -30,14 +32,13 @@ interface UseSmartFormResult {
     submitForm: () => Promise<boolean>;
 }
 declare function useSmartForm(schema: SmartFormSchema): UseSmartFormResult;
-declare const SmartForm: {
-    name: string;
-};
+declare const SmartForm: any;
+declare const SmartFormPlugin: any;
+
 declare const _default: {
     useSmartForm: typeof useSmartForm;
-    SmartForm: {
-        name: string;
-    };
+    SmartForm: any;
+    SmartFormPlugin: any;
 };
 
-export { SmartForm, type SmartFormData, type SmartFormErrors, type SmartFormSchema, type UseSmartFormResult, _default as default, useSmartForm };
+export { SmartForm, type SmartFormData, type SmartFormErrors, SmartFormPlugin, type SmartFormSchema, type UseSmartFormResult, _default as default, useSmartForm };

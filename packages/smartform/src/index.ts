@@ -1,11 +1,13 @@
 // AI-powered form validation for Vue.js
 import { App } from 'vue';
-import {
-  AIClient,
+import { AIClient } from '@aivue/core';
+
+// Import Vue compatibility utilities from core
+const {
   createCompatComponent,
   registerCompatComponent,
   createCompatPlugin
-} from '@aivue/core';
+} = require('@aivue/core');
 
 // Export types
 export interface SmartFormSchema {
@@ -82,21 +84,7 @@ export const SmartFormPlugin = createCompatPlugin({
   }
 });
 
-// Re-export Vue compatibility utilities from core
-export {
-  vueVersion,
-  isOlderVue3,
-  createNode,
-  compatCreateElementBlock,
-  compatCreateElementVNode,
-  compatNormalizeClass,
-  createCompatComponent,
-  registerCompatComponent,
-  createCompatPlugin,
-  installCompatPlugin,
-  createReactiveState,
-  createCompatRef
-} from '@aivue/core';
+// No need to re-export Vue compatibility utilities
 
 // Default export
 export default {

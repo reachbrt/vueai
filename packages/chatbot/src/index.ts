@@ -1,16 +1,17 @@
 // AI-powered chat components for Vue.js
 import { App } from 'vue';
-import {
-  AIClient,
-  createCompatComponent,
-  registerCompatComponent,
-  createCompatPlugin,
-  installCompatPlugin
-} from '@aivue/core';
+import { AIClient } from '@aivue/core';
 import AiChatWindowComponent from './components/AiChatWindow.vue';
 import AiChatToggleComponent from './components/AiChatToggle.vue';
 import { useChatEngine as useChatEngineComposable, Message, ChatOptions, ChatState } from './composables/useChatEngine';
 import { formatMarkdown } from './utils/markdown';
+
+// Import Vue compatibility utilities from core
+const {
+  createCompatComponent,
+  registerCompatComponent,
+  createCompatPlugin
+} = require('@aivue/core');
 
 // Re-export types
 export type { Message, ChatOptions, ChatState };
@@ -36,21 +37,7 @@ export const AiChatPlugin = createCompatPlugin({
   }
 });
 
-// Re-export Vue compatibility utilities from core
-export {
-  vueVersion,
-  isOlderVue3,
-  createNode,
-  compatCreateElementBlock,
-  compatCreateElementVNode,
-  compatNormalizeClass,
-  createCompatComponent,
-  registerCompatComponent,
-  createCompatPlugin,
-  installCompatPlugin,
-  createReactiveState,
-  createCompatRef
-} from '@aivue/core';
+// No need to re-export Vue compatibility utilities
 
 // Default export
 export default {

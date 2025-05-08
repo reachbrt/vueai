@@ -38,6 +38,14 @@
       title="AI Assistant"
       position="bottom"
       theme="light"
+      :demoMode="!aiClient.apiKey"
+      :demoResponses="{
+        'hello': 'Hello! I\'m a demo AI assistant. This is a demo mode that works without an API key.',
+        'help': 'I can help you with various tasks. In demo mode, I respond with pre-defined messages.',
+        'features': 'This chatbot supports markdown, code highlighting, streaming responses, and more!',
+        'vue': 'Vue.js is a progressive JavaScript framework for building user interfaces.',
+        'demo': 'Yes, I\'m currently running in demo mode because no API key was provided. To use real AI responses, please provide a valid API key.'
+      }"
     />
   </div>
 </template>

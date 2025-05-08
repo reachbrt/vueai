@@ -1,34 +1,19 @@
 // Core AI functionality for Vue.js components
-import {
-  vueVersion,
-  isOlderVue3,
-  createNode,
-  compatCreateElementBlock,
-  compatCreateElementVNode,
-  compatNormalizeClass,
-  createCompatComponent,
-  registerCompatComponent,
-  createCompatPlugin,
-  installCompatPlugin,
-  createReactiveState,
-  createCompatRef
-} from './utils/vue-compat';
+import vueCompat from './utils/vue-compat';
 
 // Export Vue compatibility utilities
-export {
-  vueVersion,
-  isOlderVue3,
-  createNode,
-  compatCreateElementBlock,
-  compatCreateElementVNode,
-  compatNormalizeClass,
-  createCompatComponent,
-  registerCompatComponent,
-  createCompatPlugin,
-  installCompatPlugin,
-  createReactiveState,
-  createCompatRef
-};
+export const vueVersion = vueCompat.vueVersion;
+export const isOlderVue3 = vueCompat.isOlderVue3;
+export const createNode = vueCompat.createNode;
+export const compatCreateElementBlock = vueCompat.compatCreateElementBlock;
+export const compatCreateElementVNode = vueCompat.compatCreateElementVNode;
+export const compatNormalizeClass = vueCompat.compatNormalizeClass;
+export const createCompatComponent = vueCompat.createCompatComponent;
+export const registerCompatComponent = vueCompat.registerCompatComponent;
+export const createCompatPlugin = vueCompat.createCompatPlugin;
+export const installCompatPlugin = vueCompat.installCompatPlugin;
+export const createReactiveState = vueCompat.createReactiveState;
+export const createCompatRef = vueCompat.createCompatRef;
 
 // Export message types
 export interface Message {
@@ -82,28 +67,218 @@ export class AIClient {
 
   // Chat functionality
   async chat(messages: Message[], options?: ChatOptions): Promise<string> {
-    // This is a placeholder implementation
-    // In a real implementation, this would call the appropriate provider API
-    console.log(`Using provider: ${this.provider}`);
-    console.log(`Messages: ${JSON.stringify(messages)}`);
+    if (!this.apiKey && this.provider !== 'ollama') {
+      console.warn(`No API key provided for ${this.provider}. Using fallback response.`);
+      return this.getFallbackResponse(messages);
+    }
 
-    // Simulate a response
-    return "This is a simulated response from the AI. In a real implementation, this would be a response from the provider API.";
+    try {
+      switch (this.provider) {
+        case 'openai':
+          return await this.callOpenAI(messages, options);
+        case 'claude':
+          return await this.callClaude(messages, options);
+        case 'gemini':
+          return await this.callGemini(messages, options);
+        case 'ollama':
+          return await this.callOllama(messages, options);
+        default:
+          return this.getFallbackResponse(messages);
+      }
+    } catch (error) {
+      console.error(`Error calling ${this.provider} API:`, error);
+      throw error;
+    }
   }
 
   // Streaming chat functionality
   async chatStream(messages: Message[], callbacks: StreamCallbacks, options?: ChatOptions): Promise<void> {
-    // This is a placeholder implementation
-    // In a real implementation, this would stream responses from the provider API
     callbacks.onStart?.();
 
-    const response = "This is a simulated streaming response from the AI.";
+    if (!this.apiKey && this.provider !== 'ollama') {
+      console.warn(`No API key provided for ${this.provider}. Using fallback response.`);
+      return this.streamFallbackResponse(callbacks);
+    }
+
+    try {
+      switch (this.provider) {
+        case 'openai':
+          await this.streamOpenAI(messages, callbacks, options);
+          break;
+        case 'claude':
+          await this.streamClaude(messages, callbacks, options);
+          break;
+        case 'gemini':
+          await this.streamGemini(messages, callbacks, options);
+          break;
+        case 'ollama':
+          await this.streamOllama(messages, callbacks, options);
+          break;
+        default:
+          await this.streamFallbackResponse(callbacks);
+      }
+    } catch (error) {
+      console.error(`Error streaming from ${this.provider} API:`, error);
+      callbacks.onError?.(error as Error);
+    }
+  }
+
+  // OpenAI implementation
+  private async callOpenAI(messages: Message[], options?: ChatOptions): Promise<string> {
+    const url = this.baseUrl || 'https://api.openai.com/v1/chat/completions';
+    const model = this.model || 'gpt-3.5-turbo';
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.apiKey}`,
+        ...(this.organizationId ? { 'OpenAI-Organization': this.organizationId } : {})
+      },
+      body: JSON.stringify({
+        model,
+        messages,
+        temperature: options?.temperature || 0.7,
+        max_tokens: options?.maxTokens,
+        top_p: options?.topP || 1,
+        frequency_penalty: options?.frequencyPenalty || 0,
+        presence_penalty: options?.presencePenalty || 0,
+        stop: options?.stopSequences,
+        stream: false
+      })
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(`OpenAI API error: ${error.error?.message || response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data.choices[0].message.content;
+  }
+
+  private async streamOpenAI(messages: Message[], callbacks: StreamCallbacks, options?: ChatOptions): Promise<void> {
+    const url = this.baseUrl || 'https://api.openai.com/v1/chat/completions';
+    const model = this.model || 'gpt-3.5-turbo';
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.apiKey}`,
+        ...(this.organizationId ? { 'OpenAI-Organization': this.organizationId } : {})
+      },
+      body: JSON.stringify({
+        model,
+        messages,
+        temperature: options?.temperature || 0.7,
+        max_tokens: options?.maxTokens,
+        top_p: options?.topP || 1,
+        frequency_penalty: options?.frequencyPenalty || 0,
+        presence_penalty: options?.presencePenalty || 0,
+        stop: options?.stopSequences,
+        stream: true
+      })
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(`OpenAI API error: ${error.error?.message || response.statusText}`);
+    }
+
+    if (!response.body) {
+      throw new Error('Response body is null');
+    }
+
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder('utf-8');
+    let completeText = '';
+
+    try {
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        const chunk = decoder.decode(value, { stream: true });
+        const lines = chunk.split('\n').filter(line => line.trim() !== '');
+
+        for (const line of lines) {
+          if (line.startsWith('data: ')) {
+            const data = line.slice(6);
+            if (data === '[DONE]') continue;
+
+            try {
+              const parsed = JSON.parse(data);
+              const content = parsed.choices[0]?.delta?.content || '';
+              if (content) {
+                callbacks.onToken?.(content);
+                completeText += content;
+              }
+            } catch (e) {
+              console.warn('Error parsing SSE message:', e);
+            }
+          }
+        }
+      }
+    } finally {
+      callbacks.onComplete?.(completeText);
+    }
+  }
+
+  // Claude implementation
+  private async callClaude(messages: Message[], options?: ChatOptions): Promise<string> {
+    // Implement Claude API call
+    return this.getFallbackResponse(messages);
+  }
+
+  private async streamClaude(messages: Message[], callbacks: StreamCallbacks, options?: ChatOptions): Promise<void> {
+    // Implement Claude streaming
+    await this.streamFallbackResponse(callbacks);
+  }
+
+  // Gemini implementation
+  private async callGemini(messages: Message[], options?: ChatOptions): Promise<string> {
+    // Implement Gemini API call
+    return this.getFallbackResponse(messages);
+  }
+
+  private async streamGemini(messages: Message[], callbacks: StreamCallbacks, options?: ChatOptions): Promise<void> {
+    // Implement Gemini streaming
+    await this.streamFallbackResponse(callbacks);
+  }
+
+  // Ollama implementation
+  private async callOllama(messages: Message[], options?: ChatOptions): Promise<string> {
+    // Implement Ollama API call
+    return this.getFallbackResponse(messages);
+  }
+
+  private async streamOllama(messages: Message[], callbacks: StreamCallbacks, options?: ChatOptions): Promise<void> {
+    // Implement Ollama streaming
+    await this.streamFallbackResponse(callbacks);
+  }
+
+  // Fallback implementations
+  private getFallbackResponse(messages: Message[]): string {
+    const userMessage = messages[messages.length - 1].content.toLowerCase();
+
+    if (userMessage.includes('hello') || userMessage.includes('hi')) {
+      return "Hello! I'm an AI assistant. How can I help you today?";
+    } else if (userMessage.includes('help')) {
+      return "I'm here to help! You can ask me questions, request information, or just chat.";
+    } else {
+      return "I'm an AI assistant powered by the @aivue library. To get real responses, please provide a valid API key for your chosen provider.";
+    }
+  }
+
+  private async streamFallbackResponse(callbacks: StreamCallbacks): Promise<void> {
+    const response = "I'm an AI assistant powered by the @aivue library. To get real responses, please provide a valid API key for your chosen provider.";
 
     // Simulate streaming tokens
     for (const char of response) {
       callbacks.onToken?.(char);
       // Simulate delay
-      await new Promise(resolve => setTimeout(resolve, 50));
+      await new Promise(resolve => setTimeout(resolve, 30));
     }
 
     callbacks.onComplete?.(response);

@@ -163,6 +163,20 @@ const props = defineProps({
     default: '/api/chat'
   },
 
+  // Demo mode
+  demoMode: {
+    type: Boolean,
+    default: false
+  },
+  demoResponses: {
+    type: Object as PropType<Record<string, string>>,
+    default: () => ({
+      'hello': 'Hello! I\'m a demo AI assistant. How can I help you today?',
+      'help': 'I can help you with various tasks. Just ask me a question!',
+      'features': 'This chatbot component supports markdown, code highlighting, streaming responses, and more!'
+    })
+  },
+
   // Chat configuration
   title: {
     type: String,
@@ -269,6 +283,8 @@ const chatOptions = computed(() => ({
   initialMessages: props.initialMessages,
   streaming: props.streaming,
   persistenceKey: props.persistenceKey,
+  demoMode: props.demoMode,
+  demoResponses: props.demoResponses,
 
   // Callbacks
   onError: (error: Error) => {
