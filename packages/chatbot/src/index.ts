@@ -1,5 +1,8 @@
 // AI-powered chat components for Vue.js
 import { AIClient, Message as CoreMessage } from '@aivue/core';
+import AiChatWindowComponent from './components/AiChatWindow.vue';
+import { useChatEngine as useChatEngineComposable } from './composables/useChatEngine';
+import { formatMarkdown } from './utils/markdown';
 
 // Export types
 export interface Message extends CoreMessage {
@@ -8,48 +11,29 @@ export interface Message extends CoreMessage {
 }
 
 export interface ChatOptions {
-  provider: string;
-  apiKey?: string;
-  model?: string;
+  client: AIClient;
   systemPrompt?: string;
   streaming?: boolean;
   initialMessages?: Message[];
+  persistenceKey?: string | null;
+  maxMessages?: number;
+  onError?: ((error: Error) => void) | null;
 }
 
-export interface UseChatEngineResult {
-  messages: Message[];
-  isLoading: boolean;
-  error: Error | null;
-  sendMessage: (content: string) => Promise<void>;
-  resetConversation: () => void;
-}
+// Export components
+export const AiChatWindow = AiChatWindowComponent;
 
-// Placeholder for the useChatEngine composable
-export function useChatEngine(options: ChatOptions): UseChatEngineResult {
-  // This is a placeholder implementation
-  // In a real implementation, this would be a Vue composable
-  return {
-    messages: options.initialMessages || [],
-    isLoading: false,
-    error: null,
-    sendMessage: async () => {
-      console.log('Message sent');
-    },
-    resetConversation: () => {
-      console.log('Conversation reset');
-    }
-  };
-}
+// Export composables
+export const useChatEngine = useChatEngineComposable;
 
-// Placeholder for the AiChatWindow component
-// In a real implementation, this would be a Vue component
-export const AiChatWindow = {
-  name: 'AiChatWindow',
-  // Component implementation would go here
+// Export utilities
+export const utils = {
+  formatMarkdown
 };
 
 // Default export
 export default {
+  AiChatWindow,
   useChatEngine,
-  AiChatWindow
+  utils
 };
