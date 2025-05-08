@@ -2,6 +2,14 @@
 
 All notable changes to the @aivue/smartform package will be documented in this file.
 
+## [1.1.2] - 2023-07-25
+
+### Fixed
+- Updated dependency on @aivue/core to version 1.1.2
+- Improved package structure and exports
+- Enhanced build configuration
+- Fixed module resolution issues
+
 ## [1.1.1] - 2023-07-20
 
 ### Fixed

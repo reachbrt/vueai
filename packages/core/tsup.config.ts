@@ -5,5 +5,14 @@ export default defineConfig({
   format: ['cjs', 'esm'],
   dts: true,
   clean: true,
-  external: ['vue']
+  external: ['vue', 'eventsource-parser'],
+  sourcemap: true,
+  minify: false,
+  splitting: false,
+  outDir: 'dist',
+  outExtension({ format }) {
+    return {
+      js: format === 'cjs' ? '.js' : '.mjs',
+    };
+  },
 });

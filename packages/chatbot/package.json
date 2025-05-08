@@ -1,21 +1,43 @@
 {
   "name": "@aivue/chatbot",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "AI-powered chat components for Vue.js",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./components/*": {
+      "import": "./dist/components/*",
+      "require": "./dist/components/*"
+    },
+    "./composables/*": {
+      "import": "./dist/composables/*",
+      "require": "./dist/composables/*"
+    },
+    "./utils/*": {
+      "import": "./dist/utils/*",
+      "require": "./dist/utils/*"
+    }
+  },
   "files": [
-    "dist"
+    "dist",
+    "README.md",
+    "CHANGELOG.md"
   ],
   "scripts": {
-    "build": "vue-tsc --declaration --emitDeclarationOnly && vite build",
+    "build": "npm run clean && vue-tsc --declaration --emitDeclarationOnly && vite build",
     "dev": "vite build --watch",
     "lint": "eslint \"src/**/*.{ts,vue}\"",
     "clean": "rm -rf dist",
     "test": "vitest run --config ./vitest.config.ts",
     "test:watch": "vitest --config ./vitest.config.ts",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "postbuild": "cp -r src/components dist/components && cp -r src/composables dist/composables && cp -r src/utils dist/utils"
   },
   "keywords": [
     "vue",
@@ -41,7 +63,7 @@
     "access": "public"
   },
   "peerDependencies": {
-    "@aivue/core": "^1.1.1",
+    "@aivue/core": "^1.1.2",
     "vue": "^2.6.0 || ^3.0.0"
   },
   "devDependencies": {
@@ -60,7 +82,6 @@
     "vue-tsc": "^2.2.10"
   },
   "dependencies": {
-    "@aivue/core": "^1.0.1",
     "markdown-it": "^14.0.0",
     "uuid": "^9.0.1"
   }

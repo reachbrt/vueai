@@ -1,6 +1,6 @@
 {
   "name": "@aivue/core",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Core AI functionality for Vue.js components",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -31,7 +31,7 @@
     "url": "https://github.com/reachbrt/vueai/issues"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
+    "access": "public"
   },
   "peerDependencies": {
     "vue": "^2.6.0 || ^3.0.0"

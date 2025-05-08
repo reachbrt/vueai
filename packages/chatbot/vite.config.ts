@@ -18,13 +18,23 @@ export default defineConfig({
       fileName: (format) => `index.${format === 'es' ? 'mjs' : 'js'}`,
     },
     rollupOptions: {
-      external: ['vue', '@aivue/core'],
+      external: ['vue', '@aivue/core', 'markdown-it', 'uuid'],
       output: {
         globals: {
           vue: 'Vue',
           '@aivue/core': 'AiVueCore',
+          'markdown-it': 'MarkdownIt',
+          'uuid': 'uuid'
         },
+        preserveModules: true,
+        preserveModulesRoot: 'src',
+        entryFileNames: (chunkInfo) => {
+          return `[name].js`;
+        }
       },
     },
+    outDir: 'dist',
+    emptyOutDir: true,
+    sourcemap: true,
   },
 });

@@ -1,2 +1,2 @@
-// @aivue/core v1.1.0
+// @aivue/core v1.1.1
 module.exports = {};
