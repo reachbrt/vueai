@@ -8,15 +8,6 @@
   "files": [
     "dist"
   ],
-  "scripts": {
-    "build": "npm run clean && mkdir -p dist && cp -r src/* dist/ && cp package.json dist/ && cp README.md dist/",
-    "dev": "npm run build -- --watch",
-    "lint": "eslint \"src/**/*.{ts,vue}\"",
-    "clean": "rm -rf dist",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "prepublishOnly": "npm run build"
-  },
   "keywords": [
     "vue",
     "ai",
@@ -53,6 +44,5 @@
     "vitest": "^1.0.0",
     "vue": "^3.5.0"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }
