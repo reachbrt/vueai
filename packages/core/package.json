@@ -40,9 +40,7 @@
     "url": "https://github.com/reachbrt/vueai/issues"
   },
   "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/",
-    "provenance": true
+    "access": "public"
   },
   "peerDependencies": {
     "vue": "^3.0.0"
