@@ -1,6 +1,6 @@
 {
-  "name": "@reachbrt/vueai-core",
-  "version": "1.0.1-beta",
+  "name": "@aivue/core",
+  "version": "1.0.0",
   "description": "Core AI functionality for Vue.js components",
   "main": "dist/index.js",
   "module": "dist/index.mjs",

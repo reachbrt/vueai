@@ -1,14 +1,14 @@
-# @reachbrt/vueai-chatbot
+# @aivue/chatbot
 
 > AI-powered chat components for Vue.js
 
-[![npm version](https://img.shields.io/npm/v/@reachbrt/vueai-chatbot.svg?style=flat-square)](https://www.npmjs.com/package/@reachbrt/vueai-chatbot)
-[![npm downloads](https://img.shields.io/npm/dm/@reachbrt/vueai-chatbot.svg?style=flat-square)](https://www.npmjs.com/package/@reachbrt/vueai-chatbot)
-[![MIT License](https://img.shields.io/npm/l/@reachbrt/vueai-chatbot.svg?style=flat-square)](https://github.com/reachbrt/vueai/blob/main/LICENSE)
+[![npm version](https://img.shields.io/npm/v/@aivue/chatbot.svg?style=flat-square)](https://www.npmjs.com/package/@aivue/chatbot)
+[![npm downloads](https://img.shields.io/npm/dm/@aivue/chatbot.svg?style=flat-square)](https://www.npmjs.com/package/@aivue/chatbot)
+[![MIT License](https://img.shields.io/npm/l/@aivue/chatbot.svg?style=flat-square)](https://github.com/reachbrt/vueai/blob/main/LICENSE)
 
 ## Overview
 
-`@reachbrt/vueai-chatbot` provides ready-to-use chat components for Vue.js applications, powered by AI. Create engaging conversational interfaces with minimal setup, supporting multiple AI providers.
+`@aivue/chatbot` provides ready-to-use chat components for Vue.js applications, powered by AI. Create engaging conversational interfaces with minimal setup, supporting multiple AI providers.
 
 ## Features
 
@@ -25,13 +25,13 @@
 
 ```bash
 # npm
-npm install @reachbrt/vueai-chatbot @reachbrt/vueai-core
+npm install @aivue/chatbot @aivue/core
 
 # yarn
-yarn add @reachbrt/vueai-chatbot @reachbrt/vueai-core
+yarn add @aivue/chatbot @aivue/core
 
 # pnpm
-pnpm add @reachbrt/vueai-chatbot @reachbrt/vueai-core
+pnpm add @aivue/chatbot @aivue/core
 ```
 
 ## Basic Usage
@@ -51,7 +51,7 @@ pnpm add @reachbrt/vueai-chatbot @reachbrt/vueai-core
 
 <script setup>
 import { ref } from 'vue';
-import { AiChatWindow, useChatEngine } from '@reachbrt/vueai-chatbot';
+import { AiChatWindow, useChatEngine } from '@aivue/chatbot';
 
 // Use the chat engine composable
 const {
@@ -83,7 +83,7 @@ const {
 The `useChatEngine` composable provides a simple way to integrate AI chat functionality into any Vue component:
 
 ```javascript
-import { useChatEngine } from '@reachbrt/vueai-chatbot';
+import { useChatEngine } from '@aivue/chatbot';
 
 // In your setup function or script setup
 const {
@@ -128,7 +128,7 @@ The `AiChatWindow` component accepts various props for customization:
 
 <script setup>
 import { ref } from 'vue';
-import { AiChatWindow, useChatEngine } from '@reachbrt/vueai-chatbot';
+import { AiChatWindow, useChatEngine } from '@aivue/chatbot';
 
 const userAvatar = ref('/path/to/user-avatar.png');
 const assistantAvatar = ref('/path/to/assistant-avatar.png');
@@ -193,9 +193,9 @@ You can customize the appearance of the chat window using CSS variables:
 
 ## Related Packages
 
-- [@reachbrt/vueai-core](https://www.npmjs.com/package/@reachbrt/vueai-core) - Core AI functionality for Vue.js components
-- [@reachbrt/vueai-autosuggest](https://www.npmjs.com/package/@reachbrt/vueai-autosuggest) - AI-powered suggestion components for Vue.js
-- [@reachbrt/vueai-smartform](https://www.npmjs.com/package/@reachbrt/vueai-smartform) - AI-powered form validation for Vue.js
+- [@aivue/core](https://www.npmjs.com/package/@aivue/core) - Core AI functionality for Vue.js components
+- [@aivue/autosuggest](https://www.npmjs.com/package/@aivue/autosuggest) - AI-powered suggestion components for Vue.js
+- [@aivue/smartform](https://www.npmjs.com/package/@aivue/smartform) - AI-powered form validation for Vue.js
 
 ## License
 

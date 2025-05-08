@@ -1,6 +1,6 @@
 {
-  "name": "@reachbrt/vueai-smartform",
-  "version": "1.0.1-beta",
+  "name": "@aivue/smartform",
+  "version": "1.0.0",
   "description": "AI-powered form validation for Vue.js",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -41,7 +41,7 @@
     "access": "public"
   },
   "peerDependencies": {
-    "@reachbrt/vueai-core": "^1.0.1-beta",
+    "@aivue/core": "^1.0.0",
     "vue": "^3.0.0"
   },
   "devDependencies": {
@@ -54,7 +54,7 @@
     "vue": "^3.5.0"
   },
   "dependencies": {
-    "@reachbrt/vueai-core": "^1.0.1-beta",
+    "@aivue/core": "^1.0.0",
     "zod": "^3.22.0"
   }
 }
