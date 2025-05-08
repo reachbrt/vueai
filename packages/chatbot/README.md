@@ -19,7 +19,7 @@
 - 🧠 **Multiple AI providers**: Works with OpenAI, Claude, Gemini, and more
 - 📝 **Markdown support**: Rich text formatting in messages
 - 💾 **Conversation history**: Save and load chat sessions
-- 🔧 **Fully typed**: Complete TypeScript support
+- 🔧 **Fully typed**: Complete TypeScript support with type definitions
 
 ## Installation
 
@@ -345,6 +345,23 @@ When using the component in templates, you can use either PascalCase or kebab-ca
 <AiChatWindow :client="aiClient" />
 <ai-chat-window :client="aiClient" />
 ```
+
+### TypeScript Support
+
+The package includes full TypeScript support. You can import types directly:
+
+```typescript
+import { Message, ChatOptions } from '@aivue/chatbot';
+
+// Use types in your code
+const messages: Message[] = [];
+const options: ChatOptions = {
+  client: aiClient,
+  systemPrompt: 'You are a helpful assistant.'
+};
+```
+
+For detailed TypeScript usage examples, see the [TypeScript Usage Guide](./TYPESCRIPT.md).
 
 ### API Key Handling
 
