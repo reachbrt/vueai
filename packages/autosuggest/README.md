@@ -1,14 +1,14 @@
-# @reachbrt/vueai-autosuggest
+# @aivue/autosuggest
 
 > AI-powered suggestion components for Vue.js
 
-[![npm version](https://img.shields.io/npm/v/@reachbrt/vueai-autosuggest.svg?style=flat-square)](https://www.npmjs.com/package/@reachbrt/vueai-autosuggest)
-[![npm downloads](https://img.shields.io/npm/dm/@reachbrt/vueai-autosuggest.svg?style=flat-square)](https://www.npmjs.com/package/@reachbrt/vueai-autosuggest)
-[![MIT License](https://img.shields.io/npm/l/@reachbrt/vueai-autosuggest.svg?style=flat-square)](https://github.com/reachbrt/vueai/blob/main/LICENSE)
+[![npm version](https://img.shields.io/npm/v/@aivue/autosuggest.svg?style=flat-square)](https://www.npmjs.com/package/@aivue/autosuggest)
+[![npm downloads](https://img.shields.io/npm/dm/@aivue/autosuggest.svg?style=flat-square)](https://www.npmjs.com/package/@aivue/autosuggest)
+[![MIT License](https://img.shields.io/npm/l/@aivue/autosuggest.svg?style=flat-square)](https://github.com/reachbrt/vueai/blob/main/LICENSE)
 
 ## Overview
 
-`@reachbrt/vueai-autosuggest` provides intelligent, AI-powered suggestion components for Vue.js applications. Enhance your forms, search boxes, and text inputs with context-aware suggestions powered by AI.
+`@aivue/autosuggest` provides intelligent, AI-powered suggestion components for Vue.js applications. Enhance your forms, search boxes, and text inputs with context-aware suggestions powered by AI.
 
 ## Features
 
@@ -25,13 +25,13 @@
 
 ```bash
 # npm
-npm install @reachbrt/vueai-autosuggest @reachbrt/vueai-core
+npm install @aivue/autosuggest @aivue/core
 
 # yarn
-yarn add @reachbrt/vueai-autosuggest @reachbrt/vueai-core
+yarn add @aivue/autosuggest @aivue/core
 
 # pnpm
-pnpm add @reachbrt/vueai-autosuggest @reachbrt/vueai-core
+pnpm add @aivue/autosuggest @aivue/core
 ```
 
 ## Basic Usage
@@ -53,7 +53,7 @@ pnpm add @reachbrt/vueai-autosuggest @reachbrt/vueai-core
 
 <script setup>
 import { ref } from 'vue';
-import { Autosuggest, useAutosuggest } from '@reachbrt/vueai-autosuggest';
+import { Autosuggest, useAutosuggest } from '@aivue/autosuggest';
 
 const searchQuery = ref('');
 
@@ -104,7 +104,7 @@ function handleSelect(suggestion) {
 The `useAutosuggest` composable provides a simple way to integrate AI-powered suggestions into any Vue component:
 
 ```javascript
-import { useAutosuggest } from '@reachbrt/vueai-autosuggest';
+import { useAutosuggest } from '@aivue/autosuggest';
 
 // In your setup function or script setup
 const {
@@ -175,11 +175,11 @@ You can customize how suggestions are rendered using slots:
         <img src="/spinner.gif" alt="Loading" />
       </div>
     </template>
-    
+
     <!-- Custom suggestion item -->
     <template #suggestion="{ suggestion, isHighlighted }">
-      <div 
-        class="custom-suggestion" 
+      <div
+        class="custom-suggestion"
         :class="{ 'highlighted': isHighlighted }"
       >
         <span class="suggestion-text">{{ suggestion.text }}</span>
@@ -237,9 +237,9 @@ interface SuggestionItem {
 
 ## Related Packages
 
-- [@reachbrt/vueai-core](https://www.npmjs.com/package/@reachbrt/vueai-core) - Core AI functionality for Vue.js components
-- [@reachbrt/vueai-chatbot](https://www.npmjs.com/package/@reachbrt/vueai-chatbot) - AI-powered chat components for Vue.js
-- [@reachbrt/vueai-smartform](https://www.npmjs.com/package/@reachbrt/vueai-smartform) - AI-powered form validation for Vue.js
+- [@aivue/core](https://www.npmjs.com/package/@aivue/core) - Core AI functionality for Vue.js components
+- [@aivue/chatbot](https://www.npmjs.com/package/@aivue/chatbot) - AI-powered chat components for Vue.js
+- [@aivue/smartform](https://www.npmjs.com/package/@aivue/smartform) - AI-powered form validation for Vue.js
 
 ## License
 

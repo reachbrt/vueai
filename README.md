@@ -3,24 +3,24 @@
 # VueAI
 
 A modular AI-powered Vue.js component suite including:
-- **@reachbrt/vueai-core** – Core AI functionality for Vue.js components
-- **@reachbrt/vueai-chatbot** – Multi-provider AI chat widget
-- **@reachbrt/vueai-autosuggest** – Smart autosuggest with semantic ranking
-- **@reachbrt/vueai-smartform** – AI-enhanced forms with dynamic validation
+- **@aivue/core** – Core AI functionality for Vue.js components
+- **@aivue/chatbot** – Multi-provider AI chat widget
+- **@aivue/autosuggest** – Smart autosuggest with semantic ranking
+- **@aivue/smartform** – AI-enhanced forms with dynamic validation
 
 ## 📦 Installation
 
 ```bash
 # Install the core package
-npm install @reachbrt/vueai-core
+npm install @aivue/core
 
 # Install component packages as needed
-npm install @reachbrt/vueai-chatbot
-npm install @reachbrt/vueai-autosuggest
-npm install @reachbrt/vueai-smartform
+npm install @aivue/chatbot
+npm install @aivue/autosuggest
+npm install @aivue/smartform
 
 # Or install all packages at once
-npm install @reachbrt/vueai-core @reachbrt/vueai-chatbot @reachbrt/vueai-autosuggest @reachbrt/vueai-smartform
+npm install @aivue/core @aivue/chatbot @aivue/autosuggest @aivue/smartform
 ```
 
 ---
@@ -29,7 +29,7 @@ npm install @reachbrt/vueai-core @reachbrt/vueai-chatbot @reachbrt/vueai-autosug
 ```
 vueai/
 ├── packages/
-│   ├── core/           # @reachbrt/vueai-core
+│   ├── core/           # @aivue/core
 │   │   ├── src/
 │   │   │   ├── index.ts
 │   │   │   └── providers/
@@ -40,9 +40,9 @@ vueai/
 │   │   │       ├── ollama.ts
 │   │   │       ├── deepseek.ts
 │   │   │       └── fallback.ts
-│   ├── chatbot/        # @reachbrt/vueai-chatbot
-│   ├── autosuggest/    # @reachbrt/vueai-autosuggest
-│   └── smartform/      # @reachbrt/vueai-smartform
+│   ├── chatbot/        # @aivue/chatbot
+│   ├── autosuggest/    # @aivue/autosuggest
+│   └── smartform/      # @aivue/smartform
 └── package.json        # Root package.json with workspace configuration
 ```
 
@@ -50,7 +50,7 @@ vueai/
 
 ## 📦 Packages
 
-### @reachbrt/vueai-chatbot
+### @aivue/chatbot
 - Multi-provider support (OpenAI, Claude, Gemini, HuggingFace, Ollama, DeepSeek)
 - Automatic fallback when API keys aren't available
 - Streaming responses with Markdown support
@@ -80,7 +80,7 @@ vueai/
 
 <script setup>
 import { ref, computed } from 'vue';
-import { AiChatWindow } from '@reachbrt/vueai-chatbot';
+import { AiChatWindow } from '@aivue/chatbot';
 
 const provider = ref('openai');
 const apiKey = computed(() => import.meta.env[`VITE_${provider.value.toUpperCase()}_API_KEY`] || '');
@@ -103,7 +103,7 @@ function resetConversation() {
 </script>
 ```
 
-### @reachbrt/vueai-autosuggest
+### @aivue/autosuggest
 - AI-powered results with semantic sort
 - Multi-provider support with automatic fallback
 - Contextual suggestions based on domain
@@ -143,7 +143,7 @@ function resetConversation() {
 
 <script setup>
 import { ref, computed } from 'vue';
-import { useAutosuggest } from '@reachbrt/vueai-autosuggest';
+import { useAutosuggest } from '@aivue/autosuggest';
 
 const query = ref('');
 const provider = ref('openai');
@@ -171,7 +171,7 @@ function getModelForProvider(provider) {
 </script>
 ```
 
-### @reachbrt/vueai-smartform
+### @aivue/smartform
 - AI-powered validation + dynamic healing
 - Multi-provider support with automatic fallback
 - Intelligent form field suggestions
@@ -187,7 +187,7 @@ function getModelForProvider(provider) {
 
 <script setup>
 import { ref } from 'vue';
-import { SmartForm } from '@reachbrt/vueai-smartform';
+import { SmartForm } from '@aivue/smartform';
 
 const provider = ref('openai'); // Supports all AI providers with fallback
 
@@ -213,12 +213,12 @@ function handleSubmit(data) {
 
 ---
 
-## 🧠 @reachbrt/vueai-core Shared AI Engine
+## 🧠 @aivue/core Shared AI Engine
 
 Our core package provides a unified interface for working with multiple AI providers, complete with an automatic fallback mechanism that ensures your components work even without API keys.
 
 ```ts
-import { AIClient } from '@reachbrt/vueai-core';
+import { AIClient } from '@aivue/core';
 
 // Create a client with your preferred provider
 const client = new AIClient({
@@ -280,10 +280,10 @@ test('sends messages', async () => {
 npm run build:packages
 
 # Publish packages
-npm publish --access public --workspace @reachbrt/vueai-core
-npm publish --access public --workspace @reachbrt/vueai-chatbot
-npm publish --access public --workspace @reachbrt/vueai-autosuggest
-npm publish --access public --workspace @reachbrt/vueai-smartform
+npm publish --access public --workspace @aivue/core
+npm publish --access public --workspace @aivue/chatbot
+npm publish --access public --workspace @aivue/autosuggest
+npm publish --access public --workspace @aivue/smartform
 
 # Or use the publish script
 npm run publish:packages

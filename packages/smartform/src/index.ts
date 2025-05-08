@@ -1,5 +1,5 @@
 // AI-powered form validation for Vue.js
-import { AIClient } from '@reachbrt/vueai-core';
+import { AIClient } from '@aivue/core';
 
 // Export types
 export interface SmartFormSchema {

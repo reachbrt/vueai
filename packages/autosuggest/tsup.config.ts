@@ -5,5 +5,5 @@ export default defineConfig({
   format: ['cjs', 'esm'],
   dts: true,
   clean: true,
-  external: ['vue', '@reachbrt/vueai-core']
+  external: ['vue', '@aivue/core']
 });

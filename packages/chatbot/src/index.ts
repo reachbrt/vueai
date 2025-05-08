@@ -1,5 +1,5 @@
 // AI-powered chat components for Vue.js
-import { AIClient, Message as CoreMessage } from '@reachbrt/vueai-core';
+import { AIClient, Message as CoreMessage } from '@aivue/core';
 
 // Export types
 export interface Message extends CoreMessage {

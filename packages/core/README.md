@@ -1,14 +1,14 @@
-# @reachbrt/vueai-core
+# @aivue/core
 
 > Core AI functionality for Vue.js components
 
-[![npm version](https://img.shields.io/npm/v/@reachbrt/vueai-core.svg?style=flat-square)](https://www.npmjs.com/package/@reachbrt/vueai-core)
-[![npm downloads](https://img.shields.io/npm/dm/@reachbrt/vueai-core.svg?style=flat-square)](https://www.npmjs.com/package/@reachbrt/vueai-core)
-[![MIT License](https://img.shields.io/npm/l/@reachbrt/vueai-core.svg?style=flat-square)](https://github.com/reachbrt/vueai/blob/main/LICENSE)
+[![npm version](https://img.shields.io/npm/v/@aivue/core.svg?style=flat-square)](https://www.npmjs.com/package/@aivue/core)
+[![npm downloads](https://img.shields.io/npm/dm/@aivue/core.svg?style=flat-square)](https://www.npmjs.com/package/@aivue/core)
+[![MIT License](https://img.shields.io/npm/l/@aivue/core.svg?style=flat-square)](https://github.com/reachbrt/vueai/blob/main/LICENSE)
 
 ## Overview
 
-`@reachbrt/vueai-core` provides a unified interface for working with multiple AI providers in Vue.js applications. It serves as the foundation for all VueAI components, offering a consistent API for interacting with various AI services.
+`@aivue/core` provides a unified interface for working with multiple AI providers in Vue.js applications. It serves as the foundation for all VueAI components, offering a consistent API for interacting with various AI services.
 
 ## Features
 
@@ -23,19 +23,19 @@
 
 ```bash
 # npm
-npm install @reachbrt/vueai-core
+npm install @aivue/core
 
 # yarn
-yarn add @reachbrt/vueai-core
+yarn add @aivue/core
 
 # pnpm
-pnpm add @reachbrt/vueai-core
+pnpm add @aivue/core
 ```
 
 ## Basic Usage
 
 ```javascript
-import { AIClient } from '@reachbrt/vueai-core';
+import { AIClient } from '@aivue/core';
 
 // Create a client with your preferred provider
 const client = new AIClient({
@@ -49,7 +49,7 @@ async function getResponse() {
   const response = await client.chat([
     { role: 'user', content: 'Hello, can you help me with Vue.js?' }
   ]);
-  
+
   console.log(response);
 }
 ```
@@ -57,7 +57,7 @@ async function getResponse() {
 ## Streaming Responses
 
 ```javascript
-import { AIClient } from '@reachbrt/vueai-core';
+import { AIClient } from '@aivue/core';
 
 const client = new AIClient({
   provider: 'claude',
@@ -81,7 +81,7 @@ client.chatStream(
 
 ```javascript
 import { ref, onMounted } from 'vue';
-import { AIClient } from '@reachbrt/vueai-core';
+import { AIClient } from '@aivue/core';
 
 export default {
   setup() {
@@ -117,7 +117,7 @@ export default {
 ## Configuring Multiple Providers
 
 ```javascript
-import { registerProviders } from '@reachbrt/vueai-core';
+import { registerProviders } from '@aivue/core';
 
 // Register multiple providers at once
 registerProviders({
@@ -195,9 +195,9 @@ interface StreamCallbacks {
 
 ## Related Packages
 
-- [@reachbrt/vueai-chatbot](https://www.npmjs.com/package/@reachbrt/vueai-chatbot) - AI-powered chat components for Vue.js
-- [@reachbrt/vueai-autosuggest](https://www.npmjs.com/package/@reachbrt/vueai-autosuggest) - AI-powered suggestion components for Vue.js
-- [@reachbrt/vueai-smartform](https://www.npmjs.com/package/@reachbrt/vueai-smartform) - AI-powered form validation for Vue.js
+- [@aivue/chatbot](https://www.npmjs.com/package/@aivue/chatbot) - AI-powered chat components for Vue.js
+- [@aivue/autosuggest](https://www.npmjs.com/package/@aivue/autosuggest) - AI-powered suggestion components for Vue.js
+- [@aivue/smartform](https://www.npmjs.com/package/@aivue/smartform) - AI-powered form validation for Vue.js
 
 ## License
 

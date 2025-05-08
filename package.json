@@ -15,14 +15,14 @@
     "db:push": "drizzle-kit push --force --config=./drizzle.config.ts",
     "db:seed": "tsx db/seed.ts",
     "build:packages": "npm run build --workspaces",
-    "build:core": "npm run build --workspace @reachbrt/vueai-core",
-    "build:chatbot": "npm run build --workspace @reachbrt/vueai-chatbot",
-    "build:autosuggest": "npm run build --workspace @reachbrt/vueai-autosuggest",
-    "build:smartform": "npm run build --workspace @reachbrt/vueai-smartform",
+    "build:core": "npm run build --workspace @aivue/core",
+    "build:chatbot": "npm run build --workspace @aivue/chatbot",
+    "build:autosuggest": "npm run build --workspace @aivue/autosuggest",
+    "build:smartform": "npm run build --workspace @aivue/smartform",
     "clean": "npm run clean --workspaces",
     "test": "npm run test --workspaces",
     "lint": "npm run lint --workspaces",
-    "publish:packages": "npm run build:packages && npm publish --access public --workspace @reachbrt/vueai-core && npm publish --access public --workspace @reachbrt/vueai-chatbot && npm publish --access public --workspace @reachbrt/vueai-autosuggest && npm publish --access public --workspace @reachbrt/vueai-smartform"
+    "publish:packages": "npm run build:packages && npm publish --access public --workspace @aivue/core && npm publish --access public --workspace @aivue/chatbot && npm publish --access public --workspace @aivue/autosuggest && npm publish --access public --workspace @aivue/smartform"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.37.0",

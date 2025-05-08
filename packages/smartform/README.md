@@ -1,14 +1,14 @@
-# @reachbrt/vueai-smartform
+# @aivue/smartform
 
 > AI-powered form validation for Vue.js
 
-[![npm version](https://img.shields.io/npm/v/@reachbrt/vueai-smartform.svg?style=flat-square)](https://www.npmjs.com/package/@reachbrt/vueai-smartform)
-[![npm downloads](https://img.shields.io/npm/dm/@reachbrt/vueai-smartform.svg?style=flat-square)](https://www.npmjs.com/package/@reachbrt/vueai-smartform)
-[![MIT License](https://img.shields.io/npm/l/@reachbrt/vueai-smartform.svg?style=flat-square)](https://github.com/reachbrt/vueai/blob/main/LICENSE)
+[![npm version](https://img.shields.io/npm/v/@aivue/smartform.svg?style=flat-square)](https://www.npmjs.com/package/@aivue/smartform)
+[![npm downloads](https://img.shields.io/npm/dm/@aivue/smartform.svg?style=flat-square)](https://www.npmjs.com/package/@aivue/smartform)
+[![MIT License](https://img.shields.io/npm/l/@aivue/smartform.svg?style=flat-square)](https://github.com/reachbrt/vueai/blob/main/LICENSE)
 
 ## Overview
 
-`@reachbrt/vueai-smartform` provides intelligent, AI-powered form validation and auto-correction for Vue.js applications. Create smarter forms that understand user intent and provide helpful feedback.
+`@aivue/smartform` provides intelligent, AI-powered form validation and auto-correction for Vue.js applications. Create smarter forms that understand user intent and provide helpful feedback.
 
 ## Features
 
@@ -25,13 +25,13 @@
 
 ```bash
 # npm
-npm install @reachbrt/vueai-smartform @reachbrt/vueai-core
+npm install @aivue/smartform @aivue/core
 
 # yarn
-yarn add @reachbrt/vueai-smartform @reachbrt/vueai-core
+yarn add @aivue/smartform @aivue/core
 
 # pnpm
-pnpm add @reachbrt/vueai-smartform @reachbrt/vueai-core
+pnpm add @aivue/smartform @aivue/core
 ```
 
 ## Basic Usage
@@ -48,7 +48,7 @@ pnpm add @reachbrt/vueai-smartform @reachbrt/vueai-core
       @change="handleChange"
       @submit="handleSubmit"
     />
-    
+
     <!-- Or use with your own form elements -->
     <form @submit.prevent="submitForm">
       <div class="form-group">
@@ -63,17 +63,17 @@ pnpm add @reachbrt/vueai-smartform @reachbrt/vueai-core
         <div v-if="errors.email" class="error-message">
           {{ errors.email }}
         </div>
-        <button 
-          v-if="errors.email" 
-          type="button" 
+        <button
+          v-if="errors.email"
+          type="button"
           @click="fixWithAI('email')"
         >
           Fix with AI
         </button>
       </div>
-      
+
       <!-- More form fields -->
-      
+
       <button type="submit" :disabled="isLoading">Submit</button>
     </form>
   </div>
@@ -81,7 +81,7 @@ pnpm add @reachbrt/vueai-smartform @reachbrt/vueai-core
 
 <script setup>
 import { ref, reactive } from 'vue';
-import { SmartForm, useSmartForm } from '@reachbrt/vueai-smartform';
+import { SmartForm, useSmartForm } from '@aivue/smartform';
 
 // Define your form schema
 const formSchema = {
@@ -154,7 +154,7 @@ async function handleSubmit() {
 The `useSmartForm` composable provides a simple way to integrate AI-powered form validation into any Vue component:
 
 ```javascript
-import { useSmartForm } from '@reachbrt/vueai-smartform';
+import { useSmartForm } from '@aivue/smartform';
 
 // Define your form schema
 const formSchema = {
@@ -214,7 +214,7 @@ const formSchema = {
     required: true,
     label: 'Full Name'
   },
-  
+
   // Email field with AI validation and self-healing
   email: {
     type: 'email',
@@ -223,7 +223,7 @@ const formSchema = {
     required: true,
     label: 'Email Address'
   },
-  
+
   // Select field with options
   country: {
     type: 'select',
@@ -236,7 +236,7 @@ const formSchema = {
       { value: 'uk', label: 'United Kingdom' }
     ]
   },
-  
+
   // Number field with min/max validation
   age: {
     type: 'number',
@@ -246,7 +246,7 @@ const formSchema = {
     min: 18,
     max: 120
   },
-  
+
   // Textarea field
   bio: {
     type: 'textarea',
@@ -309,9 +309,9 @@ interface SmartFormSchema {
 
 ## Related Packages
 
-- [@reachbrt/vueai-core](https://www.npmjs.com/package/@reachbrt/vueai-core) - Core AI functionality for Vue.js components
-- [@reachbrt/vueai-chatbot](https://www.npmjs.com/package/@reachbrt/vueai-chatbot) - AI-powered chat components for Vue.js
-- [@reachbrt/vueai-autosuggest](https://www.npmjs.com/package/@reachbrt/vueai-autosuggest) - AI-powered suggestion components for Vue.js
+- [@aivue/core](https://www.npmjs.com/package/@aivue/core) - Core AI functionality for Vue.js components
+- [@aivue/chatbot](https://www.npmjs.com/package/@aivue/chatbot) - AI-powered chat components for Vue.js
+- [@aivue/autosuggest](https://www.npmjs.com/package/@aivue/autosuggest) - AI-powered suggestion components for Vue.js
 
 ## License
 

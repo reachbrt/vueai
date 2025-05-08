@@ -10,7 +10,7 @@
     "outDir": "dist",
     "jsx": "preserve",
     "paths": {
-      "@reachbrt/vueai-core": ["../core/src"]
+      "@aivue/core": ["../core/src"]
     }
   },
   "include": ["src/**/*"],

@@ -1,4 +1,4 @@
-import { Message as Message$1 } from '@reachbrt/vueai-core';
+import { Message as Message$1 } from '@aivue/core';
 
 interface Message extends Message$1 {
     id?: string;
