@@ -16,6 +16,8 @@ export interface ChatOptions {
     streaming?: boolean;
     persistenceKey?: string | null;
     maxMessages?: number;
+    demoMode?: boolean;
+    demoResponses?: Record<string, string>;
     useProxy?: boolean;
     proxyUrl?: string;
     onError?: ((error: Error) => void) | null;

@@ -135,14 +135,19 @@ export function useChatEngine(options: ChatOptions): ChatEngineReturn {
   });
 
   // Save messages to localStorage when they change
-  watch(messages, (newMessages) => {
+  const saveMessagesToLocalStorage = () => {
     if (persistenceKey) {
       try {
-        localStorage.setItem(persistenceKey, JSON.stringify(newMessages));
+        localStorage.setItem(persistenceKey, JSON.stringify(messages.value));
       } catch (err) {
         console.error('Error saving chat history:', err);
       }
     }
+  };
+
+  // Watch for changes to save to localStorage
+  watch(messages, () => {
+    saveMessagesToLocalStorage();
   }, { deep: true });
 
   /**

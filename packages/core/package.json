@@ -18,8 +18,8 @@
     "CHANGELOG.md"
   ],
   "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
+    "build": "npm run clean && mkdir -p dist && cp -r src/* dist/ && cp package.json dist/ && cp README.md dist/",
+    "dev": "tsc --watch",
     "lint": "eslint \"src/**/*.ts\"",
     "clean": "rm -rf dist",
     "test": "vitest run",

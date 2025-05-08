@@ -30,7 +30,7 @@
     "CHANGELOG.md"
   ],
   "scripts": {
-    "build": "npm run clean && vue-tsc --declaration --emitDeclarationOnly && vite build",
+    "build": "npm run clean && vite build && npm run postbuild",
     "dev": "vite build --watch",
     "lint": "eslint \"src/**/*.{ts,vue}\"",
     "clean": "rm -rf dist",
