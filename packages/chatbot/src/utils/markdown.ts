@@ -7,7 +7,7 @@ const md = new MarkdownIt({
   breaks: true,       // Convert '\n' in paragraphs into <br>
   linkify: true,      // Autoconvert URL-like text to links
   typographer: true,  // Enable smartquotes and other typographic replacements
-  highlight: function (str, lang) {
+  highlight: function (str: string, lang: string) {
     // You could add syntax highlighting here if needed
     return `<pre class="language-${lang}"><code>${str}</code></pre>`;
   }
@@ -16,10 +16,10 @@ const md = new MarkdownIt({
 /**
  * Format markdown text to HTML
  * 
- * @param {String} text - Markdown text to format
- * @returns {String} HTML formatted text
+ * @param text - Markdown text to format
+ * @returns HTML formatted text
  */
-export function formatMarkdown(text) {
+export function formatMarkdown(text: string): string {
   if (!text) return '';
   return md.render(text);
 }

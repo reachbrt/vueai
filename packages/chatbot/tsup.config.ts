@@ -1,6 +1,7 @@
 import { defineConfig } from 'tsup';
 import { readFileSync } from 'fs';
 import { join } from 'path';
+import vuePlugin from './vue-plugin';
 
 // Parse package.json to get dependencies and peerDependencies
 const pkg = JSON.parse(
@@ -20,10 +21,20 @@ export default defineConfig({
   sourcemap: true,
   clean: true,
   external,
-  esbuildOptions(options) {
-    options.loader = {
-      ...options.loader,
-      '.vue': 'ts', // Handle Vue files
+  esbuildPlugins: [
+    vuePlugin()
+  ],
+  // Make sure to include .vue files in the build
+  outExtension({ format }) {
+    return {
+      js: format === 'esm' ? '.mjs' : '.js',
     };
   },
+  // Ensure TypeScript files are properly processed
+  tsconfig: 'tsconfig.json',
+  // Define Vue constants
+  define: {
+    __VUE_OPTIONS_API__: 'true',
+    __VUE_PROD_DEVTOOLS__: 'false'
+  }
 });

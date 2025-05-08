@@ -5,13 +5,13 @@
         <h3 class="ai-chat-window__title">{{ title }}</h3>
       </slot>
     </div>
-    
+
     <div class="ai-chat-window__messages" ref="messagesContainer">
       <template v-for="(message, index) in messages" :key="message.id || index">
-        <slot 
-          v-if="message.role === 'user'" 
-          name="user-message" 
-          :message="message" 
+        <slot
+          v-if="message.role === 'user'"
+          name="user-message"
+          :message="message"
           :index="index"
         >
           <div class="ai-chat-window__message ai-chat-window__message--user">
@@ -27,11 +27,11 @@
             </div>
           </div>
         </slot>
-        
-        <slot 
-          v-else-if="message.role === 'assistant'" 
-          name="assistant-message" 
-          :message="message" 
+
+        <slot
+          v-else-if="message.role === 'assistant'"
+          name="assistant-message"
+          :message="message"
           :index="index"
         >
           <div class="ai-chat-window__message ai-chat-window__message--assistant">
@@ -44,8 +44,8 @@
               <div v-if="showTimestamps && message.timestamp" class="ai-chat-window__message-timestamp">
                 {{ formatTimestamp(message.timestamp) }}
               </div>
-              <button 
-                v-if="showCopyButton" 
+              <button
+                v-if="showCopyButton"
                 class="ai-chat-window__copy-button"
                 @click="copyToClipboard(message.content)"
               >
@@ -54,11 +54,11 @@
             </div>
           </div>
         </slot>
-        
-        <slot 
-          v-else 
-          name="message" 
-          :message="message" 
+
+        <slot
+          v-else
+          name="message"
+          :message="message"
           :index="index"
         >
           <div class="ai-chat-window__message">
@@ -69,20 +69,20 @@
           </div>
         </slot>
       </template>
-      
+
       <div v-if="isLoading" class="ai-chat-window__loading">
         <slot name="loading">
           <div class="ai-chat-window__loading-text">{{ loadingText }}</div>
         </slot>
       </div>
-      
+
       <div v-if="error" class="ai-chat-window__error">
         <slot name="error" :error="error">
           <div class="ai-chat-window__error-text">{{ errorText }}</div>
         </slot>
       </div>
     </div>
-    
+
     <div class="ai-chat-window__input-container">
       <slot name="input" :input="userInput" :send-message="handleSendMessage">
         <div class="ai-chat-window__input-wrapper">
@@ -94,8 +94,8 @@
             @keydown.enter.prevent="handleKeyDown"
             ref="inputElement"
           ></textarea>
-          <button 
-            class="ai-chat-window__send-button" 
+          <button
+            class="ai-chat-window__send-button"
             @click="handleSendMessage"
             :disabled="isLoading || !userInput.trim()"
           >
@@ -104,11 +104,11 @@
         </div>
       </slot>
     </div>
-    
+
     <div class="ai-chat-window__footer">
       <slot name="footer">
-        <button 
-          v-if="messages.length > 0" 
+        <button
+          v-if="messages.length > 0"
           class="ai-chat-window__clear-button"
           @click="clearMessages"
         >
@@ -119,16 +119,17 @@
   </div>
 </template>
 
-<script>
-import { ref, computed, watch, nextTick, onMounted } from 'vue';
-import { useChatEngine } from '../composables/useChatEngine';
+<script lang="ts">
+import { ref, computed, watch, nextTick, onMounted, defineComponent, PropType } from 'vue';
+import { AIClient } from '@aivue/core';
+import { useChatEngine, Message } from '../composables/useChatEngine';
 import { formatMarkdown } from '../utils/markdown';
 
-export default {
+export default defineComponent({
   name: 'AiChatWindow',
   props: {
     client: {
-      type: Object,
+      type: Object as PropType<AIClient>,
       required: true
     },
     title: {
@@ -140,7 +141,7 @@ export default {
       default: 'Type a message...'
     },
     initialMessages: {
-      type: Array,
+      type: Array as PropType<Message[]>,
       default: () => []
     },
     systemPrompt: {
@@ -180,9 +181,9 @@ export default {
       default: null
     },
     theme: {
-      type: String,
+      type: String as PropType<'light' | 'dark'>,
       default: 'light',
-      validator: (value) => ['light', 'dark'].includes(value)
+      validator: (value: string) => ['light', 'dark'].includes(value)
     },
     height: {
       type: String,
@@ -203,9 +204,9 @@ export default {
   },
   setup(props, { emit }) {
     const userInput = ref('');
-    const messagesContainer = ref(null);
-    const inputElement = ref(null);
-    
+    const messagesContainer = ref<HTMLElement | null>(null);
+    const inputElement = ref<HTMLTextAreaElement | null>(null);
+
     const chatOptions = computed(() => ({
       client: props.client,
       systemPrompt: props.systemPrompt,
@@ -213,23 +214,23 @@ export default {
       streaming: props.streaming,
       persistenceKey: props.persistenceKey
     }));
-    
-    const { 
-      messages, 
-      isLoading, 
-      error, 
-      sendMessage, 
-      clearMessages 
+
+    const {
+      messages,
+      isLoading,
+      error,
+      sendMessage,
+      clearMessages
     } = useChatEngine(chatOptions.value);
-    
+
     const handleSendMessage = async () => {
       if (!userInput.value.trim() || isLoading.value) return;
-      
+
       const message = userInput.value;
       userInput.value = '';
-      
+
       emit('message-sent', { message });
-      
+
       try {
         await sendMessage(message);
         emit('response-received', { message: messages.value[messages.value.length - 1] });
@@ -237,25 +238,25 @@ export default {
         emit('error', { error: err });
       }
     };
-    
-    const handleKeyDown = (event) => {
+
+    const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Enter' && !event.shiftKey) {
         event.preventDefault();
         handleSendMessage();
       }
     };
-    
-    const formatMessage = (content) => {
+
+    const formatMessage = (content: string): string => {
       return formatMarkdown(content);
     };
-    
-    const formatTimestamp = (timestamp) => {
+
+    const formatTimestamp = (timestamp?: Date): string => {
       if (!timestamp) return '';
       const date = new Date(timestamp);
       return date.toLocaleTimeString();
     };
-    
-    const copyToClipboard = (text) => {
+
+    const copyToClipboard = (text: string): void => {
       navigator.clipboard.writeText(text)
         .then(() => {
           // Could show a toast notification here
@@ -265,7 +266,7 @@ export default {
           console.error('Failed to copy text: ', err);
         });
     };
-    
+
     // Auto-scroll to bottom when new messages arrive
     watch(messages, () => {
       nextTick(() => {
@@ -274,14 +275,14 @@ export default {
         }
       });
     }, { deep: true });
-    
+
     // Focus input on mount
     onMounted(() => {
       if (inputElement.value) {
         inputElement.value.focus();
       }
     });
-    
+
     return {
       userInput,
       messages,
@@ -297,7 +298,7 @@ export default {
       copyToClipboard
     };
   }
-};
+});
 </script>
 
 <style>
