@@ -2,11 +2,15 @@
 
 # VueAI
 
+[![npm version](https://img.shields.io/npm/v/@aivue/core.svg?style=flat-square)](https://www.npmjs.com/package/@aivue/core)
+[![npm downloads](https://img.shields.io/npm/dm/@aivue/core.svg?style=flat-square)](https://www.npmjs.com/package/@aivue/core)
+[![MIT License](https://img.shields.io/npm/l/@aivue/core.svg?style=flat-square)](https://github.com/reachbrt/vueai/blob/main/LICENSE)
+
 A modular AI-powered Vue.js component suite including:
-- **@aivue/core** – Core AI functionality for Vue.js components
-- **@aivue/chatbot** – Multi-provider AI chat widget
-- **@aivue/autosuggest** – Smart autosuggest with semantic ranking
-- **@aivue/smartform** – AI-enhanced forms with dynamic validation
+- **[@aivue/core](https://www.npmjs.com/package/@aivue/core)** – Core AI functionality for Vue.js components
+- **[@aivue/chatbot](https://www.npmjs.com/package/@aivue/chatbot)** – Multi-provider AI chat widget
+- **[@aivue/autosuggest](https://www.npmjs.com/package/@aivue/autosuggest)** – Smart autosuggest with semantic ranking
+- **[@aivue/smartform](https://www.npmjs.com/package/@aivue/smartform)** – AI-enhanced forms with dynamic validation
 
 ## 📦 Installation
 
@@ -50,7 +54,7 @@ vueai/
 
 ## 📦 Packages
 
-### @aivue/chatbot
+### @aivue/chatbot [![npm version](https://img.shields.io/npm/v/@aivue/chatbot.svg?style=flat-square)](https://www.npmjs.com/package/@aivue/chatbot)
 - Multi-provider support (OpenAI, Claude, Gemini, HuggingFace, Ollama, DeepSeek)
 - Automatic fallback when API keys aren't available
 - Streaming responses with Markdown support
@@ -103,7 +107,7 @@ function resetConversation() {
 </script>
 ```
 
-### @aivue/autosuggest
+### @aivue/autosuggest [![npm version](https://img.shields.io/npm/v/@aivue/autosuggest.svg?style=flat-square)](https://www.npmjs.com/package/@aivue/autosuggest)
 - AI-powered results with semantic sort
 - Multi-provider support with automatic fallback
 - Contextual suggestions based on domain
@@ -171,7 +175,7 @@ function getModelForProvider(provider) {
 </script>
 ```
 
-### @aivue/smartform
+### @aivue/smartform [![npm version](https://img.shields.io/npm/v/@aivue/smartform.svg?style=flat-square)](https://www.npmjs.com/package/@aivue/smartform)
 - AI-powered validation + dynamic healing
 - Multi-provider support with automatic fallback
 - Intelligent form field suggestions
@@ -213,7 +217,7 @@ function handleSubmit(data) {
 
 ---
 
-## 🧠 @aivue/core Shared AI Engine
+## 🧠 @aivue/core Shared AI Engine [![npm version](https://img.shields.io/npm/v/@aivue/core.svg?style=flat-square)](https://www.npmjs.com/package/@aivue/core)
 
 Our core package provides a unified interface for working with multiple AI providers, complete with an automatic fallback mechanism that ensures your components work even without API keys.
 
