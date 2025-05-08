@@ -32,6 +32,15 @@ yarn add @aivue/core
 pnpm add @aivue/core
 ```
 
+### Vue Compatibility
+
+This package is compatible with both Vue 2 and Vue 3:
+
+- **Vue 2**: Compatible with Vue 2.6.0 and higher
+- **Vue 3**: Compatible with all Vue 3.x versions
+
+The package automatically detects which version of Vue you're using and provides the appropriate compatibility layer. This means you can use the same package regardless of whether your project is using Vue 2 or Vue 3.
+
 ## Basic Usage
 
 ```javascript
@@ -191,6 +200,61 @@ interface StreamCallbacks {
   onComplete?: (completeText: string) => void;
   onError?: (error: Error) => void;
 }
+```
+
+## Vue Version Compatibility
+
+The package includes a comprehensive compatibility layer that handles differences between Vue 2 and Vue 3 automatically. If you need to use the compatibility utilities directly:
+
+### For Vue 2 and Vue 3 Projects
+
+```javascript
+import {
+  // Version detection
+  vueVersion,  // 2 or 3 depending on detected Vue version
+
+  // Component utilities
+  createCompatComponent,  // Create components that work in both Vue 2 and 3
+  registerCompatComponent, // Register components globally in both Vue 2 and 3
+
+  // Plugin utilities
+  createCompatPlugin,     // Create plugins that work in both Vue 2 and 3
+  installCompatPlugin,    // Install plugins in both Vue 2 and 3
+
+  // Reactivity utilities
+  createReactiveState,    // Create reactive state in both Vue 2 and 3
+  createCompatRef         // Create refs that work in both Vue 2 and 3
+} from '@aivue/core';
+
+// Example: Create a component that works in both Vue 2 and 3
+const MyComponent = createCompatComponent({
+  // component options
+});
+
+// Example: Register a component globally in both Vue 2 and 3
+// For Vue 2, this uses Vue.component()
+// For Vue 3, this uses app.component()
+registerCompatComponent(app, 'MyComponent', MyComponent);
+
+// Example: Create reactive state
+const state = createReactiveState({ count: 0 });
+
+// Example: Create a ref
+const count = createCompatRef(0);
+```
+
+### For Vue 3 Specific Compatibility
+
+If you're working with different versions of Vue 3, the package also provides utilities to handle differences between Vue 3.0.x and Vue 3.2+:
+
+```javascript
+import {
+  compatCreateElementBlock,
+  compatCreateElementVNode,
+  compatNormalizeClass
+} from '@aivue/core';
+
+// These functions work across all Vue 3 versions
 ```
 
 ## Related Packages

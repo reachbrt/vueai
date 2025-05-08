@@ -22,7 +22,9 @@
     "clean": "npm run clean --workspaces",
     "test": "npm run test --workspaces",
     "lint": "npm run lint --workspaces",
-    "publish:packages": "npm run build:packages && npm publish --access public --workspace @aivue/core && npm publish --access public --workspace @aivue/chatbot && npm publish --access public --workspace @aivue/autosuggest && npm publish --access public --workspace @aivue/smartform"
+    "publish:packages": "npm run build:packages && npm publish --access public --workspace @aivue/core && npm publish --access public --workspace @aivue/chatbot && npm publish --access public --workspace @aivue/autosuggest && npm publish --access public --workspace @aivue/smartform",
+    "publish:github": "npm run build:packages && npm publish --registry=https://npm.pkg.github.com/ --workspace @aivue/core && npm publish --registry=https://npm.pkg.github.com/ --workspace @aivue/chatbot && npm publish --registry=https://npm.pkg.github.com/ --workspace @aivue/autosuggest && npm publish --registry=https://npm.pkg.github.com/ --workspace @aivue/smartform",
+    "publish:all": "./publish-all.sh"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.37.0",

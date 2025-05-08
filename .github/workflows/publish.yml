@@ -33,11 +33,15 @@ jobs:
         run: npm ci
 
       - name: Build packages
-        run: npm run build:packages
+        run: |
+          cd packages/core && npm run build
+          cd ../chatbot && npm run build
+          cd ../autosuggest && npm run build
+          cd ../smartform && npm run build
 
       - name: Get package version
         id: package-version
-        run: echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+        run: echo "version=$(node -p "require('./packages/core/package.json').version")" >> $GITHUB_OUTPUT
 
       - name: Version bump (if workflow_dispatch)
         if: github.event_name == 'workflow_dispatch'
@@ -47,8 +51,12 @@ jobs:
           npm version ${{ github.event.inputs.version }} -m "Bump version to %s [skip ci]"
           git push --follow-tags
 
-      - name: Publish packages
-        run: npm run publish:packages
+      - name: Publish packages to npm
+        run: |
+          cd packages/core && npm publish
+          cd ../chatbot && npm publish
+          cd ../autosuggest && npm publish
+          cd ../smartform && npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 

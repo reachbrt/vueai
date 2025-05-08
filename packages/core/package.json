@@ -1,6 +1,6 @@
 {
   "name": "@aivue/core",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Core AI functionality for Vue.js components",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -43,7 +43,7 @@
     "access": "public"
   },
   "peerDependencies": {
-    "vue": "^3.0.0"
+    "vue": "^2.6.0 || ^3.0.0"
   },
   "devDependencies": {
     "@types/node": "^20.16.0",

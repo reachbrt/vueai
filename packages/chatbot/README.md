@@ -5,6 +5,7 @@
 [![npm version](https://img.shields.io/npm/v/@aivue/chatbot.svg?style=flat-square)](https://www.npmjs.com/package/@aivue/chatbot)
 [![npm downloads](https://img.shields.io/npm/dm/@aivue/chatbot.svg?style=flat-square)](https://www.npmjs.com/package/@aivue/chatbot)
 [![MIT License](https://img.shields.io/npm/l/@aivue/chatbot.svg?style=flat-square)](https://github.com/reachbrt/vueai/blob/main/LICENSE)
+[![codecov](https://codecov.io/gh/reachbrt/vueai/branch/main/graph/badge.svg)](https://codecov.io/gh/reachbrt/vueai)
 
 ## Overview
 
@@ -20,6 +21,10 @@
 - 📝 **Markdown support**: Rich text formatting in messages
 - 💾 **Conversation history**: Save and load chat sessions
 - 🔧 **Fully typed**: Complete TypeScript support with type definitions
+- 🔌 **Vue plugin**: Easy global registration of components
+- 🔒 **API key security**: Built-in proxy support for secure API key handling
+- 🚀 **Composition API**: First-class support for Vue 3 Composition API
+- 🔄 **Dynamic configuration**: Update models and settings on the fly
 
 ## Installation
 
@@ -33,6 +38,15 @@ yarn add @aivue/chatbot @aivue/core
 # pnpm
 pnpm add @aivue/chatbot @aivue/core
 ```
+
+### Vue Compatibility
+
+This package is compatible with both Vue 2 and Vue 3:
+
+- **Vue 2**: Compatible with Vue 2.6.0 and higher
+- **Vue 3**: Compatible with all Vue 3.x versions
+
+The package automatically detects which version of Vue you're using and provides the appropriate compatibility layer. This means you can use the same package regardless of whether your project is using Vue 2 or Vue 3.
 
 ## Basic Usage
 
@@ -81,7 +95,20 @@ import { aiClient } from './ai-client.js';
 
 ### 3. Register Components Globally (Optional)
 
-If you prefer to register components globally:
+If you prefer to register components globally, you can use the provided Vue plugin:
+
+```javascript
+// main.js
+import { createApp } from 'vue';
+import App from './App.vue';
+import { AiChatPlugin } from '@aivue/chatbot';
+
+const app = createApp(App);
+app.use(AiChatPlugin); // Register all components globally
+app.mount('#app');
+```
+
+Or register individual components manually:
 
 ```javascript
 // main.js
@@ -106,6 +133,8 @@ Then use it in your templates with either PascalCase or kebab-case:
 
 The `useChatEngine` composable provides a simple way to integrate AI chat functionality into any Vue component:
 
+### Using with an AIClient instance
+
 ```vue
 <script setup>
 import { ref } from 'vue';
@@ -127,6 +156,54 @@ const {
   streaming: true,
   persistenceKey: 'my-chat-history'
 });
+</script>
+```
+
+### Direct provider configuration (new)
+
+You can now configure the provider directly without creating an AIClient instance:
+
+```vue
+<script setup>
+import { ref } from 'vue';
+import { useChatEngine } from '@aivue/chatbot';
+
+const {
+  messages,
+  isLoading,
+  error,
+  sendMessage,
+  clearMessages,
+  resetError,
+  updateConfig
+} = useChatEngine({
+  // Provider configuration
+  provider: 'openai',
+  apiKey: import.meta.env.VITE_OPENAI_API_KEY,
+  model: 'gpt-3.5-turbo',
+
+  // API security
+  useProxy: true,
+  proxyUrl: '/api/chat',
+
+  // Chat behavior
+  initialMessages: [
+    { role: 'assistant', content: 'Hello! How can I help you today?' }
+  ],
+  systemPrompt: 'You are a helpful assistant.',
+  streaming: true,
+  persistenceKey: 'my-chat-history',
+
+  // Callbacks
+  onError: (err) => console.error('Chat error:', err),
+  onMessageSent: (msg) => console.log('Message sent:', msg),
+  onResponseReceived: (msg) => console.log('Response received:', msg)
+});
+
+// You can dynamically update the configuration
+function switchToGpt4() {
+  updateConfig({ model: 'gpt-4o' });
+}
 
 const userInput = ref('');
 
@@ -150,9 +227,10 @@ function handleSend() {
       <input v-model="userInput" @keyup.enter="handleSend" :disabled="isLoading" />
       <button @click="handleSend" :disabled="isLoading">Send</button>
       <button @click="clearMessages">Clear</button>
+      <button @click="switchToGpt4">Switch to GPT-4</button>
     </div>
 
-    <div v-if="error" class="error">{{ error }}</div>
+    <div v-if="error" class="error">{{ error.message }}</div>
   </div>
 </template>
 ```
@@ -161,7 +239,7 @@ Note that all values returned from `useChatEngine` are Vue reactive refs, so you
 
 ## Customizing the Chat Window
 
-The `AiChatWindow` component accepts various props for customization:
+### Using with AIClient
 
 ```vue
 <template>
@@ -213,6 +291,115 @@ function handleError(event) {
 </script>
 ```
 
+### Direct Provider Configuration (New)
+
+You can now configure the provider directly without creating an AIClient instance:
+
+```vue
+<template>
+  <AiChatWindow
+    provider="openai"
+    :api-key="apiKey"
+    model="gpt-3.5-turbo"
+    :use-proxy="true"
+    proxy-url="/api/chat"
+    title="AI Assistant"
+    placeholder="Ask me anything about Vue..."
+    :initial-messages="initialMessages"
+    system-prompt="You are a Vue.js expert who provides clear, concise answers."
+    :streaming="true"
+    theme="dark"
+    :show-timestamps="true"
+    @message-sent="handleMessageSent"
+    @response-received="handleResponseReceived"
+    @error="handleError"
+  />
+</template>
+
+<script setup>
+import { ref } from 'vue';
+import { AiChatWindow } from '@aivue/chatbot';
+
+const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
+const initialMessages = ref([
+  { role: 'assistant', content: 'Hello! I can help you with Vue.js questions.' }
+]);
+
+function handleMessageSent(event) {
+  console.log('Message sent:', event.message);
+}
+
+function handleResponseReceived(event) {
+  console.log('Response received:', event.message);
+}
+
+function handleError(event) {
+  console.error('Error:', event.error);
+}
+</script>
+```
+
+## Using the Intercom-like Chat Toggle
+
+The `AiChatToggle` component provides an Intercom-like floating chat button that expands into a chat window:
+
+```vue
+<template>
+  <!-- Floating chat button that toggles the chat window -->
+  <AiChatToggle
+    provider="openai"
+    :api-key="apiKey"
+    model="gpt-3.5-turbo"
+    position="bottom"  <!-- 'bottom' or 'top' -->
+    :default-open="false"
+    title="Chat with AI"
+    theme="light"
+  />
+</template>
+
+<script setup>
+import { AiChatToggle } from '@aivue/chatbot';
+
+const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
+</script>
+```
+
+### AiChatToggle with Custom Content
+
+You can also use your own custom chat implementation inside the toggle:
+
+```vue
+<template>
+  <AiChatToggle position="bottom" title="Custom Chat">
+    <!-- Your custom chat implementation goes here -->
+    <div class="custom-chat">
+      <div class="messages">
+        <div v-for="msg in messages" :key="msg.id" class="message">
+          {{ msg.content }}
+        </div>
+      </div>
+      <input v-model="input" @keyup.enter="sendMessage" />
+      <button @click="sendMessage">Send</button>
+    </div>
+  </AiChatToggle>
+</template>
+
+<script setup>
+import { ref } from 'vue';
+import { AiChatToggle } from '@aivue/chatbot';
+
+const messages = ref([]);
+const input = ref('');
+
+function sendMessage() {
+  if (input.value.trim()) {
+    messages.value.push({ id: Date.now(), content: input.value });
+    input.value = '';
+  }
+}
+</script>
+```
+
 ## Advanced Usage: Custom Styling
 
 You can customize the appearance of the chat window using CSS variables:
@@ -254,7 +441,17 @@ You can customize the appearance of the chat window using CSS variables:
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `client` | `AIClient` | **Required** | The AIClient instance to use for generating responses |
+| **Provider Configuration** | | | |
+| `client` | `AIClient` | `null` | The AIClient instance to use for generating responses |
+| `provider` | `String` | `null` | AI provider (e.g., 'openai', 'claude', 'gemini') |
+| `apiKey` | `String` | `null` | API key for the provider |
+| `model` | `String` | `null` | Model to use (e.g., 'gpt-3.5-turbo') |
+| `baseUrl` | `String` | `null` | Custom base URL for API requests |
+| `organizationId` | `String` | `null` | Organization ID (for OpenAI) |
+| **API Security** | | | |
+| `useProxy` | `Boolean` | `false` | Whether to use a proxy for API requests |
+| `proxyUrl` | `String` | `'/api/chat'` | URL for the proxy endpoint |
+| **Chat Configuration** | | | |
 | `title` | `String` | `'Chat'` | The title displayed in the chat window header |
 | `placeholder` | `String` | `'Type a message...'` | Placeholder text for the input field |
 | `initialMessages` | `Array` | `[]` | Initial messages to populate the chat |
@@ -262,6 +459,7 @@ You can customize the appearance of the chat window using CSS variables:
 | `streaming` | `Boolean` | `true` | Whether to stream responses token by token |
 | `loadingText` | `String` | `'Thinking...'` | Text to display while waiting for a response |
 | `errorText` | `String` | `'An error occurred. Please try again.'` | Text to display when an error occurs |
+| **UI Configuration** | | | |
 | `showTimestamps` | `Boolean` | `false` | Whether to show timestamps on messages |
 | `showCopyButton` | `Boolean` | `true` | Whether to show a button to copy message content |
 | `showAvatars` | `Boolean` | `true` | Whether to show avatars for the user and assistant |
@@ -293,17 +491,69 @@ You can customize the appearance of the chat window using CSS variables:
 | `input` | `{ input, sendMessage }` | Custom input area |
 | `footer` | - | Custom footer content |
 
+### AiChatToggle Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| **Toggle Behavior** | | | |
+| `position` | `String` | `'bottom'` | Position of the toggle button ('bottom' or 'top') |
+| `defaultOpen` | `Boolean` | `false` | Whether the chat window is open by default |
+| `title` | `String` | `'Chat with AI'` | Title displayed in the chat window header |
+| **Provider Configuration** | | | |
+| `client` | `AIClient` | `null` | The AIClient instance to use for generating responses |
+| `provider` | `String` | `null` | AI provider (e.g., 'openai', 'claude', 'gemini') |
+| `apiKey` | `String` | `null` | API key for the provider |
+| `model` | `String` | `null` | Model to use (e.g., 'gpt-3.5-turbo') |
+| **Chat Configuration** | | | |
+| `placeholder` | `String` | `'Type a message...'` | Placeholder text for the input field |
+| `initialMessages` | `Array` | `[]` | Initial messages to populate the chat |
+| `systemPrompt` | `String` | `'You are a helpful assistant.'` | System prompt to guide the AI's behavior |
+| `streaming` | `Boolean` | `true` | Whether to stream responses token by token |
+| `theme` | `String` | `'light'` | Theme for the chat window ('light' or 'dark') |
+| `showAvatars` | `Boolean` | `true` | Whether to show avatars for the user and assistant |
+| `persistenceKey` | `String` | `null` | Key for persisting chat history in localStorage |
+
+### AiChatToggle Events
+
+| Event | Payload | Description |
+|-------|---------|-------------|
+| `toggle` | `boolean` | Emitted when the chat window is toggled, with the new state |
+| `message-sent` | `{ message }` | Emitted when a user message is sent |
+| `response-received` | `{ message }` | Emitted when an AI response is received |
+| `error` | `{ error }` | Emitted when an error occurs |
+
+### AiChatToggle Slots
+
+| Slot | Props | Description |
+|------|-------|-------------|
+| `default` | - | Custom chat implementation (replaces the default AiChatWindow) |
+| `toggle-icon` | - | Custom icon for the toggle button when closed |
+| `close-icon` | - | Custom icon for the toggle button when open |
+
 ### useChatEngine Options
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `client` | `AIClient` | **Required** | The AIClient instance to use |
+| **Provider Configuration** | | | |
+| `client` | `AIClient` | `null` | The AIClient instance to use |
+| `provider` | `String` | **Required if no client** | AI provider (e.g., 'openai', 'claude', 'gemini') |
+| `apiKey` | `String` | `undefined` | API key for the provider |
+| `model` | `String` | provider-dependent | Model to use |
+| `baseUrl` | `String` | `undefined` | Custom base URL for API requests |
+| `organizationId` | `String` | `undefined` | Organization ID (for OpenAI) |
+| **API Security** | | | |
+| `useProxy` | `Boolean` | `false` | Whether to use a proxy for API requests |
+| `proxyUrl` | `String` | `'/api/chat'` | URL for the proxy endpoint |
+| **Chat Behavior** | | | |
 | `initialMessages` | `Array` | `[]` | Initial messages to populate the chat |
 | `systemPrompt` | `String` | `'You are a helpful assistant.'` | System prompt to guide the AI's behavior |
 | `streaming` | `Boolean` | `true` | Whether to stream responses token by token |
 | `persistenceKey` | `String` | `null` | Key for persisting chat history in localStorage |
 | `maxMessages` | `Number` | `100` | Maximum number of messages to keep in history |
+| **Callbacks** | | | |
 | `onError` | `Function` | `null` | Callback function when an error occurs |
+| `onMessageSent` | `Function` | `null` | Callback when a message is sent |
+| `onResponseReceived` | `Function` | `null` | Callback when a response is received |
 
 ### useChatEngine Return Values
 
@@ -311,11 +561,13 @@ You can customize the appearance of the chat window using CSS variables:
 |-------|------|-------------|
 | `messages` | `Ref<Array>` | Reactive array of chat messages |
 | `isLoading` | `Ref<Boolean>` | Whether a response is being generated |
-| `error` | `Ref<String>` | Error message, if any |
+| `error` | `Ref<Error>` | Error object, if any |
 | `sendMessage` | `Function` | Function to send a user message |
 | `clearMessages` | `Function` | Function to clear the chat history |
 | `setMessages` | `Function` | Function to set the messages array |
 | `addMessage` | `Function` | Function to add a single message |
+| `resetError` | `Function` | Function to reset the error state |
+| `updateConfig` | `Function` | Function to update configuration options |
 
 ## Troubleshooting
 
@@ -356,14 +608,13 @@ import { Message, ChatOptions } from '@aivue/chatbot';
 // Use types in your code
 const messages: Message[] = [];
 const options: ChatOptions = {
-  client: aiClient,
+  provider: 'openai',
+  apiKey: import.meta.env.VITE_OPENAI_API_KEY,
   systemPrompt: 'You are a helpful assistant.'
 };
 ```
 
-For detailed TypeScript usage examples, see the [TypeScript Usage Guide](./TYPESCRIPT.md).
-
-### API Key Handling
+### API Key Security
 
 For security reasons, never hardcode API keys in your code. Use environment variables instead:
 
@@ -375,23 +626,17 @@ VITE_OPENAI_API_KEY=your-api-key
 const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
 ```
 
-### Error Handling
-
-If you're not seeing any error messages, you can listen for the `error` event:
+Or better yet, use the proxy feature:
 
 ```vue
-<template>
-  <AiChatWindow
-    :client="aiClient"
-    @error="handleError"
-  />
-</template>
-
 <script setup>
-function handleError(error) {
-  console.error('Chat error:', error);
-  // Show a notification or handle the error
-}
+import { useChatEngine } from '@aivue/chatbot';
+
+const { messages, isLoading, sendMessage } = useChatEngine({
+  provider: 'openai',
+  useProxy: true,
+  proxyUrl: '/api/chat' // Your backend endpoint
+});
 </script>
 ```
 
@@ -415,6 +660,60 @@ module.exports = {
   // ...
 }
 ```
+
+### Vite Configuration
+
+For Vite projects, add the following to your `vite.config.js`:
+
+```javascript
+// vite.config.js
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
+
+export default defineConfig({
+  plugins: [vue()],
+  optimizeDeps: {
+    include: ['@aivue/chatbot', '@aivue/core']
+  }
+});
+```
+
+### Vue Version Compatibility Issues
+
+If you encounter errors related to missing Vue functions like `createElementBlock`, `normalizeClass`, or `createElementVNode`, it means you're using an older version of Vue 3 (pre-3.2.0). Here's how to fix it:
+
+1. **Check your Vue version**:
+   ```bash
+   npm list vue
+   ```
+
+2. **If you're using Vue < 3.2.0**:
+   The package includes a compatibility layer that should handle this automatically. If you're still experiencing issues, you can:
+
+   a. **Update to Vue 3.2.0 or higher** (recommended):
+   ```bash
+   npm install vue@^3.2.0
+   ```
+
+   b. **Use the compatibility utilities explicitly**:
+   ```javascript
+   import {
+     compatCreateElementBlock,
+     compatCreateElementVNode,
+     compatNormalizeClass
+   } from '@aivue/chatbot';
+
+   // Use these functions instead of the Vue ones
+   ```
+
+3. **For component registration issues**:
+   Use the provided compatibility helpers:
+   ```javascript
+   import { registerCompatComponent } from '@aivue/chatbot';
+
+   // Instead of app.component('MyComponent', Component)
+   registerCompatComponent(app, 'MyComponent', Component);
+   ```
 
 ## Related Packages
 

@@ -34,9 +34,18 @@ yarn add @aivue/smartform @aivue/core
 pnpm add @aivue/smartform @aivue/core
 ```
 
+### Vue Compatibility
+
+This package is compatible with both Vue 2 and Vue 3:
+
+- **Vue 2**: Compatible with Vue 2.6.0 and higher
+- **Vue 3**: Compatible with all Vue 3.x versions
+
+The package automatically detects which version of Vue you're using and provides the appropriate compatibility layer. This means you can use the same package regardless of whether your project is using Vue 2 or Vue 3.
+
 ## Basic Usage
 
-### Vue 3 Component
+### Basic Component Usage
 
 ```vue
 <template>
@@ -81,7 +90,7 @@ pnpm add @aivue/smartform @aivue/core
 
 <script setup>
 import { ref, reactive } from 'vue';
-import { SmartForm, useSmartForm } from '@aivue/smartform';
+import { SmartForm, useSmartForm, SmartFormPlugin } from '@aivue/smartform';
 
 // Define your form schema
 const formSchema = {
@@ -147,6 +156,38 @@ async function handleSubmit() {
   margin-top: 0.25rem;
 }
 </style>
+```
+
+## Global Registration
+
+You can register the SmartForm component globally using the provided plugin:
+
+### Vue 3
+
+```javascript
+// main.js
+import { createApp } from 'vue';
+import App from './App.vue';
+import { SmartFormPlugin } from '@aivue/smartform';
+
+const app = createApp(App);
+app.use(SmartFormPlugin); // Register all components globally
+app.mount('#app');
+```
+
+### Vue 2
+
+```javascript
+// main.js
+import Vue from 'vue';
+import App from './App.vue';
+import { SmartFormPlugin } from '@aivue/smartform';
+
+Vue.use(SmartFormPlugin); // Register all components globally
+
+new Vue({
+  render: h => h(App)
+}).$mount('#app');
 ```
 
 ## Using the SmartForm Composable
