@@ -1,4 +1,34 @@
 // Core AI functionality for Vue.js components
+import {
+  vueVersion,
+  isOlderVue3,
+  createNode,
+  compatCreateElementBlock,
+  compatCreateElementVNode,
+  compatNormalizeClass,
+  createCompatComponent,
+  registerCompatComponent,
+  createCompatPlugin,
+  installCompatPlugin,
+  createReactiveState,
+  createCompatRef
+} from './utils/vue-compat';
+
+// Export Vue compatibility utilities
+export {
+  vueVersion,
+  isOlderVue3,
+  createNode,
+  compatCreateElementBlock,
+  compatCreateElementVNode,
+  compatNormalizeClass,
+  createCompatComponent,
+  registerCompatComponent,
+  createCompatPlugin,
+  installCompatPlugin,
+  createReactiveState,
+  createCompatRef
+};
 
 // Export message types
 export interface Message {
@@ -56,7 +86,7 @@ export class AIClient {
     // In a real implementation, this would call the appropriate provider API
     console.log(`Using provider: ${this.provider}`);
     console.log(`Messages: ${JSON.stringify(messages)}`);
-    
+
     // Simulate a response
     return "This is a simulated response from the AI. In a real implementation, this would be a response from the provider API.";
   }
@@ -66,16 +96,16 @@ export class AIClient {
     // This is a placeholder implementation
     // In a real implementation, this would stream responses from the provider API
     callbacks.onStart?.();
-    
+
     const response = "This is a simulated streaming response from the AI.";
-    
+
     // Simulate streaming tokens
     for (const char of response) {
       callbacks.onToken?.(char);
       // Simulate delay
       await new Promise(resolve => setTimeout(resolve, 50));
     }
-    
+
     callbacks.onComplete?.(response);
   }
 }
@@ -103,5 +133,18 @@ export function registerProviders(providers: ProviderConfig): void {
 // Default export
 export default {
   AIClient,
-  registerProviders
+  registerProviders,
+  // Include compatibility utilities in default export
+  vueVersion,
+  isOlderVue3,
+  createNode,
+  compatCreateElementBlock,
+  compatCreateElementVNode,
+  compatNormalizeClass,
+  createCompatComponent,
+  registerCompatComponent,
+  createCompatPlugin,
+  installCompatPlugin,
+  createReactiveState,
+  createCompatRef
 };

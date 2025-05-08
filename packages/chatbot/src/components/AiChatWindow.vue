@@ -119,184 +119,237 @@
   </div>
 </template>
 
-<script lang="ts">
-import { ref, computed, watch, nextTick, onMounted, defineComponent, PropType } from 'vue';
-import { AIClient } from '@aivue/core';
+<script setup lang="ts">
+import { ref, computed, watch, nextTick, onMounted, PropType } from 'vue';
+import { AIClient, AIProvider } from '@aivue/core';
 import { useChatEngine, Message } from '../composables/useChatEngine';
 import { formatMarkdown } from '../utils/markdown';
 
-export default defineComponent({
-  name: 'AiChatWindow',
-  props: {
-    client: {
-      type: Object as PropType<AIClient>,
-      required: true
-    },
-    title: {
-      type: String,
-      default: 'Chat'
-    },
-    placeholder: {
-      type: String,
-      default: 'Type a message...'
-    },
-    initialMessages: {
-      type: Array as PropType<Message[]>,
-      default: () => []
-    },
-    systemPrompt: {
-      type: String,
-      default: 'You are a helpful assistant.'
-    },
-    streaming: {
-      type: Boolean,
-      default: true
-    },
-    loadingText: {
-      type: String,
-      default: 'Thinking...'
-    },
-    errorText: {
-      type: String,
-      default: 'An error occurred. Please try again.'
-    },
-    showTimestamps: {
-      type: Boolean,
-      default: false
-    },
-    showCopyButton: {
-      type: Boolean,
-      default: true
-    },
-    showAvatars: {
-      type: Boolean,
-      default: true
-    },
-    userAvatar: {
-      type: String,
-      default: null
-    },
-    assistantAvatar: {
-      type: String,
-      default: null
-    },
-    theme: {
-      type: String as PropType<'light' | 'dark'>,
-      default: 'light',
-      validator: (value: string) => ['light', 'dark'].includes(value)
-    },
-    height: {
-      type: String,
-      default: '500px'
-    },
-    width: {
-      type: String,
-      default: '100%'
-    },
-    maxWidth: {
-      type: String,
-      default: '800px'
-    },
-    persistenceKey: {
-      type: String,
-      default: null
-    }
+// Define props with TypeScript
+const props = defineProps({
+  // Provider configuration (either client or provider is required)
+  client: {
+    type: Object as PropType<AIClient>,
+    default: null
   },
-  setup(props, { emit }) {
-    const userInput = ref('');
-    const messagesContainer = ref<HTMLElement | null>(null);
-    const inputElement = ref<HTMLTextAreaElement | null>(null);
+  provider: {
+    type: String as PropType<AIProvider>,
+    default: null
+  },
+  apiKey: {
+    type: String,
+    default: null
+  },
+  model: {
+    type: String,
+    default: null
+  },
+  baseUrl: {
+    type: String,
+    default: null
+  },
+  organizationId: {
+    type: String,
+    default: null
+  },
 
-    const chatOptions = computed(() => ({
-      client: props.client,
-      systemPrompt: props.systemPrompt,
-      initialMessages: props.initialMessages,
-      streaming: props.streaming,
-      persistenceKey: props.persistenceKey
-    }));
+  // API security options
+  useProxy: {
+    type: Boolean,
+    default: false
+  },
+  proxyUrl: {
+    type: String,
+    default: '/api/chat'
+  },
 
-    const {
-      messages,
-      isLoading,
-      error,
-      sendMessage,
-      clearMessages
-    } = useChatEngine(chatOptions.value);
+  // Chat configuration
+  title: {
+    type: String,
+    default: 'Chat'
+  },
+  placeholder: {
+    type: String,
+    default: 'Type a message...'
+  },
+  initialMessages: {
+    type: Array as PropType<Message[]>,
+    default: () => []
+  },
+  systemPrompt: {
+    type: String,
+    default: 'You are a helpful assistant.'
+  },
+  streaming: {
+    type: Boolean,
+    default: true
+  },
+  loadingText: {
+    type: String,
+    default: 'Thinking...'
+  },
+  errorText: {
+    type: String,
+    default: 'An error occurred. Please try again.'
+  },
 
-    const handleSendMessage = async () => {
-      if (!userInput.value.trim() || isLoading.value) return;
+  // UI configuration
+  showTimestamps: {
+    type: Boolean,
+    default: false
+  },
+  showCopyButton: {
+    type: Boolean,
+    default: true
+  },
+  showAvatars: {
+    type: Boolean,
+    default: true
+  },
+  userAvatar: {
+    type: String,
+    default: null
+  },
+  assistantAvatar: {
+    type: String,
+    default: null
+  },
+  theme: {
+    type: String as PropType<'light' | 'dark'>,
+    default: 'light',
+    validator: (value: string) => ['light', 'dark'].includes(value)
+  },
+  height: {
+    type: String,
+    default: '500px'
+  },
+  width: {
+    type: String,
+    default: '100%'
+  },
+  maxWidth: {
+    type: String,
+    default: '800px'
+  },
+  persistenceKey: {
+    type: String,
+    default: null
+  }
+});
 
-      const message = userInput.value;
-      userInput.value = '';
+// Define emits
+const emit = defineEmits(['message-sent', 'response-received', 'error']);
 
-      emit('message-sent', { message });
+// Local state
+const userInput = ref('');
+const messagesContainer = ref<HTMLElement | null>(null);
+const inputElement = ref<HTMLTextAreaElement | null>(null);
 
-      try {
-        await sendMessage(message);
-        emit('response-received', { message: messages.value[messages.value.length - 1] });
-      } catch (err) {
-        emit('error', { error: err });
-      }
-    };
+// Validate that either client or provider is provided
+if (!props.client && !props.provider) {
+  console.error('Either client or provider must be specified in AiChatWindow props');
+}
 
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Enter' && !event.shiftKey) {
-        event.preventDefault();
-        handleSendMessage();
-      }
-    };
+// Configure chat options
+const chatOptions = computed(() => ({
+  // Provider configuration
+  client: props.client,
+  provider: props.provider as AIProvider,
+  apiKey: props.apiKey,
+  model: props.model,
+  baseUrl: props.baseUrl,
+  organizationId: props.organizationId,
 
-    const formatMessage = (content: string): string => {
-      return formatMarkdown(content);
-    };
+  // API security
+  useProxy: props.useProxy,
+  proxyUrl: props.proxyUrl,
 
-    const formatTimestamp = (timestamp?: Date): string => {
-      if (!timestamp) return '';
-      const date = new Date(timestamp);
-      return date.toLocaleTimeString();
-    };
+  // Chat behavior
+  systemPrompt: props.systemPrompt,
+  initialMessages: props.initialMessages,
+  streaming: props.streaming,
+  persistenceKey: props.persistenceKey,
 
-    const copyToClipboard = (text: string): void => {
-      navigator.clipboard.writeText(text)
-        .then(() => {
-          // Could show a toast notification here
-          console.log('Copied to clipboard');
-        })
-        .catch(err => {
-          console.error('Failed to copy text: ', err);
-        });
-    };
+  // Callbacks
+  onError: (error: Error) => {
+    emit('error', { error });
+  },
+  onMessageSent: (message: Message) => {
+    emit('message-sent', { message });
+  },
+  onResponseReceived: (message: Message) => {
+    emit('response-received', { message });
+  }
+}));
 
-    // Auto-scroll to bottom when new messages arrive
-    watch(messages, () => {
-      nextTick(() => {
-        if (messagesContainer.value) {
-          messagesContainer.value.scrollTop = messagesContainer.value.scrollHeight;
-        }
-      });
-    }, { deep: true });
+// Initialize chat engine
+const {
+  messages,
+  isLoading,
+  error,
+  sendMessage,
+  clearMessages
+} = useChatEngine(chatOptions.value);
 
-    // Focus input on mount
-    onMounted(() => {
-      if (inputElement.value) {
-        inputElement.value.focus();
-      }
+// Handle sending messages
+const handleSendMessage = async () => {
+  if (!userInput.value.trim() || isLoading.value) return;
+
+  const message = userInput.value;
+  userInput.value = '';
+
+  try {
+    await sendMessage(message);
+  } catch (err) {
+    // Error is already handled by the onError callback
+  }
+};
+
+// Handle keyboard events
+const handleKeyDown = (event: KeyboardEvent) => {
+  if (event.key === 'Enter' && !event.shiftKey) {
+    event.preventDefault();
+    handleSendMessage();
+  }
+};
+
+// Format message content with markdown
+const formatMessage = (content: string): string => {
+  return formatMarkdown(content);
+};
+
+// Format timestamp for display
+const formatTimestamp = (timestamp?: Date): string => {
+  if (!timestamp) return '';
+  const date = new Date(timestamp);
+  return date.toLocaleTimeString();
+};
+
+// Copy message content to clipboard
+const copyToClipboard = (text: string): void => {
+  navigator.clipboard.writeText(text)
+    .then(() => {
+      // Could show a toast notification here
+      console.log('Copied to clipboard');
+    })
+    .catch(err => {
+      console.error('Failed to copy text: ', err);
     });
+};
 
-    return {
-      userInput,
-      messages,
-      isLoading,
-      error,
-      messagesContainer,
-      inputElement,
-      handleSendMessage,
-      handleKeyDown,
-      clearMessages,
-      formatMessage,
-      formatTimestamp,
-      copyToClipboard
-    };
+// Auto-scroll to bottom when new messages arrive
+watch(messages, () => {
+  nextTick(() => {
+    if (messagesContainer.value) {
+      messagesContainer.value.scrollTop = messagesContainer.value.scrollHeight;
+    }
+  });
+}, { deep: true });
+
+// Focus input on mount
+onMounted(() => {
+  if (inputElement.value) {
+    inputElement.value.focus();
   }
 });
 </script>

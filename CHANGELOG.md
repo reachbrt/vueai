@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.0.2] - 2024-05-08
+
+### Improvements
+
+- Added full TypeScript support to the `@aivue/chatbot` package
+- Fixed component registration issues in Vue 3 applications
+- Updated build process to properly handle Vue components
+- Improved compatibility with the `@aivue/core` package
+- Enhanced documentation with TypeScript usage examples
+
+## [1.0.1] - 2024-05-07
+
+### Bug Fixes
+
+- Fixed minor issues with package exports
+- Updated dependencies to latest versions
+- Improved documentation
+
 ## [1.0.0] - 2024-05-07
 
 ### Breaking Changes
