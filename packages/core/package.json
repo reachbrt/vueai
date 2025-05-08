@@ -1,6 +1,6 @@
 {
   "name": "@aivue/core",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Core AI functionality for Vue.js components",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
