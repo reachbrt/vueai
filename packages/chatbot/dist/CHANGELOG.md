@@ -2,6 +2,18 @@
 
 All notable changes to the @aivue/chatbot package will be documented in this file.
 
+## [1.1.1] - 2023-07-20
+
+### Added
+- Added demo mode that works without an API key
+- Added customizable demo responses based on keywords
+- Added better error handling for API calls
+
+### Fixed
+- Fixed the "This is a simulated streaming response from the AI" issue
+- Fixed component registration issues
+- Improved error feedback when API calls fail
+
 ## [1.1.0] - 2023-07-15
 
 ### Added

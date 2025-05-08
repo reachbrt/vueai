@@ -2,6 +2,13 @@
 
 All notable changes to the @aivue/smartform package will be documented in this file.
 
+## [1.1.1] - 2023-07-20
+
+### Fixed
+- Fixed compatibility with the updated core package
+- Improved error handling for API calls
+- Fixed component registration issues
+
 ## [1.1.0] - 2023-07-15
 
 ### Added

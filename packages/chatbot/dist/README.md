@@ -339,6 +339,34 @@ function handleError(event) {
 </script>
 ```
 
+## Demo Mode (No API Key Required)
+
+You can use the chatbot in demo mode without an API key:
+
+```vue
+<template>
+  <AiChatWindow
+    provider="openai"
+    :demoMode="true"
+    :demoResponses="{
+      'hello': 'Hello! I\'m a demo AI assistant.',
+      'help': 'I can help you with various tasks. Just ask me a question!',
+      'features': 'This chatbot supports markdown, code highlighting, and more!'
+    }"
+  />
+</template>
+
+<script setup>
+import { AiChatWindow } from '@aivue/chatbot';
+</script>
+```
+
+This is useful for:
+- Showcasing the chatbot functionality without requiring an API key
+- Creating demos and examples
+- Testing the UI without making actual API calls
+- Fallback when API keys are not available
+
 ## Using the Intercom-like Chat Toggle
 
 The `AiChatToggle` component provides an Intercom-like floating chat button that expands into a chat window:
@@ -470,6 +498,9 @@ You can customize the appearance of the chat window using CSS variables:
 | `width` | `String` | `'100%'` | Width of the chat window |
 | `maxWidth` | `String` | `'800px'` | Maximum width of the chat window |
 | `persistenceKey` | `String` | `null` | Key for persisting chat history in localStorage |
+| **Demo Mode** | | | |
+| `demoMode` | `Boolean` | `false` | Whether to use demo mode (no API key required) |
+| `demoResponses` | `Object` | `{}` | Map of keywords to predefined responses for demo mode |
 
 ### AiChatWindow Events
 
@@ -512,6 +543,9 @@ You can customize the appearance of the chat window using CSS variables:
 | `theme` | `String` | `'light'` | Theme for the chat window ('light' or 'dark') |
 | `showAvatars` | `Boolean` | `true` | Whether to show avatars for the user and assistant |
 | `persistenceKey` | `String` | `null` | Key for persisting chat history in localStorage |
+| **Demo Mode** | | | |
+| `demoMode` | `Boolean` | `false` | Whether to use demo mode (no API key required) |
+| `demoResponses` | `Object` | `{}` | Map of keywords to predefined responses for demo mode |
 
 ### AiChatToggle Events
 
@@ -550,6 +584,9 @@ You can customize the appearance of the chat window using CSS variables:
 | `streaming` | `Boolean` | `true` | Whether to stream responses token by token |
 | `persistenceKey` | `String` | `null` | Key for persisting chat history in localStorage |
 | `maxMessages` | `Number` | `100` | Maximum number of messages to keep in history |
+| **Demo Mode** | | | |
+| `demoMode` | `Boolean` | `false` | Whether to use demo mode (no API key required) |
+| `demoResponses` | `Object` | `{}` | Map of keywords to predefined responses for demo mode |
 | **Callbacks** | | | |
 | `onError` | `Function` | `null` | Callback function when an error occurs |
 | `onMessageSent` | `Function` | `null` | Callback when a message is sent |

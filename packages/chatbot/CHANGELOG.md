@@ -2,6 +2,16 @@
 
 All notable changes to the @aivue/chatbot package will be documented in this file.
 
+## [1.1.2] - 2023-07-25
+
+### Fixed
+- Fixed missing distribution files issue
+- Resolved dependency conflicts with @aivue/core
+- Improved module resolution for better compatibility with Webpack and Vite
+- Enhanced build configuration to include all necessary files
+- Added proper exports field for better module resolution
+- Fixed package structure to ensure all components are properly exported
+
 ## [1.1.1] - 2023-07-20
 
 ### Added

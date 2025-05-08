@@ -2,6 +2,14 @@
 
 All notable changes to the @aivue/core package will be documented in this file.
 
+## [1.1.1] - 2023-07-20
+
+### Fixed
+- Fixed the "This is a simulated streaming response from the AI" issue
+- Implemented proper API calls to OpenAI and other providers
+- Added fallback responses when no API key is provided
+- Improved error handling for API calls
+
 ## [1.1.0] - 2023-07-15
 
 ### Added

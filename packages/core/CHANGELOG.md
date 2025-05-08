@@ -2,6 +2,14 @@
 
 All notable changes to the @aivue/core package will be documented in this file.
 
+## [1.1.2] - 2023-07-25
+
+### Fixed
+- Improved package structure and exports
+- Enhanced build configuration
+- Fixed module resolution issues
+- Added better compatibility with different build tools
+
 ## [1.1.1] - 2023-07-20
 
 ### Fixed
