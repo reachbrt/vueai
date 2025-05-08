@@ -20,31 +20,35 @@ PACKAGES=("core" "chatbot" "autosuggest" "smartform")
 for package in "${PACKAGES[@]}"; do
   echo -e "${GREEN}Preparing @aivue/${package}...${NC}"
   cd "packages/${package}"
-  
+
   # Create dist directory if it doesn't exist
   mkdir -p dist
-  
+
   # Copy package.json and README.md to dist
   cp package.json dist/
   cp README.md dist/
-  
+
   # If CHANGELOG.md exists, copy it too
   if [ -f CHANGELOG.md ]; then
     cp CHANGELOG.md dist/
   fi
-  
-  # Create a simple index.js file in dist
-  echo "// @aivue/${package} v$(node -p "require('./package.json').version")" > dist/index.js
-  echo "module.exports = {};" >> dist/index.js
-  
-  # Create a simple index.d.ts file in dist
-  echo "// @aivue/${package} v$(node -p "require('./package.json').version")" > dist/index.d.ts
-  echo "export {};" >> dist/index.d.ts
-  
+
+  # Create a simple index.js file in dist if it doesn't exist
+  if [ ! -f dist/index.js ]; then
+    echo "// @aivue/${package} v$(node -p "require('./package.json').version")" > dist/index.js
+    echo "module.exports = {};" >> dist/index.js
+  fi
+
+  # Create a simple index.d.ts file in dist if it doesn't exist
+  if [ ! -f dist/index.d.ts ]; then
+    echo "// @aivue/${package} v$(node -p "require('./package.json').version")" > dist/index.d.ts
+    echo "export {};" >> dist/index.d.ts
+  fi
+
   # Copy source files for reference
   mkdir -p dist/src
   cp -r src/* dist/src/
-  
+
   cd ../..
 done
 
@@ -62,13 +66,13 @@ echo -e "${YELLOW}Publishing to GitHub...${NC}"
 for package in "${PACKAGES[@]}"; do
   echo -e "${GREEN}Publishing @aivue/${package} to GitHub...${NC}"
   cd "packages/${package}/dist"
-  
+
   # Update package.json for GitHub Packages
   node -e "const pkg = require('./package.json'); pkg.name = '@reachbrt/' + pkg.name.split('/')[1]; pkg.repository = { type: 'git', url: 'https://github.com/reachbrt/vueai.git', directory: 'packages/${package}' }; pkg.publishConfig = { registry: 'https://npm.pkg.github.com/' }; require('fs').writeFileSync('package.json', JSON.stringify(pkg, null, 2));"
-  
+
   # Publish to GitHub Packages
   npm publish --registry=https://npm.pkg.github.com/
-  
+
   cd ../../..
 done
 

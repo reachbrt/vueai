@@ -1,0 +1,68 @@
+{
+  "name": "@aivue/core",
+  "version": "1.1.2",
+  "description": "Core AI functionality for Vue.js components",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "npm run clean && mkdir -p dist && cp -r src/* dist/ && cp package.json dist/ && cp README.md dist/",
+    "dev": "tsc --watch",
+    "lint": "eslint \"src/**/*.ts\"",
+    "clean": "rm -rf dist",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "vue",
+    "ai",
+    "core",
+    "openai",
+    "claude",
+    "gemini",
+    "huggingface",
+    "ollama",
+    "deepseek"
+  ],
+  "author": "Bharatkumar Subramanian <reachbrt@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/reachbrt/vueai.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://github.com/reachbrt/vueai#readme",
+  "bugs": {
+    "url": "https://github.com/reachbrt/vueai/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "vue": "^2.6.0 || ^3.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.16.0",
+    "eslint": "^8.56.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.3.0",
+    "vitest": "^1.0.0",
+    "vue": "^3.5.0"
+  },
+  "dependencies": {
+    "eventsource-parser": "^1.1.1"
+  }
+}
