@@ -72,6 +72,8 @@ jobs:
       run: |
         cd demo
         npm ci
+        # Make sure we're using the latest published packages
+        npm install @aivue/core@latest @aivue/chatbot@latest @aivue/autosuggest@latest @aivue/smartform@latest
         npm run build
 
     - name: Deploy to GitHub Pages
