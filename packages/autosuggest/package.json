@@ -1,6 +1,6 @@
 {
   "name": "@aivue/autosuggest",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "description": "AI-powered suggestion components for Vue.js",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -22,13 +22,13 @@
     "CHANGELOG.md"
   ],
   "scripts": {
-    "build": "npm run clean && mkdir -p dist && cp -r src/* dist/ && cp package.json dist/ && cp README.md dist/",
-    "dev": "npm run build -- --watch",
+    "build": "npm run clean && tsup && npm run postbuild",
+    "dev": "tsup --watch",
     "lint": "eslint \"src/**/*.{ts,vue}\"",
     "clean": "rm -rf dist",
     "test": "vitest run",
     "test:watch": "vitest",
-    "prepublishOnly": "npm run build"
+    "postbuild": "cp -r src/components dist/components && cp README.md dist/ && cp CHANGELOG.md dist/ 2>/dev/null || true"
   },
   "keywords": [
     "vue",
