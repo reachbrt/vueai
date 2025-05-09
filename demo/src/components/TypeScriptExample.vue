@@ -47,7 +47,6 @@ const chatOptions: ChatOptions = {
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { aiClient } from '../ai-client';
 
 // Define types
 interface Message {
@@ -55,13 +54,6 @@ interface Message {
   content: string;
   id?: string;
   timestamp?: Date;
-}
-
-interface ChatOptions {
-  client: any;
-  initialMessages?: Message[];
-  systemPrompt?: string;
-  streaming?: boolean;
 }
 
 // Simple UUID generator

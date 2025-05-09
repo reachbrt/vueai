@@ -8,9 +8,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@aivue/core": "^1.1.7",
-    "@aivue/chatbot": "^1.1.7",
     "@aivue/autosuggest": "^1.1.8",
+    "@aivue/chatbot": "^1.1.7",
+    "@aivue/core": "^1.1.7",
     "@aivue/smartform": "^1.1.8",
     "vue": "^3.5.0"
   },
