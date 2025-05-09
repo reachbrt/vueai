@@ -5,11 +5,7 @@ import { AIClient } from '@aivue/core';
 export const aiClient = new AIClient({
   provider: 'openai',
   apiKey: import.meta.env.VITE_OPENAI_API_KEY || '', // Use environment variable
-  options: {
-    model: 'gpt-4',
-    temperature: 0.7,
-    maxTokens: 1000
-  }
+  model: 'gpt-4'
 });
 
 // Fallback configuration when no API key is available
@@ -18,9 +14,6 @@ if (!import.meta.env.VITE_OPENAI_API_KEY) {
   // Use fallback provider that doesn't require an API key
   Object.assign(aiClient, new AIClient({
     provider: 'fallback',
-    options: {
-      model: 'gpt-3.5-turbo',
-      temperature: 0.7
-    }
+    model: 'gpt-3.5-turbo'
   }));
 }

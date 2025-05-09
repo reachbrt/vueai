@@ -1,104 +1,38 @@
 <template>
   <div class="app">
     <header>
-      <h1>AIVue Components Demo</h1>
-      <p>A demonstration of all @aivue packages with TypeScript support</p>
+      <h1>Vue AI Components</h1>
+      <p>Powerful AI-powered components for Vue.js applications</p>
     </header>
 
-    <NavBar @tab-change="changeTab" />
-
     <main>
-      <!-- Chatbot demos -->
-      <section v-if="activeTab === 'chatbot' || activeTab === 'all'">
-        <h2>Chatbot Components</h2>
+      <section>
+        <h2>Welcome to Vue AI Components</h2>
         <div class="demo-container">
-          <h3>Basic Chat Window</h3>
-          <AiChatWindow
-            :client="aiClient"
-            title="AI Assistant"
-            placeholder="Ask me anything..."
-            :show-avatars="true"
-            theme="light"
-          />
-        </div>
-
-        <div class="demo-container">
-          <h3>Custom Chat Implementation</h3>
-          <CustomChat />
-        </div>
-
-        <div class="demo-container">
-          <h3>TypeScript Example</h3>
-          <TypeScriptExample />
-        </div>
-      </section>
-
-      <!-- Autosuggest demos -->
-      <section v-if="activeTab === 'autosuggest' || activeTab === 'all'">
-        <h2>Autosuggest Components</h2>
-        <div class="demo-container">
-          <AutosuggestDemo />
-        </div>
-      </section>
-
-      <!-- SmartForm demos -->
-      <section v-if="activeTab === 'smartform' || activeTab === 'all'">
-        <h2>SmartForm Components</h2>
-        <div class="demo-container">
-          <SmartFormDemo />
+          <p>This is a simplified demo of the Vue AI Components library.</p>
+          <p>The full demo includes:</p>
+          <ul>
+            <li>AI Chat Components</li>
+            <li>AI Autosuggest Components</li>
+            <li>AI Smart Form Components</li>
+            <li>TypeScript Integration</li>
+          </ul>
+          <p>Visit our <a href="https://github.com/reachbrt/vueai" target="_blank">GitHub Repository</a> to learn more.</p>
         </div>
       </section>
     </main>
 
     <footer>
-      <p>Powered by <a href="https://github.com/reachbrt/vueai" target="_blank">AIVue</a></p>
+      <p>Created by <a href="https://github.com/reachbrt" target="_blank">reachbrt</a> | <a href="https://github.com/reachbrt/vueai" target="_blank">GitHub Repository</a></p>
     </footer>
-
-    <!-- Intercom-like Chat Toggle -->
-    <AiChatToggle
-      :client="aiClient"
-      title="Chat with AI"
-      theme="light"
-    />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
-import { aiClient } from './ai-client';
-import CustomChat from './components/CustomChat.vue';
-import TypeScriptExample from './components/TypeScriptExample.vue';
-import AutosuggestDemo from './components/AutosuggestDemo.vue';
-import SmartFormDemo from './components/SmartFormDemo.vue';
-import NavBar from './components/NavBar.vue';
-
-// Import components directly
-import { AiChatWindow, AiChatToggle } from '@aivue/chatbot';
+import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'App',
-  components: {
-    AiChatWindow,
-    AiChatToggle,
-    CustomChat,
-    TypeScriptExample,
-    AutosuggestDemo,
-    SmartFormDemo,
-    NavBar
-  },
-  setup() {
-    const activeTab = ref('all');
-
-    const changeTab = (tabId: string) => {
-      activeTab.value = tabId;
-    };
-
-    return {
-      aiClient,
-      activeTab,
-      changeTab
-    };
-  }
+  name: 'App'
 });
 </script>
 
