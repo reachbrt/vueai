@@ -27,31 +27,13 @@ fi
 # Array of packages in order of dependencies
 PACKAGES=("core" "chatbot" "autosuggest" "smartform")
 
-# Check if we need to build packages
-if [ -d "packages/core/src" ]; then
-  # Build all packages first
-  echo -e "${YELLOW}Building all packages...${NC}"
-  for package in "${PACKAGES[@]}"; do
-    echo -e "${GREEN}Building @aivue/${package}...${NC}"
-    cd "packages/${package}"
-    npm run build
+# Skip building and use pre-built packages in dist directory
+echo -e "${YELLOW}Skipping build step - using pre-built packages in dist directory...${NC}"
 
-    # Verify if dist directory exists
-    if [ ! -d "dist" ]; then
-      echo -e "${RED}Error: dist directory is missing for @aivue/${package}. Build might have failed.${NC}"
-      exit 1
-    fi
-
-    cd ../..
-  done
-else
-  echo -e "${YELLOW}Skipping build step - using pre-built packages in dist directory...${NC}"
-
-  # Verify if dist directory exists
-  if [ ! -d "dist/core" ]; then
-    echo -e "${RED}Error: dist/core directory is missing. Please make sure the packages are built.${NC}"
-    exit 1
-  fi
+# Verify if dist directory exists
+if [ ! -d "dist/core" ]; then
+  echo -e "${RED}Error: dist/core directory is missing. Please make sure the packages are built.${NC}"
+  exit 1
 fi
 
 # Publish all packages
