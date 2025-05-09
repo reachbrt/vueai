@@ -1,9 +1,10 @@
 import { AIClient } from '@aivue/core';
 
-// Create an AI client with OpenAI API key
+// Create an AI client with environment variable for API key
+// In production, you should use environment variables or a secure vault
 export const aiClient = new AIClient({
   provider: 'openai',
-  apiKey: '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',
+  apiKey: import.meta.env.VITE_OPENAI_API_KEY || '', // Use environment variable
   options: {
     model: 'gpt-4',
     temperature: 0.7,
@@ -11,11 +12,15 @@ export const aiClient = new AIClient({
   }
 });
 
-// Fallback configuration if needed
-// export const aiClient = new AIClient({
-//   provider: 'fallback', // Fallback provider works without any API keys
-//   options: {
-//     model: 'gpt-3.5-turbo',
-//     temperature: 0.7
-//   }
-// });
+// Fallback configuration when no API key is available
+if (!import.meta.env.VITE_OPENAI_API_KEY) {
+  console.warn('No OpenAI API key found. Using fallback provider.');
+  // Use fallback provider that doesn't require an API key
+  Object.assign(aiClient, new AIClient({
+    provider: 'fallback',
+    options: {
+      model: 'gpt-3.5-turbo',
+      temperature: 0.7
+    }
+  }));
+}
