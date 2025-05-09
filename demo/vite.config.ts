@@ -6,7 +6,7 @@ export default defineConfig({
   define: {
     'process.env': {}
   },
-  base: '/vueai/', // Set the base path for GitHub Pages
+  // Remove base path for Netlify deployment
   build: {
     commonjsOptions: {
       include: [/node_modules/]
