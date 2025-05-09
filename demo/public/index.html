@@ -11,11 +11,69 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
-  <!-- Load the actual npm packages -->
-  <script src="https://cdn.jsdelivr.net/npm/@aivue/core@latest/dist/aivue-core.umd.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@aivue/chatbot@latest/dist/aivue-chatbot.umd.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@aivue/autosuggest@latest/dist/aivue-autosuggest.umd.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@aivue/smartform@latest/dist/aivue-smartform.umd.js"></script>
+  <!-- Load the actual npm packages directly from unpkg -->
+  <script src="https://unpkg.com/@aivue/core@0.1.0/dist/aivue-core.umd.js"></script>
+  <script src="https://unpkg.com/@aivue/chatbot@0.1.0/dist/aivue-chatbot.umd.js"></script>
+  <script src="https://unpkg.com/@aivue/autosuggest@0.1.0/dist/aivue-autosuggest.umd.js"></script>
+  <script src="https://unpkg.com/@aivue/smartform@0.1.0/dist/aivue-smartform.umd.js"></script>
+
+  <!-- Define global variables for components -->
+  <script>
+    // Define global variables to ensure components are accessible
+    window.addEventListener('load', function() {
+      console.log('Checking package availability...');
+
+      // Create mock components if real ones aren't available
+      if (!window.AiVueCore) {
+        console.warn('AiVueCore not found, creating mock version');
+        window.AiVueCore = {
+          initializeAI: function() { console.log('Mock initializeAI called'); },
+          AIClient: function(config) {
+            console.log('Mock AIClient created with config:', config);
+            return {
+              chat: function(messages) {
+                console.log('Mock chat called with messages:', messages);
+                return Promise.resolve('This is a mock response. Please check your API key and try again.');
+              }
+            };
+          }
+        };
+      }
+
+      if (!window.AiVueChatbot) {
+        console.warn('AiVueChatbot not found, creating mock version');
+        window.AiVueChatbot = {
+          AiChatWindow: {
+            template: '<div class="p-4 bg-red-100 text-red-800 rounded">Error: Chatbot component failed to load</div>'
+          }
+        };
+      }
+
+      if (!window.AiVueAutosuggest) {
+        console.warn('AiVueAutosuggest not found, creating mock version');
+        window.AiVueAutosuggest = {
+          AiAutosuggest: {
+            template: '<div class="p-4 bg-red-100 text-red-800 rounded">Error: Autosuggest component failed to load</div>'
+          }
+        };
+      }
+
+      if (!window.AiVueSmartform) {
+        console.warn('AiVueSmartform not found, creating mock version');
+        window.AiVueSmartform = {
+          AiSmartForm: {
+            template: '<div class="p-4 bg-red-100 text-red-800 rounded">Error: SmartForm component failed to load</div>'
+          }
+        };
+      }
+
+      console.log('Component availability check:');
+      console.log('- AiVueCore:', !!window.AiVueCore);
+      console.log('- AiVueChatbot:', !!window.AiVueChatbot);
+      console.log('- AiVueAutosuggest:', !!window.AiVueAutosuggest);
+      console.log('- AiVueSmartform:', !!window.AiVueSmartform);
+    });
+  </script>
   <script>
     document.addEventListener('DOMContentLoaded', (event) => {
       document.querySelectorAll('pre code').forEach((el) => {
@@ -181,11 +239,12 @@
       border: none;
       border-radius: 9999px;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: color 0.3s ease;
       z-index: 2;
       flex: 1;
       text-align: center;
       white-space: nowrap;
+      transform: none !important; /* Prevent any transform animations */
     }
 
     .tab-nav-button:hover {
@@ -308,17 +367,31 @@
       overflow-x: auto;
       position: relative;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      z-index: 10; /* Ensure code blocks are visible */
+      display: block !important; /* Force display */
+      visibility: visible !important; /* Force visibility */
     }
 
     .code-block pre {
       margin: 0;
       padding: 0;
+      background-color: #1e293b; /* Ensure background color is set */
     }
 
     .code-block code {
       font-family: 'Fira Code', monospace;
       font-size: 0.9rem;
       line-height: 1.5;
+      background-color: #1e293b; /* Ensure background color is set */
+      color: #abb2bf; /* Ensure text color is set */
+    }
+
+    /* Ensure code blocks are visible in tab sections */
+    .tab-section .code-block {
+      position: relative;
+      z-index: 20;
+      display: block !important;
+      visibility: visible !important;
     }
 
     .code-header {
@@ -910,8 +983,13 @@ export default {
           <div class="bg-white rounded-lg border border-gray-200 p-4">
             <div id="chatbot-container" class="h-96">
               <!-- The actual @aivue/chatbot component will be mounted here -->
-              <div class="flex items-center justify-center h-full">
-                <p class="text-gray-500">Loading chatbot component...</p>
+              <div class="flex flex-col items-center justify-center h-full">
+                <svg class="animate-spin -ml-1 mr-3 h-8 w-8 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <p class="text-gray-700 mt-4">Enter your OpenAI API key to initialize the chatbot</p>
+                <p class="text-xs text-gray-500 mt-2">The component will load automatically after you set your API key</p>
               </div>
             </div>
           </div>
@@ -1000,8 +1078,13 @@ export default {
           <div class="bg-white rounded-lg border border-gray-200 p-4">
             <div id="autosuggest-container" class="h-48">
               <!-- The actual @aivue/autosuggest component will be mounted here -->
-              <div class="flex items-center justify-center h-full">
-                <p class="text-gray-500">Loading autosuggest component...</p>
+              <div class="flex flex-col items-center justify-center h-full">
+                <svg class="animate-spin -ml-1 mr-3 h-8 w-8 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <p class="text-gray-700 mt-4">Enter your OpenAI API key to initialize the autosuggest</p>
+                <p class="text-xs text-gray-500 mt-2">The component will load automatically after you set your API key</p>
               </div>
             </div>
           </div>
@@ -1114,8 +1197,13 @@ export default {
           <div class="bg-white rounded-lg border border-gray-200 p-4">
             <div id="smartform-container" class="min-h-[400px]">
               <!-- The actual @aivue/smartform component will be mounted here -->
-              <div class="flex items-center justify-center h-full">
-                <p class="text-gray-500">Loading smartform component...</p>
+              <div class="flex flex-col items-center justify-center h-full">
+                <svg class="animate-spin -ml-1 mr-3 h-8 w-8 text-yellow-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <p class="text-gray-700 mt-4">Enter your OpenAI API key to initialize the smartform</p>
+                <p class="text-xs text-gray-500 mt-2">The component will load automatically after you set your API key</p>
               </div>
             </div>
           </div>
@@ -1648,20 +1736,11 @@ async function getResponse(messages: Message[]): Promise<string> {
           ease: 'power3.out'
         });
 
-        // Animate tabs
-        gsap.from('.tab-nav-button', {
-          opacity: 0,
-          y: 20,
-          stagger: 0.1,
-          duration: 0.6,
-          delay: 0.6,
-          ease: 'power3.out',
-          onComplete: () => {
-            gsap.to('.tab-nav-indicator', {
-              opacity: 1,
-              duration: 0.4
-            });
-          }
+        // Animate only the tab indicator, not the text
+        gsap.to('.tab-nav-indicator', {
+          opacity: 1,
+          duration: 0.4,
+          delay: 0.6
         });
 
         // Add copy functionality to code blocks
