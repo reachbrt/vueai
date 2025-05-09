@@ -73,7 +73,7 @@ import SmartFormDemo from './components/SmartFormDemo.vue';
 import NavBar from './components/NavBar.vue';
 
 // Import components directly
-import { AiChatWindow, AiChatToggle } from '../node_modules/@aivue/chatbot';
+import { AiChatWindow, AiChatToggle } from '@aivue/chatbot';
 
 export default defineComponent({
   name: 'App',

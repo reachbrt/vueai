@@ -33,7 +33,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, watch, nextTick } from 'vue';
-import { useChatEngine, utils } from '../../node_modules/@aivue/chatbot';
+import { useChatEngine, utils } from '@aivue/chatbot';
 import { aiClient } from '../ai-client';
 
 export default defineComponent({

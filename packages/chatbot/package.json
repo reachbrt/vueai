@@ -1,6 +1,6 @@
 {
   "name": "@aivue/chatbot",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "AI-powered chat components for Vue.js",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -63,7 +63,7 @@
     "access": "public"
   },
   "peerDependencies": {
-    "@aivue/core": "^1.1.5",
+    "@aivue/core": "^1.1.7",
     "vue": "^2.6.0 || ^3.0.0"
   },
   "devDependencies": {

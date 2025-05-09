@@ -36,7 +36,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { AiAutosuggest } from '../../node_modules/@aivue/autosuggest';
+import { AiAutosuggest } from '@aivue/autosuggest';
 import { aiClient } from '../ai-client';
 
 export default defineComponent({
