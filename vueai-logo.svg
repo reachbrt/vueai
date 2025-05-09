@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="120" viewBox="0 0 300 120">
+  <!-- Vue.js inspired V shape with gradient -->
+  <g transform="translate(25, 20)">
+    <!-- Main Vue.js V shape with gradient -->
+    <linearGradient id="vue-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#41B883" />
+      <stop offset="100%" style="stop-color:#34495E" />
+    </linearGradient>
+    
+    <!-- AI brain circuit pattern -->
+    <linearGradient id="ai-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8E44AD" />
+      <stop offset="100%" style="stop-color:#41B883" />
+    </linearGradient>
+    
+    <!-- Vue.js inspired V shape -->
+    <path d="M40,0 L60,35 L80,0 L100,0 L60,68 L20,0 Z" fill="url(#vue-gradient)" />
+    
+    <!-- AI Brain circuit pattern -->
+    <g transform="translate(110, 15)" fill="none" stroke="url(#ai-gradient)" stroke-width="2">
+      <circle cx="25" cy="25" r="20" />
+      <path d="M5,25 H45" />
+      <path d="M25,5 V45" />
+      <path d="M10,10 L40,40" />
+      <path d="M10,40 L40,10" />
+      <path d="M25,25 m-10,0 a10,10 0 1,0 20,0 a10,10 0 1,0 -20,0" />
+    </g>
+    
+    <!-- Text elements -->
+    <text x="0" y="85" font-family="Arial, sans-serif" font-weight="bold" font-size="32" fill="#34495E">Vue<tspan fill="#41B883">AI</tspan></text>
+    
+    <!-- Tagline -->
+    <text x="0" y="100" font-family="Arial, sans-serif" font-size="12" fill="#666">Multi-provider AI components for Vue.js</text>
+  </g>
+</svg>
