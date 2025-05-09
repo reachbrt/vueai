@@ -11,72 +11,322 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
-  <!-- Load the actual npm packages directly from unpkg -->
-  <script src="https://unpkg.com/@aivue/core@0.1.0/dist/aivue-core.umd.js"></script>
-  <script src="https://unpkg.com/@aivue/chatbot@0.1.0/dist/aivue-chatbot.umd.js"></script>
-  <script src="https://unpkg.com/@aivue/autosuggest@0.1.0/dist/aivue-autosuggest.umd.js"></script>
-  <script src="https://unpkg.com/@aivue/smartform@0.1.0/dist/aivue-smartform.umd.js"></script>
-
-  <!-- Define global variables for components -->
+  <!-- Create mock implementations of the components directly -->
   <script>
-    // Define global variables to ensure components are accessible
-    window.addEventListener('load', function() {
-      console.log('Checking package availability...');
+    // Define all components directly in the page
+    // This avoids loading issues with unpkg/jsdelivr
 
-      // Create mock components if real ones aren't available
-      if (!window.AiVueCore) {
-        console.warn('AiVueCore not found, creating mock version');
-        window.AiVueCore = {
-          initializeAI: function() { console.log('Mock initializeAI called'); },
-          AIClient: function(config) {
-            console.log('Mock AIClient created with config:', config);
-            return {
-              chat: function(messages) {
-                console.log('Mock chat called with messages:', messages);
-                return Promise.resolve('This is a mock response. Please check your API key and try again.');
-              }
+    // Core package
+    window.AiVueCore = {
+      initializeAI: function() {
+        console.log('AiVueCore.initializeAI called');
+      },
+      AIClient: function(config) {
+        console.log('AIClient created with config:', config);
+        return {
+          chat: function(messages) {
+            console.log('Chat called with messages:', messages);
+            return new Promise((resolve) => {
+              setTimeout(() => {
+                resolve("This is a demo response. In a real implementation, this would be a response from the OpenAI API using your API key.");
+              }, 1000);
+            });
+          }
+        };
+      }
+    };
+
+    // Chatbot package
+    window.AiVueChatbot = {
+      AiChatWindow: {
+        props: ['client', 'title', 'placeholder', 'showAvatars', 'theme'],
+        template: `
+          <div class="ai-chat-window p-4 border rounded-lg bg-white shadow-md">
+            <div class="chat-header border-b pb-2 mb-4">
+              <h3 class="font-bold text-lg">{{ title }}</h3>
+            </div>
+            <div class="chat-messages space-y-4 h-64 overflow-y-auto mb-4 p-2">
+              <div v-if="messages.length === 0" class="text-gray-500 text-center py-8">
+                Start a conversation by typing a message below.
+              </div>
+              <div v-for="(msg, index) in messages" :key="index"
+                   :class="['message p-3 rounded-lg max-w-3/4',
+                           msg.role === 'user' ? 'bg-blue-100 ml-auto' : 'bg-gray-100']">
+                <div v-if="showAvatars" class="flex items-center mb-1">
+                  <div :class="['w-6 h-6 rounded-full flex items-center justify-center mr-2',
+                              msg.role === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-500 text-white']">
+                    {{ msg.role === 'user' ? 'U' : 'A' }}
+                  </div>
+                  <div class="text-xs font-semibold">
+                    {{ msg.role === 'user' ? 'You' : 'Assistant' }}
+                  </div>
+                </div>
+                <div>{{ msg.content }}</div>
+              </div>
+            </div>
+            <div class="chat-input">
+              <form @submit.prevent="sendMessage" class="flex">
+                <input
+                  v-model="inputMessage"
+                  :placeholder="placeholder"
+                  class="flex-grow p-2 border rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <button
+                  type="submit"
+                  class="bg-blue-500 text-white px-4 py-2 rounded-r-lg hover:bg-blue-600 focus:outline-none"
+                  :disabled="inputMessage.trim() === ''"
+                >
+                  Send
+                </button>
+              </form>
+            </div>
+          </div>
+        `,
+        data() {
+          return {
+            messages: [],
+            inputMessage: '',
+            isLoading: false
+          };
+        },
+        methods: {
+          async sendMessage() {
+            if (this.inputMessage.trim() === '' || this.isLoading) return;
+
+            const userMessage = {
+              role: 'user',
+              content: this.inputMessage
             };
-          }
-        };
-      }
 
-      if (!window.AiVueChatbot) {
-        console.warn('AiVueChatbot not found, creating mock version');
-        window.AiVueChatbot = {
-          AiChatWindow: {
-            template: '<div class="p-4 bg-red-100 text-red-800 rounded">Error: Chatbot component failed to load</div>'
-          }
-        };
-      }
+            this.messages.push(userMessage);
+            const currentInput = this.inputMessage;
+            this.inputMessage = '';
+            this.isLoading = true;
 
-      if (!window.AiVueAutosuggest) {
-        console.warn('AiVueAutosuggest not found, creating mock version');
-        window.AiVueAutosuggest = {
-          AiAutosuggest: {
-            template: '<div class="p-4 bg-red-100 text-red-800 rounded">Error: Autosuggest component failed to load</div>'
-          }
-        };
-      }
+            try {
+              // Use the client to get a response
+              const response = await this.client.chat(this.messages);
 
-      if (!window.AiVueSmartform) {
-        console.warn('AiVueSmartform not found, creating mock version');
-        window.AiVueSmartform = {
-          AiSmartForm: {
-            template: '<div class="p-4 bg-red-100 text-red-800 rounded">Error: SmartForm component failed to load</div>'
+              this.messages.push({
+                role: 'assistant',
+                content: response
+              });
+            } catch (error) {
+              console.error('Error getting response:', error);
+              this.messages.push({
+                role: 'assistant',
+                content: 'Sorry, there was an error processing your request.'
+              });
+            } finally {
+              this.isLoading = false;
+            }
           }
-        };
+        }
       }
+    };
 
-      console.log('Component availability check:');
-      console.log('- AiVueCore:', !!window.AiVueCore);
-      console.log('- AiVueChatbot:', !!window.AiVueChatbot);
-      console.log('- AiVueAutosuggest:', !!window.AiVueAutosuggest);
-      console.log('- AiVueSmartform:', !!window.AiVueSmartform);
-    });
+    // Autosuggest package
+    window.AiVueAutosuggest = {
+      AiAutosuggest: {
+        props: ['client', 'modelValue', 'placeholder', 'debounce', 'minLength'],
+        template: `
+          <div class="ai-autosuggest relative">
+            <input
+              :value="modelValue"
+              @input="onInput"
+              :placeholder="placeholder"
+              class="w-full p-2 border rounded"
+            />
+            <div v-if="isLoading" class="absolute right-3 top-2">
+              <div class="animate-spin h-5 w-5 border-2 border-blue-500 rounded-full border-t-transparent"></div>
+            </div>
+          </div>
+        `,
+        data() {
+          return {
+            isLoading: false,
+            timeout: null
+          };
+        },
+        methods: {
+          onInput(e) {
+            const value = e.target.value;
+            this.$emit('update:modelValue', value);
+
+            // Clear previous timeout
+            if (this.timeout) {
+              clearTimeout(this.timeout);
+            }
+
+            // Don't suggest if text is too short
+            if (value.length < this.minLength) {
+              return;
+            }
+
+            // Debounce the suggestion request
+            this.timeout = setTimeout(() => {
+              this.getSuggestion(value);
+            }, this.debounce);
+          },
+
+          async getSuggestion(text) {
+            this.isLoading = true;
+
+            try {
+              // In a real implementation, this would call the AI API
+              // For demo purposes, we'll just simulate a delay
+              await new Promise(resolve => setTimeout(resolve, 1000));
+
+              // Simulate a suggestion by appending text
+              const suggestion = text + " (This is a demo suggestion)";
+              this.$emit('update:modelValue', suggestion);
+            } catch (error) {
+              console.error('Error getting suggestion:', error);
+            } finally {
+              this.isLoading = false;
+            }
+          }
+        }
+      }
+    };
+
+    // Smartform package
+    window.AiVueSmartform = {
+      AiSmartForm: {
+        props: ['client', 'schema'],
+        template: `
+          <div class="ai-smart-form">
+            <h3 class="text-xl font-semibold mb-4">{{ schema.title }}</h3>
+            <form @submit.prevent="handleSubmit" class="space-y-4">
+              <div v-for="field in schema.fields" :key="field.name" class="form-field">
+                <label :for="field.name" class="block text-sm font-medium text-gray-700 mb-1">
+                  {{ field.label }}
+                  <span v-if="field.required" class="text-red-500">*</span>
+                </label>
+
+                <textarea
+                  v-if="field.type === 'textarea'"
+                  :id="field.name"
+                  v-model="formData[field.name]"
+                  rows="4"
+                  class="w-full p-2 border rounded focus:ring-blue-500 focus:border-blue-500"
+                ></textarea>
+
+                <input
+                  v-else
+                  :id="field.name"
+                  :type="field.type"
+                  v-model="formData[field.name]"
+                  class="w-full p-2 border rounded focus:ring-blue-500 focus:border-blue-500"
+                />
+
+                <div v-if="validationErrors[field.name]" class="mt-1 text-sm text-red-600">
+                  {{ validationErrors[field.name] }}
+                </div>
+
+                <div v-if="validationSuggestions[field.name]" class="mt-1 text-sm text-yellow-600">
+                  {{ validationSuggestions[field.name] }}
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <button
+                  type="submit"
+                  class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none"
+                  :disabled="isSubmitting"
+                >
+                  <span v-if="isSubmitting">Submitting...</span>
+                  <span v-else>Submit</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        `,
+        data() {
+          return {
+            formData: {},
+            validationErrors: {},
+            validationSuggestions: {},
+            isSubmitting: false
+          };
+        },
+        created() {
+          // Initialize form data
+          this.schema.fields.forEach(field => {
+            this.formData[field.name] = '';
+          });
+        },
+        methods: {
+          async validateField(field, value) {
+            // Clear previous errors/suggestions
+            this.validationErrors[field.name] = null;
+            this.validationSuggestions[field.name] = null;
+
+            // Required field validation
+            if (field.required && !value.trim()) {
+              this.validationErrors[field.name] = `${field.label} is required`;
+              return false;
+            }
+
+            // Email validation
+            if (field.type === 'email' && value.trim()) {
+              const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+              if (!emailRegex.test(value)) {
+                this.validationErrors[field.name] = 'Please enter a valid email address';
+                return false;
+              }
+            }
+
+            // In a real implementation, this would call the AI API for advanced validation
+            // For demo purposes, we'll just add some suggestions
+            if (field.name === 'message' && value.length < 20 && value.trim()) {
+              this.validationSuggestions[field.name] = 'Consider providing more details in your message';
+            }
+
+            return true;
+          },
+
+          async handleSubmit() {
+            this.isSubmitting = true;
+
+            // Validate all fields
+            let isValid = true;
+            for (const field of this.schema.fields) {
+              const fieldValid = await this.validateField(field, this.formData[field.name]);
+              if (!fieldValid) {
+                isValid = false;
+              }
+            }
+
+            if (isValid) {
+              // In a real implementation, this would submit the data
+              await new Promise(resolve => setTimeout(resolve, 1000));
+              this.$emit('submit', this.formData);
+
+              // Reset form
+              this.schema.fields.forEach(field => {
+                this.formData[field.name] = '';
+              });
+            }
+
+            this.isSubmitting = false;
+          }
+        }
+      }
+    };
+
+    console.log('Mock components initialized:');
+    console.log('- AiVueCore:', !!window.AiVueCore);
+    console.log('- AiVueChatbot:', !!window.AiVueChatbot);
+    console.log('- AiVueAutosuggest:', !!window.AiVueAutosuggest);
+    console.log('- AiVueSmartform:', !!window.AiVueSmartform);
   </script>
   <script>
     document.addEventListener('DOMContentLoaded', (event) => {
       document.querySelectorAll('pre code').forEach((el) => {
+        // Escape HTML before highlighting to prevent security warnings
+        const originalContent = el.textContent;
+        el.textContent = originalContent; // This ensures content is properly escaped
         hljs.highlightElement(el);
       });
     });
@@ -1542,6 +1792,9 @@ async function getResponse(messages: Message[]): Promise<string> {
             // Highlight code blocks in the new tab
             if (newTabContent) {
               newTabContent.querySelectorAll('pre code').forEach((block) => {
+                // Escape HTML before highlighting to prevent security warnings
+                const originalContent = block.textContent;
+                block.textContent = originalContent; // This ensures content is properly escaped
                 hljs.highlightElement(block);
               });
             }
@@ -1764,6 +2017,12 @@ async function getResponse(messages: Message[]): Promise<string> {
     };
 
     const app = Vue.createApp(appData);
+
+    // Configure Vue to handle custom elements
+    app.config.compilerOptions.isCustomElement = tag => {
+      return tag.startsWith('ai-') || tag.includes('-');
+    };
+
     app.mount('#app');
 
     // Initialize the actual npm packages
@@ -1832,9 +2091,9 @@ async function getResponse(messages: Message[]): Promise<string> {
         }
 
         function initializeChatbot(apiKey) {
-          console.log('Initializing chatbot with API key');
-          if (!chatbotContainer || !apiKey) {
-            console.error('Cannot initialize chatbot: container or API key missing');
+          console.log('Initializing chatbot with API key:', apiKey.substring(0, 3) + '...');
+          if (!chatbotContainer) {
+            console.error('Cannot initialize chatbot: container missing');
             return;
           }
 
@@ -1857,7 +2116,7 @@ async function getResponse(messages: Message[]): Promise<string> {
                 console.log('Setting up chatbot component');
                 const aiClient = new AiVueCore.AIClient({
                   provider: 'openai',
-                  apiKey: apiKey,
+                  apiKey: apiKey || 'demo-key',
                   model: 'gpt-4'
                 });
 
@@ -1866,6 +2125,11 @@ async function getResponse(messages: Message[]): Promise<string> {
                 };
               }
             });
+
+            // Configure Vue to handle custom elements
+            chatbotApp.config.compilerOptions.isCustomElement = tag => {
+              return tag.startsWith('ai-') || tag.includes('-');
+            };
 
             // Register the component
             console.log('Registering AiChatWindow component');
@@ -1888,6 +2152,11 @@ async function getResponse(messages: Message[]): Promise<string> {
 
         // Setup API key handling for chatbot
         setupApiKeyHandling('set-api-key', 'api-key-input', 'aivue-api-key', initializeChatbot);
+
+        // Initialize with a demo key if none is provided
+        if (!localStorage.getItem('aivue-api-key')) {
+          initializeChatbot('demo-key');
+        }
       } else {
         console.error('AiVueChatbot not found!');
       }
@@ -1905,9 +2174,9 @@ async function getResponse(messages: Message[]): Promise<string> {
         }
 
         function initializeAutosuggest(apiKey) {
-          console.log('Initializing autosuggest with API key');
-          if (!autosuggestContainer || !apiKey) {
-            console.error('Cannot initialize autosuggest: container or API key missing');
+          console.log('Initializing autosuggest with API key:', apiKey.substring(0, 3) + '...');
+          if (!autosuggestContainer) {
+            console.error('Cannot initialize autosuggest: container missing');
             return;
           }
 
@@ -1939,7 +2208,7 @@ async function getResponse(messages: Message[]): Promise<string> {
 
                 const aiClient = new AiVueCore.AIClient({
                   provider: 'openai',
-                  apiKey: apiKey,
+                  apiKey: apiKey || 'demo-key',
                   model: 'gpt-4'
                 });
 
@@ -1949,6 +2218,11 @@ async function getResponse(messages: Message[]): Promise<string> {
                 };
               }
             });
+
+            // Configure Vue to handle custom elements
+            autosuggestApp.config.compilerOptions.isCustomElement = tag => {
+              return tag.startsWith('ai-') || tag.includes('-');
+            };
 
             // Register the component
             console.log('Registering AiAutosuggest component');
@@ -1971,6 +2245,11 @@ async function getResponse(messages: Message[]): Promise<string> {
 
         // Setup API key handling for autosuggest
         setupApiKeyHandling('set-autosuggest-api-key', 'autosuggest-api-key', 'aivue-api-key', initializeAutosuggest);
+
+        // Initialize with a demo key if none is provided
+        if (!localStorage.getItem('aivue-api-key')) {
+          initializeAutosuggest('demo-key');
+        }
       } else {
         console.error('AiVueAutosuggest not found!');
       }
@@ -1988,9 +2267,9 @@ async function getResponse(messages: Message[]): Promise<string> {
         }
 
         function initializeSmartform(apiKey) {
-          console.log('Initializing smartform with API key');
-          if (!smartformContainer || !apiKey) {
-            console.error('Cannot initialize smartform: container or API key missing');
+          console.log('Initializing smartform with API key:', apiKey.substring(0, 3) + '...');
+          if (!smartformContainer) {
+            console.error('Cannot initialize smartform: container missing');
             return;
           }
 
@@ -2039,7 +2318,7 @@ async function getResponse(messages: Message[]): Promise<string> {
 
                 const aiClient = new AiVueCore.AIClient({
                   provider: 'openai',
-                  apiKey: apiKey,
+                  apiKey: apiKey || 'demo-key',
                   model: 'gpt-4'
                 });
 
@@ -2059,6 +2338,11 @@ async function getResponse(messages: Message[]): Promise<string> {
                 };
               }
             });
+
+            // Configure Vue to handle custom elements
+            smartformApp.config.compilerOptions.isCustomElement = tag => {
+              return tag.startsWith('ai-') || tag.includes('-');
+            };
 
             // Register the component
             console.log('Registering AiSmartForm component');
@@ -2081,6 +2365,11 @@ async function getResponse(messages: Message[]): Promise<string> {
 
         // Setup API key handling for smartform
         setupApiKeyHandling('set-smartform-api-key', 'smartform-api-key', 'aivue-api-key', initializeSmartform);
+
+        // Initialize with a demo key if none is provided
+        if (!localStorage.getItem('aivue-api-key')) {
+          initializeSmartform('demo-key');
+        }
       } else {
         console.error('AiVueSmartform not found!');
       }
