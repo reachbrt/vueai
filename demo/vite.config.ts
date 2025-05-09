@@ -6,20 +6,10 @@ export default defineConfig({
   define: {
     'process.env': {}
   },
-  // Remove base path for Netlify deployment
   build: {
+    // Don't externalize any dependencies to ensure everything is bundled
     commonjsOptions: {
       include: [/node_modules/]
-    },
-    rollupOptions: {
-      // Make sure to externalize deps that shouldn't be bundled
-      external: ['vue'],
-      output: {
-        // Global vars to use in UMD build for externalized deps
-        globals: {
-          vue: 'Vue'
-        }
-      }
     }
   }
 });
