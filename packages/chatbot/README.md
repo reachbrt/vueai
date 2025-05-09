@@ -6,6 +6,7 @@
 [![npm downloads](https://img.shields.io/npm/dm/@aivue/chatbot.svg?style=flat-square)](https://www.npmjs.com/package/@aivue/chatbot)
 [![MIT License](https://img.shields.io/npm/l/@aivue/chatbot.svg?style=flat-square)](https://github.com/reachbrt/vueai/blob/main/LICENSE)
 [![codecov](https://codecov.io/gh/reachbrt/vueai/branch/main/graph/badge.svg)](https://codecov.io/gh/reachbrt/vueai)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/5cb37fa7-9ee1-4af6-9ff4-d34ff0322ded/deploy-status)](https://app.netlify.com/sites/aivue-demo/deploys)
 
 ## Overview
 
@@ -751,6 +752,10 @@ If you encounter errors related to missing Vue functions like `createElementBloc
    // Instead of app.component('MyComponent', Component)
    registerCompatComponent(app, 'MyComponent', Component);
    ```
+
+## Demo
+
+Check out our [interactive demo](https://aivue-demo.netlify.app/chatbot) to see the chatbot components in action.
 
 ## Related Packages
 

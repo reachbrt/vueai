@@ -6,6 +6,7 @@
 [![npm downloads](https://img.shields.io/npm/dm/@aivue/core.svg?style=flat-square)](https://www.npmjs.com/package/@aivue/core)
 [![MIT License](https://img.shields.io/npm/l/@aivue/core.svg?style=flat-square)](https://github.com/reachbrt/vueai/blob/main/LICENSE)
 [![codecov](https://codecov.io/gh/reachbrt/vueai/graph/badge.svg?token=8LYV3M14ZG)](https://codecov.io/gh/reachbrt/vueai)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/5cb37fa7-9ee1-4af6-9ff4-d34ff0322ded/deploy-status)](https://app.netlify.com/sites/aivue-demo/deploys)
 
 A modular AI-powered Vue.js component suite including:
 - **[@aivue/core](https://www.npmjs.com/package/@aivue/core)** – Core AI functionality for Vue.js components
@@ -297,6 +298,7 @@ npm run publish:packages
 ---
 
 ## 📚 Docs & Demo
+- [Live Demo](https://aivue-demo.netlify.app/) - Interactive demo of all components
 - [Documentation Wiki](https://github.com/reachbrt/vueai/wiki)
 - Storybook
 - Nuxt/Vite templates
