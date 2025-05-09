@@ -1,12 +1,25 @@
 {
   "name": "@aivue/smartform",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "AI-powered form validation for Vue.js",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./components/*": {
+      "import": "./dist/components/*",
+      "require": "./dist/components/*"
+    }
+  },
   "files": [
-    "dist"
+    "dist",
+    "README.md",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "build": "npm run clean && mkdir -p dist && cp -r src/* dist/ && cp package.json dist/ && cp README.md dist/",
@@ -41,7 +54,7 @@
     "access": "public"
   },
   "peerDependencies": {
-    "@aivue/core": "^1.1.5",
+    "@aivue/core": "^1.1.7",
     "vue": "^2.6.0 || ^3.0.0"
   },
   "devDependencies": {

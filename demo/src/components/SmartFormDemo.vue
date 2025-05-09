@@ -43,7 +43,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { AiSmartForm } from '../../node_modules/@aivue/smartform';
+import { AiSmartForm } from '@aivue/smartform';
 import { aiClient } from '../ai-client';
 
 export default defineComponent({
