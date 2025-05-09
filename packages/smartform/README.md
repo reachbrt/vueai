@@ -5,6 +5,7 @@
 [![npm version](https://img.shields.io/npm/v/@aivue/smartform.svg?style=flat-square)](https://www.npmjs.com/package/@aivue/smartform)
 [![npm downloads](https://img.shields.io/npm/dm/@aivue/smartform.svg?style=flat-square)](https://www.npmjs.com/package/@aivue/smartform)
 [![MIT License](https://img.shields.io/npm/l/@aivue/smartform.svg?style=flat-square)](https://github.com/reachbrt/vueai/blob/main/LICENSE)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/5cb37fa7-9ee1-4af6-9ff4-d34ff0322ded/deploy-status)](https://app.netlify.com/sites/aivue-demo/deploys)
 
 ## Overview
 
@@ -347,6 +348,10 @@ interface SmartFormSchema {
   };
 }
 ```
+
+## Demo
+
+Check out our [interactive demo](https://aivue-demo.netlify.app/smartform) to see the smartform components in action.
 
 ## Related Packages
 

@@ -5,6 +5,7 @@
 [![npm version](https://img.shields.io/npm/v/@aivue/autosuggest.svg?style=flat-square)](https://www.npmjs.com/package/@aivue/autosuggest)
 [![npm downloads](https://img.shields.io/npm/dm/@aivue/autosuggest.svg?style=flat-square)](https://www.npmjs.com/package/@aivue/autosuggest)
 [![MIT License](https://img.shields.io/npm/l/@aivue/autosuggest.svg?style=flat-square)](https://github.com/reachbrt/vueai/blob/main/LICENSE)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/5cb37fa7-9ee1-4af6-9ff4-d34ff0322ded/deploy-status)](https://app.netlify.com/sites/aivue-demo/deploys)
 
 ## Overview
 
@@ -480,6 +481,10 @@ You can customize the appearance of the autosuggest component using CSS variable
   --aivue-autosuggest-font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 ```
+
+## Demo
+
+Check out our [interactive demo](https://aivue-demo.netlify.app/autosuggest) to see the autosuggest components in action.
 
 ## Related Packages
 
