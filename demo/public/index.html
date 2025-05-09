@@ -5,97 +5,406 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vue AI Components</title>
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+      document.querySelectorAll('pre code').forEach((el) => {
+        hljs.highlightElement(el);
+      });
+    });
+  </script>
   <style>
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f5f7fa;
-      color: #333;
+    .tab-active {
+      border-bottom: 2px solid #3b82f6;
+      color: #3b82f6;
     }
-
-    .app {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-
-    header {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
-    header h1 {
-      font-size: 2.5rem;
-      margin-bottom: 10px;
-      color: #2563eb;
-    }
-
-    header p {
-      font-size: 1.2rem;
-      color: #64748b;
-    }
-
-    h2 {
-      color: #1e40af;
-      margin-top: 0;
-      margin-bottom: 20px;
-      font-size: 1.8rem;
-    }
-
     .demo-container {
-      background-color: white;
-      border-radius: 8px;
+      border-radius: 0.5rem;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-      padding: 20px;
-      margin-bottom: 30px;
+      background-color: white;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
     }
-
-    footer {
-      text-align: center;
-      margin-top: 40px;
-      padding: 20px;
-      color: #64748b;
-      border-top: 1px solid #e2e8f0;
+    .code-block {
+      background-color: #1e293b;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      margin: 1rem 0;
+      overflow-x: auto;
     }
-
-    footer a {
-      color: #2563eb;
-      text-decoration: none;
+    .message {
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      margin-bottom: 0.75rem;
+      max-width: 80%;
     }
-
-    footer a:hover {
-      text-decoration: underline;
+    .message.user {
+      background-color: #dbeafe;
+      margin-left: auto;
+    }
+    .message.assistant {
+      background-color: #f1f5f9;
+    }
+    .form-input {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #e2e8f0;
+      border-radius: 0.25rem;
+      margin-bottom: 1rem;
+    }
+    .btn {
+      padding: 0.5rem 1rem;
+      background-color: #3b82f6;
+      color: white;
+      border-radius: 0.25rem;
+      border: none;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background-color: #2563eb;
+    }
+    .btn:disabled {
+      background-color: #94a3b8;
+      cursor: not-allowed;
     }
   </style>
 </head>
-<body>
+<body class="bg-gray-50 text-gray-800">
   <div id="app">
-    <div class="app">
-      <header>
-        <h1>Vue AI Components</h1>
-        <p>Powerful AI-powered components for Vue.js applications</p>
+    <div class="max-w-6xl mx-auto px-4 py-8">
+      <header class="text-center mb-12">
+        <h1 class="text-4xl font-bold text-blue-600 mb-2">Vue AI Components</h1>
+        <p class="text-xl text-gray-500">Powerful AI-powered components for Vue.js applications</p>
       </header>
 
-      <main>
-        <section>
-          <h2>Welcome to Vue AI Components</h2>
-          <div class="demo-container">
-            <p>This is a simplified demo of the Vue AI Components library.</p>
-            <p>The full demo includes:</p>
-            <ul>
-              <li>AI Chat Components</li>
-              <li>AI Autosuggest Components</li>
-              <li>AI Smart Form Components</li>
-              <li>TypeScript Integration</li>
-            </ul>
-            <p>Visit our <a href="https://github.com/reachbrt/vueai" target="_blank">GitHub Repository</a> to learn more.</p>
-          </div>
-        </section>
-      </main>
+      <div class="flex border-b border-gray-200 mb-8">
+        <button
+          v-for="tab in tabs"
+          :key="tab.id"
+          @click="activeTab = tab.id"
+          :class="['px-4 py-2 font-medium', activeTab === tab.id ? 'tab-active' : 'text-gray-500']"
+        >
+          {{ tab.name }}
+        </button>
+      </div>
 
-      <footer>
-        <p>Created by <a href="https://github.com/reachbrt" target="_blank">reachbrt</a> | <a href="https://github.com/reachbrt/vueai" target="_blank">GitHub Repository</a></p>
+      <!-- Overview Tab -->
+      <div v-if="activeTab === 'overview'" class="space-y-8">
+        <div class="demo-container">
+          <h2 class="text-2xl font-bold text-blue-800 mb-4">Welcome to Vue AI Components</h2>
+          <p class="mb-4">A collection of powerful, easy-to-use Vue components for integrating AI capabilities into your applications.</p>
+
+          <h3 class="text-xl font-semibold text-gray-700 mt-6 mb-2">Features</h3>
+          <ul class="list-disc pl-6 space-y-2">
+            <li>Simple integration with OpenAI and other AI providers</li>
+            <li>Fully customizable components</li>
+            <li>TypeScript support</li>
+            <li>Compatible with Vue 2 and Vue 3</li>
+            <li>Lightweight and performant</li>
+          </ul>
+
+          <h3 class="text-xl font-semibold text-gray-700 mt-6 mb-2">Packages</h3>
+          <div class="grid md:grid-cols-2 gap-4 mt-4">
+            <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+              <h4 class="font-bold text-blue-600">@aivue/core</h4>
+              <p class="text-gray-600 mt-2">Core functionality for AI integration</p>
+            </div>
+            <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+              <h4 class="font-bold text-blue-600">@aivue/chatbot</h4>
+              <p class="text-gray-600 mt-2">Chat interface components</p>
+            </div>
+            <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+              <h4 class="font-bold text-blue-600">@aivue/autosuggest</h4>
+              <p class="text-gray-600 mt-2">AI-powered input suggestions</p>
+            </div>
+            <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+              <h4 class="font-bold text-blue-600">@aivue/smartform</h4>
+              <p class="text-gray-600 mt-2">Intelligent form components</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo-container">
+          <h2 class="text-2xl font-bold text-blue-800 mb-4">Getting Started</h2>
+          <p class="mb-4">Install the packages you need:</p>
+          <div class="code-block">
+            <pre><code class="language-bash">npm install @aivue/core @aivue/chatbot @aivue/autosuggest @aivue/smartform</code></pre>
+          </div>
+
+          <p class="mb-4">Initialize the AI client:</p>
+          <div class="code-block">
+            <pre><code class="language-javascript">import { initializeAI, AIClient } from '@aivue/core';
+
+// Initialize the AI functionality
+initializeAI();
+
+// Create an AI client
+const aiClient = new AIClient({
+  provider: 'openai',
+  apiKey: 'your-api-key',
+  model: 'gpt-4'
+});</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chatbot Tab -->
+      <div v-if="activeTab === 'chatbot'" class="space-y-8">
+        <div class="demo-container">
+          <h2 class="text-2xl font-bold text-blue-800 mb-4">Chat Components</h2>
+          <p class="mb-4">The @aivue/chatbot package provides components for creating chat interfaces:</p>
+
+          <h3 class="text-xl font-semibold text-gray-700 mt-6 mb-2">AiChatWindow Component</h3>
+          <p class="mb-4">A complete chat window with message history and input field:</p>
+          <div class="code-block">
+            <pre><code class="language-html">&lt;template&gt;
+  &lt;AiChatWindow
+    :client="aiClient"
+    title="AI Assistant"
+    placeholder="Ask me anything..."
+    :show-avatars="true"
+    theme="light"
+  /&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import { AiChatWindow } from '@aivue/chatbot';
+import { aiClient } from './ai-client';
+
+export default {
+  components: {
+    AiChatWindow
+  },
+  setup() {
+    return {
+      aiClient
+    };
+  }
+}
+&lt;/script&gt;</code></pre>
+          </div>
+
+          <h3 class="text-xl font-semibold text-gray-700 mt-6 mb-2">Chat Demo</h3>
+          <div class="bg-white rounded-lg border border-gray-200 p-4">
+            <div class="flex flex-col h-64 overflow-y-auto mb-4">
+              <div v-for="(message, index) in chatMessages" :key="index"
+                   :class="['message', message.role]">
+                <div class="font-semibold text-sm text-gray-600 mb-1">{{ message.role }}</div>
+                <div>{{ message.content }}</div>
+              </div>
+              <div v-if="isTyping" class="message assistant">
+                <div class="font-semibold text-sm text-gray-600 mb-1">assistant</div>
+                <div>typing...</div>
+              </div>
+            </div>
+            <div class="flex">
+              <input v-model="chatInput" @keyup.enter="sendChatMessage"
+                     class="form-input" placeholder="Type a message..." />
+              <button @click="sendChatMessage" class="btn ml-2" :disabled="isTyping">Send</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Autosuggest Tab -->
+      <div v-if="activeTab === 'autosuggest'" class="space-y-8">
+        <div class="demo-container">
+          <h2 class="text-2xl font-bold text-blue-800 mb-4">Autosuggest Components</h2>
+          <p class="mb-4">The @aivue/autosuggest package provides components for AI-powered input suggestions:</p>
+
+          <h3 class="text-xl font-semibold text-gray-700 mt-6 mb-2">AiAutosuggest Component</h3>
+          <p class="mb-4">An input field with AI-powered suggestions:</p>
+          <div class="code-block">
+            <pre><code class="language-html">&lt;template&gt;
+  &lt;AiAutosuggest
+    :client="aiClient"
+    v-model="inputValue"
+    placeholder="Start typing..."
+    :debounce="300"
+    :min-length="3"
+  /&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import { AiAutosuggest } from '@aivue/autosuggest';
+import { aiClient } from './ai-client';
+
+export default {
+  components: {
+    AiAutosuggest
+  },
+  setup() {
+    const inputValue = ref('');
+
+    return {
+      aiClient,
+      inputValue
+    };
+  }
+}
+&lt;/script&gt;</code></pre>
+          </div>
+
+          <h3 class="text-xl font-semibold text-gray-700 mt-6 mb-2">Autosuggest Demo</h3>
+          <div class="bg-white rounded-lg border border-gray-200 p-4">
+            <div class="mb-4">
+              <label class="block text-gray-700 mb-2">Email input with suggestions</label>
+              <input v-model="emailInput" class="form-input" placeholder="Start typing an email..." />
+              <div v-if="emailSuggestion" class="mt-2 text-sm text-gray-500">
+                Suggestion: {{ emailSuggestion }}
+                <button @click="acceptSuggestion" class="text-blue-500 ml-2">Accept</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SmartForm Tab -->
+      <div v-if="activeTab === 'smartform'" class="space-y-8">
+        <div class="demo-container">
+          <h2 class="text-2xl font-bold text-blue-800 mb-4">Smart Form Components</h2>
+          <p class="mb-4">The @aivue/smartform package provides intelligent form components:</p>
+
+          <h3 class="text-xl font-semibold text-gray-700 mt-6 mb-2">AiSmartForm Component</h3>
+          <p class="mb-4">A form with AI-powered validation and suggestions:</p>
+          <div class="code-block">
+            <pre><code class="language-html">&lt;template&gt;
+  &lt;AiSmartForm
+    :client="aiClient"
+    :schema="formSchema"
+    @submit="handleSubmit"
+  /&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import { AiSmartForm } from '@aivue/smartform';
+import { aiClient } from './ai-client';
+
+export default {
+  components: {
+    AiSmartForm
+  },
+  setup() {
+    const formSchema = {
+      title: 'Contact Form',
+      fields: [
+        {
+          name: 'name',
+          label: 'Full Name',
+          type: 'text',
+          required: true
+        },
+        {
+          name: 'email',
+          label: 'Email Address',
+          type: 'email',
+          required: true
+        },
+        {
+          name: 'message',
+          label: 'Message',
+          type: 'textarea'
+        }
+      ]
+    };
+
+    const handleSubmit = (data) => {
+      console.log('Form submitted:', data);
+    };
+
+    return {
+      aiClient,
+      formSchema,
+      handleSubmit
+    };
+  }
+}
+&lt;/script&gt;</code></pre>
+          </div>
+
+          <h3 class="text-xl font-semibold text-gray-700 mt-6 mb-2">Smart Form Demo</h3>
+          <div class="bg-white rounded-lg border border-gray-200 p-4">
+            <form @submit.prevent="submitForm">
+              <div class="mb-4">
+                <label class="block text-gray-700 mb-2">Full Name</label>
+                <input v-model="formData.name" class="form-input" placeholder="Enter your name" />
+                <div v-if="formErrors.name" class="mt-1 text-red-500 text-sm">{{ formErrors.name }}</div>
+              </div>
+              <div class="mb-4">
+                <label class="block text-gray-700 mb-2">Email Address</label>
+                <input v-model="formData.email" class="form-input" placeholder="Enter your email" />
+                <div v-if="formErrors.email" class="mt-1 text-red-500 text-sm">{{ formErrors.email }}</div>
+              </div>
+              <div class="mb-4">
+                <label class="block text-gray-700 mb-2">Message</label>
+                <textarea v-model="formData.message" class="form-input" rows="4" placeholder="Enter your message"></textarea>
+                <div v-if="formErrors.message" class="mt-1 text-red-500 text-sm">{{ formErrors.message }}</div>
+              </div>
+              <button type="submit" class="btn">Submit</button>
+            </form>
+            <div v-if="formSubmitted" class="mt-4 p-3 bg-green-100 text-green-800 rounded">
+              Form submitted successfully!
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TypeScript Tab -->
+      <div v-if="activeTab === 'typescript'" class="space-y-8">
+        <div class="demo-container">
+          <h2 class="text-2xl font-bold text-blue-800 mb-4">TypeScript Support</h2>
+          <p class="mb-4">All packages include full TypeScript support:</p>
+
+          <h3 class="text-xl font-semibold text-gray-700 mt-6 mb-2">Type Definitions</h3>
+          <div class="code-block">
+            <pre><code class="language-typescript">// Core types
+import { AIClient, AIClientOptions, Message } from '@aivue/core';
+
+// Chatbot types
+import { ChatOptions, ChatEngineOptions } from '@aivue/chatbot';
+
+// Autosuggest types
+import { AutosuggestOptions, SuggestionItem } from '@aivue/autosuggest';
+
+// SmartForm types
+import { SmartFormSchema, FormField } from '@aivue/smartform';</code></pre>
+          </div>
+
+          <h3 class="text-xl font-semibold text-gray-700 mt-6 mb-2">TypeScript Example</h3>
+          <div class="code-block">
+            <pre><code class="language-typescript">import { AIClient, Message } from '@aivue/core';
+
+// Create a typed AI client
+const client: AIClient = new AIClient({
+  provider: 'openai',
+  apiKey: process.env.OPENAI_API_KEY,
+  model: 'gpt-4'
+});
+
+// Create a typed message array
+const messages: Message[] = [
+  {
+    role: 'system',
+    content: 'You are a helpful assistant.'
+  },
+  {
+    role: 'user',
+    content: 'Hello, AI!'
+  }
+];
+
+// Type-safe function
+async function getResponse(messages: Message[]): Promise<string> {
+  return await client.chat(messages);
+}</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <footer class="text-center mt-12 py-6 text-gray-500 border-t border-gray-200">
+        <p>Created by <a href="https://github.com/reachbrt" target="_blank" class="text-blue-600 hover:underline">reachbrt</a> | <a href="https://github.com/reachbrt/vueai" target="_blank" class="text-blue-600 hover:underline">GitHub Repository</a></p>
       </footer>
     </div>
   </div>
@@ -104,7 +413,141 @@
     const app = Vue.createApp({
       data() {
         return {
-          message: 'Hello Vue!'
+          activeTab: 'overview',
+          tabs: [
+            { id: 'overview', name: 'Overview' },
+            { id: 'chatbot', name: 'Chatbot' },
+            { id: 'autosuggest', name: 'Autosuggest' },
+            { id: 'smartform', name: 'SmartForm' },
+            { id: 'typescript', name: 'TypeScript' }
+          ],
+          // Chat demo data
+          chatMessages: [
+            { role: 'assistant', content: 'Hello! How can I help you today?' }
+          ],
+          chatInput: '',
+          isTyping: false,
+
+          // Autosuggest demo data
+          emailInput: '',
+          emailSuggestion: '',
+
+          // Form demo data
+          formData: {
+            name: '',
+            email: '',
+            message: ''
+          },
+          formErrors: {
+            name: '',
+            email: '',
+            message: ''
+          },
+          formSubmitted: false
+        }
+      },
+      methods: {
+        // Chat methods
+        sendChatMessage() {
+          if (!this.chatInput.trim()) return;
+
+          // Add user message
+          this.chatMessages.push({
+            role: 'user',
+            content: this.chatInput
+          });
+
+          const userInput = this.chatInput;
+          this.chatInput = '';
+          this.isTyping = true;
+
+          // Simulate AI response
+          setTimeout(() => {
+            let response = '';
+
+            if (userInput.toLowerCase().includes('hello') || userInput.toLowerCase().includes('hi')) {
+              response = 'Hello! How can I assist you today?';
+            } else if (userInput.toLowerCase().includes('help')) {
+              response = 'I\'m here to help! You can ask me about the Vue AI Components library.';
+            } else if (userInput.toLowerCase().includes('chatbot') || userInput.toLowerCase().includes('chat')) {
+              response = 'The @aivue/chatbot package provides components for creating chat interfaces like this one!';
+            } else if (userInput.toLowerCase().includes('autosuggest')) {
+              response = 'The @aivue/autosuggest package provides components for AI-powered input suggestions.';
+            } else if (userInput.toLowerCase().includes('form') || userInput.toLowerCase().includes('smartform')) {
+              response = 'The @aivue/smartform package provides intelligent form components with AI-powered validation.';
+            } else {
+              response = 'I\'m a demo of the @aivue/chatbot package. You can ask me about the Vue AI Components library!';
+            }
+
+            this.chatMessages.push({
+              role: 'assistant',
+              content: response
+            });
+
+            this.isTyping = false;
+          }, 1000);
+        },
+
+        // Autosuggest methods
+        watchEmailInput() {
+          if (this.emailInput.length > 3 && !this.emailInput.includes('@')) {
+            // Simulate AI suggestion
+            this.emailSuggestion = this.emailInput + '@gmail.com';
+          } else {
+            this.emailSuggestion = '';
+          }
+        },
+        acceptSuggestion() {
+          if (this.emailSuggestion) {
+            this.emailInput = this.emailSuggestion;
+            this.emailSuggestion = '';
+          }
+        },
+
+        // Form methods
+        validateForm() {
+          let isValid = true;
+          this.formErrors = {
+            name: '',
+            email: '',
+            message: ''
+          };
+
+          if (!this.formData.name) {
+            this.formErrors.name = 'Name is required';
+            isValid = false;
+          }
+
+          if (!this.formData.email) {
+            this.formErrors.email = 'Email is required';
+            isValid = false;
+          } else if (!this.formData.email.includes('@')) {
+            this.formErrors.email = 'Please enter a valid email address';
+            isValid = false;
+          }
+
+          return isValid;
+        },
+        submitForm() {
+          if (this.validateForm()) {
+            // Form is valid
+            this.formSubmitted = true;
+
+            // Reset form after 3 seconds
+            setTimeout(() => {
+              this.formData = {
+                name: '',
+                email: '',
+                message: ''
+              };
+              this.formSubmitted = false;
+            }, 3000);
+          }
+        }
+      },
+      watch: {
+        emailInput() {
+          this.watchEmailInput();
         }
       }
     });
