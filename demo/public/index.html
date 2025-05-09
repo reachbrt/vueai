@@ -8,6 +8,8 @@
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', (event) => {
       document.querySelectorAll('pre code').forEach((el) => {
@@ -16,126 +18,449 @@
     });
   </script>
   <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-dark: #2563eb;
+      --secondary: #8b5cf6;
+      --accent: #f59e0b;
+      --text: #1e293b;
+      --text-light: #64748b;
+      --bg: #f8fafc;
+      --bg-card: #ffffff;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
     .tab-active {
-      border-bottom: 2px solid #3b82f6;
-      color: #3b82f6;
+      border-bottom: 2px solid var(--primary);
+      color: var(--primary);
     }
+
     .demo-container {
-      border-radius: 0.5rem;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-      background-color: white;
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
+      border-radius: 0.75rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+      background-color: var(--bg-card);
+      padding: 1.75rem;
+      margin-bottom: 2rem;
+      transform: translateY(0);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
     }
+
+    .demo-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.6s ease;
+    }
+
+    .demo-container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .demo-container:hover::before {
+      transform: scaleX(1);
+    }
+
     .code-block {
       background-color: #1e293b;
       border-radius: 0.5rem;
       padding: 1rem;
       margin: 1rem 0;
       overflow-x: auto;
+      position: relative;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
+
     .message {
       padding: 0.75rem;
       border-radius: 0.5rem;
       margin-bottom: 0.75rem;
       max-width: 80%;
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateY(20px);
     }
+
+    .message.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     .message.user {
       background-color: #dbeafe;
       margin-left: auto;
+      border-top-right-radius: 0;
     }
+
     .message.assistant {
       background-color: #f1f5f9;
+      border-top-left-radius: 0;
     }
+
     .form-input {
       width: 100%;
-      padding: 0.5rem;
+      padding: 0.75rem;
       border: 1px solid #e2e8f0;
-      border-radius: 0.25rem;
+      border-radius: 0.5rem;
       margin-bottom: 1rem;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
     }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    }
+
     .btn {
-      padding: 0.5rem 1rem;
-      background-color: #3b82f6;
+      padding: 0.75rem 1.25rem;
+      background-color: var(--primary);
       color: white;
-      border-radius: 0.25rem;
+      border-radius: 0.5rem;
       border: none;
       cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
     }
+
     .btn:hover {
-      background-color: #2563eb;
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
     .btn:disabled {
       background-color: #94a3b8;
       cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .btn::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      background-image: radial-gradient(circle, #fff 10%, transparent 10.01%);
+      background-repeat: no-repeat;
+      background-position: 50%;
+      transform: scale(10, 10);
+      opacity: 0;
+      transition: transform 0.5s, opacity 1s;
+    }
+
+    .btn:active::after {
+      transform: scale(0, 0);
+      opacity: 0.3;
+      transition: 0s;
+    }
+
+    .feature-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 0.5rem;
+      padding: 1.25rem;
+      transition: all 0.3s ease;
+      height: 100%;
+    }
+
+    .feature-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .animate-fade-up {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .animate-fade-right {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+
+    .animate-fade-left {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+
+    .animate-scale {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+      100% {
+        transform: translateY(0px);
+      }
+    }
+
+    .float-animation {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
     }
   </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
   <div id="app">
     <div class="max-w-6xl mx-auto px-4 py-8">
-      <header class="text-center mb-12">
-        <h1 class="text-4xl font-bold text-blue-600 mb-2">Vue AI Components</h1>
-        <p class="text-xl text-gray-500">Powerful AI-powered components for Vue.js applications</p>
+      <header class="text-center mb-16 relative">
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+          <div class="circle-1 absolute rounded-full bg-blue-100 opacity-20" style="width: 300px; height: 300px; top: -100px; left: -100px;"></div>
+          <div class="circle-2 absolute rounded-full bg-purple-100 opacity-20" style="width: 200px; height: 200px; top: 50px; right: -50px;"></div>
+        </div>
+        <h1 class="text-5xl font-bold mb-4 hero-title">
+          <span class="gradient-text">Vue AI</span> Components
+        </h1>
+        <p class="text-xl text-gray-500 max-w-2xl mx-auto hero-subtitle">
+          Powerful AI-powered components for building intelligent Vue.js applications
+        </p>
+        <div class="mt-8 hero-buttons">
+          <a href="https://github.com/reachbrt/vueai" target="_blank" class="btn inline-block mr-4">
+            <svg class="inline-block w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path>
+            </svg>
+            GitHub
+          </a>
+          <a href="https://www.npmjs.com/package/@aivue/core" target="_blank" class="btn inline-block bg-gray-800 hover:bg-gray-900">
+            <svg class="inline-block w-5 h-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M0 0v24h24V0H0zm12 18.664h-2.667V7.333H6.667v11.331H2V5.333h10v13.331zm6.667 0h-4V5.333H22v13.331h-3.333V7.333z"/>
+            </svg>
+            npm
+          </a>
+        </div>
       </header>
 
-      <div class="flex border-b border-gray-200 mb-8">
+      <div class="flex border-b border-gray-200 mb-12 justify-center tabs-container">
         <button
           v-for="tab in tabs"
           :key="tab.id"
-          @click="activeTab = tab.id"
-          :class="['px-4 py-2 font-medium', activeTab === tab.id ? 'tab-active' : 'text-gray-500']"
+          @click="changeTab(tab.id)"
+          :class="['px-6 py-3 font-medium text-lg transition-all duration-300', activeTab === tab.id ? 'tab-active' : 'text-gray-500 hover:text-gray-700']"
         >
           {{ tab.name }}
         </button>
       </div>
 
       <!-- Overview Tab -->
-      <div v-if="activeTab === 'overview'" class="space-y-8">
-        <div class="demo-container">
-          <h2 class="text-2xl font-bold text-blue-800 mb-4">Welcome to Vue AI Components</h2>
-          <p class="mb-4">A collection of powerful, easy-to-use Vue components for integrating AI capabilities into your applications.</p>
-
-          <h3 class="text-xl font-semibold text-gray-700 mt-6 mb-2">Features</h3>
-          <ul class="list-disc pl-6 space-y-2">
-            <li>Simple integration with OpenAI and other AI providers</li>
-            <li>Fully customizable components</li>
-            <li>TypeScript support</li>
-            <li>Compatible with Vue 2 and Vue 3</li>
-            <li>Lightweight and performant</li>
-          </ul>
-
-          <h3 class="text-xl font-semibold text-gray-700 mt-6 mb-2">Packages</h3>
-          <div class="grid md:grid-cols-2 gap-4 mt-4">
-            <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
-              <h4 class="font-bold text-blue-600">@aivue/core</h4>
-              <p class="text-gray-600 mt-2">Core functionality for AI integration</p>
+      <div v-if="activeTab === 'overview'" class="space-y-12">
+        <div class="demo-container overview-intro">
+          <div class="flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 md:pr-8">
+              <h2 class="text-3xl font-bold mb-4 section-title">
+                <span class="gradient-text">Welcome to</span> Vue AI Components
+              </h2>
+              <p class="text-lg mb-6 section-description">
+                A collection of powerful, easy-to-use Vue components for integrating AI capabilities into your applications.
+              </p>
+              <div class="space-y-4 feature-list">
+                <div class="flex items-start">
+                  <div class="flex-shrink-0 mt-1">
+                    <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                    </svg>
+                  </div>
+                  <p class="ml-3 text-gray-700">Simple integration with OpenAI and other AI providers</p>
+                </div>
+                <div class="flex items-start">
+                  <div class="flex-shrink-0 mt-1">
+                    <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                    </svg>
+                  </div>
+                  <p class="ml-3 text-gray-700">Fully customizable components with beautiful UI</p>
+                </div>
+                <div class="flex items-start">
+                  <div class="flex-shrink-0 mt-1">
+                    <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                    </svg>
+                  </div>
+                  <p class="ml-3 text-gray-700">TypeScript support with full type definitions</p>
+                </div>
+                <div class="flex items-start">
+                  <div class="flex-shrink-0 mt-1">
+                    <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                    </svg>
+                  </div>
+                  <p class="ml-3 text-gray-700">Compatible with Vue 2 and Vue 3</p>
+                </div>
+                <div class="flex items-start">
+                  <div class="flex-shrink-0 mt-1">
+                    <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                    </svg>
+                  </div>
+                  <p class="ml-3 text-gray-700">Lightweight and performant</p>
+                </div>
+              </div>
             </div>
-            <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
-              <h4 class="font-bold text-blue-600">@aivue/chatbot</h4>
-              <p class="text-gray-600 mt-2">Chat interface components</p>
-            </div>
-            <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
-              <h4 class="font-bold text-blue-600">@aivue/autosuggest</h4>
-              <p class="text-gray-600 mt-2">AI-powered input suggestions</p>
-            </div>
-            <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
-              <h4 class="font-bold text-blue-600">@aivue/smartform</h4>
-              <p class="text-gray-600 mt-2">Intelligent form components</p>
+            <div class="md:w-1/2 mt-8 md:mt-0 overview-image">
+              <div class="relative">
+                <div class="absolute inset-0 bg-gradient-to-r from-blue-100 to-purple-100 rounded-lg transform rotate-3 scale-105 opacity-50"></div>
+                <div class="relative bg-white p-6 rounded-lg shadow-lg">
+                  <div class="flex items-center mb-4">
+                    <div class="w-3 h-3 bg-red-500 rounded-full mr-2"></div>
+                    <div class="w-3 h-3 bg-yellow-500 rounded-full mr-2"></div>
+                    <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                  </div>
+                  <div class="space-y-3">
+                    <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+                    <div class="h-4 bg-gray-200 rounded"></div>
+                    <div class="h-4 bg-gray-200 rounded w-5/6"></div>
+                    <div class="h-4 bg-gray-200 rounded w-2/3"></div>
+                    <div class="h-4 bg-blue-200 rounded w-1/2"></div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="demo-container">
-          <h2 class="text-2xl font-bold text-blue-800 mb-4">Getting Started</h2>
-          <p class="mb-4">Install the packages you need:</p>
-          <div class="code-block">
-            <pre><code class="language-bash">npm install @aivue/core @aivue/chatbot @aivue/autosuggest @aivue/smartform</code></pre>
+        <div class="demo-container packages-section">
+          <h2 class="text-3xl font-bold mb-8 text-center section-title">
+            <span class="gradient-text">Powerful</span> Packages
+          </h2>
+          <div class="grid md:grid-cols-2 gap-6 mt-8">
+            <div class="feature-card package-card core-card">
+              <div class="flex items-center mb-4">
+                <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mr-3">
+                  <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                  </svg>
+                </div>
+                <h4 class="text-xl font-bold text-blue-600">@aivue/core</h4>
+              </div>
+              <p class="text-gray-600">Core functionality for AI integration with multiple providers. The foundation for all AI components.</p>
+              <div class="mt-4">
+                <a href="https://www.npmjs.com/package/@aivue/core" target="_blank" class="text-blue-600 hover:underline text-sm font-medium inline-flex items-center">
+                  Learn more
+                  <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                  </svg>
+                </a>
+              </div>
+            </div>
+            <div class="feature-card package-card chatbot-card">
+              <div class="flex items-center mb-4">
+                <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center mr-3">
+                  <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
+                  </svg>
+                </div>
+                <h4 class="text-xl font-bold text-purple-600">@aivue/chatbot</h4>
+              </div>
+              <p class="text-gray-600">Beautiful chat interface components for creating conversational experiences with AI.</p>
+              <div class="mt-4">
+                <a href="https://www.npmjs.com/package/@aivue/chatbot" target="_blank" class="text-purple-600 hover:underline text-sm font-medium inline-flex items-center">
+                  Learn more
+                  <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                  </svg>
+                </a>
+              </div>
+            </div>
+            <div class="feature-card package-card autosuggest-card">
+              <div class="flex items-center mb-4">
+                <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center mr-3">
+                  <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                  </svg>
+                </div>
+                <h4 class="text-xl font-bold text-green-600">@aivue/autosuggest</h4>
+              </div>
+              <p class="text-gray-600">AI-powered input suggestions that enhance user experience with intelligent autocompletion.</p>
+              <div class="mt-4">
+                <a href="https://www.npmjs.com/package/@aivue/autosuggest" target="_blank" class="text-green-600 hover:underline text-sm font-medium inline-flex items-center">
+                  Learn more
+                  <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                  </svg>
+                </a>
+              </div>
+            </div>
+            <div class="feature-card package-card smartform-card">
+              <div class="flex items-center mb-4">
+                <div class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center mr-3">
+                  <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+                  </svg>
+                </div>
+                <h4 class="text-xl font-bold text-yellow-600">@aivue/smartform</h4>
+              </div>
+              <p class="text-gray-600">Intelligent form components with AI-powered validation and suggestions for better data collection.</p>
+              <div class="mt-4">
+                <a href="https://www.npmjs.com/package/@aivue/smartform" target="_blank" class="text-yellow-600 hover:underline text-sm font-medium inline-flex items-center">
+                  Learn more
+                  <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                  </svg>
+                </a>
+              </div>
+            </div>
           </div>
+        </div>
 
-          <p class="mb-4">Initialize the AI client:</p>
-          <div class="code-block">
-            <pre><code class="language-javascript">import { initializeAI, AIClient } from '@aivue/core';
+        <div class="demo-container getting-started-section">
+          <h2 class="text-3xl font-bold mb-6 section-title">
+            <span class="gradient-text">Getting</span> Started
+          </h2>
+          <div class="space-y-6">
+            <div class="step-item">
+              <div class="flex items-center mb-2">
+                <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold mr-3">1</div>
+                <h3 class="text-xl font-semibold">Install the packages</h3>
+              </div>
+              <div class="ml-11">
+                <div class="code-block">
+                  <pre><code class="language-bash">npm install @aivue/core @aivue/chatbot @aivue/autosuggest @aivue/smartform</code></pre>
+                </div>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="flex items-center mb-2">
+                <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold mr-3">2</div>
+                <h3 class="text-xl font-semibold">Initialize the AI client</h3>
+              </div>
+              <div class="ml-11">
+                <div class="code-block">
+                  <pre><code class="language-javascript">import { initializeAI, AIClient } from '@aivue/core';
 
 // Initialize the AI functionality
 initializeAI();
@@ -146,6 +471,30 @@ const aiClient = new AIClient({
   apiKey: 'your-api-key',
   model: 'gpt-4'
 });</code></pre>
+                </div>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="flex items-center mb-2">
+                <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold mr-3">3</div>
+                <h3 class="text-xl font-semibold">Use the components</h3>
+              </div>
+              <div class="ml-11">
+                <div class="code-block">
+                  <pre><code class="language-html">&lt;template&gt;
+  &lt;div&gt;
+    &lt;AiChatWindow
+      :client="aiClient"
+      title="AI Assistant"
+      placeholder="Ask me anything..."
+      :show-avatars="true"
+    /&gt;
+  &lt;/div&gt;
+&lt;/template&gt;</code></pre>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -410,7 +759,7 @@ async function getResponse(messages: Message[]): Promise<string> {
   </div>
 
   <script>
-    const app = Vue.createApp({
+    const appData = {
       data() {
         return {
           activeTab: 'overview',
@@ -461,6 +810,23 @@ async function getResponse(messages: Message[]): Promise<string> {
           this.chatInput = '';
           this.isTyping = true;
 
+          // Animate the new message
+          this.$nextTick(() => {
+            const messages = document.querySelectorAll('.message:not(.show)');
+            if (messages.length > 0) {
+              gsap.to(messages, {
+                opacity: 1,
+                y: 0,
+                stagger: 0.1,
+                duration: 0.4,
+                ease: 'power2.out',
+                onComplete: () => {
+                  messages.forEach(msg => msg.classList.add('show'));
+                }
+              });
+            }
+          });
+
           // Simulate AI response
           setTimeout(() => {
             let response = '';
@@ -485,6 +851,23 @@ async function getResponse(messages: Message[]): Promise<string> {
             });
 
             this.isTyping = false;
+
+            // Animate the new message
+            this.$nextTick(() => {
+              const messages = document.querySelectorAll('.message:not(.show)');
+              if (messages.length > 0) {
+                gsap.to(messages, {
+                  opacity: 1,
+                  y: 0,
+                  stagger: 0.1,
+                  duration: 0.4,
+                  ease: 'power2.out',
+                  onComplete: () => {
+                    messages.forEach(msg => msg.classList.add('show'));
+                  }
+                });
+              }
+            });
           }, 1000);
         },
 
@@ -493,6 +876,17 @@ async function getResponse(messages: Message[]): Promise<string> {
           if (this.emailInput.length > 3 && !this.emailInput.includes('@')) {
             // Simulate AI suggestion
             this.emailSuggestion = this.emailInput + '@gmail.com';
+
+            // Animate the suggestion
+            this.$nextTick(() => {
+              const suggestionEl = document.querySelector('.suggestion-text');
+              if (suggestionEl) {
+                gsap.fromTo(suggestionEl,
+                  { opacity: 0, y: 10 },
+                  { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' }
+                );
+              }
+            });
           } else {
             this.emailSuggestion = '';
           }
@@ -526,12 +920,34 @@ async function getResponse(messages: Message[]): Promise<string> {
             isValid = false;
           }
 
+          // Animate error messages
+          this.$nextTick(() => {
+            const errorMessages = document.querySelectorAll('.error-message');
+            if (errorMessages.length > 0) {
+              gsap.fromTo(errorMessages,
+                { opacity: 0, y: -10 },
+                { opacity: 1, y: 0, stagger: 0.1, duration: 0.3, ease: 'power2.out' }
+              );
+            }
+          });
+
           return isValid;
         },
         submitForm() {
           if (this.validateForm()) {
             // Form is valid
             this.formSubmitted = true;
+
+            // Animate success message
+            this.$nextTick(() => {
+              const successMessage = document.querySelector('.success-message');
+              if (successMessage) {
+                gsap.fromTo(successMessage,
+                  { opacity: 0, scale: 0.9 },
+                  { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(1.7)' }
+                );
+              }
+            });
 
             // Reset form after 3 seconds
             setTimeout(() => {
@@ -543,14 +959,200 @@ async function getResponse(messages: Message[]): Promise<string> {
               this.formSubmitted = false;
             }, 3000);
           }
+        },
+
+        // Tab switching with animation
+        changeTab(tabId) {
+          const oldTab = document.querySelector(`[v-if="activeTab === '${this.activeTab}'"]`);
+          this.activeTab = tabId;
+
+          // Animate tab transition
+          this.$nextTick(() => {
+            const newTab = document.querySelector(`[v-if="activeTab === '${tabId}'"]`);
+            if (newTab) {
+              gsap.fromTo(newTab,
+                { opacity: 0, y: 20 },
+                { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }
+              );
+            }
+          });
+
+          // Initialize animations for the new tab
+          this.initAnimations();
+        },
+
+        // Initialize animations for the current tab
+        initAnimations() {
+          this.$nextTick(() => {
+            // Animate section titles
+            gsap.utils.toArray('.section-title').forEach(title => {
+              gsap.from(title, {
+                scrollTrigger: {
+                  trigger: title,
+                  start: 'top 80%',
+                  toggleActions: 'play none none none'
+                },
+                opacity: 0,
+                y: 30,
+                duration: 0.8,
+                ease: 'power3.out'
+              });
+            });
+
+            // Animate feature cards
+            gsap.utils.toArray('.feature-card').forEach((card, index) => {
+              gsap.from(card, {
+                scrollTrigger: {
+                  trigger: card,
+                  start: 'top 85%',
+                  toggleActions: 'play none none none'
+                },
+                opacity: 0,
+                y: 30,
+                duration: 0.6,
+                delay: index * 0.1,
+                ease: 'power3.out'
+              });
+            });
+
+            // Animate code blocks
+            gsap.utils.toArray('.code-block').forEach(block => {
+              gsap.from(block, {
+                scrollTrigger: {
+                  trigger: block,
+                  start: 'top 85%',
+                  toggleActions: 'play none none none'
+                },
+                opacity: 0,
+                y: 20,
+                duration: 0.6,
+                ease: 'power2.out'
+              });
+            });
+
+            // Animate step items
+            gsap.utils.toArray('.step-item').forEach((step, index) => {
+              gsap.from(step, {
+                scrollTrigger: {
+                  trigger: step,
+                  start: 'top 85%',
+                  toggleActions: 'play none none none'
+                },
+                opacity: 0,
+                x: -30,
+                duration: 0.6,
+                delay: index * 0.2,
+                ease: 'power2.out'
+              });
+            });
+
+            // Animate overview image
+            const overviewImage = document.querySelector('.overview-image');
+            if (overviewImage) {
+              gsap.from(overviewImage, {
+                scrollTrigger: {
+                  trigger: overviewImage,
+                  start: 'top 80%',
+                  toggleActions: 'play none none none'
+                },
+                opacity: 0,
+                x: 50,
+                duration: 0.8,
+                ease: 'power3.out'
+              });
+            }
+
+            // Animate messages in chat demo
+            const messages = document.querySelectorAll('.message:not(.show)');
+            if (messages.length > 0) {
+              gsap.to(messages, {
+                opacity: 1,
+                y: 0,
+                stagger: 0.1,
+                duration: 0.4,
+                ease: 'power2.out',
+                onComplete: () => {
+                  messages.forEach(msg => msg.classList.add('show'));
+                }
+              });
+            }
+          });
         }
       },
       watch: {
         emailInput() {
           this.watchEmailInput();
+        },
+        activeTab(newTab, oldTab) {
+          // Initialize animations when tab changes
+          this.$nextTick(() => {
+            this.initAnimations();
+          });
         }
+      },
+      mounted() {
+        // Initialize GSAP animations
+        this.initAnimations();
+
+        // Set up ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Animate hero section
+        gsap.from('.hero-title', {
+          opacity: 0,
+          y: -50,
+          duration: 1,
+          ease: 'power3.out'
+        });
+
+        gsap.from('.hero-subtitle', {
+          opacity: 0,
+          y: -30,
+          duration: 1,
+          delay: 0.2,
+          ease: 'power3.out'
+        });
+
+        gsap.from('.hero-buttons', {
+          opacity: 0,
+          y: 30,
+          duration: 1,
+          delay: 0.4,
+          ease: 'power3.out'
+        });
+
+        // Animate floating circles
+        gsap.to('.circle-1', {
+          x: 20,
+          y: 20,
+          duration: 4,
+          repeat: -1,
+          yoyo: true,
+          ease: 'sine.inOut'
+        });
+
+        gsap.to('.circle-2', {
+          x: -20,
+          y: -20,
+          duration: 5,
+          repeat: -1,
+          yoyo: true,
+          ease: 'sine.inOut'
+        });
+
+        // Animate tabs
+        gsap.from('.tabs-container button', {
+          opacity: 0,
+          y: 20,
+          stagger: 0.1,
+          duration: 0.6,
+          delay: 0.6,
+          ease: 'power3.out'
+        });
       }
-    });
+    };
+
+    const app = Vue.createApp(appData);
     app.mount('#app');
   </script>
 </body>
