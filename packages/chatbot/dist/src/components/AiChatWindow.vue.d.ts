@@ -1,39 +1,40 @@
 import { PropType } from 'vue';
-import { AIClient, AIProvider } from '@aivue/core';
+import { AIClient, AIProvider } from '../../../core/src';
 import { Message } from '../composables/useChatEngine';
-declare var __VLS_1: {}, __VLS_3: {
-    message: Message;
-    index: number;
-}, __VLS_5: {
-    message: Message;
-    index: number;
-}, __VLS_7: {
-    message: Message;
-    index: number;
-}, __VLS_9: {}, __VLS_11: {
-    error: Error;
-}, __VLS_13: {
-    input: string;
-    sendMessage: () => Promise<void>;
-}, __VLS_15: {};
-type __VLS_Slots = {} & {
-    header?: (props: typeof __VLS_1) => any;
-} & {
-    'user-message'?: (props: typeof __VLS_3) => any;
-} & {
-    'assistant-message'?: (props: typeof __VLS_5) => any;
-} & {
-    message?: (props: typeof __VLS_7) => any;
-} & {
-    loading?: (props: typeof __VLS_9) => any;
-} & {
-    error?: (props: typeof __VLS_11) => any;
-} & {
-    input?: (props: typeof __VLS_13) => any;
-} & {
-    footer?: (props: typeof __VLS_15) => any;
+declare function __VLS_template(): {
+    attrs: Partial<{}>;
+    slots: {
+        header?(_: {}): any;
+        'user-message'?(_: {
+            message: Message;
+            index: number;
+        }): any;
+        'assistant-message'?(_: {
+            message: Message;
+            index: number;
+        }): any;
+        message?(_: {
+            message: Message;
+            index: number;
+        }): any;
+        loading?(_: {}): any;
+        error?(_: {
+            error: Error;
+        }): any;
+        input?(_: {
+            input: string;
+            sendMessage: () => Promise<void>;
+        }): any;
+        footer?(_: {}): any;
+    };
+    refs: {
+        messagesContainer: HTMLDivElement;
+        inputElement: HTMLTextAreaElement;
+    };
+    rootEl: HTMLDivElement;
 };
-declare const __VLS_component: import("vue").DefineComponent<import("vue").ExtractPropTypes<{
+type __VLS_TemplateResult = ReturnType<typeof __VLS_template>;
+declare const __VLS_component: import('vue').DefineComponent<import('vue').ExtractPropTypes<{
     client: {
         type: PropType<AIClient>;
         default: null;
@@ -147,11 +148,11 @@ declare const __VLS_component: import("vue").DefineComponent<import("vue").Extra
         type: StringConstructor;
         default: null;
     };
-}>, {}, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
+}>, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {
     "message-sent": (...args: any[]) => void;
     "response-received": (...args: any[]) => void;
     error: (...args: any[]) => void;
-}, string, import("vue").PublicProps, Readonly<import("vue").ExtractPropTypes<{
+}, string, import('vue').PublicProps, Readonly<import('vue').ExtractPropTypes<{
     client: {
         type: PropType<AIClient>;
         default: null;
@@ -297,10 +298,13 @@ declare const __VLS_component: import("vue").DefineComponent<import("vue").Extra
     height: string;
     width: string;
     maxWidth: string;
-}, {}, {}, {}, string, import("vue").ComponentProvideOptions, true, {}, any>;
-declare const _default: __VLS_WithSlots<typeof __VLS_component, __VLS_Slots>;
+}, {}, {}, {}, string, import('vue').ComponentProvideOptions, true, {
+    messagesContainer: HTMLDivElement;
+    inputElement: HTMLTextAreaElement;
+}, HTMLDivElement>;
+declare const _default: __VLS_WithTemplateSlots<typeof __VLS_component, __VLS_TemplateResult["slots"]>;
 export default _default;
-type __VLS_WithSlots<T, S> = T & {
+type __VLS_WithTemplateSlots<T, S> = T & {
     new (): {
         $slots: S;
     };

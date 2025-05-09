@@ -1,5 +1,32 @@
 # Changelog
 
+## [1.2.0] - 2024-05-09
+
+### Added
+- Enhanced SmartForm with color-coded validation feedback (green, yellow, red)
+- Real-time AI validation for form fields
+- Improved AI analysis of submitted form data
+- Added GitHub workflow for CI/CD
+- Added comprehensive documentation for all packages
+
+### Changed
+- Updated package.json files with better metadata
+- Improved error handling in AI client
+- Enhanced OpenAI API integration with support for project API keys
+- Updated README files with more examples and documentation
+
+### Fixed
+- Fixed issues with component registration in Vue 3
+- Fixed validation prop type in SmartForm component
+- Fixed API integration issues in the core package
+- Fixed styling issues in the SmartForm component
+
+## [1.1.5] - 2024-05-08
+
+### Added
+- Improved compatibility with Vue 2 and Vue 3
+- Enhanced documentation and examples
+
 ## [1.0.2] - 2024-05-08
 
 ### Improvements

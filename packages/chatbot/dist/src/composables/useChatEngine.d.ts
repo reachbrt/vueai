@@ -1,5 +1,5 @@
 import { Ref } from 'vue';
-import { AIClient, Message as CoreMessage, AIProvider } from '@aivue/core';
+import { AIClient, Message as CoreMessage, AIProvider } from '../../../core/src';
 export interface Message extends CoreMessage {
     id?: string;
     timestamp?: Date;

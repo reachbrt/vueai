@@ -2,21 +2,27 @@
   <div class="custom-chat">
     <div class="custom-chat-messages" ref="messagesContainer">
       <div v-for="(message, index) in messages" :key="index" class="message" :class="message.role">
-        <div class="message-role">{{ message.role === 'user' ? 'You' : 'AI' }}</div>
+        <div class="message-header">
+          <div class="message-role">{{ message.role === 'user' ? 'You' : 'AI' }}</div>
+          <div class="message-time" v-if="message.timestamp">{{ formatTime(message.timestamp) }}</div>
+        </div>
         <div class="message-content" v-html="formatMessage(message.content)"></div>
       </div>
-      
-      <div v-if="isLoading" class="message loading">
-        <div class="message-role">AI</div>
+
+      <div v-if="isLoading" class="message loading assistant">
+        <div class="message-header">
+          <div class="message-role">AI</div>
+          <div class="message-time">{{ formatTime(new Date()) }}</div>
+        </div>
         <div class="message-content">Thinking...</div>
       </div>
     </div>
-    
+
     <div class="custom-chat-input">
-      <input 
-        v-model="userInput" 
-        type="text" 
-        placeholder="Type a message..." 
+      <input
+        v-model="userInput"
+        type="text"
+        placeholder="Type a message..."
         @keyup.enter="sendMessage"
         :disabled="isLoading"
       />
@@ -26,8 +32,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted, watch, nextTick } from 'vue';
-import { useChatEngine, Message, utils } from '@aivue/chatbot';
+import { defineComponent, ref, watch, nextTick } from 'vue';
+import { useChatEngine, utils } from '../../node_modules/@aivue/chatbot';
 import { aiClient } from '../ai-client';
 
 export default defineComponent({
@@ -35,29 +41,35 @@ export default defineComponent({
   setup() {
     const userInput = ref('');
     const messagesContainer = ref<HTMLElement | null>(null);
-    
+
     // Use the chatEngine composable
     const { messages, isLoading, error, sendMessage: sendChatMessage } = useChatEngine({
       client: aiClient,
       systemPrompt: 'You are a helpful assistant that provides concise answers.',
       streaming: true
     });
-    
+
     // Send a message
     const sendMessage = async () => {
       if (!userInput.value.trim() || isLoading.value) return;
-      
+
       const message = userInput.value;
       userInput.value = '';
-      
+
       await sendChatMessage(message);
     };
-    
+
     // Format message with markdown
     const formatMessage = (content: string): string => {
       return utils.formatMarkdown(content);
     };
-    
+
+    // Format timestamp
+    const formatTime = (timestamp?: Date): string => {
+      if (!timestamp) return '';
+      return timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    };
+
     // Auto-scroll to bottom when new messages arrive
     watch(messages, () => {
       nextTick(() => {
@@ -66,7 +78,7 @@ export default defineComponent({
         }
       });
     }, { deep: true });
-    
+
     return {
       userInput,
       messages,
@@ -74,7 +86,8 @@ export default defineComponent({
       error,
       messagesContainer,
       sendMessage,
-      formatMessage
+      formatMessage,
+      formatTime
     };
   }
 });
@@ -118,11 +131,21 @@ export default defineComponent({
   opacity: 0.7;
 }
 
+.message-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
 .message-role {
   font-weight: bold;
-  margin-bottom: 4px;
   font-size: 0.875rem;
   color: #64748b;
+}
+
+.message-time {
+  font-size: 0.75rem;
+  color: #94a3b8;
 }
 
 .message-content {

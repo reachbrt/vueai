@@ -1,7 +1,7 @@
 <template>
   <div class="typescript-example">
     <h3>TypeScript Integration Example</h3>
-    
+
     <div class="code-example">
       <pre><code>// Import types from @aivue/chatbot
 import { Message, ChatOptions } from '@aivue/chatbot';
@@ -24,7 +24,7 @@ const chatOptions: ChatOptions = {
   streaming: true
 };</code></pre>
     </div>
-    
+
     <div class="example-output">
       <h4>Live Example</h4>
       <div class="message-list">
@@ -36,7 +36,7 @@ const chatOptions: ChatOptions = {
           <div class="content">{{ message.content }}</div>
         </div>
       </div>
-      
+
       <div class="controls">
         <button @click="addMessage" :disabled="isLoading">Add Message</button>
         <button @click="clearMessages" :disabled="isLoading">Clear Messages</button>
@@ -47,9 +47,30 @@ const chatOptions: ChatOptions = {
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { Message, ChatOptions } from '@aivue/chatbot';
-import { v4 as uuidv4 } from 'uuid';
 import { aiClient } from '../ai-client';
+
+// Define types
+interface Message {
+  role: 'user' | 'assistant' | 'system';
+  content: string;
+  id?: string;
+  timestamp?: Date;
+}
+
+interface ChatOptions {
+  client: any;
+  initialMessages?: Message[];
+  systemPrompt?: string;
+  streaming?: boolean;
+}
+
+// Simple UUID generator
+const uuidv4 = () => {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+};
 
 export default defineComponent({
   name: 'TypeScriptExample',
@@ -69,19 +90,19 @@ export default defineComponent({
         timestamp: new Date()
       }
     ]);
-    
+
     const isLoading = ref(false);
-    
+
     // Format timestamp
     const formatTimestamp = (timestamp?: Date): string => {
       if (!timestamp) return '';
       return timestamp.toLocaleTimeString();
     };
-    
+
     // Add a new message
     const addMessage = (): void => {
       isLoading.value = true;
-      
+
       // Add user message
       const userMessage: Message = {
         role: 'user',
@@ -90,7 +111,7 @@ export default defineComponent({
         timestamp: new Date()
       };
       messages.value.push(userMessage);
-      
+
       // Simulate AI response
       setTimeout(() => {
         const assistantMessage: Message = {
@@ -103,12 +124,12 @@ export default defineComponent({
         isLoading.value = false;
       }, 1000);
     };
-    
+
     // Clear all messages
     const clearMessages = (): void => {
       messages.value = [];
     };
-    
+
     return {
       messages,
       isLoading,

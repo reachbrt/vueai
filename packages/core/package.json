@@ -1,6 +1,6 @@
 {
   "name": "@aivue/core",
-  "version": "1.1.4",
+  "version": "1.1.6",
   "description": "Core AI functionality for Vue.js components",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -18,7 +18,7 @@
     "CHANGELOG.md"
   ],
   "scripts": {
-    "build": "npm run clean && mkdir -p dist && cp -r src/* dist/ && cp package.json dist/ && cp README.md dist/",
+    "build": "tsup",
     "dev": "tsc --watch",
     "lint": "eslint \"src/**/*.ts\"",
     "clean": "rm -rf dist",

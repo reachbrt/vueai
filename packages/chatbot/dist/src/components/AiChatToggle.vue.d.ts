@@ -1,7 +1,7 @@
 import { PropType } from 'vue';
-import { AIClient, AIProvider } from '@aivue/core';
+import { AIClient, AIProvider } from '../../../core/src';
 import { Message } from '../composables/useChatEngine';
-declare const _default: import("vue").DefineComponent<import("vue").ExtractPropTypes<{
+declare const _default: import('vue').DefineComponent<import('vue').ExtractPropTypes<{
     position: {
         type: PropType<"bottom" | "top">;
         default: string;
@@ -72,11 +72,11 @@ declare const _default: import("vue").DefineComponent<import("vue").ExtractPropT
         };
     };
 }>, {
-    isOpen: import("vue").Ref<boolean, boolean>;
+    isOpen: import('vue').Ref<boolean, boolean>;
     toggleChat: () => void;
-    useDefaultChat: import("vue").ComputedRef<boolean>;
-    chatProps: import("vue").ComputedRef<Record<string, any>>;
-}, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("message-sent" | "response-received" | "error" | "toggle")[], "message-sent" | "response-received" | "error" | "toggle", import("vue").PublicProps, Readonly<import("vue").ExtractPropTypes<{
+    useDefaultChat: import('vue').ComputedRef<boolean>;
+    chatProps: import('vue').ComputedRef<Record<string, any>>;
+}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, ("message-sent" | "response-received" | "error" | "toggle")[], "message-sent" | "response-received" | "error" | "toggle", import('vue').PublicProps, Readonly<import('vue').ExtractPropTypes<{
     position: {
         type: PropType<"bottom" | "top">;
         default: string;
@@ -170,7 +170,7 @@ declare const _default: import("vue").DefineComponent<import("vue").ExtractPropT
     defaultOpen: boolean;
 }, {}, {
     AiChatWindow: {
-        new (...args: any[]): import("vue").CreateComponentPublicInstanceWithMixins<Readonly<import("vue").ExtractPropTypes<{
+        new (...args: any[]): import('vue').CreateComponentPublicInstanceWithMixins<Readonly<import('vue').ExtractPropTypes<{
             client: {
                 type: PropType<AIClient>;
                 default: null;
@@ -288,11 +288,11 @@ declare const _default: import("vue").DefineComponent<import("vue").ExtractPropT
             "onMessage-sent"?: ((...args: any[]) => any) | undefined;
             "onResponse-received"?: ((...args: any[]) => any) | undefined;
             onError?: ((...args: any[]) => any) | undefined;
-        }>, {}, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
+        }>, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {
             "message-sent": (...args: any[]) => void;
             "response-received": (...args: any[]) => void;
             error: (...args: any[]) => void;
-        }, import("vue").PublicProps, {
+        }, import('vue').PublicProps, {
             initialMessages: Message[];
             systemPrompt: string;
             streaming: boolean;
@@ -320,14 +320,17 @@ declare const _default: import("vue").DefineComponent<import("vue").ExtractPropT
             height: string;
             width: string;
             maxWidth: string;
-        }, true, {}, {}, import("vue").GlobalComponents, import("vue").GlobalDirectives, string, {}, any, import("vue").ComponentProvideOptions, {
+        }, true, {}, {}, import('vue').GlobalComponents, import('vue').GlobalDirectives, string, {
+            messagesContainer: HTMLDivElement;
+            inputElement: HTMLTextAreaElement;
+        }, HTMLDivElement, import('vue').ComponentProvideOptions, {
             P: {};
             B: {};
             D: {};
             C: {};
             M: {};
             Defaults: {};
-        }, Readonly<import("vue").ExtractPropTypes<{
+        }, Readonly<import('vue').ExtractPropTypes<{
             client: {
                 type: PropType<AIClient>;
                 default: null;
@@ -477,7 +480,7 @@ declare const _default: import("vue").DefineComponent<import("vue").ExtractPropT
         __isFragment?: never;
         __isTeleport?: never;
         __isSuspense?: never;
-    } & import("vue").ComponentOptionsBase<Readonly<import("vue").ExtractPropTypes<{
+    } & import('vue').ComponentOptionsBase<Readonly<import('vue').ExtractPropTypes<{
         client: {
             type: PropType<AIClient>;
             default: null;
@@ -595,7 +598,7 @@ declare const _default: import("vue").DefineComponent<import("vue").ExtractPropT
         "onMessage-sent"?: ((...args: any[]) => any) | undefined;
         "onResponse-received"?: ((...args: any[]) => any) | undefined;
         onError?: ((...args: any[]) => any) | undefined;
-    }>, {}, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
+    }>, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {
         "message-sent": (...args: any[]) => void;
         "response-received": (...args: any[]) => void;
         error: (...args: any[]) => void;
@@ -627,38 +630,31 @@ declare const _default: import("vue").DefineComponent<import("vue").ExtractPropT
         height: string;
         width: string;
         maxWidth: string;
-    }, {}, string, {}, import("vue").GlobalComponents, import("vue").GlobalDirectives, string, import("vue").ComponentProvideOptions> & import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps & (new () => {
+    }, {}, string, {}, import('vue').GlobalComponents, import('vue').GlobalDirectives, string, import('vue').ComponentProvideOptions> & import('vue').VNodeProps & import('vue').AllowedComponentProps & import('vue').ComponentCustomProps & (new () => {
         $slots: {
-            header?: (props: {}) => any;
-        } & {
-            'user-message'?: (props: {
+            header?(_: {}): any;
+            'user-message'?(_: {
                 message: Message;
                 index: number;
-            }) => any;
-        } & {
-            'assistant-message'?: (props: {
+            }): any;
+            'assistant-message'?(_: {
                 message: Message;
                 index: number;
-            }) => any;
-        } & {
-            message?: (props: {
+            }): any;
+            message?(_: {
                 message: Message;
                 index: number;
-            }) => any;
-        } & {
-            loading?: (props: {}) => any;
-        } & {
-            error?: (props: {
+            }): any;
+            loading?(_: {}): any;
+            error?(_: {
                 error: Error;
-            }) => any;
-        } & {
-            input?: (props: {
+            }): any;
+            input?(_: {
                 input: string;
                 sendMessage: () => Promise<void>;
-            }) => any;
-        } & {
-            footer?: (props: {}) => any;
+            }): any;
+            footer?(_: {}): any;
         };
     });
-}, {}, string, import("vue").ComponentProvideOptions, true, {}, any>;
+}, {}, string, import('vue').ComponentProvideOptions, true, {}, any>;
 export default _default;

@@ -1,31 +1,53 @@
 <template>
   <div class="app">
     <header>
-      <h1>AIVue Chatbot Demo</h1>
-      <p>A demonstration of the @aivue/chatbot package with TypeScript support</p>
+      <h1>AIVue Components Demo</h1>
+      <p>A demonstration of all @aivue packages with TypeScript support</p>
     </header>
 
+    <NavBar @tab-change="changeTab" />
+
     <main>
-      <div class="demo-container">
-        <h2>Basic Chat Window</h2>
-        <AiChatWindow
-          :client="aiClient"
-          title="AI Assistant"
-          placeholder="Ask me anything..."
-          :show-avatars="true"
-          theme="light"
-        />
-      </div>
+      <!-- Chatbot demos -->
+      <section v-if="activeTab === 'chatbot' || activeTab === 'all'">
+        <h2>Chatbot Components</h2>
+        <div class="demo-container">
+          <h3>Basic Chat Window</h3>
+          <AiChatWindow
+            :client="aiClient"
+            title="AI Assistant"
+            placeholder="Ask me anything..."
+            :show-avatars="true"
+            theme="light"
+          />
+        </div>
 
-      <div class="demo-container">
-        <h2>Custom Chat Implementation</h2>
-        <CustomChat />
-      </div>
+        <div class="demo-container">
+          <h3>Custom Chat Implementation</h3>
+          <CustomChat />
+        </div>
 
-      <div class="demo-container">
-        <h2>TypeScript Example</h2>
-        <TypeScriptExample />
-      </div>
+        <div class="demo-container">
+          <h3>TypeScript Example</h3>
+          <TypeScriptExample />
+        </div>
+      </section>
+
+      <!-- Autosuggest demos -->
+      <section v-if="activeTab === 'autosuggest' || activeTab === 'all'">
+        <h2>Autosuggest Components</h2>
+        <div class="demo-container">
+          <AutosuggestDemo />
+        </div>
+      </section>
+
+      <!-- SmartForm demos -->
+      <section v-if="activeTab === 'smartform' || activeTab === 'all'">
+        <h2>SmartForm Components</h2>
+        <div class="demo-container">
+          <SmartFormDemo />
+        </div>
+      </section>
     </main>
 
     <footer>
@@ -35,27 +57,23 @@
     <!-- Intercom-like Chat Toggle -->
     <AiChatToggle
       :client="aiClient"
-      title="AI Assistant"
-      position="bottom"
+      title="Chat with AI"
       theme="light"
-      :demoMode="!aiClient.apiKey"
-      :demoResponses="{
-        'hello': 'Hello! I\'m a demo AI assistant. This is a demo mode that works without an API key.',
-        'help': 'I can help you with various tasks. In demo mode, I respond with pre-defined messages.',
-        'features': 'This chatbot supports markdown, code highlighting, streaming responses, and more!',
-        'vue': 'Vue.js is a progressive JavaScript framework for building user interfaces.',
-        'demo': 'Yes, I\'m currently running in demo mode because no API key was provided. To use real AI responses, please provide a valid API key.'
-      }"
     />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { AiChatWindow, AiChatToggle } from '@aivue/chatbot';
+import { defineComponent, ref } from 'vue';
 import { aiClient } from './ai-client';
 import CustomChat from './components/CustomChat.vue';
 import TypeScriptExample from './components/TypeScriptExample.vue';
+import AutosuggestDemo from './components/AutosuggestDemo.vue';
+import SmartFormDemo from './components/SmartFormDemo.vue';
+import NavBar from './components/NavBar.vue';
+
+// Import components directly
+import { AiChatWindow, AiChatToggle } from '../node_modules/@aivue/chatbot';
 
 export default defineComponent({
   name: 'App',
@@ -63,11 +81,22 @@ export default defineComponent({
     AiChatWindow,
     AiChatToggle,
     CustomChat,
-    TypeScriptExample
+    TypeScriptExample,
+    AutosuggestDemo,
+    SmartFormDemo,
+    NavBar
   },
   setup() {
+    const activeTab = ref('all');
+
+    const changeTab = (tabId: string) => {
+      activeTab.value = tabId;
+    };
+
     return {
-      aiClient
+      aiClient,
+      activeTab,
+      changeTab
     };
   }
 });
@@ -90,7 +119,7 @@ body {
 
 header {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 }
 
 header h1 {
@@ -104,6 +133,21 @@ header p {
   color: #64748b;
 }
 
+h2 {
+  color: #1e40af;
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+}
+
+h3 {
+  margin-top: 0;
+  color: #334155;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
 .demo-container {
   background-color: white;
   border-radius: 8px;
@@ -112,12 +156,8 @@ header p {
   margin-bottom: 30px;
 }
 
-.demo-container h2 {
-  margin-top: 0;
-  color: #1e40af;
-  border-bottom: 1px solid #e2e8f0;
-  padding-bottom: 10px;
-  margin-bottom: 20px;
+section {
+  margin-bottom: 40px;
 }
 
 footer {

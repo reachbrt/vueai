@@ -1,6 +1,6 @@
 {
   "name": "@aivue/smartform",
-  "version": "1.1.4",
+  "version": "1.1.6",
   "description": "AI-powered form validation for Vue.js",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -41,7 +41,7 @@
     "access": "public"
   },
   "peerDependencies": {
-    "@aivue/core": "^1.1.4",
+    "@aivue/core": "^1.1.5",
     "vue": "^2.6.0 || ^3.0.0"
   },
   "devDependencies": {
