@@ -147,66 +147,121 @@
       transform: translateY(-50%);
     }
 
-    /* Tab controls */
-    .tabs-container {
-      position: relative;
-      display: flex;
-      justify-content: center;
-      margin-bottom: 2rem;
-      border-bottom: 1px solid #e2e8f0;
-      gap: 0.5rem;
+    /* New Tab Navigation System */
+    .tab-navigation {
+      position: sticky;
+      top: 0;
       background-color: white;
-      padding: 0 1rem;
-      border-radius: 0.5rem 0.5rem 0 0;
-      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.03);
-      z-index: 10;
+      z-index: 100;
+      padding: 1rem 0;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      margin-bottom: 3rem;
     }
 
-    .tab-button {
+    .tab-nav-container {
+      display: flex;
+      justify-content: center;
+      gap: 0.25rem;
       position: relative;
-      padding: 1rem 1.5rem;
+      max-width: 800px;
+      margin: 0 auto;
+      background: rgba(247, 250, 252, 0.8);
+      border-radius: 9999px;
+      padding: 0.5rem;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .tab-nav-button {
+      position: relative;
+      padding: 0.75rem 1.5rem;
       font-weight: 600;
       color: var(--text-light);
       background: transparent;
       border: none;
+      border-radius: 9999px;
       cursor: pointer;
       transition: all 0.3s ease;
+      z-index: 2;
+      flex: 1;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .tab-nav-button:hover {
+      color: var(--primary);
+    }
+
+    .tab-nav-button.active {
+      color: white;
+    }
+
+    .tab-nav-indicator {
+      position: absolute;
+      height: calc(100% - 0.5rem);
+      top: 0.25rem;
+      border-radius: 9999px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
       z-index: 1;
+      box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
     }
 
-    .tab-button:hover {
-      color: var(--primary);
+    /* Tab Content Sections */
+    .tab-section {
+      padding: 2rem 0;
+      display: none;
     }
 
-    .tab-button.active {
-      color: var(--primary);
+    .tab-section.active {
+      display: block;
+      animation: fadeIn 0.5s ease forwards;
     }
 
-    .tab-button.active::after {
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .section-header {
+      position: relative;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      border-radius: 1rem;
+      overflow: hidden;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+    }
+
+    .section-header::before {
       content: '';
       position: absolute;
-      bottom: 0;
+      top: 0;
       left: 0;
       width: 100%;
-      height: 3px;
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      height: 100%;
+      background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+      opacity: 0.3;
     }
 
-    .tab-indicator {
-      position: absolute;
-      bottom: -1px;
-      height: 3px;
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
-      transition: all 0.3s ease;
-      opacity: 0;
+    .section-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      position: relative;
     }
 
-    .tab-content {
-      background-color: white;
-      border-radius: 0 0 0.5rem 0.5rem;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-      padding: 2rem;
-      min-height: 400px;
+    .section-description {
+      font-size: 1.125rem;
+      max-width: 600px;
+      opacity: 0.9;
+      position: relative;
     }
 
     /* Demo container */
@@ -513,27 +568,27 @@
       </div>
     </header>
 
-    <!-- Fixed position tabs that stay visible -->
-    <div class="sticky top-0 z-50 bg-white shadow-md">
-      <div class="max-w-6xl mx-auto">
-        <div class="tabs-container">
+    <!-- New Tab Navigation System -->
+    <div class="tab-navigation">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="tab-nav-container">
           <button
             v-for="tab in tabs"
             :key="tab.id"
             @click="changeTab(tab.id)"
-            :class="['tab-button', activeTab === tab.id ? 'active' : '']"
+            :class="['tab-nav-button', activeTab === tab.id ? 'active' : '']"
           >
             {{ tab.name }}
           </button>
-          <div class="tab-indicator" ref="tabIndicator"></div>
+          <div class="tab-nav-indicator" ref="tabIndicator"></div>
         </div>
       </div>
     </div>
 
-    <div class="max-w-6xl mx-auto px-4 pb-8 pt-4">
+    <div class="max-w-6xl mx-auto px-4 pb-8">
 
       <!-- Overview Tab -->
-      <div v-if="activeTab === 'overview'" class="space-y-12">
+      <div id="overview-content" class="tab-section active space-y-12">
         <div class="demo-container overview-intro">
           <div class="flex flex-col md:flex-row items-center">
             <div class="md:w-1/2 md:pr-8">
@@ -730,6 +785,20 @@
               </div>
               <div class="ml-11">
                 <div class="code-block">
+                  <div class="code-header">
+                    <div class="code-dots">
+                      <div class="code-dot red"></div>
+                      <div class="code-dot yellow"></div>
+                      <div class="code-dot green"></div>
+                    </div>
+                    <div class="code-language">JavaScript</div>
+                    <button class="code-copy">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                      </svg>
+                    </button>
+                  </div>
                   <pre><code class="language-javascript">import { initializeAI, AIClient } from '@aivue/core';
 
 // Initialize the AI functionality
@@ -752,6 +821,20 @@ const aiClient = new AIClient({
               </div>
               <div class="ml-11">
                 <div class="code-block">
+                  <div class="code-header">
+                    <div class="code-dots">
+                      <div class="code-dot red"></div>
+                      <div class="code-dot yellow"></div>
+                      <div class="code-dot green"></div>
+                    </div>
+                    <div class="code-language">Vue.js</div>
+                    <button class="code-copy">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                      </svg>
+                    </button>
+                  </div>
                   <pre><code class="language-html">&lt;template&gt;
   &lt;div&gt;
     &lt;AiChatWindow
@@ -770,9 +853,13 @@ const aiClient = new AIClient({
       </div>
 
       <!-- Chatbot Tab -->
-      <div v-if="activeTab === 'chatbot'" class="space-y-8">
+      <div id="chatbot-content" class="tab-section space-y-8">
+        <div class="section-header">
+          <h2 class="section-title">Chat Components</h2>
+          <p class="section-description">Create intelligent conversational experiences with our AI-powered chat interface components.</p>
+        </div>
+
         <div class="demo-container">
-          <h2 class="text-2xl font-bold text-blue-800 mb-4">Chat Components</h2>
           <p class="mb-4">The @aivue/chatbot package provides components for creating chat interfaces:</p>
 
           <h3 class="text-xl font-semibold text-gray-700 mt-6 mb-2">AiChatWindow Component</h3>
@@ -853,14 +940,32 @@ export default {
       </div>
 
       <!-- Autosuggest Tab -->
-      <div v-if="activeTab === 'autosuggest'" class="space-y-8">
+      <div id="autosuggest-content" class="tab-section space-y-8">
+        <div class="section-header">
+          <h2 class="section-title">Autosuggest Components</h2>
+          <p class="section-description">Enhance user experience with intelligent AI-powered input suggestions that adapt to user input.</p>
+        </div>
+
         <div class="demo-container">
-          <h2 class="text-2xl font-bold text-blue-800 mb-4">Autosuggest Components</h2>
           <p class="mb-4">The @aivue/autosuggest package provides components for AI-powered input suggestions:</p>
 
           <h3 class="text-xl font-semibold text-gray-700 mt-6 mb-2">AiAutosuggest Component</h3>
           <p class="mb-4">An input field with AI-powered suggestions:</p>
           <div class="code-block">
+            <div class="code-header">
+              <div class="code-dots">
+                <div class="code-dot red"></div>
+                <div class="code-dot yellow"></div>
+                <div class="code-dot green"></div>
+              </div>
+              <div class="code-language">Vue.js</div>
+              <button class="code-copy">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+              </button>
+            </div>
             <pre><code class="language-html">&lt;template&gt;
   &lt;AiAutosuggest
     :client="aiClient"
@@ -925,14 +1030,32 @@ export default {
       </div>
 
       <!-- SmartForm Tab -->
-      <div v-if="activeTab === 'smartform'" class="space-y-8">
+      <div id="smartform-content" class="tab-section space-y-8">
+        <div class="section-header">
+          <h2 class="section-title">Smart Form Components</h2>
+          <p class="section-description">Create intelligent forms with AI-powered validation and suggestions for better data collection.</p>
+        </div>
+
         <div class="demo-container">
-          <h2 class="text-2xl font-bold text-blue-800 mb-4">Smart Form Components</h2>
           <p class="mb-4">The @aivue/smartform package provides intelligent form components:</p>
 
           <h3 class="text-xl font-semibold text-gray-700 mt-6 mb-2">AiSmartForm Component</h3>
           <p class="mb-4">A form with AI-powered validation and suggestions:</p>
           <div class="code-block">
+            <div class="code-header">
+              <div class="code-dots">
+                <div class="code-dot red"></div>
+                <div class="code-dot yellow"></div>
+                <div class="code-dot green"></div>
+              </div>
+              <div class="code-language">Vue.js</div>
+              <button class="code-copy">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+              </button>
+            </div>
             <pre><code class="language-html">&lt;template&gt;
   &lt;AiSmartForm
     :client="aiClient"
@@ -1021,9 +1144,13 @@ export default {
       </div>
 
       <!-- TypeScript Tab -->
-      <div v-if="activeTab === 'typescript'" class="space-y-8">
+      <div id="typescript-content" class="tab-section space-y-8">
+        <div class="section-header">
+          <h2 class="section-title">TypeScript Support</h2>
+          <p class="section-description">Enjoy full TypeScript support with comprehensive type definitions for all components and APIs.</p>
+        </div>
+
         <div class="demo-container">
-          <h2 class="text-2xl font-bold text-blue-800 mb-4">TypeScript Support</h2>
           <p class="mb-4">All packages include full TypeScript support:</p>
 
           <h3 class="text-xl font-semibold text-gray-700 mt-6 mb-2">Type Definitions</h3>
@@ -1043,6 +1170,20 @@ import { SmartFormSchema, FormField } from '@aivue/smartform';</code></pre>
 
           <h3 class="text-xl font-semibold text-gray-700 mt-6 mb-2">TypeScript Example</h3>
           <div class="code-block">
+            <div class="code-header">
+              <div class="code-dots">
+                <div class="code-dot red"></div>
+                <div class="code-dot yellow"></div>
+                <div class="code-dot green"></div>
+              </div>
+              <div class="code-language">TypeScript</div>
+              <button class="code-copy">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+              </button>
+            </div>
             <pre><code class="language-typescript">import { AIClient, Message } from '@aivue/core';
 
 // Create a typed AI client
@@ -1283,30 +1424,45 @@ async function getResponse(messages: Message[]): Promise<string> {
 
         // Tab switching with animation
         changeTab(tabId) {
-          const oldTab = document.querySelector(`[v-if="activeTab === '${this.activeTab}'"]`);
+          // Hide all tab contents
+          document.querySelectorAll('.tab-section').forEach(tab => {
+            tab.classList.remove('active');
+          });
+
+          // Update active tab
           this.activeTab = tabId;
+
+          // Show the selected tab content
+          const newTabContent = document.getElementById(`${tabId}-content`);
+          if (newTabContent) {
+            newTabContent.classList.add('active');
+
+            // Scroll to top of content
+            window.scrollTo({
+              top: document.querySelector('.tab-navigation').offsetTop,
+              behavior: 'smooth'
+            });
+          }
 
           // Update tab indicator position
           this.$nextTick(() => {
             this.updateTabIndicator();
 
-            // Animate tab transition
-            const newTab = document.querySelector(`[v-if="activeTab === '${tabId}'"]`);
-            if (newTab) {
-              gsap.fromTo(newTab,
-                { opacity: 0, y: 20 },
-                { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }
-              );
-            }
-
             // Initialize animations for the new tab
             this.initAnimations();
+
+            // Highlight code blocks in the new tab
+            if (newTabContent) {
+              newTabContent.querySelectorAll('pre code').forEach((block) => {
+                hljs.highlightElement(block);
+              });
+            }
           });
         },
 
         // Update tab indicator position
         updateTabIndicator() {
-          const activeTabButton = document.querySelector('.tab-button.active');
+          const activeTabButton = document.querySelector('.tab-nav-button.active');
           const tabIndicator = this.$refs.tabIndicator;
 
           if (activeTabButton && tabIndicator) {
@@ -1493,7 +1649,7 @@ async function getResponse(messages: Message[]): Promise<string> {
         });
 
         // Animate tabs
-        gsap.from('.tab-button', {
+        gsap.from('.tab-nav-button', {
           opacity: 0,
           y: 20,
           stagger: 0.1,
@@ -1501,7 +1657,7 @@ async function getResponse(messages: Message[]): Promise<string> {
           delay: 0.6,
           ease: 'power3.out',
           onComplete: () => {
-            gsap.to('.tab-indicator', {
+            gsap.to('.tab-nav-indicator', {
               opacity: 1,
               duration: 0.4
             });
@@ -1533,220 +1689,329 @@ async function getResponse(messages: Message[]): Promise<string> {
 
     // Initialize the actual npm packages
     document.addEventListener('DOMContentLoaded', () => {
+      console.log('Initializing npm packages...');
+
       // Initialize core
       const AiVueCore = window.AiVueCore;
       if (AiVueCore) {
+        console.log('AiVueCore found, initializing...');
         AiVueCore.initializeAI();
+      } else {
+        console.error('AiVueCore not found!');
       }
 
       // Setup API key handling
       function setupApiKeyHandling(buttonId, inputId, storageKey, callback) {
+        console.log(`Setting up API key handling for ${buttonId}`);
         const button = document.getElementById(buttonId);
         const input = document.getElementById(inputId);
+
+        if (!button || !input) {
+          console.error(`Button or input not found: ${buttonId}, ${inputId}`);
+          return;
+        }
 
         // Check if API key is already stored
         const savedApiKey = localStorage.getItem(storageKey);
         if (savedApiKey) {
+          console.log(`Found saved API key for ${storageKey}`);
           input.value = savedApiKey;
-          if (callback) callback(savedApiKey);
+          if (callback) {
+            console.log(`Initializing with saved API key for ${buttonId}`);
+            callback(savedApiKey);
+          }
         }
 
         // Set up button click handler
-        if (button && input) {
-          button.addEventListener('click', () => {
-            const apiKey = input.value.trim();
-            if (apiKey) {
-              localStorage.setItem(storageKey, apiKey);
-              if (callback) callback(apiKey);
+        button.addEventListener('click', () => {
+          console.log(`${buttonId} clicked`);
+          const apiKey = input.value.trim();
+          if (apiKey) {
+            console.log(`Saving API key for ${storageKey}`);
+            localStorage.setItem(storageKey, apiKey);
+            if (callback) {
+              console.log(`Initializing with new API key for ${buttonId}`);
+              callback(apiKey);
             }
-          });
-        }
+          } else {
+            console.error('API key is empty');
+            alert('Please enter a valid API key');
+          }
+        });
       }
 
       // Initialize chatbot
       const AiVueChatbot = window.AiVueChatbot;
       if (AiVueChatbot) {
+        console.log('AiVueChatbot found');
         const chatbotContainer = document.getElementById('chatbot-container');
 
+        if (!chatbotContainer) {
+          console.error('Chatbot container not found!');
+        } else {
+          console.log('Chatbot container found');
+        }
+
         function initializeChatbot(apiKey) {
-          if (!chatbotContainer || !apiKey) return;
+          console.log('Initializing chatbot with API key');
+          if (!chatbotContainer || !apiKey) {
+            console.error('Cannot initialize chatbot: container or API key missing');
+            return;
+          }
 
-          // Clear container
-          chatbotContainer.innerHTML = '';
+          try {
+            // Clear container
+            chatbotContainer.innerHTML = '';
 
-          // Create a new Vue app for the chatbot
-          const chatbotApp = Vue.createApp({
-            template: `
-              <ai-chat-window
-                :client="aiClient"
-                title="AI Assistant"
-                placeholder="Ask me anything..."
-                :show-avatars="true"
-                theme="light"
-              />
-            `,
-            setup() {
-              const aiClient = new AiVueCore.AIClient({
-                provider: 'openai',
-                apiKey: apiKey,
-                model: 'gpt-4'
-              });
+            // Create a new Vue app for the chatbot
+            const chatbotApp = Vue.createApp({
+              template: `
+                <ai-chat-window
+                  :client="aiClient"
+                  title="AI Assistant"
+                  placeholder="Ask me anything..."
+                  :show-avatars="true"
+                  theme="light"
+                />
+              `,
+              setup() {
+                console.log('Setting up chatbot component');
+                const aiClient = new AiVueCore.AIClient({
+                  provider: 'openai',
+                  apiKey: apiKey,
+                  model: 'gpt-4'
+                });
 
-              return {
-                aiClient
-              };
-            }
-          });
+                return {
+                  aiClient
+                };
+              }
+            });
 
-          // Register the component
-          chatbotApp.component('ai-chat-window', AiVueChatbot.AiChatWindow);
+            // Register the component
+            console.log('Registering AiChatWindow component');
+            chatbotApp.component('ai-chat-window', AiVueChatbot.AiChatWindow);
 
-          // Mount the app
-          chatbotApp.mount(chatbotContainer);
+            // Mount the app
+            console.log('Mounting chatbot app');
+            chatbotApp.mount(chatbotContainer);
+            console.log('Chatbot mounted successfully');
+          } catch (error) {
+            console.error('Error initializing chatbot:', error);
+            chatbotContainer.innerHTML = `
+              <div class="p-4 bg-red-100 text-red-800 rounded">
+                <p class="font-bold">Error initializing chatbot</p>
+                <p>${error.message}</p>
+              </div>
+            `;
+          }
         }
 
         // Setup API key handling for chatbot
         setupApiKeyHandling('set-api-key', 'api-key-input', 'aivue-api-key', initializeChatbot);
+      } else {
+        console.error('AiVueChatbot not found!');
       }
 
       // Initialize autosuggest
       const AiVueAutosuggest = window.AiVueAutosuggest;
       if (AiVueAutosuggest) {
+        console.log('AiVueAutosuggest found');
         const autosuggestContainer = document.getElementById('autosuggest-container');
 
+        if (!autosuggestContainer) {
+          console.error('Autosuggest container not found!');
+        } else {
+          console.log('Autosuggest container found');
+        }
+
         function initializeAutosuggest(apiKey) {
-          if (!autosuggestContainer || !apiKey) return;
+          console.log('Initializing autosuggest with API key');
+          if (!autosuggestContainer || !apiKey) {
+            console.error('Cannot initialize autosuggest: container or API key missing');
+            return;
+          }
 
-          // Clear container
-          autosuggestContainer.innerHTML = '';
+          try {
+            // Clear container
+            autosuggestContainer.innerHTML = '';
 
-          // Create a new Vue app for the autosuggest
-          const autosuggestApp = Vue.createApp({
-            template: `
-              <div class="p-4">
-                <label class="block text-gray-700 mb-2">Try typing a sentence:</label>
-                <ai-autosuggest
-                  :client="aiClient"
-                  v-model="inputValue"
-                  placeholder="Start typing..."
-                  :debounce="300"
-                  :min-length="3"
-                  class="w-full p-2 border rounded"
-                />
-                <div class="mt-4 text-sm text-gray-600" v-if="inputValue">
-                  Current value: {{ inputValue }}
+            // Create a new Vue app for the autosuggest
+            const autosuggestApp = Vue.createApp({
+              template: `
+                <div class="p-4">
+                  <label class="block text-gray-700 mb-2">Try typing a sentence:</label>
+                  <ai-autosuggest
+                    :client="aiClient"
+                    v-model="inputValue"
+                    placeholder="Start typing..."
+                    :debounce="300"
+                    :min-length="3"
+                    class="w-full p-2 border rounded"
+                  />
+                  <div class="mt-4 text-sm text-gray-600" v-if="inputValue">
+                    Current value: {{ inputValue }}
+                  </div>
                 </div>
+              `,
+              setup() {
+                console.log('Setting up autosuggest component');
+                const inputValue = Vue.ref('');
+
+                const aiClient = new AiVueCore.AIClient({
+                  provider: 'openai',
+                  apiKey: apiKey,
+                  model: 'gpt-4'
+                });
+
+                return {
+                  aiClient,
+                  inputValue
+                };
+              }
+            });
+
+            // Register the component
+            console.log('Registering AiAutosuggest component');
+            autosuggestApp.component('ai-autosuggest', AiVueAutosuggest.AiAutosuggest);
+
+            // Mount the app
+            console.log('Mounting autosuggest app');
+            autosuggestApp.mount(autosuggestContainer);
+            console.log('Autosuggest mounted successfully');
+          } catch (error) {
+            console.error('Error initializing autosuggest:', error);
+            autosuggestContainer.innerHTML = `
+              <div class="p-4 bg-red-100 text-red-800 rounded">
+                <p class="font-bold">Error initializing autosuggest</p>
+                <p>${error.message}</p>
               </div>
-            `,
-            setup() {
-              const inputValue = Vue.ref('');
-
-              const aiClient = new AiVueCore.AIClient({
-                provider: 'openai',
-                apiKey: apiKey,
-                model: 'gpt-4'
-              });
-
-              return {
-                aiClient,
-                inputValue
-              };
-            }
-          });
-
-          // Register the component
-          autosuggestApp.component('ai-autosuggest', AiVueAutosuggest.AiAutosuggest);
-
-          // Mount the app
-          autosuggestApp.mount(autosuggestContainer);
+            `;
+          }
         }
 
         // Setup API key handling for autosuggest
         setupApiKeyHandling('set-autosuggest-api-key', 'autosuggest-api-key', 'aivue-api-key', initializeAutosuggest);
+      } else {
+        console.error('AiVueAutosuggest not found!');
       }
 
       // Initialize smartform
       const AiVueSmartform = window.AiVueSmartform;
       if (AiVueSmartform) {
+        console.log('AiVueSmartform found');
         const smartformContainer = document.getElementById('smartform-container');
 
+        if (!smartformContainer) {
+          console.error('Smartform container not found!');
+        } else {
+          console.log('Smartform container found');
+        }
+
         function initializeSmartform(apiKey) {
-          if (!smartformContainer || !apiKey) return;
+          console.log('Initializing smartform with API key');
+          if (!smartformContainer || !apiKey) {
+            console.error('Cannot initialize smartform: container or API key missing');
+            return;
+          }
 
-          // Clear container
-          smartformContainer.innerHTML = '';
+          try {
+            // Clear container
+            smartformContainer.innerHTML = '';
 
-          // Create a new Vue app for the smartform
-          const smartformApp = Vue.createApp({
-            template: `
-              <ai-smart-form
-                :client="aiClient"
-                :schema="formSchema"
-                @submit="handleSubmit"
-              />
-              <div v-if="submitted" class="mt-4 p-3 bg-green-100 text-green-800 rounded">
-                Form submitted successfully!
+            // Create a new Vue app for the smartform
+            const smartformApp = Vue.createApp({
+              template: `
+                <ai-smart-form
+                  :client="aiClient"
+                  :schema="formSchema"
+                  @submit="handleSubmit"
+                />
+                <div v-if="submitted" class="mt-4 p-3 bg-green-100 text-green-800 rounded">
+                  Form submitted successfully!
+                </div>
+              `,
+              setup() {
+                console.log('Setting up smartform component');
+                const submitted = Vue.ref(false);
+
+                const formSchema = {
+                  title: 'Contact Form',
+                  fields: [
+                    {
+                      name: 'name',
+                      label: 'Full Name',
+                      type: 'text',
+                      required: true
+                    },
+                    {
+                      name: 'email',
+                      label: 'Email Address',
+                      type: 'email',
+                      required: true
+                    },
+                    {
+                      name: 'message',
+                      label: 'Message',
+                      type: 'textarea'
+                    }
+                  ]
+                };
+
+                const aiClient = new AiVueCore.AIClient({
+                  provider: 'openai',
+                  apiKey: apiKey,
+                  model: 'gpt-4'
+                });
+
+                const handleSubmit = (data) => {
+                  console.log('Form submitted:', data);
+                  submitted.value = true;
+                  setTimeout(() => {
+                    submitted.value = false;
+                  }, 3000);
+                };
+
+                return {
+                  aiClient,
+                  formSchema,
+                  handleSubmit,
+                  submitted
+                };
+              }
+            });
+
+            // Register the component
+            console.log('Registering AiSmartForm component');
+            smartformApp.component('ai-smart-form', AiVueSmartform.AiSmartForm);
+
+            // Mount the app
+            console.log('Mounting smartform app');
+            smartformApp.mount(smartformContainer);
+            console.log('Smartform mounted successfully');
+          } catch (error) {
+            console.error('Error initializing smartform:', error);
+            smartformContainer.innerHTML = `
+              <div class="p-4 bg-red-100 text-red-800 rounded">
+                <p class="font-bold">Error initializing smartform</p>
+                <p>${error.message}</p>
               </div>
-            `,
-            setup() {
-              const submitted = Vue.ref(false);
-
-              const formSchema = {
-                title: 'Contact Form',
-                fields: [
-                  {
-                    name: 'name',
-                    label: 'Full Name',
-                    type: 'text',
-                    required: true
-                  },
-                  {
-                    name: 'email',
-                    label: 'Email Address',
-                    type: 'email',
-                    required: true
-                  },
-                  {
-                    name: 'message',
-                    label: 'Message',
-                    type: 'textarea'
-                  }
-                ]
-              };
-
-              const aiClient = new AiVueCore.AIClient({
-                provider: 'openai',
-                apiKey: apiKey,
-                model: 'gpt-4'
-              });
-
-              const handleSubmit = (data) => {
-                console.log('Form submitted:', data);
-                submitted.value = true;
-                setTimeout(() => {
-                  submitted.value = false;
-                }, 3000);
-              };
-
-              return {
-                aiClient,
-                formSchema,
-                handleSubmit,
-                submitted
-              };
-            }
-          });
-
-          // Register the component
-          smartformApp.component('ai-smart-form', AiVueSmartform.AiSmartForm);
-
-          // Mount the app
-          smartformApp.mount(smartformContainer);
+            `;
+          }
         }
 
         // Setup API key handling for smartform
         setupApiKeyHandling('set-smartform-api-key', 'smartform-api-key', 'aivue-api-key', initializeSmartform);
+      } else {
+        console.error('AiVueSmartform not found!');
       }
+
+      // Check if all components are loaded
+      console.log('Component availability check:');
+      console.log('- AiVueCore:', !!window.AiVueCore);
+      console.log('- AiVueChatbot:', !!window.AiVueChatbot);
+      console.log('- AiVueAutosuggest:', !!window.AiVueAutosuggest);
+      console.log('- AiVueSmartform:', !!window.AiVueSmartform);
     });
   </script>
 </body>
