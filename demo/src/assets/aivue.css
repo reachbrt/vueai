@@ -1,0 +1,370 @@
+/* AIVue Components CSS */
+
+/* Common styles */
+:root {
+  --ai-primary-color: #2563eb;
+  --ai-secondary-color: #64748b;
+  --ai-background-color: #f8fafc;
+  --ai-border-color: #e2e8f0;
+  --ai-text-color: #334155;
+  --ai-light-text-color: #64748b;
+  --ai-success-color: #10b981;
+  --ai-error-color: #ef4444;
+  --ai-warning-color: #f59e0b;
+  --ai-info-color: #3b82f6;
+}
+
+/* Chatbot styles */
+.ai-chat-window {
+  display: flex;
+  flex-direction: column;
+  height: 400px;
+  border: 1px solid var(--ai-border-color);
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: white;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.ai-chat-header {
+  background-color: var(--ai-primary-color);
+  color: white;
+  padding: 12px 16px;
+  font-weight: bold;
+  border-bottom: 1px solid var(--ai-border-color);
+}
+
+.ai-chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background-color: var(--ai-background-color);
+}
+
+.ai-message {
+  padding: 12px;
+  border-radius: 8px;
+  max-width: 80%;
+  display: flex;
+  gap: 8px;
+}
+
+.ai-message.user {
+  background-color: #dbeafe;
+  align-self: flex-end;
+}
+
+.ai-message.assistant {
+  background-color: white;
+  align-self: flex-start;
+  border: 1px solid var(--ai-border-color);
+}
+
+.ai-message.loading {
+  opacity: 0.7;
+}
+
+.ai-avatar {
+  font-size: 1.5rem;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ai-message-content {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.ai-chat-input {
+  display: flex;
+  padding: 12px;
+  border-top: 1px solid var(--ai-border-color);
+  background-color: white;
+}
+
+.ai-chat-input input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid var(--ai-border-color);
+  border-radius: 4px;
+  margin-right: 8px;
+  font-size: 14px;
+}
+
+.ai-chat-input button {
+  padding: 8px 16px;
+  background-color: var(--ai-primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.ai-chat-input button:disabled {
+  background-color: var(--ai-secondary-color);
+  cursor: not-allowed;
+}
+
+.ai-chat-toggle-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.ai-chat-toggle {
+  background-color: var(--ai-primary-color);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Autosuggest styles */
+.ai-autosuggest-container {
+  position: relative;
+  width: 100%;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.ai-autosuggest-input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.ai-autosuggest-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--ai-border-color);
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.ai-autosuggest-loading {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--ai-secondary-color);
+}
+
+.ai-autosuggest-suggestion {
+  margin-top: 8px;
+  padding: 10px;
+  background-color: var(--ai-background-color);
+  border: 1px solid var(--ai-border-color);
+  border-radius: 4px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.suggestion-text {
+  font-weight: bold;
+  color: var(--ai-primary-color);
+}
+
+.accept-suggestion {
+  background-color: var(--ai-primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+/* SmartForm styles */
+.ai-smart-form {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.form-title {
+  margin-bottom: 20px;
+  color: var(--ai-text-color);
+  font-size: 1.5rem;
+}
+
+.ai-form-field {
+  margin-bottom: 16px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.ai-form-field label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: var(--ai-text-color);
+}
+
+.ai-form-field input,
+.ai-form-field textarea,
+.ai-form-field select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--ai-border-color);
+  border-radius: 4px;
+  font-size: 14px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Field states */
+.field-valid input,
+.field-valid textarea,
+.field-valid select,
+.input-valid {
+  border-color: #10b981 !important;
+  box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.2);
+}
+
+.field-suggestion input,
+.field-suggestion textarea,
+.field-suggestion select,
+.input-suggestion {
+  border-color: #f59e0b !important;
+  box-shadow: 0 0 0 1px rgba(245, 158, 11, 0.2);
+}
+
+.field-error input,
+.field-error textarea,
+.field-error select,
+.input-error {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.2);
+}
+
+.field-loading input,
+.field-loading textarea,
+.field-loading select,
+.input-loading {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.2);
+}
+
+/* Validation icons */
+.validation-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  margin-left: 8px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.valid-icon {
+  background-color: #10b981;
+  color: white;
+}
+
+.suggestion-icon {
+  background-color: #f59e0b;
+  color: white;
+}
+
+.error-icon {
+  background-color: #ef4444;
+  color: white;
+}
+
+/* Loading indicator */
+.loading-indicator {
+  font-size: 12px;
+  color: #3b82f6;
+  margin-left: 8px;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
+/* Validation messages */
+.validation-message {
+  font-size: 12px;
+  margin-top: 4px;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.valid-message {
+  color: #065f46;
+  background-color: rgba(16, 185, 129, 0.1);
+}
+
+.suggestion-message {
+  color: #92400e;
+  background-color: rgba(245, 158, 11, 0.1);
+}
+
+.error-message {
+  color: #b91c1c;
+  background-color: rgba(239, 68, 68, 0.1);
+}
+
+.ai-form-field textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.checkbox-wrapper input[type="checkbox"] {
+  width: auto;
+}
+
+.checkbox-label {
+  font-weight: 500;
+  color: var(--ai-text-color);
+}
+
+.form-actions {
+  margin-top: 24px;
+}
+
+.submit-button {
+  padding: 10px 20px;
+  background-color: var(--ai-primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.submit-button:disabled {
+  background-color: var(--ai-secondary-color);
+  cursor: not-allowed;
+}
+
+.ai-smart-form-error {
+  color: var(--ai-error-color);
+  padding: 16px;
+  border: 1px solid var(--ai-error-color);
+  border-radius: 4px;
+  background-color: rgba(239, 68, 68, 0.1);
+}
