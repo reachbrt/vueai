@@ -64,6 +64,7 @@ export const SmartFormPlugin = createCompatPlugin({
   install(app: App) {
     // Register components globally using the compatibility helper
     registerCompatComponent(app, 'SmartForm', SmartForm);
+    registerCompatComponent(app, 'AiSmartForm', SmartForm);
   }
 });
 
