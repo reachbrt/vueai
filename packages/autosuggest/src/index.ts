@@ -21,14 +21,15 @@ export interface AutosuggestOptions {
 }
 
 // Import Vue compatibility utilities from core
-const {
+import {
   createCompatComponent,
   registerCompatComponent,
   createCompatPlugin
-} = require('@aivue/core');
+} from '@aivue/core';
 
 // Export components with compatibility layer
 export const Autosuggest = createCompatComponent(AutosuggestComponent);
+export const AiAutosuggest = Autosuggest;
 
 // Vue Plugin with compatibility layer
 export const AutosuggestPlugin = createCompatPlugin({
@@ -44,6 +45,7 @@ export const useAutosuggest = useAutosuggestComposable;
 // Default export
 export default {
   Autosuggest,
+  AiAutosuggest,
   useAutosuggest,
   AutosuggestPlugin
 };

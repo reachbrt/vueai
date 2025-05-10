@@ -20,7 +20,7 @@ export interface AutosuggestReturn {
 
 /**
  * Composable for AI-powered suggestions
- * 
+ *
  * @param options Configuration options
  * @returns Autosuggest state and methods
  */
@@ -40,7 +40,7 @@ export function useAutosuggest(options: AutosuggestOptions): AutosuggestReturn {
 
   /**
    * Search for suggestions
-   * 
+   *
    * @param query Search query
    */
   const search = async (query: string): Promise<void> => {
@@ -62,12 +62,36 @@ export function useAutosuggest(options: AutosuggestOptions): AutosuggestReturn {
         isLoading.value = true;
 
         try {
-          // This is a placeholder implementation
-          // In a real implementation, this would call the AI client
-          // For now, we'll just simulate a response
-          const response = await simulateAIResponse(query, context);
-          
-          suggestions.value = response.slice(0, maxSuggestions);
+          // Create a prompt for the AI to generate suggestions
+          const prompt = `
+            Generate ${maxSuggestions} short, relevant suggestions to complete or continue this input: "${query}"
+
+            Format your response as a numbered list with each suggestion on a new line.
+            1. First suggestion
+            2. Second suggestion
+            etc.
+
+            Keep suggestions concise and relevant to the input.
+          `;
+
+          // Call the AI client to get suggestions
+          const response = await client.chat([
+            { role: 'system', content: 'You are a helpful assistant providing autocomplete suggestions.' },
+            { role: 'user', content: prompt }
+          ]);
+
+          // Parse the response to extract suggestions
+          const lines = response.split('\n');
+          const extractedSuggestions = lines
+            .filter(line => /^\d+\./.test(line.trim()))
+            .map(line => {
+              const text = line.replace(/^\d+\.\s*/, '').trim();
+              return { text, score: 1.0 - (0.1 * (lines.indexOf(line) || 0)) };
+            })
+            .filter(Boolean)
+            .slice(0, maxSuggestions);
+
+          suggestions.value = extractedSuggestions;
           resolve();
         } catch (err: any) {
           error.value = err.message || 'Failed to get suggestions';
@@ -86,26 +110,6 @@ export function useAutosuggest(options: AutosuggestOptions): AutosuggestReturn {
   const clear = (): void => {
     suggestions.value = [];
     error.value = null;
-  };
-
-  // Simulate AI response for demo purposes
-  const simulateAIResponse = async (query: string, context: string): Promise<SuggestionItem[]> => {
-    // In a real implementation, this would call the AI client
-    // For now, we'll just return some dummy suggestions
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        const dummySuggestions: SuggestionItem[] = [
-          { text: `${query} example`, score: 0.95 },
-          { text: `${query} tutorial`, score: 0.85 },
-          { text: `How to use ${query}`, score: 0.75 },
-          { text: `${query} documentation`, score: 0.65 },
-          { text: `${query} best practices`, score: 0.55 },
-          { text: `${query} tips and tricks`, score: 0.45 },
-          { text: `${query} advanced usage`, score: 0.35 }
-        ];
-        resolve(dummySuggestions);
-      }, 300);
-    });
   };
 
   return {

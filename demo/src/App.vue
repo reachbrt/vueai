@@ -5,12 +5,14 @@
       <p>Powerful AI-powered components for Vue.js applications</p>
     </header>
 
+    <NavBar @tab-change="activeTab = $event" />
+
     <main>
-      <section>
+      <section v-if="activeTab === 'all'">
         <h2>Welcome to Vue AI Components</h2>
         <div class="demo-container">
-          <p>This is a simplified demo of the Vue AI Components library.</p>
-          <p>The full demo includes:</p>
+          <p>This is a demo of the Vue AI Components library.</p>
+          <p>Select a tab above to explore different components:</p>
           <ul>
             <li>AI Chat Components</li>
             <li>AI Autosuggest Components</li>
@@ -18,6 +20,39 @@
             <li>TypeScript Integration</li>
           </ul>
           <p>Visit our <a href="https://github.com/reachbrt/vueai" target="_blank">GitHub Repository</a> to learn more.</p>
+        </div>
+      </section>
+
+      <section v-if="activeTab === 'chatbot'" class="chatbot-section">
+        <h2>Chatbot Component</h2>
+        <div class="demo-container">
+          <AiChatWindow
+            :client="aiClient"
+            title="AI Assistant"
+            placeholder="Ask me anything..."
+            :show-avatars="true"
+          />
+        </div>
+      </section>
+
+      <section v-if="activeTab === 'autosuggest'">
+        <h2>Autosuggest Component</h2>
+        <div class="demo-container">
+          <AutosuggestDemo />
+        </div>
+      </section>
+
+      <section v-if="activeTab === 'smartform'">
+        <h2>Smart Form Component</h2>
+        <div class="demo-container">
+          <SmartFormDemo />
+        </div>
+      </section>
+
+      <section v-if="activeTab === 'typescript'">
+        <h2>TypeScript Integration</h2>
+        <div class="demo-container">
+          <TypeScriptExample />
         </div>
       </section>
     </main>
@@ -29,8 +64,28 @@
 </template>
 
 <script>
+import NavBar from './components/NavBar.vue';
+import AutosuggestDemo from './components/AutosuggestDemo.vue';
+import SmartFormDemo from './components/SmartFormDemo.vue';
+import TypeScriptExample from './components/TypeScriptExample.vue';
+import { AiChatWindow } from '@aivue/chatbot';
+import { aiClient } from './ai-client';
+
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    NavBar,
+    AutosuggestDemo,
+    SmartFormDemo,
+    TypeScriptExample,
+    AiChatWindow
+  },
+  data() {
+    return {
+      activeTab: 'all',
+      aiClient
+    }
+  }
 }
 </script>
 

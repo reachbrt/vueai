@@ -16,13 +16,23 @@ This is a demonstration of the `@aivue/chatbot` package with TypeScript support.
 npm install
 ```
 
-2. Start the development server:
+2. Set up your API keys:
+   - Copy `.env.example` to `.env`
+   - Add your API keys to the `.env` file:
+   ```
+   # OpenAI API Key
+   VITE_OPENAI_API_KEY=your_openai_api_key_here
+   ```
+
+3. Start the development server:
 
 ```bash
 npm run dev
 ```
 
-3. Open your browser and navigate to the URL shown in the terminal (usually http://localhost:5173).
+4. Open your browser and navigate to the URL shown in the terminal (usually http://localhost:5173).
+
+> **Note:** The demo will work without API keys using the fallback provider, which simulates AI responses. For the best experience, add your OpenAI API key to the `.env` file.
 
 ## Examples
 
@@ -72,22 +82,22 @@ import { aiClient } from './ai-client';
 export default defineComponent({
   setup() {
     const userInput = ref('');
-    
+
     const { messages, isLoading, error, sendMessage } = useChatEngine({
       client: aiClient,
       systemPrompt: 'You are a helpful assistant.',
       streaming: true
     });
-    
+
     const handleSendMessage = async () => {
       if (!userInput.value.trim() || isLoading.value) return;
-      
+
       const message = userInput.value;
       userInput.value = '';
-      
+
       await sendMessage(message);
     };
-    
+
     return {
       userInput,
       messages,

@@ -117,7 +117,7 @@ export default {
     const inputElement = ref(null);
     const showSuggestions = ref(false);
     const selectedIndex = ref(-1);
-    
+
     const options = computed(() => ({
       client: props.client,
       debounce: props.debounce,
@@ -126,20 +126,19 @@ export default {
       context: props.context,
       onError: (error) => emit('error', error)
     }));
-    
-    const { 
-      suggestions, 
-      isLoading, 
-      error, 
-      search, 
-      clearSuggestions,
-      selectSuggestion: selectSuggestionInternal
+
+    const {
+      suggestions,
+      isLoading,
+      error,
+      search,
+      clear: clearSuggestions
     } = useAutosuggest(options.value);
-    
+
     const handleInput = (event) => {
       const value = event.target.value;
       emit('update:modelValue', value);
-      
+
       if (value.length >= props.minLength) {
         search(value);
         showSuggestions.value = true;
@@ -147,20 +146,20 @@ export default {
         clearSuggestions();
         showSuggestions.value = false;
       }
-      
+
       selectedIndex.value = -1;
     };
-    
+
     const selectSuggestion = (suggestion) => {
       emit('update:modelValue', suggestion.text);
       emit('suggestion-selected', suggestion);
       showSuggestions.value = false;
       clearSuggestions();
     };
-    
+
     const handleKeyDown = (event) => {
       if (!showSuggestions.value || suggestions.value.length === 0) return;
-      
+
       switch (event.key) {
         case 'ArrowDown':
           event.preventDefault();
@@ -182,24 +181,24 @@ export default {
           break;
       }
     };
-    
+
     // Close suggestions when clicking outside
     const handleClickOutside = (event) => {
       if (inputElement.value && !inputElement.value.contains(event.target)) {
         showSuggestions.value = false;
       }
     };
-    
+
     // Watch for suggestions changes
     watch(suggestions, (newSuggestions) => {
       emit('suggestions-updated', newSuggestions);
     });
-    
+
     // Add event listeners
     onMounted(() => {
       document.addEventListener('keydown', handleKeyDown);
       document.addEventListener('click', handleClickOutside);
-      
+
       // Focus input on mount if autofocus is enabled
       nextTick(() => {
         if (inputElement.value && props.autofocus) {
@@ -207,7 +206,7 @@ export default {
         }
       });
     });
-    
+
     return {
       inputElement,
       suggestions,

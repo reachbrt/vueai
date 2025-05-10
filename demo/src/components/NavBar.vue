@@ -2,8 +2,8 @@
   <nav class="navbar">
     <h3>AIVue Components</h3>
     <div class="nav-links">
-      <button 
-        v-for="tab in tabs" 
+      <button
+        v-for="tab in tabs"
         :key="tab.id"
         @click="selectTab(tab.id)"
         :class="{ 'active': activeTab === tab.id }"
@@ -21,19 +21,20 @@ export default defineComponent({
   name: 'NavBar',
   setup(_, { emit }) {
     const tabs = [
+      { id: 'all', name: 'All Components' },
       { id: 'chatbot', name: 'Chatbot' },
       { id: 'autosuggest', name: 'Autosuggest' },
       { id: 'smartform', name: 'SmartForm' },
-      { id: 'all', name: 'All Components' }
+      { id: 'typescript', name: 'TypeScript' }
     ];
-    
+
     const activeTab = ref('all');
-    
+
     const selectTab = (tabId: string) => {
       activeTab.value = tabId;
       emit('tab-change', tabId);
     };
-    
+
     return {
       tabs,
       activeTab,

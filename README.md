@@ -29,6 +29,30 @@ npm install @aivue/smartform
 npm install @aivue/core @aivue/chatbot @aivue/autosuggest @aivue/smartform
 ```
 
+## 🔑 API Key Setup
+
+1. Create a `.env` file in your project root (this file will be automatically excluded from Git)
+2. Add your API keys for the providers you want to use:
+
+```
+# OpenAI API Key
+VITE_OPENAI_API_KEY=your_openai_api_key_here
+
+# Claude API Key (optional)
+VITE_CLAUDE_API_KEY=your_claude_api_key_here
+
+# Gemini API Key (optional)
+VITE_GEMINI_API_KEY=your_gemini_api_key_here
+
+# HuggingFace API Key (optional)
+VITE_HUGGINGFACE_API_KEY=your_huggingface_api_key_here
+
+# DeepSeek API Key (optional)
+VITE_DEEPSEEK_API_KEY=your_deepseek_api_key_here
+```
+
+> **Note:** If you don't have API keys, the components will still work using the fallback provider which simulates AI responses.
+
 ---
 
 ## 🏗️ Structure

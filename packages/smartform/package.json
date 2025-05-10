@@ -1,15 +1,15 @@
 {
   "name": "@aivue/smartform",
-  "version": "1.1.9",
+  "version": "1.2.1",
   "description": "AI-powered form validation for Vue.js",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
-      "require": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "require": "./dist/index.js"
     },
     "./components/*": {
       "import": "./dist/components/*",
@@ -22,13 +22,13 @@
     "CHANGELOG.md"
   ],
   "scripts": {
-    "build": "npm run clean && tsup && npm run postbuild",
-    "dev": "tsup --watch",
+    "build": "npm run clean && vite build && npm run postbuild",
+    "dev": "vite --watch",
     "lint": "eslint \"src/**/*.{ts,vue}\"",
     "clean": "rm -rf dist",
     "test": "vitest run",
     "test:watch": "vitest",
-    "postbuild": "cp -r src/components dist/components && cp README.md dist/ && cp CHANGELOG.md dist/ 2>/dev/null || true"
+    "postbuild": "cp -r src/components dist/components && cp -r src/composables dist/composables && cp README.md dist/ && cp CHANGELOG.md dist/ 2>/dev/null || true"
   },
   "keywords": [
     "vue",
@@ -54,7 +54,7 @@
     "access": "public"
   },
   "peerDependencies": {
-    "@aivue/core": "^1.1.9",
+    "@aivue/core": "^1.2.1",
     "vue": "^2.6.0 || ^3.0.0"
   },
   "devDependencies": {

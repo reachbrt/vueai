@@ -612,28 +612,33 @@
     .code-block {
       background-color: #1e293b;
       border-radius: 0.5rem;
-      padding: 1rem;
-      margin: 1rem 0;
-      overflow-x: auto;
+      padding: 0;
+      margin: 1.5rem 0;
+      overflow: hidden;
       position: relative;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
       z-index: 10; /* Ensure code blocks are visible */
       display: block !important; /* Force display */
       visibility: visible !important; /* Force visibility */
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .code-block pre {
       margin: 0;
-      padding: 0;
+      padding: 1rem;
       background-color: #1e293b; /* Ensure background color is set */
+      overflow-x: auto;
     }
 
     .code-block code {
-      font-family: 'Fira Code', monospace;
+      font-family: 'Fira Code', 'Menlo', 'Monaco', 'Courier New', monospace;
       font-size: 0.9rem;
-      line-height: 1.5;
-      background-color: #1e293b; /* Ensure background color is set */
-      color: #abb2bf; /* Ensure text color is set */
+      line-height: 1.6;
+      background-color: transparent !important; /* Ensure background color is transparent */
+      color: #abb2bf !important; /* Ensure text color is set */
+      text-shadow: none !important;
+      padding: 0 !important;
+      border: none !important;
     }
 
     /* Ensure code blocks are visible in tab sections */
@@ -644,15 +649,27 @@
       visibility: visible !important;
     }
 
+    /* Syntax highlighting overrides */
+    .hljs-keyword, .hljs-tag { color: #c678dd !important; }
+    .hljs-attr { color: #e5c07b !important; }
+    .hljs-string { color: #98c379 !important; }
+    .hljs-name { color: #e06c75 !important; }
+    .hljs-built_in { color: #56b6c2 !important; }
+    .hljs-comment { color: #7f848e !important; font-style: italic; }
+    .hljs-number { color: #d19a66 !important; }
+    .hljs-variable { color: #e06c75 !important; }
+    .hljs-function { color: #61afef !important; }
+
     .code-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0.5rem 1rem;
-      background-color: #2d3748;
+      padding: 0.75rem 1rem;
+      background-color: #282c34;
       border-radius: 0.5rem 0.5rem 0 0;
       color: white;
       font-size: 0.85rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .code-dots {
@@ -664,15 +681,31 @@
       width: 12px;
       height: 12px;
       border-radius: 50%;
+      transition: all 0.2s ease;
     }
 
-    .code-dot.red { background-color: #f56565; }
-    .code-dot.yellow { background-color: #ecc94b; }
-    .code-dot.green { background-color: #48bb78; }
+    .code-dot.red { background-color: #ff5f56; }
+    .code-dot.yellow { background-color: #ffbd2e; }
+    .code-dot.green { background-color: #27c93f; }
+
+    .code-block:hover .code-dot.red {
+      box-shadow: 0 0 0 2px rgba(255, 95, 86, 0.3);
+    }
+
+    .code-block:hover .code-dot.yellow {
+      box-shadow: 0 0 0 2px rgba(255, 189, 46, 0.3);
+    }
+
+    .code-block:hover .code-dot.green {
+      box-shadow: 0 0 0 2px rgba(39, 201, 63, 0.3);
+    }
 
     .code-language {
-      font-weight: 500;
+      font-weight: 600;
       opacity: 0.8;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      font-size: 0.75rem;
     }
 
     .code-copy {
@@ -682,10 +715,13 @@
       opacity: 0.6;
       cursor: pointer;
       transition: opacity 0.2s;
+      padding: 0.25rem;
+      border-radius: 4px;
     }
 
     .code-copy:hover {
       opacity: 1;
+      background-color: rgba(255, 255, 255, 0.1);
     }
 
     /* Chat messages */
@@ -2090,6 +2126,9 @@ async function getResponse(messages: Message[]): Promise<string> {
           console.log('Chatbot container found');
         }
 
+        // Store Vue app instances to unmount them before remounting
+        let chatbotAppInstance = null;
+
         function initializeChatbot(apiKey) {
           console.log('Initializing chatbot with API key:', apiKey.substring(0, 3) + '...');
           if (!chatbotContainer) {
@@ -2098,6 +2137,13 @@ async function getResponse(messages: Message[]): Promise<string> {
           }
 
           try {
+            // Unmount previous app if it exists
+            if (chatbotAppInstance) {
+              console.log('Unmounting previous chatbot app');
+              chatbotAppInstance.unmount();
+              chatbotAppInstance = null;
+            }
+
             // Clear container
             chatbotContainer.innerHTML = '';
 
@@ -2138,6 +2184,7 @@ async function getResponse(messages: Message[]): Promise<string> {
             // Mount the app
             console.log('Mounting chatbot app');
             chatbotApp.mount(chatbotContainer);
+            chatbotAppInstance = chatbotApp;
             console.log('Chatbot mounted successfully');
           } catch (error) {
             console.error('Error initializing chatbot:', error);
@@ -2173,6 +2220,9 @@ async function getResponse(messages: Message[]): Promise<string> {
           console.log('Autosuggest container found');
         }
 
+        // Store Vue app instances to unmount them before remounting
+        let autosuggestAppInstance = null;
+
         function initializeAutosuggest(apiKey) {
           console.log('Initializing autosuggest with API key:', apiKey.substring(0, 3) + '...');
           if (!autosuggestContainer) {
@@ -2181,6 +2231,13 @@ async function getResponse(messages: Message[]): Promise<string> {
           }
 
           try {
+            // Unmount previous app if it exists
+            if (autosuggestAppInstance) {
+              console.log('Unmounting previous autosuggest app');
+              autosuggestAppInstance.unmount();
+              autosuggestAppInstance = null;
+            }
+
             // Clear container
             autosuggestContainer.innerHTML = '';
 
@@ -2231,6 +2288,7 @@ async function getResponse(messages: Message[]): Promise<string> {
             // Mount the app
             console.log('Mounting autosuggest app');
             autosuggestApp.mount(autosuggestContainer);
+            autosuggestAppInstance = autosuggestApp;
             console.log('Autosuggest mounted successfully');
           } catch (error) {
             console.error('Error initializing autosuggest:', error);
@@ -2266,6 +2324,9 @@ async function getResponse(messages: Message[]): Promise<string> {
           console.log('Smartform container found');
         }
 
+        // Store Vue app instances to unmount them before remounting
+        let smartformAppInstance = null;
+
         function initializeSmartform(apiKey) {
           console.log('Initializing smartform with API key:', apiKey.substring(0, 3) + '...');
           if (!smartformContainer) {
@@ -2274,6 +2335,13 @@ async function getResponse(messages: Message[]): Promise<string> {
           }
 
           try {
+            // Unmount previous app if it exists
+            if (smartformAppInstance) {
+              console.log('Unmounting previous smartform app');
+              smartformAppInstance.unmount();
+              smartformAppInstance = null;
+            }
+
             // Clear container
             smartformContainer.innerHTML = '';
 
@@ -2351,6 +2419,7 @@ async function getResponse(messages: Message[]): Promise<string> {
             // Mount the app
             console.log('Mounting smartform app');
             smartformApp.mount(smartformContainer);
+            smartformAppInstance = smartformApp;
             console.log('Smartform mounted successfully');
           } catch (error) {
             console.error('Error initializing smartform:', error);
