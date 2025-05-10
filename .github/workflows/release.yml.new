@@ -1,0 +1,72 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          registry-url: 'https://registry.npmjs.org/'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+          body: |
+            ## What's Changed
+            
+            ### Core Package (v1.1.0)
+            - Added Vue 2 compatibility
+            - Added comprehensive compatibility layer
+            - Updated peer dependencies
+            
+            ### Chatbot Package (v1.1.0)
+            - Added Vue 2 compatibility
+            - Added Intercom-like toggle component
+            - Improved component registration
+            
+            ### Autosuggest Package (v1.1.0)
+            - Added Vue 2 compatibility
+            - Added plugin for global registration
+            
+            ### Smartform Package (v1.1.0)
+            - Added Vue 2 compatibility
+            - Added plugin for global registration
+            
+            For more details, see the CHANGELOG.md files in each package.
+
+      - name: Publish to npm
+        run: npm run publish:packages
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Setup Node.js for GitHub Packages
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          registry-url: 'https://npm.pkg.github.com/'
+          scope: '@reachbrt'
+
+      - name: Publish to GitHub Packages
+        run: npm run publish:github
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
