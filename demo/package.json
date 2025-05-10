@@ -8,10 +8,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@aivue/autosuggest": "^1.2.2",
-    "@aivue/chatbot": "^1.2.2",
-    "@aivue/core": "^1.2.2",
-    "@aivue/smartform": "^1.2.2",
+    "@aivue/autosuggest": "^1.2.3",
+    "@aivue/chatbot": "^1.2.3",
+    "@aivue/core": "^1.2.3",
+    "@aivue/smartform": "^1.2.3",
     "vue": "^3.5.0"
   },
   "devDependencies": {
