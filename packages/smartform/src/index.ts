@@ -3,11 +3,17 @@ import { App } from 'vue';
 import { AIClient } from '@aivue/core';
 
 // Import Vue compatibility utilities from core
-const {
+import {
   createCompatComponent,
   registerCompatComponent,
   createCompatPlugin
-} = require('@aivue/core');
+} from '@aivue/core';
+
+// Import the real useSmartForm composable
+import { useSmartForm as useSmartFormImpl, SmartFormOptions, SmartFormReturn } from './composables/useSmartForm';
+
+// Re-export the types from the composable
+export type { SmartFormOptions, SmartFormReturn };
 
 // Export types
 export interface SmartFormSchema {
@@ -32,48 +38,18 @@ export interface SmartFormErrors {
   [field: string]: string;
 }
 
-export interface UseSmartFormResult {
-  formData: SmartFormData;
-  errors: SmartFormErrors;
-  handleChange: (field: string, value: any) => void;
-  validate: (field?: string) => Promise<boolean>;
-  fixWithAI: (field: string) => Promise<void>;
-  reset: () => void;
-  submitForm: () => Promise<boolean>;
+// Re-export the useSmartForm composable
+export function useSmartForm(options: SmartFormOptions): SmartFormReturn {
+  return useSmartFormImpl(options);
 }
 
-// Placeholder for the useSmartForm composable
-export function useSmartForm(schema: SmartFormSchema): UseSmartFormResult {
-  // This is a placeholder implementation
-  // In a real implementation, this would be a Vue composable
-  return {
-    formData: {},
-    errors: {},
-    handleChange: () => {
-      console.log('Field changed');
-    },
-    validate: async () => {
-      console.log('Form validated');
-      return true;
-    },
-    fixWithAI: async () => {
-      console.log('Field fixed with AI');
-    },
-    reset: () => {
-      console.log('Form reset');
-    },
-    submitForm: async () => {
-      console.log('Form submitted');
-      return true;
-    }
-  };
-}
+// Import the SmartForm component
+import SmartFormComponent from './components/SmartForm.vue';
 
-// Placeholder for the SmartForm component
-// In a real implementation, this would be a Vue component
+// Create a compatible component
 export const SmartForm = createCompatComponent({
   name: 'SmartForm',
-  // Component implementation would go here
+  component: SmartFormComponent
 });
 
 // Vue Plugin with compatibility layer
