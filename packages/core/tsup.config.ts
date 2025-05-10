@@ -6,7 +6,7 @@ export default defineConfig({
     options.resolveExtensions = ['.ts', '.js'];
   },
   format: ['cjs', 'esm'],
-  dts: false, // Temporarily disable TypeScript declaration generation
+  dts: true, // Enable TypeScript declaration generation
   clean: true,
   external: ['vue', 'eventsource-parser'],
   sourcemap: true,

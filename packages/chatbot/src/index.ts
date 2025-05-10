@@ -7,11 +7,11 @@ import { useChatEngine as useChatEngineComposable, Message, ChatOptions, ChatSta
 import { formatMarkdown } from './utils/markdown';
 
 // Import Vue compatibility utilities from core
-const {
+import {
   createCompatComponent,
   registerCompatComponent,
   createCompatPlugin
-} = require('@aivue/core');
+} from '@aivue/core';
 
 // Re-export types
 export type { Message, ChatOptions, ChatState };

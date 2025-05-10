@@ -3,7 +3,9 @@ import { v4 as uuidv4 } from 'uuid';
 import { AIClient, Message as CoreMessage, StreamCallbacks, AIProvider } from '@aivue/core';
 
 // Define types
-export interface Message extends CoreMessage {
+export interface Message {
+  role: 'system' | 'user' | 'assistant';
+  content: string;
   id?: string;
   timestamp?: Date;
 }
