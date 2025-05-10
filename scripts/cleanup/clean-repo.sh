@@ -19,7 +19,7 @@ echo -e "${GREEN}Backup created at .git.bak${NC}"
 # Remove the API key from the repository history
 echo -e "${YELLOW}Removing API key from repository history...${NC}"
 git filter-branch --force --index-filter \
-  "git ls-files -z | xargs -0 sed -i '' 's/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/YOUR_API_KEY_PLACEHOLDER/g'" \
+  "git ls-files -z '*.env*' | xargs -0 -I{} sh -c 'if [ -f \"{}\" ]; then sed -i \"\" \"s/sk-[a-zA-Z0-9_\\-]\{30,\}/YOUR_API_KEY_PLACEHOLDER/g\" \"{}\"; fi'" \
   --prune-empty -- --all
 
 # Force garbage collection to remove the old objects
@@ -29,7 +29,7 @@ git gc --prune=now --aggressive
 
 # Verify the API key has been removed
 echo -e "${YELLOW}Verifying API key has been removed...${NC}"
-if git grep -q "sk-"; then
+if git grep -q "sk-[a-zA-Z0-9_\-]\{30,\}"; then
   echo -e "${RED}API key still found in repository. Please check manually.${NC}"
   exit 1
 else
@@ -45,14 +45,14 @@ if [ "$PUSH_TO_GITHUB" = "y" ] || [ "$PUSH_TO_GITHUB" = "Y" ]; then
   git push origin main --force
 
   # Push the tag
-  git tag -f v1.2.0
-  git push origin v1.2.0 --force
+  git tag -f v1.2.2
+  git push origin v1.2.2 --force
 
   echo -e "${GREEN}Repository successfully cleaned and pushed to GitHub!${NC}"
 else
   echo -e "${YELLOW}Skipping push to GitHub. You can push manually with:${NC}"
   echo -e "git push origin main --force"
-  echo -e "git push origin v1.2.0 --force"
+  echo -e "git push origin v1.2.2 --force"
 fi
 
 echo -e "${GREEN}All done!${NC}"
