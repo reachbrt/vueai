@@ -29,13 +29,14 @@ import {
 
 // Export components with compatibility layer
 export const Autosuggest = createCompatComponent(AutosuggestComponent);
-export const AiAutosuggest = Autosuggest;
+export const AiAutosuggest = Autosuggest; // Alias for backward compatibility
 
 // Vue Plugin with compatibility layer
 export const AutosuggestPlugin = createCompatPlugin({
   install(app: App) {
     // Register components globally using the compatibility helper
     registerCompatComponent(app, 'Autosuggest', AutosuggestComponent);
+    registerCompatComponent(app, 'AiAutosuggest', AutosuggestComponent);
   }
 });
 

@@ -63,35 +63,47 @@ export function useAutosuggest(options: AutosuggestOptions): AutosuggestReturn {
 
         try {
           // Create a prompt for the AI to generate suggestions
-          const prompt = `
-            Generate ${maxSuggestions} short, relevant suggestions to complete or continue this input: "${query}"
+          const prompt = `Generate ${maxSuggestions} search suggestions for the query: "${query}"
+          ${context ? `\nContext: ${context}` : ''}
 
-            Format your response as a numbered list with each suggestion on a new line.
-            1. First suggestion
-            2. Second suggestion
-            etc.
+          Format the response as a JSON array of objects with "text" and "score" properties.
+          Example: [{"text": "suggestion 1", "score": 0.95}, {"text": "suggestion 2", "score": 0.85}]
 
-            Keep suggestions concise and relevant to the input.
+          The score should be between 0 and 1, representing the relevance of the suggestion.
           `;
 
-          // Call the AI client to get suggestions
+          // Call the AI client to generate suggestions
           const response = await client.chat([
-            { role: 'system', content: 'You are a helpful assistant providing autocomplete suggestions.' },
+            { role: 'system', content: 'You are a helpful assistant generating search suggestions.' },
             { role: 'user', content: prompt }
           ]);
 
-          // Parse the response to extract suggestions
-          const lines = response.split('\n');
-          const extractedSuggestions = lines
-            .filter(line => /^\d+\./.test(line.trim()))
-            .map(line => {
-              const text = line.replace(/^\d+\.\s*/, '').trim();
-              return { text, score: 1.0 - (0.1 * (lines.indexOf(line) || 0)) };
-            })
-            .filter(Boolean)
-            .slice(0, maxSuggestions);
+          // Parse the response as JSON
+          let parsedResponse: SuggestionItem[] = [];
 
-          suggestions.value = extractedSuggestions;
+          try {
+            // Extract JSON array from the response if needed
+            const jsonMatch = response.match(/\[.*\]/s);
+            const jsonString = jsonMatch ? jsonMatch[0] : response;
+            parsedResponse = JSON.parse(jsonString);
+
+            // Validate the response format
+            parsedResponse = parsedResponse
+              .filter(item => typeof item.text === 'string' && typeof item.score === 'number')
+              .map(item => ({
+                text: item.text,
+                score: Math.max(0, Math.min(1, item.score)) // Ensure score is between 0 and 1
+              }));
+          } catch (parseError) {
+            // If parsing fails, create suggestions from the raw response
+            const lines = response.split('\n').filter(line => line.trim());
+            parsedResponse = lines.map((line, index) => ({
+              text: line.replace(/^\d+\.\s*/, '').trim(),
+              score: 1 - (index * 0.1)
+            }));
+          }
+
+          suggestions.value = parsedResponse.slice(0, maxSuggestions);
           resolve();
         } catch (err: any) {
           error.value = err.message || 'Failed to get suggestions';
