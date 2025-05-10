@@ -132,7 +132,7 @@ export default {
       isLoading,
       error,
       search,
-      clear: clearSuggestions
+      clear
     } = useAutosuggest(options.value);
 
     const handleInput = (event) => {
@@ -143,7 +143,7 @@ export default {
         search(value);
         showSuggestions.value = true;
       } else {
-        clearSuggestions();
+        clear();
         showSuggestions.value = false;
       }
 
@@ -154,7 +154,7 @@ export default {
       emit('update:modelValue', suggestion.text);
       emit('suggestion-selected', suggestion);
       showSuggestions.value = false;
-      clearSuggestions();
+      clear();
     };
 
     const handleKeyDown = (event) => {
@@ -216,7 +216,7 @@ export default {
       selectedIndex,
       handleInput,
       selectSuggestion,
-      clearSuggestions
+      clear
     };
   }
 };
