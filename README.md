@@ -324,9 +324,28 @@ npm run publish:packages
 ## 📚 Docs & Demo
 - [Live Demo](https://aivue-demo.netlify.app/) - Interactive demo of all components
 - [Documentation Wiki](https://github.com/reachbrt/vueai/wiki)
+- [Local Demo](./demo/README.md) - Run the demo locally with `npm run demo`
 - Storybook
 - Nuxt/Vite templates
 - AI playgrounds with multi-provider support
+
+### Running the Demo Locally
+
+You can run the demo locally to see all components in action:
+
+```bash
+# From the root directory
+npm run demo
+
+# Or using the shell script directly
+./run-demo.sh
+
+# Or from the demo directory
+cd demo
+npm run dev
+```
+
+The demo will be available at http://localhost:8080
 
 ---
 

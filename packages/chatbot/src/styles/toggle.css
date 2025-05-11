@@ -1,0 +1,268 @@
+/* Chat Window Container for toggle functionality */
+.ai-chat-window-container {
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  width: 400px;
+  height: 600px;
+  border-radius: var(--chat-border-radius);
+  box-shadow: var(--chat-shadow);
+  z-index: 1000;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.ai-chat-toggle {
+  --chat-toggle-bg: #3b82f6;
+  --chat-toggle-hover: #2563eb;
+  --chat-toggle-text: #ffffff;
+  --chat-header-bg: #f8fafc;
+  --chat-header-border: #e2e8f0;
+  --chat-header-text: #1e293b;
+  --chat-close-color: #64748b;
+  --chat-close-hover: #e2e8f0;
+  --chat-bg: #ffffff;
+  --chat-border-radius: 16px;
+  --chat-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --chat-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+  position: fixed;
+  z-index: 9999;
+  font-family: var(--chat-font);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Dark Theme */
+.ai-chat-toggle[data-theme="dark"] {
+  --chat-toggle-bg: #cba6f7;
+  --chat-toggle-hover: #b4befe;
+  --chat-toggle-text: #1e1e2e;
+  --chat-header-bg: #181825;
+  --chat-header-border: #313244;
+  --chat-header-text: #cdd6f4;
+  --chat-close-color: #cdd6f4;
+  --chat-close-hover: #313244;
+  --chat-bg: #1e1e2e;
+}
+
+/* Soft Theme */
+.ai-chat-toggle[data-theme="soft"] {
+  --chat-toggle-bg: #74c0fc;
+  --chat-toggle-hover: #4dabf7;
+  --chat-toggle-text: #ffffff;
+  --chat-header-bg: #f1f3f5;
+  --chat-header-border: #dee2e6;
+  --chat-header-text: #495057;
+  --chat-close-color: #495057;
+  --chat-close-hover: #dee2e6;
+  --chat-bg: #f8f9fa;
+}
+
+/* Vibrant Theme */
+.ai-chat-toggle[data-theme="vibrant"] {
+  --chat-toggle-bg: #f72585;
+  --chat-toggle-hover: #b5179e;
+  --chat-toggle-text: #ffffff;
+  --chat-header-bg: #7209b7;
+  --chat-header-border: #560bad;
+  --chat-header-text: #ffffff;
+  --chat-close-color: #ffffff;
+  --chat-close-hover: #560bad;
+  --chat-bg: #ffffff;
+}
+
+/* Corporate Theme */
+.ai-chat-toggle[data-theme="corporate"] {
+  --chat-toggle-bg: #64ffda;
+  --chat-toggle-hover: #00e5ff;
+  --chat-toggle-text: #0a192f;
+  --chat-header-bg: #0a192f;
+  --chat-header-border: #172a45;
+  --chat-header-text: #e6f1ff;
+  --chat-close-color: #e6f1ff;
+  --chat-close-hover: #172a45;
+  --chat-bg: #ffffff;
+}
+
+.ai-chat-toggle--bottom {
+  right: 20px;
+  bottom: 20px;
+}
+
+.ai-chat-toggle--top {
+  right: 20px;
+  top: 20px;
+}
+
+.ai-chat-toggle__button {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: var(--chat-toggle-bg);
+  color: var(--chat-toggle-text);
+  border: none;
+  box-shadow: var(--chat-shadow);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+}
+
+.ai-chat-toggle__button:hover {
+  transform: scale(1.05) translateY(-5px);
+  background-color: var(--chat-toggle-hover);
+  box-shadow: 0 15px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+}
+
+.ai-chat-toggle__button:active {
+  transform: scale(0.95);
+}
+
+.ai-chat-toggle__button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 120%;
+  height: 120%;
+  background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%);
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  transition: transform 0.5s, opacity 0.5s;
+}
+
+.ai-chat-toggle__button:hover::after {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+
+.ai-chat-toggle__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+.ai-chat-toggle__window {
+  position: absolute;
+  bottom: 80px;
+  right: 0;
+  width: 380px;
+  height: 600px;
+  background-color: var(--chat-bg);
+  border-radius: var(--chat-border-radius);
+  box-shadow: var(--chat-shadow);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 1px solid var(--chat-header-border);
+  transform-origin: bottom right;
+}
+
+.ai-chat-toggle--top .ai-chat-toggle__window {
+  bottom: auto;
+  top: 80px;
+  transform-origin: top right;
+}
+
+.ai-chat-toggle__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background-color: var(--chat-header-bg);
+  border-bottom: 1px solid var(--chat-header-border);
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.ai-chat-toggle[data-theme="vibrant"] .ai-chat-toggle__header {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  border-bottom: none;
+}
+
+.ai-chat-toggle__title {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--chat-header-text);
+  letter-spacing: -0.01em;
+}
+
+.ai-chat-toggle__close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--chat-close-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  width: 30px;
+  height: 30px;
+  position: relative;
+}
+
+.ai-chat-toggle__close:hover {
+  background-color: var(--chat-close-hover);
+  transform: rotate(90deg);
+}
+
+.ai-chat-toggle__close::before,
+.ai-chat-toggle__close::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 2px;
+  background-color: currentColor;
+  border-radius: 1px;
+}
+
+.ai-chat-toggle__close::before {
+  transform: rotate(45deg);
+}
+
+.ai-chat-toggle__close::after {
+  transform: rotate(-45deg);
+}
+
+.ai-chat-toggle__content {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+@media (max-width: 480px) {
+  .ai-chat-toggle__window {
+    width: calc(100vw - 40px);
+    height: 500px;
+    right: 0;
+    left: 0;
+    margin: 0 auto;
+    max-height: 80vh;
+  }
+
+  .ai-chat-toggle__button {
+    width: 54px;
+    height: 54px;
+  }
+
+  .ai-chat-toggle--bottom {
+    right: 16px;
+    bottom: 16px;
+  }
+
+  .ai-chat-toggle--top {
+    right: 16px;
+    top: 16px;
+  }
+}

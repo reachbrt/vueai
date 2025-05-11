@@ -6,6 +6,10 @@ import AiChatToggleComponent from './components/AiChatToggle.vue';
 import { useChatEngine as useChatEngineComposable, Message, ChatOptions, ChatState } from './composables/useChatEngine';
 import { formatMarkdown } from './utils/markdown';
 
+// Import CSS - these will be included in the bundle
+import './styles/chatbot.css';
+import './styles/toggle.css';
+
 // Import Vue compatibility utilities from core
 import {
   createCompatComponent,

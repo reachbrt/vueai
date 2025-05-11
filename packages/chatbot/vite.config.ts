@@ -25,11 +25,23 @@ export default defineConfig({
           '@aivue/core': 'AiVueCore',
           'markdown-it': 'MarkdownIt',
           'uuid': 'uuid'
-        }
+        },
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name === 'style.css') return 'chatbot.css';
+          return assetInfo.name;
+        },
       },
     },
     outDir: 'dist',
     emptyOutDir: false, // Changed to false to prevent clearing the dist directory
     sourcemap: true,
+    cssCodeSplit: false, // Ensure CSS is not split
+    // Make sure CSS is included in the bundle
+    css: {
+      // Extract all CSS to a single file
+      extract: {
+        filename: 'chatbot.css'
+      },
+    },
   },
 });
