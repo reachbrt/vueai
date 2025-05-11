@@ -26,6 +26,9 @@
 - 🔒 **API key security**: Built-in proxy support for secure API key handling
 - 🚀 **Composition API**: First-class support for Vue 3 Composition API
 - 🔄 **Dynamic configuration**: Update models and settings on the fly
+- 🎭 **Multiple themes**: Modern, Dark, Soft, Vibrant, Corporate themes included
+- 🖌️ **Automatic CSS**: CSS is automatically included - no manual imports needed
+- 💅 **Modern UI**: Elegant design with smooth animations and transitions
 
 ## Installation
 
@@ -48,6 +51,29 @@ This package is compatible with both Vue 2 and Vue 3:
 - **Vue 3**: Compatible with all Vue 3.x versions
 
 The package automatically detects which version of Vue you're using and provides the appropriate compatibility layer. This means you can use the same package regardless of whether your project is using Vue 2 or Vue 3.
+
+## CSS Integration
+
+The @aivue/chatbot package now includes CSS automatically. You can import it in two ways:
+
+### Method 1: Automatic CSS Inclusion (Recommended)
+
+The CSS is automatically included when you import the components:
+
+```js
+import { AiChatWindow, AiChatToggle } from '@aivue/chatbot';
+```
+
+### Method 2: Explicit CSS Import
+
+If you need to import the CSS separately:
+
+```js
+// In your main.js or main.ts file
+import '@aivue/chatbot/style.css';
+```
+
+This is the recommended way to import the CSS, as it uses the exports field in the package.json to correctly resolve the CSS file path.
 
 ## Basic Usage
 

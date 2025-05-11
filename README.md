@@ -85,6 +85,9 @@ vueai/
 - Automatic fallback when API keys aren't available
 - Streaming responses with Markdown support
 - File upload, PDF parsing, history tracking
+- Multiple themes: Modern, Dark, Soft, Vibrant, Corporate
+- Automatic CSS inclusion - no need to manually import CSS files
+- Modern UI with elegant design and animations
 
 ```vue
 <template>
@@ -240,6 +243,31 @@ function handleSubmit(data) {
 }
 </script>
 ```
+
+---
+
+## 🎨 CSS Integration
+
+The @aivue/chatbot package now includes CSS automatically. You can import it in two ways:
+
+### Method 1: Automatic CSS Inclusion (Recommended)
+
+The CSS is automatically included when you import the components:
+
+```js
+import { AiChatWindow, AiChatToggle } from '@aivue/chatbot';
+```
+
+### Method 2: Explicit CSS Import
+
+If you need to import the CSS separately:
+
+```js
+// In your main.js or main.ts file
+import '@aivue/chatbot/style.css';
+```
+
+This is the recommended way to import the CSS, as it uses the exports field in the package.json to correctly resolve the CSS file path.
 
 ---
 

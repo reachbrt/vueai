@@ -73,11 +73,34 @@ cp .env.example .env
 
 ## Packages Used
 
-- @aivue/chatbot: ^1.4.4
+- @aivue/chatbot: ^1.4.5
 - @aivue/core: ^1.2.7
 - @aivue/autosuggest: ^1.2.8
 - @aivue/smartform: ^1.2.8
 - Vue.js: ^3.5.13
+
+## CSS Integration
+
+The @aivue/chatbot package now includes CSS automatically. You can import it in two ways:
+
+### Method 1: Automatic CSS Inclusion (Recommended)
+
+The CSS is automatically included when you import the components:
+
+```js
+import { AiChatWindow, AiChatToggle } from '@aivue/chatbot';
+```
+
+### Method 2: Explicit CSS Import
+
+If you need to import the CSS separately:
+
+```js
+// In your main.js or main.ts file
+import '@aivue/chatbot/style.css';
+```
+
+This is the recommended way to import the CSS, as it uses the exports field in the package.json to correctly resolve the CSS file path.
 
 ## Deployment
 
