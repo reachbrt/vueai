@@ -1,12 +1,45 @@
-# AIVue Chatbot Demo
+# Vue AI Components Demo
 
-This is a demonstration of the `@aivue/chatbot` package with TypeScript support. It showcases various ways to use the package in a Vue 3 application.
+A demonstration of the @aivue packages for Vue.js, showcasing AI-powered components including:
 
-## Features
+- **AI Chatbot**: Conversational AI interface with multiple themes and customization options
+- **AI Autosuggest**: Smart input suggestions powered by AI
+- **AI Smart Form**: Form validation and enhancement with AI
 
-- Basic usage of the `AiChatWindow` component
-- Custom chat implementation using the `useChatEngine` composable
-- TypeScript integration examples
+## Live Demo
+
+Check out the live demo at [https://aivue-demo.netlify.app/](https://aivue-demo.netlify.app/)
+
+## Running the Demo
+
+You can run the demo in several ways:
+
+### From the root directory:
+
+```bash
+# Using npm script
+npm run demo
+
+# Or using the shell script directly
+./run-demo.sh
+```
+
+### From the demo directory:
+
+```bash
+cd demo
+
+# Using npm script
+npm run dev
+
+# Or using npm start
+npm start
+
+# Or using Vite directly
+npx vite --host localhost --port 8080
+```
+
+The demo will be available at http://localhost:8080
 
 ## Getting Started
 
@@ -21,7 +54,7 @@ npm install
    - Add your API keys to the `.env` file:
    ```
    # OpenAI API Key
-   VITE_OPENAI_API_KEY=your_openai_api_key_here
+   VITE_OPENAI_API_KEY=your_openai_key_here
    ```
 
 3. Start the development server:
@@ -30,9 +63,38 @@ npm install
 npm run dev
 ```
 
-4. Open your browser and navigate to the URL shown in the terminal (usually http://localhost:5173).
-
 > **Note:** The demo will work without API keys using the fallback provider, which simulates AI responses. For the best experience, add your OpenAI API key to the `.env` file.
+
+## CSS Integration
+
+The @aivue/chatbot package now includes CSS automatically. You can import it in two ways:
+
+### Method 1: Automatic CSS Inclusion (Recommended)
+
+The CSS is automatically included when you import the components:
+
+```js
+import { AiChatWindow, AiChatToggle } from '@aivue/chatbot';
+```
+
+### Method 2: Explicit CSS Import
+
+If you need to import the CSS separately:
+
+```js
+// In your main.js or main.ts file
+import '@aivue/chatbot/style.css';
+```
+
+This is the recommended way to import the CSS, as it uses the exports field in the package.json to correctly resolve the CSS file path.
+
+## Features
+
+- Multiple themes for the chatbot (Modern, Dark, Soft, Vibrant, Corporate)
+- Fullscreen mode (press F key)
+- Toggle functionality for the chatbot
+- API key configuration for OpenAI
+- Responsive design for all screen sizes
 
 ## Examples
 
@@ -135,6 +197,14 @@ const chatOptions: ChatOptions = {
   streaming: true
 };
 ```
+
+## Packages Used
+
+- @aivue/chatbot: ^1.4.5
+- @aivue/core: ^1.2.7
+- @aivue/autosuggest: ^1.2.8
+- @aivue/smartform: ^1.2.8
+- Vue.js: ^3.5.13
 
 ## License
 
