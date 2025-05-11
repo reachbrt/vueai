@@ -58,3 +58,6 @@ temp
 # Misc
 .npmrc
 *.tgz
+
+# Local Netlify folder
+.netlify
