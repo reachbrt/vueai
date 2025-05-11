@@ -43,7 +43,10 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { AiSmartForm } from '@aivue/smartform';
+import SmartForm from '@aivue/smartform';
+
+// Rename the component for consistency
+const AiSmartForm = SmartForm;
 
 export default defineComponent({
   name: 'SmartFormDemo',

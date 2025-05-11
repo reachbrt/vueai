@@ -36,7 +36,10 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { AiAutosuggest } from '@aivue/autosuggest';
+import Autosuggest from '@aivue/autosuggest';
+
+// Rename the component for consistency
+const AiAutosuggest = Autosuggest;
 
 export default defineComponent({
   name: 'AutosuggestDemo',

@@ -11,10 +11,10 @@
     "start": "vite --host localhost --port 8080"
   },
   "dependencies": {
-    "@aivue/autosuggest": "^1.2.8",
-    "@aivue/chatbot": "^1.4.5",
-    "@aivue/core": "^1.2.7",
-    "@aivue/smartform": "^1.2.8",
+    "@aivue/autosuggest": "^1.2.9",
+    "@aivue/chatbot": "^1.4.9",
+    "@aivue/core": "^1.2.9",
+    "@aivue/smartform": "^1.2.9",
     "gsap": "^3.13.0",
     "vue": "^3.5.13"
   },

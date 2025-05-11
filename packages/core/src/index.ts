@@ -91,6 +91,22 @@ export class AIClient {
     }
   }
 
+  // Completion functionality for autosuggest
+  async complete(prompt: string, options?: ChatOptions): Promise<{ text: string }> {
+    // Convert prompt to a message
+    const messages: Message[] = [
+      { role: 'user', content: prompt }
+    ];
+
+    try {
+      const response = await this.chat(messages, options);
+      return { text: response };
+    } catch (error) {
+      console.error('Error in complete method:', error);
+      return { text: '' };
+    }
+  }
+
   // Streaming chat functionality
   async chatStream(messages: Message[], callbacks: StreamCallbacks, options?: ChatOptions): Promise<void> {
     callbacks.onStart?.();
