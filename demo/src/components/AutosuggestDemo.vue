@@ -37,12 +37,17 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import { AiAutosuggest } from '@aivue/autosuggest';
-import { aiClient } from '../ai-client';
 
 export default defineComponent({
   name: 'AutosuggestDemo',
   components: {
     AiAutosuggest,
+  },
+  props: {
+    aiClient: {
+      type: Object,
+      required: true
+    }
   },
   setup() {
     const inputValue = ref('');
@@ -50,7 +55,6 @@ export default defineComponent({
     const styledValue = ref('');
 
     return {
-      aiClient,
       inputValue,
       customValue,
       styledValue

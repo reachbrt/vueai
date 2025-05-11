@@ -15,6 +15,7 @@
     "@aivue/chatbot": "^1.4.5",
     "@aivue/core": "^1.2.7",
     "@aivue/smartform": "^1.2.8",
+    "gsap": "^3.13.0",
     "vue": "^3.5.13"
   },
   "devDependencies": {
