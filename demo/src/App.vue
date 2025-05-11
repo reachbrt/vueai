@@ -286,7 +286,7 @@
               The Autosuggest component provides AI-powered suggestions as users type, enhancing the input experience with contextual recommendations.
             </p>
 
-            <AutosuggestDemo :ai-client="aiClient" />
+            <AutosuggestDemo :aiClient="aiClient" />
           </div>
         </div>
       </section>
@@ -308,7 +308,7 @@
               The Smart Form component provides AI-powered form validation and analysis, helping users complete forms with intelligent feedback.
             </p>
 
-            <SmartFormDemo :ai-client="aiClient" />
+            <SmartFormDemo :aiClient="aiClient" />
           </div>
         </div>
       </section>
