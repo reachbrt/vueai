@@ -44,12 +44,17 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import { AiSmartForm } from '@aivue/smartform';
-import { aiClient } from '../ai-client';
 
 export default defineComponent({
   name: 'SmartFormDemo',
   components: {
     AiSmartForm,
+  },
+  props: {
+    aiClient: {
+      type: Object,
+      required: true
+    }
   },
   setup() {
     const submittedData = ref<any>(null);
@@ -158,7 +163,6 @@ export default defineComponent({
     };
 
     return {
-      aiClient,
       basicSchema,
       advancedSchema,
       submittedData,

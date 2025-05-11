@@ -1,6 +1,6 @@
 import { ref, Ref } from 'vue';
 import { AIClient } from '@aivue/core';
-import { SuggestionItem } from '../index';
+import { SuggestionItem } from '../types';
 
 export interface AutosuggestOptions {
   client: AIClient;
