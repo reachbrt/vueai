@@ -1,23 +1,24 @@
 {
-  "name": "aivue-demo",
-  "version": "0.1.0",
+  "name": "vue-ai-components-demo",
+  "version": "1.0.0",
+  "description": "A demonstration of the @aivue packages for Vue.js",
   "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
-    "preview": "vite preview"
+    "dev": "vite --host localhost --port 8080",
+    "build": "vite build",
+    "preview": "vite preview",
+    "start": "vite --host localhost --port 8080"
   },
   "dependencies": {
-    "@aivue/autosuggest": "^1.2.2",
-    "@aivue/chatbot": "^1.2.2",
-    "@aivue/core": "^1.2.2",
-    "@aivue/smartform": "^1.2.2",
-    "vue": "^3.5.0"
+    "@aivue/autosuggest": "^1.2.8",
+    "@aivue/chatbot": "^1.4.5",
+    "@aivue/core": "^1.2.7",
+    "@aivue/smartform": "^1.2.8",
+    "vue": "^3.5.13"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.0",
-    "typescript": "^5.3.0",
-    "vite": "^5.0.0",
-    "vue-tsc": "^2.0.0"
+    "vite": "^5.0.0"
   }
 }
