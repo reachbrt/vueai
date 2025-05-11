@@ -37,31 +37,86 @@
     </div>
 
     <div id="demo" class="demo-section">
-      <NavBar @tab-change="activeTab = $event" />
+      <!-- Elegant Tabs Navigation -->
+      <div class="elegant-tabs-container">
+        <div class="tabs-header">
+          <div class="tabs-logo">
+            <span class="logo-text">AI<span class="logo-accent">Vue</span></span>
+          </div>
+          <div class="tabs-nav">
+            <button
+              v-for="tab in tabs"
+              :key="tab.id"
+              @click="activeTab = tab.id"
+              :class="['tab-button', { active: activeTab === tab.id }]"
+            >
+              <span class="tab-icon" v-html="tab.icon"></span>
+              {{ tab.name }}
+            </button>
+          </div>
+        </div>
+      </div>
 
       <!-- API Key Configuration Section -->
       <div class="api-key-section">
         <div class="api-key-container">
-          <h3>API Key Configuration</h3>
+          <div class="api-key-header">
+            <div class="api-key-title">
+              <h3>API Key Configuration</h3>
+              <span class="api-key-subtitle">Required for all components</span>
+            </div>
+            <div class="api-key-badge" :class="{ 'badge-success': hasValidApiKey, 'badge-warning': !hasValidApiKey }">
+              {{ hasValidApiKey ? 'API Ready' : 'API Key Required' }}
+            </div>
+          </div>
+
           <div class="api-key-input">
             <label for="apiKey">OpenAI API Key:</label>
-            <input
-              type="password"
-              id="apiKey"
-              v-model="apiKey"
-              placeholder="Enter your OpenAI API key"
-              @input="updateApiKey"
-            />
+            <div class="input-with-icon">
+              <input
+                type="password"
+                id="apiKey"
+                v-model="apiKey"
+                placeholder="Enter your OpenAI API key"
+                @input="updateApiKey"
+              />
+              <span class="input-icon" v-if="hasValidApiKey">✓</span>
+              <span class="input-icon error" v-else-if="apiKey">✗</span>
+            </div>
           </div>
+
           <div class="api-key-status" :class="{ 'api-key-valid': hasValidApiKey, 'api-key-invalid': !hasValidApiKey && apiKey }">
             <span v-if="hasValidApiKey">✓ API Key set</span>
             <span v-else-if="apiKey">✗ Invalid API Key format</span>
             <span v-else>No API Key provided</span>
           </div>
+
           <div class="api-key-info">
-            <p>To use this demo, you need to provide your own OpenAI API key.</p>
-            <p>Your API key is stored only in your browser's memory and is never sent to our servers.</p>
-            <p>Get an API key at <a href="https://platform.openai.com/api-keys" target="_blank">OpenAI Platform</a></p>
+            <div class="info-icon">ℹ️</div>
+            <div class="info-content">
+              <p>To use this demo, you need to provide your own OpenAI API key.</p>
+              <p>Your API key is stored only in your browser's memory and is never sent to our servers.</p>
+              <p>Get an API key at <a href="https://platform.openai.com/api-keys" target="_blank">OpenAI Platform</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Package Info Banner -->
+      <div v-if="activeTab !== 'all'" class="package-banner">
+        <div class="package-info">
+          <h2 class="package-name">{{ currentPackage.name }}</h2>
+          <div class="package-description">{{ currentPackage.description }}</div>
+          <div class="package-badges">
+            <span class="package-badge version">v{{ currentPackage.version }}</span>
+            <span class="package-badge npm">npm install {{ currentPackage.npmName }}</span>
+            <a :href="currentPackage.github" target="_blank" class="package-badge github">GitHub</a>
+          </div>
+        </div>
+        <div class="package-features">
+          <div v-for="(feature, index) in currentPackage.features" :key="index" class="feature-item">
+            <div class="feature-icon" v-html="feature.icon"></div>
+            <div class="feature-text">{{ feature.text }}</div>
           </div>
         </div>
       </div>
@@ -83,77 +138,96 @@
         </div>
       </section>
 
-      <section v-if="activeTab === 'chatbot'" class="chatbot-section">
-        <h2>Chatbot Component</h2>
+      <section v-if="activeTab === 'chatbot'" class="component-section">
         <div class="demo-container">
           <div v-if="!hasValidApiKey" class="api-key-warning">
             Please enter a valid OpenAI API key above to use the chatbot.
           </div>
           <div v-else>
-            <div class="chat-options">
+            <div class="component-demo-header">
               <h3>Chat Options</h3>
-              <div class="options-grid">
-                <div class="option-group">
-                  <label for="chatTitle">Title:</label>
-                  <input type="text" id="chatTitle" v-model="chatOptions.title" />
-                </div>
+              <div class="component-actions">
+                <button @click="resetChatOptions" class="action-button">
+                  <span class="action-icon">↺</span> Reset Options
+                </button>
+              </div>
+            </div>
 
-                <div class="option-group">
-                  <label for="chatPlaceholder">Placeholder:</label>
-                  <input type="text" id="chatPlaceholder" v-model="chatOptions.placeholder" />
-                </div>
+            <div class="options-grid">
+              <div class="option-group">
+                <label for="chatTitle">Title:</label>
+                <input type="text" id="chatTitle" v-model="chatOptions.title" class="styled-input" />
+              </div>
 
-                <div class="option-group">
-                  <label for="chatTheme">Theme:</label>
-                  <select id="chatTheme" v-model="chatOptions.theme">
-                    <option value="light">Light</option>
-                    <option value="dark">Dark</option>
-                    <option value="blue">Blue</option>
-                    <option value="green">Green</option>
-                    <option value="purple">Purple</option>
-                  </select>
-                </div>
+              <div class="option-group">
+                <label for="chatPlaceholder">Placeholder:</label>
+                <input type="text" id="chatPlaceholder" v-model="chatOptions.placeholder" class="styled-input" />
+              </div>
 
-                <div class="option-group">
-                  <label for="chatModel">Model:</label>
-                  <select id="chatModel" v-model="chatOptions.model">
-                    <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
-                    <option value="gpt-4">GPT-4</option>
-                    <option value="gpt-4-turbo">GPT-4 Turbo</option>
-                  </select>
-                </div>
+              <div class="option-group">
+                <label for="chatTheme">Theme:</label>
+                <select id="chatTheme" v-model="chatOptions.theme" class="styled-select">
+                  <option value="light">Light</option>
+                  <option value="dark">Dark</option>
+                  <option value="blue">Blue</option>
+                  <option value="green">Green</option>
+                  <option value="purple">Purple</option>
+                </select>
+              </div>
 
-                <div class="option-group checkbox">
+              <div class="option-group">
+                <label for="chatModel">Model:</label>
+                <select id="chatModel" v-model="chatOptions.model" class="styled-select">
+                  <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
+                  <option value="gpt-4">GPT-4</option>
+                  <option value="gpt-4-turbo">GPT-4 Turbo</option>
+                </select>
+              </div>
+
+              <div class="option-group checkbox">
+                <div class="styled-checkbox">
                   <input type="checkbox" id="chatAvatars" v-model="chatOptions.showAvatars" />
                   <label for="chatAvatars">Show Avatars</label>
                 </div>
+              </div>
 
-                <div class="option-group checkbox">
+              <div class="option-group checkbox">
+                <div class="styled-checkbox">
                   <input type="checkbox" id="chatStreaming" v-model="chatOptions.streaming" />
                   <label for="chatStreaming">Enable Streaming</label>
                 </div>
+              </div>
 
-                <div class="option-group checkbox">
+              <div class="option-group checkbox">
+                <div class="styled-checkbox">
                   <input type="checkbox" id="chatFullHeight" v-model="chatOptions.fullHeight" />
                   <label for="chatFullHeight">Full Height</label>
                 </div>
+              </div>
 
-                <div class="option-group checkbox">
+              <div class="option-group checkbox">
+                <div class="styled-checkbox">
                   <input type="checkbox" id="chatMarkdown" v-model="chatOptions.markdown" />
                   <label for="chatMarkdown">Enable Markdown</label>
                 </div>
               </div>
+            </div>
 
-              <div class="option-group full-width">
-                <label for="chatSystemPrompt">System Prompt:</label>
-                <textarea
-                  id="chatSystemPrompt"
-                  v-model="chatOptions.systemPrompt"
-                  rows="3"
-                ></textarea>
+            <div class="option-group full-width">
+              <label for="chatSystemPrompt">System Prompt:</label>
+              <textarea
+                id="chatSystemPrompt"
+                v-model="chatOptions.systemPrompt"
+                rows="3"
+                class="styled-textarea"
+              ></textarea>
+            </div>
+
+            <div class="component-demo-header">
+              <h3>Chat Window Component</h3>
+              <div class="component-code">
+                <code>import { AiChatWindow } from '@aivue/chatbot';</code>
               </div>
-
-              <button @click="resetChatOptions" class="reset-button">Reset to Defaults</button>
             </div>
 
             <div class="chat-container" :class="{ 'full-height': chatOptions.fullHeight }">
@@ -169,48 +243,89 @@
               />
             </div>
 
-            <div class="chat-toggle-demo">
+            <div class="component-demo-header">
               <h3>Chat Toggle Component</h3>
-              <p>Click the button in the bottom-right corner to toggle a floating chat window.</p>
-
-              <AiChatToggle
-                :client="aiClient"
-                :title="chatOptions.title"
-                :placeholder="chatOptions.placeholder"
-                :show-avatars="chatOptions.showAvatars"
-                :theme="chatOptions.theme"
-                :streaming="chatOptions.streaming"
-                :markdown="chatOptions.markdown"
-                :system-prompt="chatOptions.systemPrompt"
-              />
+              <div class="component-code">
+                <code>import { AiChatToggle } from '@aivue/chatbot';</code>
+              </div>
             </div>
+
+            <p class="component-description">
+              Click the button in the bottom-right corner to toggle a floating chat window.
+              This component is perfect for adding chat support to your website without taking up space.
+            </p>
+
+            <AiChatToggle
+              :client="aiClient"
+              :title="chatOptions.title"
+              :placeholder="chatOptions.placeholder"
+              :show-avatars="chatOptions.showAvatars"
+              :theme="chatOptions.theme"
+              :streaming="chatOptions.streaming"
+              :markdown="chatOptions.markdown"
+              :system-prompt="chatOptions.systemPrompt"
+            />
           </div>
         </div>
       </section>
 
-      <section v-if="activeTab === 'autosuggest'">
-        <h2>Autosuggest Component</h2>
+      <section v-if="activeTab === 'autosuggest'" class="component-section">
         <div class="demo-container">
           <div v-if="!hasValidApiKey" class="api-key-warning">
             Please enter a valid OpenAI API key above to use the autosuggest component.
           </div>
-          <AutosuggestDemo v-else :ai-client="aiClient" />
+          <div v-else>
+            <div class="component-demo-header">
+              <h3>Autosuggest Component</h3>
+              <div class="component-code">
+                <code>import { AiAutosuggest } from '@aivue/autosuggest';</code>
+              </div>
+            </div>
+
+            <p class="component-description">
+              The Autosuggest component provides AI-powered suggestions as users type, enhancing the input experience with contextual recommendations.
+            </p>
+
+            <AutosuggestDemo :ai-client="aiClient" />
+          </div>
         </div>
       </section>
 
-      <section v-if="activeTab === 'smartform'">
-        <h2>Smart Form Component</h2>
+      <section v-if="activeTab === 'smartform'" class="component-section">
         <div class="demo-container">
           <div v-if="!hasValidApiKey" class="api-key-warning">
             Please enter a valid OpenAI API key above to use the smart form component.
           </div>
-          <SmartFormDemo v-else :ai-client="aiClient" />
+          <div v-else>
+            <div class="component-demo-header">
+              <h3>Smart Form Component</h3>
+              <div class="component-code">
+                <code>import { AiSmartForm } from '@aivue/smartform';</code>
+              </div>
+            </div>
+
+            <p class="component-description">
+              The Smart Form component provides AI-powered form validation and analysis, helping users complete forms with intelligent feedback.
+            </p>
+
+            <SmartFormDemo :ai-client="aiClient" />
+          </div>
         </div>
       </section>
 
-      <section v-if="activeTab === 'typescript'">
-        <h2>TypeScript Integration</h2>
+      <section v-if="activeTab === 'typescript'" class="component-section">
         <div class="demo-container">
+          <div class="component-demo-header">
+            <h3>TypeScript Integration</h3>
+            <div class="component-code">
+              <code>import { AIClient } from '@aivue/core';</code>
+            </div>
+          </div>
+
+          <p class="component-description">
+            All @aivue packages are built with TypeScript and provide comprehensive type definitions for better developer experience.
+          </p>
+
           <TypeScriptExample />
         </div>
       </section>
@@ -258,6 +373,95 @@ export default {
         fullHeight: false,
         markdown: true,
         systemPrompt: 'You are a helpful AI assistant. Answer questions concisely and accurately.'
+      },
+      tabs: [
+        {
+          id: 'all',
+          name: 'Overview',
+          icon: '🏠'
+        },
+        {
+          id: 'chatbot',
+          name: 'Chatbot',
+          icon: '💬'
+        },
+        {
+          id: 'autosuggest',
+          name: 'Autosuggest',
+          icon: '✨'
+        },
+        {
+          id: 'smartform',
+          name: 'Smart Form',
+          icon: '📝'
+        },
+        {
+          id: 'typescript',
+          name: 'TypeScript',
+          icon: '🔷'
+        }
+      ],
+      packages: {
+        chatbot: {
+          name: '@aivue/chatbot',
+          npmName: '@aivue/chatbot',
+          version: '1.4.9',
+          description: 'AI-powered chat components for Vue.js applications with streaming, markdown support, and customizable UI.',
+          github: 'https://github.com/reachbrt/vueai/tree/main/packages/chatbot',
+          features: [
+            { icon: '💬', text: 'Conversational UI' },
+            { icon: '🔄', text: 'Streaming Responses' },
+            { icon: '📝', text: 'Markdown Support' },
+            { icon: '🎨', text: 'Multiple Themes' },
+            { icon: '📱', text: 'Responsive Design' },
+            { icon: '🔌', text: 'Easy Integration' }
+          ]
+        },
+        autosuggest: {
+          name: '@aivue/autosuggest',
+          npmName: '@aivue/autosuggest',
+          version: '1.2.9',
+          description: 'AI-powered suggestion components for Vue.js that enhance user input with contextual suggestions.',
+          github: 'https://github.com/reachbrt/vueai/tree/main/packages/autosuggest',
+          features: [
+            { icon: '✨', text: 'Smart Suggestions' },
+            { icon: '⚡', text: 'Real-time Updates' },
+            { icon: '🔍', text: 'Context-aware' },
+            { icon: '🎛️', text: 'Customizable Options' },
+            { icon: '🧠', text: 'AI-powered' },
+            { icon: '🔌', text: 'Simple Integration' }
+          ]
+        },
+        smartform: {
+          name: '@aivue/smartform',
+          npmName: '@aivue/smartform',
+          version: '1.2.9',
+          description: 'AI-powered form validation and analysis for Vue.js applications with intelligent feedback.',
+          github: 'https://github.com/reachbrt/vueai/tree/main/packages/smartform',
+          features: [
+            { icon: '📝', text: 'Smart Forms' },
+            { icon: '✅', text: 'AI Validation' },
+            { icon: '📊', text: 'Data Analysis' },
+            { icon: '💡', text: 'Intelligent Feedback' },
+            { icon: '🛠️', text: 'Customizable Fields' },
+            { icon: '🔌', text: 'Easy Integration' }
+          ]
+        },
+        typescript: {
+          name: 'TypeScript Support',
+          npmName: '@aivue/core',
+          version: '1.2.8',
+          description: 'Full TypeScript support with comprehensive type definitions for all components and APIs.',
+          github: 'https://github.com/reachbrt/vueai/tree/main/packages/core',
+          features: [
+            { icon: '🔷', text: 'TypeScript Support' },
+            { icon: '📘', text: 'Type Definitions' },
+            { icon: '🧩', text: 'Intellisense' },
+            { icon: '🔒', text: 'Type Safety' },
+            { icon: '📚', text: 'Documentation' },
+            { icon: '🔌', text: 'Easy Integration' }
+          ]
+        }
       },
       features: [
         {
@@ -309,6 +513,12 @@ export default {
     // Initialize GSAP animations
     this.initHeroAnimation();
     this.initFeaturesAnimation();
+  },
+
+  computed: {
+    currentPackage() {
+      return this.packages[this.activeTab] || {};
+    }
   },
   methods: {
     updateApiKey() {
@@ -731,9 +941,336 @@ p {
 
 /* Demo Section */
 .demo-section {
-  padding: 4rem 2rem;
+  padding: 2rem 2rem 4rem;
   max-width: 1200px;
   margin: 0 auto;
+}
+
+/* Elegant Tabs */
+.elegant-tabs-container {
+  margin-bottom: 2rem;
+}
+
+.tabs-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0;
+  border-bottom: 1px solid #e2e8f0;
+  margin-bottom: 2rem;
+}
+
+.tabs-logo {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.logo-text {
+  background: linear-gradient(90deg, #2563eb, #7c3aed);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.logo-accent {
+  color: #7c3aed;
+}
+
+.tabs-nav {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.tab-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border: none;
+  background: transparent;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tab-button:hover {
+  background-color: #f1f5f9;
+  color: #334155;
+}
+
+.tab-button.active {
+  background-color: #eff6ff;
+  color: #2563eb;
+  font-weight: 600;
+}
+
+.tab-icon {
+  font-size: 1.2rem;
+}
+
+/* Package Banner */
+.package-banner {
+  background: linear-gradient(135deg, #f8fafc 0%, #eff6ff 100%);
+  border-radius: 1rem;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+}
+
+.package-info {
+  margin-bottom: 1.5rem;
+}
+
+.package-name {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: #1e293b;
+}
+
+.package-description {
+  font-size: 1.1rem;
+  color: #475569;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.package-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.package-badge {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.package-badge.version {
+  background-color: #eff6ff;
+  color: #2563eb;
+  border: 1px solid #bfdbfe;
+}
+
+.package-badge.npm {
+  background-color: #f1f5f9;
+  color: #334155;
+  border: 1px solid #e2e8f0;
+  font-family: monospace;
+}
+
+.package-badge.github {
+  background-color: #1e293b;
+  color: white;
+  text-decoration: none;
+}
+
+.package-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  background-color: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  border: 1px solid #f1f5f9;
+}
+
+.feature-icon {
+  font-size: 1.5rem;
+}
+
+.feature-text {
+  font-weight: 500;
+  color: #334155;
+}
+
+/* API Key Section Enhancements */
+.api-key-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.api-key-title {
+  display: flex;
+  flex-direction: column;
+}
+
+.api-key-subtitle {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin-top: 0.25rem;
+}
+
+.api-key-badge {
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.badge-success {
+  background-color: #ecfdf5;
+  color: #065f46;
+}
+
+.badge-warning {
+  background-color: #fff7ed;
+  color: #9a3412;
+}
+
+.input-with-icon {
+  position: relative;
+}
+
+.input-icon {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #10b981;
+  font-weight: bold;
+}
+
+.input-icon.error {
+  color: #ef4444;
+}
+
+.api-key-info {
+  display: flex;
+  gap: 1rem;
+  background-color: #f8fafc;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-top: 1rem;
+}
+
+.info-icon {
+  font-size: 1.5rem;
+}
+
+.info-content p {
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+}
+
+/* Component Demo Styles */
+.component-section {
+  margin-bottom: 3rem;
+}
+
+.component-demo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.component-demo-header h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #1e293b;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.component-code {
+  background-color: #f1f5f9;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-family: monospace;
+  color: #334155;
+}
+
+.component-description {
+  margin-bottom: 2rem;
+  color: #475569;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.component-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.action-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #f1f5f9;
+  color: #334155;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.action-button:hover {
+  background-color: #e2e8f0;
+}
+
+.action-icon {
+  font-size: 1.1rem;
+}
+
+/* Styled Form Elements */
+.styled-input,
+.styled-select,
+.styled-textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.styled-input:focus,
+.styled-select:focus,
+.styled-textarea:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+}
+
+.styled-textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.styled-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.styled-checkbox input[type="checkbox"] {
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 0.25rem;
+  border: 1px solid #e2e8f0;
+  cursor: pointer;
 }
 
 /* API Key Section Styles */
