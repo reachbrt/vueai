@@ -2,6 +2,14 @@
 
 All notable changes to the @aivue/chatbot package will be documented in this file.
 
+## [1.4.5] - 2023-08-15
+
+### Fixed
+- Fixed CSS import path to use the correct exports field
+- Updated documentation for running the demo
+- Added script for easily running the demo
+- Improved CSS bundling for better compatibility with all build systems
+
 ## [1.4.4] - 2023-08-14
 
 ### Fixed
