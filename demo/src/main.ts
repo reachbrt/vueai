@@ -5,7 +5,8 @@ import App from './App.vue'
 import './assets/aivue.css'
 
 // Import the CSS from the chatbot package
-import '@aivue/chatbot/chatbot.css'
+// Using style.css which is a copy of chatbot.css
+import '@aivue/chatbot/style.css'
 
 // Create and mount the Vue application
 createApp(App).mount('#app')
