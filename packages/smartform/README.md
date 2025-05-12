@@ -1,26 +1,34 @@
-# @aivue/smartform
+<div align="center">
+  <img src="https://raw.githubusercontent.com/reachbrt/vueai/main/demo/src/assets/images/smartform-illustration.svg" alt="AI SmartForm" width="150" height="150" />
 
-> AI-powered form validation for Vue.js
+  <h1>@aivue/smartform</h1>
+  <p>AI-powered form validation for Vue.js applications</p>
 
-[![npm version](https://img.shields.io/npm/v/@aivue/smartform.svg?style=flat-square)](https://www.npmjs.com/package/@aivue/smartform)
-[![npm downloads](https://img.shields.io/npm/dm/@aivue/smartform.svg?style=flat-square)](https://www.npmjs.com/package/@aivue/smartform)
-[![MIT License](https://img.shields.io/npm/l/@aivue/smartform.svg?style=flat-square)](https://github.com/reachbrt/vueai/blob/main/LICENSE)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/5cb37fa7-9ee1-4af6-9ff4-d34ff0322ded/deploy-status)](https://app.netlify.com/sites/aivue-demo/deploys)
+  <p>
+    <a href="https://www.npmjs.com/package/@aivue/smartform"><img src="https://img.shields.io/npm/v/@aivue/smartform.svg?style=flat-square" alt="npm version"></a>
+    <a href="https://www.npmjs.com/package/@aivue/smartform"><img src="https://img.shields.io/npm/dm/@aivue/smartform.svg?style=flat-square" alt="npm downloads"></a>
+    <a href="https://github.com/reachbrt/vueai/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/@aivue/smartform.svg?style=flat-square" alt="MIT License"></a>
+    <a href="https://codecov.io/gh/reachbrt/vueai"><img src="https://codecov.io/gh/reachbrt/vueai/graph/badge.svg?token=8LYV3M14ZG" alt="codecov"></a>
+    <a href="https://app.netlify.com/sites/aivue/deploys"><img src="https://api.netlify.com/api/v1/badges/5cb37fa7-9ee1-4af6-9ff4-d34ff0322ded/deploy-status" alt="Netlify Status"></a>
+  </p>
+
+  <p><a href="https://aivue.netlify.app/" target="_blank">📺 Live Demo</a> • <a href="https://github.com/reachbrt/vueai/wiki" target="_blank">📚 Documentation</a> • <a href="https://github.com/reachbrt/vueai/issues/new" target="_blank">🐛 Report Bug</a></p>
+</div>
 
 ## Overview
 
 `@aivue/smartform` provides intelligent, AI-powered form validation and auto-correction for Vue.js applications. Create smarter forms that understand user intent and provide helpful feedback.
 
-## Features
+## ✨ Features
 
-- 🧠 **AI-powered validation**: Contextual validation that understands user intent
-- 🔄 **Self-healing forms**: Automatically fix common input errors
-- 📝 **Helpful error messages**: Human-like error messages that explain issues clearly
-- 🛡️ **Traditional validation**: Combine with standard validation rules
-- 🎯 **Field-level validation**: Apply AI validation to specific fields only
-- 🔧 **Customizable**: Easily integrate with your existing forms
-- 📱 **Mobile-friendly**: Works on all devices
-- 🛡️ **Type safety**: Full TypeScript support
+- **🧠 AI-powered validation**: Contextual validation that understands user intent
+- **🔄 Self-healing forms**: Automatically fix common input errors
+- **📝 Helpful error messages**: Human-like error messages that explain issues clearly
+- **🛡️ Traditional validation**: Combine with standard validation rules
+- **🎯 Field-level validation**: Apply AI validation to specific fields only
+- **🔧 Customizable**: Easily integrate with your existing forms
+- **📱 Mobile-friendly**: Works on all devices
+- **🛡️ Type safety**: Full TypeScript support
 
 ## Installation
 
@@ -35,14 +43,12 @@ yarn add @aivue/smartform @aivue/core
 pnpm add @aivue/smartform @aivue/core
 ```
 
-### Vue Compatibility
+### 🔄 Vue Compatibility
 
-This package is compatible with both Vue 2 and Vue 3:
+- **✅ Vue 2**: Compatible with Vue 2.6.0 and higher
+- **✅ Vue 3**: Compatible with all Vue 3.x versions
 
-- **Vue 2**: Compatible with Vue 2.6.0 and higher
-- **Vue 3**: Compatible with all Vue 3.x versions
-
-The package automatically detects which version of Vue you're using and provides the appropriate compatibility layer. This means you can use the same package regardless of whether your project is using Vue 2 or Vue 3.
+> The package automatically detects which version of Vue you're using and provides the appropriate compatibility layer. This means you can use the same package regardless of whether your project is using Vue 2 or Vue 3.
 
 ## Basic Usage
 

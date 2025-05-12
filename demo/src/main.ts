@@ -5,6 +5,7 @@ import App from './App.vue'
 import './assets/aivue.css'
 import './assets/demo.css'
 import './assets/hero.css'
+import './assets/elegant-ui.css'
 
 // Import the CSS from the chatbot package
 // Using chatbot.css directly
