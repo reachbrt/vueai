@@ -359,11 +359,30 @@ interface SmartFormSchema {
 
 Check out our [interactive demo](https://aivue-demo.netlify.app/smartform) to see the smartform components in action.
 
-## Related Packages
+## 📦 Related Packages
 
-- [@aivue/core](https://www.npmjs.com/package/@aivue/core) - Core AI functionality for Vue.js components
-- [@aivue/chatbot](https://www.npmjs.com/package/@aivue/chatbot) - AI-powered chat components for Vue.js
-- [@aivue/autosuggest](https://www.npmjs.com/package/@aivue/autosuggest) - AI-powered suggestion components for Vue.js
+<div class="related-packages">
+  <a href="https://www.npmjs.com/package/@aivue/core" class="package-card" target="_blank">
+    <h4><span class="package-icon">🧠</span> @aivue/core</h4>
+    <div class="package-content">
+      <p>Core AI functionality for Vue.js components</p>
+    </div>
+  </a>
+
+  <a href="https://www.npmjs.com/package/@aivue/chatbot" class="package-card" target="_blank">
+    <h4><span class="package-icon">💬</span> @aivue/chatbot</h4>
+    <div class="package-content">
+      <p>AI-powered chat components for Vue.js</p>
+    </div>
+  </a>
+
+  <a href="https://www.npmjs.com/package/@aivue/autosuggest" class="package-card" target="_blank">
+    <h4><span class="package-icon">✨</span> @aivue/autosuggest</h4>
+    <div class="package-content">
+      <p>AI-powered suggestion components for Vue.js</p>
+    </div>
+  </a>
+</div>
 
 ## License
 
