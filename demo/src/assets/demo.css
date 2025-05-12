@@ -1,0 +1,198 @@
+/* Component Demo Styles */
+.component-section {
+  margin-bottom: 2rem;
+}
+
+/* Component Hero Section */
+.component-hero {
+  display: flex;
+  background: linear-gradient(135deg, #f8fafc 0%, #eff6ff 100%);
+  border-radius: 1rem;
+  overflow: hidden;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.component-hero-content {
+  flex: 1;
+  padding: 2rem;
+}
+
+.component-hero-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #1e40af;
+  background: linear-gradient(90deg, #1e40af, #3b82f6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.component-hero-description {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #475569;
+  margin-bottom: 1.5rem;
+}
+
+.component-hero-features {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.hero-feature {
+  display: flex;
+  align-items: center;
+  font-size: 0.95rem;
+  color: #334155;
+}
+
+.feature-icon {
+  margin-right: 0.5rem;
+  font-size: 1.25rem;
+}
+
+.component-hero-image {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.component-hero-image img {
+  max-width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+}
+
+@media (max-width: 768px) {
+  .component-hero {
+    flex-direction: column;
+  }
+  
+  .component-hero-image {
+    order: -1;
+  }
+}
+
+.component-demo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.component-demo-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #1e40af;
+}
+
+.component-code {
+  background-color: #f1f5f9;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+}
+
+.component-description {
+  margin-bottom: 1.5rem;
+  color: #64748b;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* Package Banner Styles */
+.package-banner {
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.package-info {
+  flex: 2;
+  min-width: 300px;
+}
+
+.package-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: #1e40af;
+}
+
+.package-description {
+  color: #475569;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.package-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.package-badge {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.package-badge.version {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.package-badge.npm {
+  background-color: #f1f5f9;
+  color: #334155;
+  font-family: monospace;
+}
+
+.package-badge.github {
+  background-color: #3b82f6;
+  color: white;
+  text-decoration: none;
+}
+
+.package-features {
+  flex: 1;
+  min-width: 200px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1rem;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.feature-icon {
+  font-size: 1.25rem;
+}
+
+.feature-text {
+  font-size: 0.875rem;
+  color: #334155;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .package-banner {
+    flex-direction: column;
+  }
+}

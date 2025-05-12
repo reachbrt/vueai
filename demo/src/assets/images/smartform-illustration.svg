@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <rect width="400" height="300" rx="20" fill="url(#paint0_linear)" />
+  
+  <!-- Form container -->
+  <rect x="70" y="60" width="260" height="180" rx="10" fill="white" stroke="#E2E8F0" stroke-width="2" />
+  
+  <!-- Form header -->
+  <rect x="70" y="60" width="260" height="40" rx="10" fill="#3B82F6" />
+  <text x="100" y="85" font-family="Arial" font-size="14" font-weight="bold" fill="white">Smart Form</text>
+  
+  <!-- Form fields -->
+  <rect x="90" y="120" width="220" height="30" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1" />
+  <rect x="90" y="170" width="220" height="30" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1" />
+  
+  <!-- Field labels -->
+  <text x="90" y="115" font-family="Arial" font-size="12" fill="#64748B">Name</text>
+  <text x="90" y="165" font-family="Arial" font-size="12" fill="#64748B">Email</text>
+  
+  <!-- Valid field indicator -->
+  <rect x="90" y="120" width="220" height="30" rx="6" stroke="#10B981" stroke-width="2" />
+  <circle cx="300" cy="135" r="8" fill="#10B981" />
+  <path d="M296 135 L299 138 L304 132" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  
+  <!-- Invalid field indicator -->
+  <rect x="90" y="170" width="220" height="30" rx="6" stroke="#EF4444" stroke-width="2" />
+  <circle cx="300" cy="185" r="8" fill="#EF4444" />
+  <path d="M297 182 L303 188 M303 182 L297 188" stroke="white" stroke-width="2" stroke-linecap="round" />
+  
+  <!-- Fix with AI button -->
+  <rect x="90" y="210" width="100" height="20" rx="10" fill="#10B981" />
+  <text x="105" y="224" font-family="Arial" font-size="10" fill="white">Fix with AI</text>
+  <text x="95" y="224" font-family="Arial" font-size="10" fill="white">🪄</text>
+  
+  <!-- Submit button -->
+  <rect x="210" y="210" width="100" height="20" rx="10" fill="#3B82F6" />
+  <text x="240" y="224" font-family="Arial" font-size="10" fill="white">Submit</text>
+  
+  <!-- AI brain icon -->
+  <circle cx="330" cy="40" r="20" fill="#93C5FD" opacity="0.8" />
+  <path d="M320 30 Q330 20 340 30 Q350 40 340 50 Q330 60 320 50 Q310 40 320 30" fill="#3B82F6" />
+  <path d="M325 30 L325 50 M335 30 L335 50" stroke="white" stroke-width="1.5" />
+  <path d="M330 25 L330 55" stroke="white" stroke-width="1.5" />
+  
+  <!-- Decorative elements -->
+  <circle cx="40" cy="40" r="15" fill="#BFDBFE" opacity="0.6" />
+  <circle cx="360" cy="260" r="15" fill="#BFDBFE" opacity="0.6" />
+  <circle cx="200" y="30" r="8" fill="#BFDBFE" opacity="0.6" />
+  <circle cx="200" y="270" r="8" fill="#BFDBFE" opacity="0.6" />
+  
+  <!-- Gradient definition -->
+  <defs>
+    <linearGradient id="paint0_linear" x1="0" y1="0" x2="400" y2="300" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F0FDF4" />
+      <stop offset="1" stop-color="#DCFCE7" />
+    </linearGradient>
+  </defs>
+</svg>

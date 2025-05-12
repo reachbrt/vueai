@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <rect width="400" height="300" rx="20" fill="url(#paint0_linear)" />
+  
+  <!-- Chat bubbles -->
+  <rect x="60" y="80" width="120" height="50" rx="15" fill="#F0F9FF" />
+  <rect x="220" y="150" width="120" height="50" rx="15" fill="#3B82F6" />
+  
+  <!-- Robot icon -->
+  <circle cx="320" cy="80" r="30" fill="#60A5FA" />
+  <rect x="310" y="70" width="20" height="15" rx="2" fill="white" />
+  <circle cx="315" cy="75" r="2" fill="#1E40AF" />
+  <circle cx="325" cy="75" r="2" fill="#1E40AF" />
+  <rect x="310" y="90" width="20" height="3" rx="1.5" fill="white" />
+  
+  <!-- User icon -->
+  <circle cx="80" cy="220" r="30" fill="#E0E7FF" />
+  <circle cx="80" cy="210" r="10" fill="#6366F1" />
+  <path d="M60 230C60 219.5 70 220 80 220C90 220 100 219.5 100 230C100 240.5 90 240 80 240C70 240 60 240.5 60 230Z" fill="#6366F1" />
+  
+  <!-- Decorative elements -->
+  <circle cx="40" cy="40" r="15" fill="#DBEAFE" opacity="0.6" />
+  <circle cx="360" cy="260" r="15" fill="#DBEAFE" opacity="0.6" />
+  <circle cx="200" cy="30" r="8" fill="#DBEAFE" opacity="0.6" />
+  <circle cx="200" cy="270" r="8" fill="#DBEAFE" opacity="0.6" />
+  
+  <!-- Text in bubbles -->
+  <text x="80" y="110" font-family="Arial" font-size="12" fill="#1E40AF">Hello AI!</text>
+  <text x="240" y="180" font-family="Arial" font-size="12" fill="white">How can I help?</text>
+  
+  <!-- Gradient definition -->
+  <defs>
+    <linearGradient id="paint0_linear" x1="0" y1="0" x2="400" y2="300" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#EFF6FF" />
+      <stop offset="1" stop-color="#DBEAFE" />
+    </linearGradient>
+  </defs>
+</svg>
