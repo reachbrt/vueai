@@ -11,7 +11,7 @@
     <AiSmartForm
       :client="aiClient"
       :schema="advancedSchema"
-      :validation="'ai'"
+      validation="ai"
       theme="light"
       @submit="handleAdvancedSubmit"
     />
@@ -43,10 +43,8 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import SmartForm from '@aivue/smartform';
-
-// Rename the component for consistency
-const AiSmartForm = SmartForm;
+// Import our local component
+import AiSmartForm from './AiSmartForm.vue';
 
 export default defineComponent({
   name: 'SmartFormDemo',
@@ -144,7 +142,12 @@ export default defineComponent({
 
     const handleAdvancedSubmit = (data: any) => {
       submittedData.value = data;
-      console.log('Advanced form submitted:', data);
+      console.log('Advanced form submitted with AI analysis:', data);
+
+      // Log the AI analysis if available
+      if (data._aiAnalysis) {
+        console.log('AI Analysis:', data._aiAnalysis);
+      }
     };
 
     // Format the AI analysis to make it more readable
@@ -153,14 +156,26 @@ export default defineComponent({
 
       // Replace numbered points with styled elements
       let formatted = analysis.replace(/(\d+\.\s*"[^"]+"):\s*([^\n]+)/g,
-        '<div class="analysis-point"><span class="field-name">$1:</span> <span class="field-analysis">$2</span></div>');
+        '<div class="analysis-point"><span class="field-name">$1</span> <span class="field-analysis">$2</span></div>');
+
+      // Also handle the format without quotes
+      formatted = formatted.replace(/(\d+\.\s*)([^:]+):\s*([^\n]+)/g,
+        '<div class="analysis-point"><span class="field-name">$1$2:</span> <span class="field-analysis">$3</span></div>');
 
       // Replace newlines with <br> tags
       formatted = formatted.replace(/\n\n/g, '<br><br>');
+      formatted = formatted.replace(/\n/g, '<br>');
 
       // Highlight key phrases
-      formatted = formatted.replace(/(improvement|issue|concern|good|excellent|missing|invalid|suggestion)/gi,
+      formatted = formatted.replace(/(improvement|issue|concern|good|excellent|missing|invalid|suggestion|valid|complete|appropriate|well-formatted)/gi,
         '<span class="highlight">$1</span>');
+
+      // Add color coding for positive/negative feedback
+      formatted = formatted.replace(/(good|excellent|valid|complete|appropriate|well-formatted)/gi,
+        '<span class="highlight positive">$1</span>');
+
+      formatted = formatted.replace(/(issue|concern|missing|invalid)/gi,
+        '<span class="highlight negative">$1</span>');
 
       return formatted;
     };
@@ -249,10 +264,23 @@ pre {
 
 .highlight {
   font-weight: bold;
-  color: #2563eb;
-  background-color: rgba(59, 130, 246, 0.1);
   padding: 0 4px;
   border-radius: 3px;
+}
+
+.highlight.positive {
+  color: #10b981;
+  background-color: rgba(16, 185, 129, 0.1);
+}
+
+.highlight.negative {
+  color: #ef4444;
+  background-color: rgba(239, 68, 68, 0.1);
+}
+
+.highlight:not(.positive):not(.negative) {
+  color: #2563eb;
+  background-color: rgba(59, 130, 246, 0.1);
 }
 
 .submitted-data-details {
