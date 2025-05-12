@@ -1,72 +1,224 @@
-# @aivue/chatbot
+<div align="center">
+  <img src="https://raw.githubusercontent.com/reachbrt/vueai/main/demo/src/assets/images/chatbot-illustration.svg" alt="AI Chatbot" width="150" height="150" />
 
-> AI-powered chat components for Vue.js
+  <h1>@aivue/chatbot</h1>
+  <p>AI-powered chat components for Vue.js applications</p>
 
-[![npm version](https://img.shields.io/npm/v/@aivue/chatbot.svg?style=flat-square)](https://www.npmjs.com/package/@aivue/chatbot)
-[![npm downloads](https://img.shields.io/npm/dm/@aivue/chatbot.svg?style=flat-square)](https://www.npmjs.com/package/@aivue/chatbot)
-[![MIT License](https://img.shields.io/npm/l/@aivue/chatbot.svg?style=flat-square)](https://github.com/reachbrt/vueai/blob/main/LICENSE)
-[![codecov](https://codecov.io/gh/reachbrt/vueai/branch/main/graph/badge.svg)](https://codecov.io/gh/reachbrt/vueai)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/5cb37fa7-9ee1-4af6-9ff4-d34ff0322ded/deploy-status)](https://app.netlify.com/sites/aivue-demo/deploys)
+  <p>
+    <a href="https://www.npmjs.com/package/@aivue/chatbot"><img src="https://img.shields.io/npm/v/@aivue/chatbot.svg?style=flat-square" alt="npm version"></a>
+    <a href="https://www.npmjs.com/package/@aivue/chatbot"><img src="https://img.shields.io/npm/dm/@aivue/chatbot.svg?style=flat-square" alt="npm downloads"></a>
+    <a href="https://github.com/reachbrt/vueai/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/@aivue/chatbot.svg?style=flat-square" alt="MIT License"></a>
+    <a href="https://codecov.io/gh/reachbrt/vueai"><img src="https://codecov.io/gh/reachbrt/vueai/graph/badge.svg?token=8LYV3M14ZG" alt="codecov"></a>
+    <a href="https://app.netlify.com/sites/aivue/deploys"><img src="https://api.netlify.com/api/v1/badges/5cb37fa7-9ee1-4af6-9ff4-d34ff0322ded/deploy-status" alt="Netlify Status"></a>
+  </p>
 
-## Overview
+  <p><a href="https://aivue.netlify.app/" target="_blank">📺 Live Demo</a> • <a href="https://github.com/reachbrt/vueai/wiki" target="_blank">📚 Documentation</a> • <a href="https://github.com/reachbrt/vueai/issues/new" target="_blank">🐛 Report Bug</a></p>
+</div>
+
+## ✨ Overview
 
 `@aivue/chatbot` provides ready-to-use chat components for Vue.js applications, powered by AI. Create engaging conversational interfaces with minimal setup, supporting multiple AI providers.
 
-## Features
+## ✨ Features
 
-- 💬 **Ready-to-use chat UI**: Beautiful, responsive chat interface
-- 🔄 **Real-time streaming**: See AI responses as they're generated
-- 📱 **Mobile-friendly**: Responsive design works on all devices
-- 🎨 **Customizable**: Easily style to match your application
-- 🧠 **Multiple AI providers**: Works with OpenAI, Claude, Gemini, and more
-- 📝 **Markdown support**: Rich text formatting in messages
-- 💾 **Conversation history**: Save and load chat sessions
-- 🔧 **Fully typed**: Complete TypeScript support with type definitions
-- 🔌 **Vue plugin**: Easy global registration of components
-- 🔒 **API key security**: Built-in proxy support for secure API key handling
-- 🚀 **Composition API**: First-class support for Vue 3 Composition API
-- 🔄 **Dynamic configuration**: Update models and settings on the fly
+<div class="feature-grid">
+  <div class="feature-item">
+    <div class="feature-icon">💬</div>
+    <div class="feature-content">
+      <h3>Ready-to-use Chat UI</h3>
+      <p>Beautiful, responsive chat interface with minimal setup</p>
+    </div>
+  </div>
 
-## Installation
+  <div class="feature-item">
+    <div class="feature-icon">🔄</div>
+    <div class="feature-content">
+      <h3>Real-time Streaming</h3>
+      <p>See AI responses as they're generated, token by token</p>
+    </div>
+  </div>
+
+  <div class="feature-item">
+    <div class="feature-icon">📱</div>
+    <div class="feature-content">
+      <h3>Mobile-friendly</h3>
+      <p>Responsive design works on all devices and screen sizes</p>
+    </div>
+  </div>
+
+  <div class="feature-item">
+    <div class="feature-icon">🎨</div>
+    <div class="feature-content">
+      <h3>Customizable</h3>
+      <p>Easily style to match your application with CSS variables</p>
+    </div>
+  </div>
+
+  <div class="feature-item">
+    <div class="feature-icon">🧠</div>
+    <div class="feature-content">
+      <h3>Multiple AI Providers</h3>
+      <p>Works with OpenAI, Claude, Gemini, HuggingFace, and more</p>
+    </div>
+  </div>
+
+  <div class="feature-item">
+    <div class="feature-icon">📝</div>
+    <div class="feature-content">
+      <h3>Markdown Support</h3>
+      <p>Rich text formatting in messages with code highlighting</p>
+    </div>
+  </div>
+
+  <div class="feature-item">
+    <div class="feature-icon">💾</div>
+    <div class="feature-content">
+      <h3>Conversation History</h3>
+      <p>Save and load chat sessions with localStorage integration</p>
+    </div>
+  </div>
+
+  <div class="feature-item">
+    <div class="feature-icon">🔧</div>
+    <div class="feature-content">
+      <h3>Fully Typed</h3>
+      <p>Complete TypeScript support with comprehensive type definitions</p>
+    </div>
+  </div>
+
+  <div class="feature-item">
+    <div class="feature-icon">🔌</div>
+    <div class="feature-content">
+      <h3>Vue Plugin</h3>
+      <p>Easy global registration of components with Vue plugin</p>
+    </div>
+  </div>
+
+  <div class="feature-item">
+    <div class="feature-icon">🔒</div>
+    <div class="feature-content">
+      <h3>API Key Security</h3>
+      <p>Built-in proxy support for secure API key handling</p>
+    </div>
+  </div>
+
+  <div class="feature-item">
+    <div class="feature-icon">🚀</div>
+    <div class="feature-content">
+      <h3>Composition API</h3>
+      <p>First-class support for Vue 3 Composition API</p>
+    </div>
+  </div>
+
+  <div class="feature-item">
+    <div class="feature-icon">🪄</div>
+    <div class="feature-content">
+      <h3>Dynamic Configuration</h3>
+      <p>Update models and settings on the fly</p>
+    </div>
+  </div>
+</div>
+
+## 📦 Installation
+
+<div class="installation-section">
+  <div class="installation-tabs">
+    <div class="installation-tab">
+      <div class="tab-header">npm</div>
+      <div class="tab-content">
 
 ```bash
-# npm
 npm install @aivue/chatbot @aivue/core
+```
 
-# yarn
+      </div>
+    </div>
+
+    <div class="installation-tab">
+      <div class="tab-header">yarn</div>
+      <div class="tab-content">
+
+```bash
 yarn add @aivue/chatbot @aivue/core
+```
 
-# pnpm
+      </div>
+    </div>
+
+    <div class="installation-tab">
+      <div class="tab-header">pnpm</div>
+      <div class="tab-content">
+
+```bash
 pnpm add @aivue/chatbot @aivue/core
 ```
 
-### Vue Compatibility
+      </div>
+    </div>
+  </div>
 
-This package is compatible with both Vue 2 and Vue 3:
+  <div class="installation-note">
+    <p>Don't forget to import the CSS:</p>
 
-- **Vue 2**: Compatible with Vue 2.6.0 and higher
-- **Vue 3**: Compatible with all Vue 3.x versions
+```javascript
+// Import the CSS from the chatbot package
+import '@aivue/chatbot/style.css'
+```
 
-The package automatically detects which version of Vue you're using and provides the appropriate compatibility layer. This means you can use the same package regardless of whether your project is using Vue 2 or Vue 3.
+  </div>
+</div>
 
-## Basic Usage
+### 🔄 Vue Compatibility
 
-### 1. Set up the AI Client
+<div class="compatibility-section">
+  <div class="compatibility-item">
+    <div class="compatibility-icon">✅</div>
+    <div class="compatibility-content">
+      <h4>Vue 2</h4>
+      <p>Compatible with Vue 2.6.0 and higher</p>
+    </div>
+  </div>
 
-First, create an AI client using `@aivue/core`:
+  <div class="compatibility-item">
+    <div class="compatibility-icon">✅</div>
+    <div class="compatibility-content">
+      <h4>Vue 3</h4>
+      <p>Compatible with all Vue 3.x versions</p>
+    </div>
+  </div>
+</div>
+
+<div class="compatibility-note">
+  <p>The package automatically detects which version of Vue you're using and provides the appropriate compatibility layer. This means you can use the same package regardless of whether your project is using Vue 2 or Vue 3.</p>
+</div>
+
+## 🚀 Quick Start
+
+<div class="quick-start-section">
+  <div class="step-container">
+    <div class="step-number">1</div>
+    <div class="step-content">
+      <h3>Set up the AI Client</h3>
+      <p>First, create an AI client using <code>@aivue/core</code>:</p>
 
 ```javascript
 // ai-client.js
 import { AIClient } from '@aivue/core';
 
 export const aiClient = new AIClient({
-  provider: 'openai', // or 'anthropic', 'gemini', 'huggingface', 'ollama', 'deepseek'
+  provider: 'openai', // or 'claude', 'gemini', 'huggingface', 'ollama', 'deepseek'
   apiKey: import.meta.env.VITE_OPENAI_API_KEY, // Use environment variables for API keys
   model: 'gpt-4o' // Specify the model to use
 });
 ```
+    </div>
+  </div>
 
-### 2. Use the AiChatWindow Component
+  <div class="step-container">
+    <div class="step-number">2</div>
+    <div class="step-content">
+      <h3>Use the AiChatWindow Component</h3>
+      <p>Import and use the component in your Vue application:</p>
 
 ```vue
 <template>
@@ -75,12 +227,15 @@ export const aiClient = new AIClient({
       :client="aiClient"
       title="AI Assistant"
       placeholder="Ask me anything..."
+      :show-avatars="true"
+      theme="light"
     />
   </div>
 </template>
 
 <script setup>
 import { AiChatWindow } from '@aivue/chatbot';
+import '@aivue/chatbot/style.css'; // Import the CSS
 import { aiClient } from './ai-client.js';
 </script>
 
@@ -90,9 +245,27 @@ import { aiClient } from './ai-client.js';
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 </style>
 ```
+    </div>
+  </div>
+
+  <div class="step-container">
+    <div class="step-number">3</div>
+    <div class="step-content">
+      <h3>That's it!</h3>
+      <p>You now have a fully functional AI chat interface in your Vue application. The component handles all the complexity of managing the chat state, sending messages to the AI provider, and displaying the responses.</p>
+
+      <div class="demo-link">
+        <a href="https://aivue.netlify.app/" target="_blank">See the live demo →</a>
+      </div>
+    </div>
+  </div>
+</div>
 
 ### 3. Register Components Globally (Optional)
 
@@ -753,16 +926,53 @@ If you encounter errors related to missing Vue functions like `createElementBloc
    registerCompatComponent(app, 'MyComponent', Component);
    ```
 
-## Demo
+## 📺 Live Demo
 
-Check out our [interactive demo](https://aivue-demo.netlify.app/chatbot) to see the chatbot components in action.
+<div class="demo-section">
+  <div class="demo-card">
+    <div class="demo-image">
+      <img src="https://raw.githubusercontent.com/reachbrt/vueai/main/demo/src/assets/images/chatbot-illustration.svg" alt="AI Chatbot Demo" width="200" height="150" />
+    </div>
+    <div class="demo-content">
+      <h3>Interactive Demo</h3>
+      <p>See the chatbot components in action with our interactive demo. Try different AI providers, customize the appearance, and test all the features.</p>
+      <div class="demo-cta">
+        <a href="https://aivue.netlify.app/" target="_blank" class="demo-button">Launch Demo</a>
+      </div>
+    </div>
+  </div>
+</div>
 
-## Related Packages
+## 📦 Related Packages
 
-- [@aivue/core](https://www.npmjs.com/package/@aivue/core) - Core AI functionality for Vue.js components
-- [@aivue/autosuggest](https://www.npmjs.com/package/@aivue/autosuggest) - AI-powered suggestion components for Vue.js
-- [@aivue/smartform](https://www.npmjs.com/package/@aivue/smartform) - AI-powered form validation for Vue.js
+<div class="related-packages">
+  <a href="https://www.npmjs.com/package/@aivue/core" class="package-card" target="_blank">
+    <div class="package-icon">🧠</div>
+    <div class="package-content">
+      <h4>@aivue/core</h4>
+      <p>Core AI functionality for Vue.js components</p>
+    </div>
+  </a>
 
-## License
+  <a href="https://www.npmjs.com/package/@aivue/autosuggest" class="package-card" target="_blank">
+    <div class="package-icon">✨</div>
+    <div class="package-content">
+      <h4>@aivue/autosuggest</h4>
+      <p>AI-powered suggestion components for Vue.js</p>
+    </div>
+  </a>
 
-MIT © [Bharatkumar Subramanian](https://github.com/reachbrt)
+  <a href="https://www.npmjs.com/package/@aivue/smartform" class="package-card" target="_blank">
+    <div class="package-icon">📝</div>
+    <div class="package-content">
+      <h4>@aivue/smartform</h4>
+      <p>AI-powered form validation for Vue.js</p>
+    </div>
+  </a>
+</div>
+
+## 📄 License
+
+<div class="license-section">
+  <p>MIT © <a href="https://github.com/reachbrt" target="_blank">Bharatkumar Subramanian</a></p>
+</div>

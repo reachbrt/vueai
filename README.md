@@ -1,20 +1,55 @@
-<img src="vueai-logo.svg" alt="VueAI Logo" width="300" height="120" />
+<div align="center">
+  <img src="vueai-logo.svg" alt="VueAI Logo" width="300" height="120" />
 
-# VueAI
+  <h1>VueAI - Modern AI Components for Vue.js</h1>
 
-[![npm version](https://img.shields.io/npm/v/@aivue/core.svg?style=flat-square)](https://www.npmjs.com/package/@aivue/core)
-[![npm downloads](https://img.shields.io/npm/dm/@aivue/core.svg?style=flat-square)](https://www.npmjs.com/package/@aivue/core)
-[![MIT License](https://img.shields.io/npm/l/@aivue/core.svg?style=flat-square)](https://github.com/reachbrt/vueai/blob/main/LICENSE)
-[![codecov](https://codecov.io/gh/reachbrt/vueai/graph/badge.svg?token=8LYV3M14ZG)](https://codecov.io/gh/reachbrt/vueai)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/5cb37fa7-9ee1-4af6-9ff4-d34ff0322ded/deploy-status)](https://app.netlify.com/sites/aivue-demo/deploys)
+  <p>
+    <a href="https://www.npmjs.com/package/@aivue/core"><img src="https://img.shields.io/npm/v/@aivue/core.svg?style=flat-square" alt="npm version"></a>
+    <a href="https://www.npmjs.com/package/@aivue/core"><img src="https://img.shields.io/npm/dm/@aivue/core.svg?style=flat-square" alt="npm downloads"></a>
+    <a href="https://github.com/reachbrt/vueai/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/@aivue/core.svg?style=flat-square" alt="MIT License"></a>
+    <a href="https://codecov.io/gh/reachbrt/vueai"><img src="https://codecov.io/gh/reachbrt/vueai/graph/badge.svg?token=8LYV3M14ZG" alt="codecov"></a>
+    <a href="https://app.netlify.com/sites/aivue/deploys"><img src="https://api.netlify.com/api/v1/badges/5cb37fa7-9ee1-4af6-9ff4-d34ff0322ded/deploy-status" alt="Netlify Status"></a>
+  </p>
 
-A modular AI-powered Vue.js component suite including:
-- **[@aivue/core](https://www.npmjs.com/package/@aivue/core)** – Core AI functionality for Vue.js components
-- **[@aivue/chatbot](https://www.npmjs.com/package/@aivue/chatbot)** – Multi-provider AI chat widget
-- **[@aivue/autosuggest](https://www.npmjs.com/package/@aivue/autosuggest)** – Smart autosuggest with semantic ranking
-- **[@aivue/smartform](https://www.npmjs.com/package/@aivue/smartform)** – AI-enhanced forms with dynamic validation
+  <p><a href="https://aivue.netlify.app/" target="_blank">📺 Live Demo</a> • <a href="https://github.com/reachbrt/vueai/wiki" target="_blank">📚 Documentation</a> • <a href="https://github.com/reachbrt/vueai/issues/new" target="_blank">🐛 Report Bug</a></p>
+</div>
 
-## 📦 Installation
+## ✨ Features
+
+A modular AI-powered Vue.js component suite that enhances your applications with intelligent capabilities:
+
+<table>
+  <tr>
+    <td align="center" width="25%">
+      <img src="demo/src/assets/images/chatbot-illustration.svg" width="80" height="80"><br>
+      <a href="https://www.npmjs.com/package/@aivue/chatbot"><b>@aivue/chatbot</b></a><br>
+      <small>Multi-provider AI chat widget</small>
+    </td>
+    <td align="center" width="25%">
+      <img src="demo/src/assets/images/autosuggest-illustration.svg" width="80" height="80"><br>
+      <a href="https://www.npmjs.com/package/@aivue/autosuggest"><b>@aivue/autosuggest</b></a><br>
+      <small>Smart autosuggest with semantic ranking</small>
+    </td>
+    <td align="center" width="25%">
+      <img src="demo/src/assets/images/smartform-illustration.svg" width="80" height="80"><br>
+      <a href="https://www.npmjs.com/package/@aivue/smartform"><b>@aivue/smartform</b></a><br>
+      <small>AI-enhanced forms with dynamic validation</small>
+    </td>
+    <td align="center" width="25%">
+      <img src="demo/src/assets/images/hero-illustration.svg" width="80" height="80"><br>
+      <a href="https://www.npmjs.com/package/@aivue/core"><b>@aivue/core</b></a><br>
+      <small>Core AI functionality for Vue.js components</small>
+    </td>
+  </tr>
+</table>
+
+## 🚀 Quick Start
+
+### 📦 Installation
+
+<table>
+<tr>
+<td>
 
 ```bash
 # Install the core package
@@ -29,12 +64,32 @@ npm install @aivue/smartform
 npm install @aivue/core @aivue/chatbot @aivue/autosuggest @aivue/smartform
 ```
 
-## 🔑 API Key Setup
+</td>
+<td>
 
-1. Create a `.env` file in your project root (this file will be automatically excluded from Git)
-2. Add your API keys for the providers you want to use:
+**Key Benefits:**
+- 🔌 Plug-n-play Vue 3 & Nuxt support
+- 🛡️ SOC2-ready AI APIs with multiple provider options
+- 🌐 Works with or without API keys during development
+- 🎬 YouTube + Replit templates
 
-```
+</td>
+</tr>
+</table>
+
+### 🔑 API Key Setup
+
+<div class="api-key-setup">
+  <div class="setup-steps">
+    <ol>
+      <li>Create a <code>.env</code> file in your project root (this file will be automatically excluded from Git)</li>
+      <li>Add your API keys for the providers you want to use:</li>
+    </ol>
+  </div>
+
+  <div class="code-example">
+
+```bash
 # OpenAI API Key
 VITE_OPENAI_API_KEY=your_openai_api_key_here
 
@@ -50,6 +105,9 @@ VITE_HUGGINGFACE_API_KEY=your_huggingface_api_key_here
 # DeepSeek API Key (optional)
 VITE_DEEPSEEK_API_KEY=your_deepseek_api_key_here
 ```
+
+  </div>
+</div>
 
 > **Note:** If you don't have API keys, the components will still work using the fallback provider which simulates AI responses.
 
@@ -78,161 +136,154 @@ vueai/
 
 ---
 
-## 📦 Packages
+## 📦 Component Packages
 
-### @aivue/chatbot [![npm version](https://img.shields.io/npm/v/@aivue/chatbot.svg?style=flat-square)](https://www.npmjs.com/package/@aivue/chatbot)
-- Multi-provider support (OpenAI, Claude, Gemini, HuggingFace, Ollama, DeepSeek)
-- Automatic fallback when API keys aren't available
-- Streaming responses with Markdown support
-- File upload, PDF parsing, history tracking
+<div class="component-cards">
+  <div class="component-card">
+    <div class="card-header">
+      <img src="demo/src/assets/images/chatbot-illustration.svg" width="60" height="60" alt="Chatbot">
+      <h3>@aivue/chatbot <a href="https://www.npmjs.com/package/@aivue/chatbot"><img src="https://img.shields.io/npm/v/@aivue/chatbot.svg?style=flat-square" alt="npm version"></a></h3>
+    </div>
+    <div class="card-features">
+      <ul>
+        <li>✅ Multi-provider support (OpenAI, Claude, Gemini, HuggingFace, Ollama, DeepSeek)</li>
+        <li>✅ Automatic fallback when API keys aren't available</li>
+        <li>✅ Streaming responses with Markdown support</li>
+        <li>✅ File upload, PDF parsing, history tracking</li>
+        <li>✅ "Fix with AI" feature for automatic corrections</li>
+      </ul>
+    </div>
+    <div class="card-code">
 
 ```vue
 <template>
-  <div>
-    <div class="provider-selector">
-      <label>Select Provider:</label>
-      <select v-model="provider" @change="resetConversation">
-        <option value="openai">OpenAI</option>
-        <option value="claude">Claude</option>
-        <option value="gemini">Gemini</option>
-        <option value="huggingface">HuggingFace</option>
-        <option value="ollama">Ollama</option>
-        <option value="deepseek">DeepSeek</option>
-      </select>
-    </div>
-
-    <AiChatWindow
-      :apiConfig="{ provider, apiKey, model }"
-      :systemPrompt="'You are a helpful assistant'"
-    />
-  </div>
+  <AiChatWindow
+    :client="aiClient"
+    title="AI Assistant"
+    placeholder="Ask me anything..."
+    :show-avatars="true"
+    theme="light"
+    :streaming="true"
+    :markdown="true"
+    system-prompt="You are a helpful AI assistant."
+  />
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { AIClient } from '@aivue/core';
 import { AiChatWindow } from '@aivue/chatbot';
+import '@aivue/chatbot/style.css';
 
-const provider = ref('openai');
-const apiKey = computed(() => import.meta.env[`VITE_${provider.value.toUpperCase()}_API_KEY`] || '');
-const model = computed(() => getModelForProvider(provider.value));
-
-function getModelForProvider(provider) {
-  switch(provider) {
-    case 'openai': return 'gpt-4o';
-    case 'claude': return 'claude-3-7-sonnet-20250219';
-    case 'gemini': return 'gemini-1.5-pro';
-    case 'huggingface': return 'mistralai/Mistral-7B-Instruct-v0.2';
-    case 'ollama': return 'llama3';
-    case 'deepseek': return 'deepseek-chat';
-  }
-}
-
-function resetConversation() {
-  // Reset chat state when changing providers
-}
+const aiClient = new AIClient({
+  provider: 'openai',
+  apiKey: import.meta.env.VITE_OPENAI_API_KEY,
+  model: 'gpt-4o'
+});
 </script>
 ```
 
-### @aivue/autosuggest [![npm version](https://img.shields.io/npm/v/@aivue/autosuggest.svg?style=flat-square)](https://www.npmjs.com/package/@aivue/autosuggest)
-- AI-powered results with semantic sort
-- Multi-provider support with automatic fallback
-- Contextual suggestions based on domain
+  </div>
+  </div>
+
+  <div class="component-card">
+    <div class="card-header">
+      <img src="demo/src/assets/images/autosuggest-illustration.svg" width="60" height="60" alt="Autosuggest">
+      <h3>@aivue/autosuggest <a href="https://www.npmjs.com/package/@aivue/autosuggest"><img src="https://img.shields.io/npm/v/@aivue/autosuggest.svg?style=flat-square" alt="npm version"></a></h3>
+    </div>
+    <div class="card-features">
+      <ul>
+        <li>✅ AI-powered results with semantic sort</li>
+        <li>✅ Multi-provider support with automatic fallback</li>
+        <li>✅ Contextual suggestions based on domain</li>
+        <li>✅ Customizable UI and behavior</li>
+      </ul>
+    </div>
+    <div class="card-code">
 
 ```vue
 <template>
-  <div>
-    <div class="provider-selector">
-      <label>Select Provider:</label>
-      <select v-model="provider">
-        <option value="openai">OpenAI</option>
-        <option value="claude">Claude</option>
-        <option value="gemini">Gemini</option>
-        <option value="huggingface">HuggingFace</option>
-        <option value="ollama">Ollama</option>
-        <option value="deepseek">DeepSeek</option>
-      </select>
-
-      <span v-if="provider === 'ollama'">
-        Using local Ollama. No API key needed.
-      </span>
-      <span v-else>
-        Works without API keys using fallback provider.
-      </span>
-    </div>
-
-    <input v-model="query" @input="search" placeholder="Search..." />
-
-    <ul v-if="suggestions.length > 0">
-      <li v-for="item in suggestions" :key="item.text">
-        {{ item.text }}
-        <span class="score">{{ item.score }}%</span>
-      </li>
-    </ul>
-  </div>
+  <AiAutosuggest
+    :client="aiClient"
+    v-model="query"
+    placeholder="Search..."
+    :debounce="300"
+    :context="'Vue.js components and libraries'"
+    @select="handleSelect"
+  />
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
-import { useAutosuggest } from '@aivue/autosuggest';
+import { ref } from 'vue';
+import { AIClient } from '@aivue/core';
+import { AiAutosuggest } from '@aivue/autosuggest';
 
 const query = ref('');
-const provider = ref('openai');
-const model = computed(() => getModelForProvider(provider.value));
+const aiClient = new AIClient({
+  provider: 'openai',
+  apiKey: import.meta.env.VITE_OPENAI_API_KEY,
+  model: 'gpt-4o'
+});
 
-const options = computed(() => ({
-  provider: provider.value,
-  model: model.value,
-  context: 'Vue.js components and libraries',
-  debounce: 300
-}));
-
-const { suggestions, search, isLoading } = useAutosuggest(options);
-
-function getModelForProvider(provider) {
-  switch(provider) {
-    case 'openai': return 'gpt-4o';
-    case 'claude': return 'claude-3-7-sonnet-20250219';
-    case 'gemini': return 'gemini-1.5-pro';
-    case 'huggingface': return 'mistralai/Mistral-7B-Instruct-v0.2';
-    case 'ollama': return 'llama3';
-    case 'deepseek': return 'deepseek-chat';
-  }
+function handleSelect(suggestion) {
+  console.log('Selected:', suggestion);
 }
 </script>
 ```
 
-### @aivue/smartform [![npm version](https://img.shields.io/npm/v/@aivue/smartform.svg?style=flat-square)](https://www.npmjs.com/package/@aivue/smartform)
-- AI-powered validation + dynamic healing
-- Multi-provider support with automatic fallback
-- Intelligent form field suggestions
+  </div>
+  </div>
+
+  <div class="component-card">
+    <div class="card-header">
+      <img src="demo/src/assets/images/smartform-illustration.svg" width="60" height="60" alt="SmartForm">
+      <h3>@aivue/smartform <a href="https://www.npmjs.com/package/@aivue/smartform"><img src="https://img.shields.io/npm/v/@aivue/smartform.svg?style=flat-square" alt="npm version"></a></h3>
+    </div>
+    <div class="card-features">
+      <ul>
+        <li>✅ AI-powered validation + dynamic healing</li>
+        <li>✅ Multi-provider support with automatic fallback</li>
+        <li>✅ Intelligent form field suggestions</li>
+        <li>✅ "Fix with AI" feature for automatic corrections</li>
+      </ul>
+    </div>
+    <div class="card-code">
 
 ```vue
 <template>
-  <SmartForm
+  <AiSmartForm
+    :client="aiClient"
     :schema="formSchema"
-    :provider="provider"
+    validation="ai"
     @submit="handleSubmit"
   />
 </template>
 
 <script setup>
 import { ref } from 'vue';
-import { SmartForm } from '@aivue/smartform';
+import { AIClient } from '@aivue/core';
+import { AiSmartForm } from '@aivue/smartform';
 
-const provider = ref('openai'); // Supports all AI providers with fallback
+const aiClient = new AIClient({
+  provider: 'openai',
+  apiKey: import.meta.env.VITE_OPENAI_API_KEY
+});
 
 const formSchema = ref({
-  email: {
-    type: 'email',
-    aiValidation: true,
-    selfHeal: true,
-    suggestions: true
-  },
-  description: {
-    type: 'textarea',
-    aiValidation: true,
-    minLength: 50
-  }
+  fields: [
+    {
+      name: 'email',
+      label: 'Email',
+      type: 'email',
+      required: true
+    },
+    {
+      name: 'description',
+      label: 'Description',
+      type: 'textarea',
+      required: true,
+      minLength: 50
+    }
+  ]
 });
 
 function handleSubmit(data) {
@@ -241,11 +292,30 @@ function handleSubmit(data) {
 </script>
 ```
 
+  </div>
+  </div>
+
 ---
 
-## 🧠 @aivue/core Shared AI Engine [![npm version](https://img.shields.io/npm/v/@aivue/core.svg?style=flat-square)](https://www.npmjs.com/package/@aivue/core)
+## 🧠 @aivue/core Shared AI Engine
 
-Our core package provides a unified interface for working with multiple AI providers, complete with an automatic fallback mechanism that ensures your components work even without API keys.
+<div class="component-card core-card">
+  <div class="card-header">
+    <img src="demo/src/assets/images/hero-illustration.svg" width="60" height="60" alt="Core">
+    <h3>@aivue/core <a href="https://www.npmjs.com/package/@aivue/core"><img src="https://img.shields.io/npm/v/@aivue/core.svg?style=flat-square" alt="npm version"></a></h3>
+  </div>
+  <div class="card-description">
+    <p>Our core package provides a unified interface for working with multiple AI providers, complete with an automatic fallback mechanism that ensures your components work even without API keys.</p>
+  </div>
+  <div class="card-features">
+    <ul>
+      <li>✅ Multi-provider support (OpenAI, Claude, Gemini, HuggingFace, Ollama, DeepSeek)</li>
+      <li>✅ Automatic fallback when API keys aren't available</li>
+      <li>✅ Unified API for chat, embeddings, and validation</li>
+      <li>✅ TypeScript support with comprehensive type definitions</li>
+    </ul>
+  </div>
+  <div class="card-code">
 
 ```ts
 import { AIClient } from '@aivue/core';
@@ -271,23 +341,46 @@ const validation = await client.validateFormField(
   'user@example',
   ['email', 'required']
 );
+
+// Complete text (for autosuggest)
+const completion = await client.complete('How do I install Vue', {
+  maxTokens: 100
+});
 ```
+
+  </div>
+</div>
 
 ---
 
 ## 🛡️ Fallback Mechanism
 
-All VueAI components include an intelligent fallback system when API keys aren't available:
+<div class="feature-section fallback-section">
+  <div class="feature-content">
+    <h3>Develop Without API Keys</h3>
+    <p>All VueAI components include an intelligent fallback system when API keys aren't available:</p>
 
-- Automatically detects missing API keys
-- Provides simulated responses that match the expected shape
-- Generates semantically reasonable suggestions
-- Delivers smooth user experience during development
-- Works with all supported providers seamlessly
+    <ul class="feature-list">
+      <li>🔍 Automatically detects missing API keys</li>
+      <li>🤖 Provides simulated responses that match the expected shape</li>
+      <li>💡 Generates semantically reasonable suggestions</li>
+      <li>🚀 Delivers smooth user experience during development</li>
+      <li>🔄 Works with all supported providers seamlessly</li>
+    </ul>
+  </div>
 
----
+  <div class="feature-image">
+    <img src="demo/src/assets/images/hero-illustration.svg" width="200" height="150" alt="Fallback Mechanism">
+  </div>
+</div>
 
-## 🧪 Testing Setup
+## 🧪 Testing & Development
+
+<div class="code-tabs">
+  <div class="tab">
+    <div class="tab-header">Testing Setup</div>
+    <div class="tab-content">
+
 ```bash
 npm install vitest @vue/test-utils --save-dev
 ```
@@ -302,9 +395,13 @@ test('sends messages', async () => {
 });
 ```
 
----
+  </div>
+  </div>
 
-## 🚀 Build & Publish
+  <div class="tab">
+    <div class="tab-header">Build & Publish</div>
+    <div class="tab-content">
+
 ```bash
 # Build all packages
 npm run build:packages
@@ -319,34 +416,55 @@ npm publish --access public --workspace @aivue/smartform
 npm run publish:packages
 ```
 
----
+  </div>
+  </div>
+</div>
 
-## 📚 Docs & Demo
-- [Live Demo](https://aivue-demo.netlify.app/) - Interactive demo of all components
-- [Documentation Wiki](https://github.com/reachbrt/vueai/wiki)
-- Storybook
-- Nuxt/Vite templates
-- AI playgrounds with multi-provider support
+## 📚 Resources
 
----
+<div class="resources-grid">
+  <a href="https://aivue.netlify.app/" class="resource-card" target="_blank">
+    <div class="resource-icon">📺</div>
+    <div class="resource-content">
+      <h4>Live Demo</h4>
+      <p>Interactive demo of all components</p>
+    </div>
+  </a>
 
-## ✅ Adoption Highlights
-- 🔌 Plug-n-play Vue 3 & Nuxt support
-- 🛡️ SOC2-ready AI APIs with multiple provider options
-- 🌐 Works with or without API keys during development
-- 🎬 YouTube + Replit templates
+  <a href="https://github.com/reachbrt/vueai/wiki" class="resource-card" target="_blank">
+    <div class="resource-icon">📚</div>
+    <div class="resource-content">
+      <h4>Documentation Wiki</h4>
+      <p>Comprehensive guides and API references</p>
+    </div>
+  </a>
 
----
+  <a href="https://github.com/reachbrt/vueai/wiki/Contributing" class="resource-card" target="_blank">
+    <div class="resource-icon">🤝</div>
+    <div class="resource-content">
+      <h4>Contributing Guide</h4>
+      <p>Help improve VueAI components</p>
+    </div>
+  </a>
+
+  <a href="https://github.com/reachbrt/vueai/issues/new" class="resource-card" target="_blank">
+    <div class="resource-icon">🐛</div>
+    <div class="resource-content">
+      <h4>Report Issues</h4>
+      <p>Submit bugs or feature requests</p>
+    </div>
+  </a>
+</div>
 
 ## 📄 License
-MIT © 2025 Bharatkumar Subramanian
 
-## 👤 Author & Maintainer
-**Bharatkumar Subramanian**
-Email: reachbrt@gmail.com
-GitHub: [github.com/reachbrt](https://github.com/reachbrt)
+<div class="license-section">
+  <p>MIT © 2025 Bharatkumar Subramanian</p>
 
----
-
-## 🤖 Want to Contribute?
-Check out our [Contributing Guide](https://github.com/reachbrt/vueai/wiki/Contributing) to get started. Submit issues, suggest features, or fork the repo to build your own AI UI components!
+  <div class="author-info">
+    <h3>Author & Maintainer</h3>
+    <p><strong>Bharatkumar Subramanian</strong></p>
+    <p>Email: <a href="mailto:reachbrt@gmail.com">reachbrt@gmail.com</a></p>
+    <p>GitHub: <a href="https://github.com/reachbrt" target="_blank">github.com/reachbrt</a></p>
+  </div>
+</div>
