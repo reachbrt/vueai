@@ -21,103 +21,18 @@
 
 ## ✨ Features
 
-<div class="feature-grid">
-  <div class="feature-item">
-    <div class="feature-icon">💬</div>
-    <div class="feature-content">
-      <h3>Ready-to-use Chat UI</h3>
-      <p>Beautiful, responsive chat interface with minimal setup</p>
-    </div>
-  </div>
-
-  <div class="feature-item">
-    <div class="feature-icon">🔄</div>
-    <div class="feature-content">
-      <h3>Real-time Streaming</h3>
-      <p>See AI responses as they're generated, token by token</p>
-    </div>
-  </div>
-
-  <div class="feature-item">
-    <div class="feature-icon">📱</div>
-    <div class="feature-content">
-      <h3>Mobile-friendly</h3>
-      <p>Responsive design works on all devices and screen sizes</p>
-    </div>
-  </div>
-
-  <div class="feature-item">
-    <div class="feature-icon">🎨</div>
-    <div class="feature-content">
-      <h3>Customizable</h3>
-      <p>Easily style to match your application with CSS variables</p>
-    </div>
-  </div>
-
-  <div class="feature-item">
-    <div class="feature-icon">🧠</div>
-    <div class="feature-content">
-      <h3>Multiple AI Providers</h3>
-      <p>Works with OpenAI, Claude, Gemini, HuggingFace, and more</p>
-    </div>
-  </div>
-
-  <div class="feature-item">
-    <div class="feature-icon">📝</div>
-    <div class="feature-content">
-      <h3>Markdown Support</h3>
-      <p>Rich text formatting in messages with code highlighting</p>
-    </div>
-  </div>
-
-  <div class="feature-item">
-    <div class="feature-icon">💾</div>
-    <div class="feature-content">
-      <h3>Conversation History</h3>
-      <p>Save and load chat sessions with localStorage integration</p>
-    </div>
-  </div>
-
-  <div class="feature-item">
-    <div class="feature-icon">🔧</div>
-    <div class="feature-content">
-      <h3>Fully Typed</h3>
-      <p>Complete TypeScript support with comprehensive type definitions</p>
-    </div>
-  </div>
-
-  <div class="feature-item">
-    <div class="feature-icon">🔌</div>
-    <div class="feature-content">
-      <h3>Vue Plugin</h3>
-      <p>Easy global registration of components with Vue plugin</p>
-    </div>
-  </div>
-
-  <div class="feature-item">
-    <div class="feature-icon">🔒</div>
-    <div class="feature-content">
-      <h3>API Key Security</h3>
-      <p>Built-in proxy support for secure API key handling</p>
-    </div>
-  </div>
-
-  <div class="feature-item">
-    <div class="feature-icon">🚀</div>
-    <div class="feature-content">
-      <h3>Composition API</h3>
-      <p>First-class support for Vue 3 Composition API</p>
-    </div>
-  </div>
-
-  <div class="feature-item">
-    <div class="feature-icon">🪄</div>
-    <div class="feature-content">
-      <h3>Dynamic Configuration</h3>
-      <p>Update models and settings on the fly</p>
-    </div>
-  </div>
-</div>
+- **💬 Ready-to-use Chat UI**: Beautiful, responsive chat interface with minimal setup
+- **🔄 Real-time Streaming**: See AI responses as they're generated, token by token
+- **📱 Mobile-friendly**: Responsive design works on all devices and screen sizes
+- **🎨 Customizable**: Easily style to match your application with CSS variables
+- **🧠 Multiple AI Providers**: Works with OpenAI, Claude, Gemini, HuggingFace, and more
+- **📝 Markdown Support**: Rich text formatting in messages with code highlighting
+- **💾 Conversation History**: Save and load chat sessions with localStorage integration
+- **🔧 Fully Typed**: Complete TypeScript support with comprehensive type definitions
+- **🔌 Vue Plugin**: Easy global registration of components with Vue plugin
+- **🔒 API Key Security**: Built-in proxy support for secure API key handling
+- **🚀 Composition API**: First-class support for Vue 3 Composition API
+- **🪄 Dynamic Configuration**: Update models and settings on the fly
 
 ## 📦 Installation
 
@@ -170,27 +85,10 @@ import '@aivue/chatbot/style.css'
 
 ### 🔄 Vue Compatibility
 
-<div class="compatibility-section">
-  <div class="compatibility-item">
-    <div class="compatibility-icon">✅</div>
-    <div class="compatibility-content">
-      <h4>Vue 2</h4>
-      <p>Compatible with Vue 2.6.0 and higher</p>
-    </div>
-  </div>
+- **✅ Vue 2**: Compatible with Vue 2.6.0 and higher
+- **✅ Vue 3**: Compatible with all Vue 3.x versions
 
-  <div class="compatibility-item">
-    <div class="compatibility-icon">✅</div>
-    <div class="compatibility-content">
-      <h4>Vue 3</h4>
-      <p>Compatible with all Vue 3.x versions</p>
-    </div>
-  </div>
-</div>
-
-<div class="compatibility-note">
-  <p>The package automatically detects which version of Vue you're using and provides the appropriate compatibility layer. This means you can use the same package regardless of whether your project is using Vue 2 or Vue 3.</p>
-</div>
+> The package automatically detects which version of Vue you're using and provides the appropriate compatibility layer. This means you can use the same package regardless of whether your project is using Vue 2 or Vue 3.
 
 ## 🚀 Quick Start
 

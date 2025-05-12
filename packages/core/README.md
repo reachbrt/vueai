@@ -1,24 +1,32 @@
-# @aivue/core
+<div align="center">
+  <img src="https://raw.githubusercontent.com/reachbrt/vueai/main/demo/src/assets/images/hero-illustration.svg" alt="AI Core" width="150" height="150" />
 
-> Core AI functionality for Vue.js components
+  <h1>@aivue/core</h1>
+  <p>Core AI functionality for Vue.js components</p>
 
-[![npm version](https://img.shields.io/npm/v/@aivue/core.svg?style=flat-square)](https://www.npmjs.com/package/@aivue/core)
-[![npm downloads](https://img.shields.io/npm/dm/@aivue/core.svg?style=flat-square)](https://www.npmjs.com/package/@aivue/core)
-[![MIT License](https://img.shields.io/npm/l/@aivue/core.svg?style=flat-square)](https://github.com/reachbrt/vueai/blob/main/LICENSE)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/5cb37fa7-9ee1-4af6-9ff4-d34ff0322ded/deploy-status)](https://app.netlify.com/sites/aivue-demo/deploys)
+  <p>
+    <a href="https://www.npmjs.com/package/@aivue/core"><img src="https://img.shields.io/npm/v/@aivue/core.svg?style=flat-square" alt="npm version"></a>
+    <a href="https://www.npmjs.com/package/@aivue/core"><img src="https://img.shields.io/npm/dm/@aivue/core.svg?style=flat-square" alt="npm downloads"></a>
+    <a href="https://github.com/reachbrt/vueai/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/@aivue/core.svg?style=flat-square" alt="MIT License"></a>
+    <a href="https://codecov.io/gh/reachbrt/vueai"><img src="https://codecov.io/gh/reachbrt/vueai/graph/badge.svg?token=8LYV3M14ZG" alt="codecov"></a>
+    <a href="https://app.netlify.com/sites/aivue/deploys"><img src="https://api.netlify.com/api/v1/badges/5cb37fa7-9ee1-4af6-9ff4-d34ff0322ded/deploy-status" alt="Netlify Status"></a>
+  </p>
+
+  <p><a href="https://aivue.netlify.app/" target="_blank">📺 Live Demo</a> • <a href="https://github.com/reachbrt/vueai/wiki" target="_blank">📚 Documentation</a> • <a href="https://github.com/reachbrt/vueai/issues/new" target="_blank">🐛 Report Bug</a></p>
+</div>
 
 ## Overview
 
 `@aivue/core` provides a unified interface for working with multiple AI providers in Vue.js applications. It serves as the foundation for all VueAI components, offering a consistent API for interacting with various AI services.
 
-## Features
+## ✨ Features
 
-- 🔌 **Multi-provider support**: Works with OpenAI, Claude, Gemini, HuggingFace, Ollama, and more
-- 🌐 **Fallback mechanism**: Continues to work even without API keys during development
-- 🔄 **Streaming support**: Real-time streaming of AI responses
-- 🛡️ **Type safety**: Full TypeScript support
-- 🧩 **Modular design**: Use only what you need
-- 🔧 **Customizable**: Configure providers, models, and parameters
+- **🔌 Multi-provider support**: Works with OpenAI, Claude, Gemini, HuggingFace, Ollama, and more
+- **🌐 Fallback mechanism**: Continues to work even without API keys during development
+- **🔄 Streaming support**: Real-time streaming of AI responses
+- **🛡️ Type safety**: Full TypeScript support
+- **🧩 Modular design**: Use only what you need
+- **🔧 Customizable**: Configure providers, models, and parameters
 
 ## Installation
 
@@ -33,14 +41,12 @@ yarn add @aivue/core
 pnpm add @aivue/core
 ```
 
-### Vue Compatibility
+### 🔄 Vue Compatibility
 
-This package is compatible with both Vue 2 and Vue 3:
+- **✅ Vue 2**: Compatible with Vue 2.6.0 and higher
+- **✅ Vue 3**: Compatible with all Vue 3.x versions
 
-- **Vue 2**: Compatible with Vue 2.6.0 and higher
-- **Vue 3**: Compatible with all Vue 3.x versions
-
-The package automatically detects which version of Vue you're using and provides the appropriate compatibility layer. This means you can use the same package regardless of whether your project is using Vue 2 or Vue 3.
+> The package automatically detects which version of Vue you're using and provides the appropriate compatibility layer. This means you can use the same package regardless of whether your project is using Vue 2 or Vue 3.
 
 ## Basic Usage
 

@@ -98,7 +98,7 @@
 
     <div id="demo" class="demo-section">
       <!-- Elegant Tabs Navigation -->
-      <div class="elegant-tabs-container">
+      <div class="elegant-tabs-container" ref="tabsContainer">
         <div class="tabs-header">
           <div class="tabs-logo">
             <span class="logo-text">AI<span class="logo-accent">Vue</span></span>
@@ -107,10 +107,11 @@
             <button
               v-for="tab in tabs"
               :key="tab.id"
-              @click="activeTab = tab.id"
+              @click="setActiveTab(tab.id)"
               :class="['tab-button', { active: activeTab === tab.id }]"
+              ref="tabButtons"
             >
-              <span class="tab-icon" v-html="tab.icon"></span>
+              <span class="tab-icon">{{ tab.icon }}</span>
               {{ tab.name }}
             </button>
           </div>
@@ -184,17 +185,34 @@
 
     <main>
       <section v-if="activeTab === 'all'">
-        <h2>Welcome to Vue AI Components</h2>
-        <div class="demo-container">
-          <p>This is a demo of the Vue AI Components library.</p>
-          <p>Select a tab above to explore different components:</p>
-          <ul>
-            <li>AI Chat Components</li>
-            <li>AI Autosuggest Components</li>
-            <li>AI Smart Form Components</li>
-            <li>TypeScript Integration</li>
-          </ul>
-          <p>Visit our <a href="https://github.com/reachbrt/vueai" target="_blank">GitHub Repository</a> to learn more.</p>
+        <div class="welcome-section" ref="welcomeSection">
+          <h2 class="welcome-title">Welcome to Vue AI Components</h2>
+          <p class="welcome-description">
+            Explore our suite of AI-powered Vue components designed to enhance your applications with intelligent features.
+            Each component is fully customizable, easy to integrate, and works with multiple AI providers.
+          </p>
+
+          <div class="welcome-cards" ref="welcomeCards">
+            <div class="welcome-card" v-for="(tab, index) in tabs.filter(t => t.id !== 'all')" :key="tab.id">
+              <div class="welcome-card-icon">{{ tab.icon }}</div>
+              <h3 class="welcome-card-title">{{ tab.name }}</h3>
+              <p class="welcome-card-description">
+                {{ getWelcomeDescription(tab.id) }}
+              </p>
+              <a href="#" class="welcome-card-link" @click.prevent="setActiveTab(tab.id)">
+                Explore {{ tab.name }} <span>→</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="welcome-github">
+            <a href="https://github.com/reachbrt/vueai" target="_blank" class="github-button">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+              </svg>
+              View on GitHub
+            </a>
+          </div>
         </div>
       </section>
 
@@ -449,8 +467,78 @@
       </section>
     </main>
 
-    <footer>
-      <p>Created by <a href="https://github.com/reachbrt" target="_blank">reachbrt</a> | <a href="https://github.com/reachbrt/vueai" target="_blank">GitHub Repository</a></p>
+    <footer class="elegant-footer" ref="footer">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="footer-logo">AIVue</div>
+          <p class="footer-description">
+            A suite of AI-powered Vue components designed to enhance your applications with intelligent features.
+            Each component is fully customizable, easy to integrate, and works with multiple AI providers.
+          </p>
+          <div class="footer-social">
+            <a href="https://github.com/reachbrt/vueai" target="_blank" class="social-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+              </svg>
+            </a>
+            <a href="https://www.npmjs.com/org/aivue" target="_blank" class="social-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M0 0h24v24H0z" stroke="none" />
+                <path d="M4 10v6h16v-6" />
+                <path d="M12 14v2" />
+                <path d="M8 14v2" />
+                <path d="M16 14v2" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-section">
+          <h3 class="footer-links-title">Components</h3>
+          <div class="footer-links">
+            <a href="#" @click.prevent="setActiveTab('chatbot')" class="footer-link">
+              <span>💬</span> AI Chatbot
+            </a>
+            <a href="#" @click.prevent="setActiveTab('autosuggest')" class="footer-link">
+              <span>✨</span> AI Autosuggest
+            </a>
+            <a href="#" @click.prevent="setActiveTab('smartform')" class="footer-link">
+              <span>📝</span> AI Smart Form
+            </a>
+            <a href="#" @click.prevent="setActiveTab('typescript')" class="footer-link">
+              <span>🔷</span> TypeScript Support
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-section">
+          <h3 class="footer-links-title">Resources</h3>
+          <div class="footer-links">
+            <a href="https://github.com/reachbrt/vueai/wiki" target="_blank" class="footer-link">
+              <span>📚</span> Documentation
+            </a>
+            <a href="https://github.com/reachbrt/vueai/issues" target="_blank" class="footer-link">
+              <span>🐛</span> Report Issues
+            </a>
+            <a href="https://github.com/reachbrt/vueai/wiki/Contributing" target="_blank" class="footer-link">
+              <span>🤝</span> Contributing
+            </a>
+            <a href="https://www.npmjs.com/org/aivue" target="_blank" class="footer-link">
+              <span>📦</span> NPM Packages
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-copyright">
+          © 2025 AIVue. Created by <a href="https://github.com/reachbrt" target="_blank" style="color: #60a5fa; text-decoration: none;">reachbrt</a>
+        </div>
+        <div class="footer-legal">
+          <a href="https://github.com/reachbrt/vueai/blob/main/LICENSE" target="_blank" class="legal-link">MIT License</a>
+          <a href="https://github.com/reachbrt/vueai" target="_blank" class="legal-link">GitHub</a>
+        </div>
+      </div>
     </footer>
   </div>
 </template>
@@ -631,6 +719,9 @@ export default {
     // Initialize GSAP animations
     this.initHeroAnimation();
     this.initFeaturesAnimation();
+    this.initWelcomeAnimation();
+    this.initTabsAnimation();
+    this.initFooterAnimation();
   },
 
   computed: {
@@ -855,6 +946,145 @@ export default {
         duration: 0.8,
         stagger: 0.15
       });
+    },
+
+    initWelcomeAnimation() {
+      if (this.$refs.welcomeSection) {
+        // Welcome section animation
+        gsap.from(this.$refs.welcomeSection, {
+          opacity: 0,
+          y: 30,
+          duration: 0.8,
+          ease: 'power3.out'
+        });
+
+        // Welcome cards staggered animation
+        if (this.$refs.welcomeCards) {
+          gsap.from('.welcome-card', {
+            opacity: 0,
+            y: 30,
+            duration: 0.6,
+            stagger: 0.1,
+            delay: 0.3,
+            ease: 'power3.out'
+          });
+
+          // Add hover animations for welcome cards
+          const welcomeCards = document.querySelectorAll('.welcome-card');
+          welcomeCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+              gsap.to(card, {
+                y: -5,
+                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                duration: 0.3
+              });
+            });
+
+            card.addEventListener('mouseleave', () => {
+              gsap.to(card, {
+                y: 0,
+                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                duration: 0.3
+              });
+            });
+          });
+        }
+      }
+    },
+
+    initTabsAnimation() {
+      if (this.$refs.tabsContainer) {
+        // Tabs container animation
+        gsap.from(this.$refs.tabsContainer, {
+          y: -20,
+          opacity: 0,
+          duration: 0.8,
+          ease: 'power3.out'
+        });
+
+        // Add scroll behavior for tabs
+        window.addEventListener('scroll', () => {
+          const scrollY = window.scrollY;
+          if (scrollY > 100) {
+            gsap.to(this.$refs.tabsContainer, {
+              backgroundColor: 'rgba(255, 255, 255, 0.95)',
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+              padding: '0.5rem 0',
+              duration: 0.3
+            });
+          } else {
+            gsap.to(this.$refs.tabsContainer, {
+              backgroundColor: 'rgba(255, 255, 255, 0.9)',
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)',
+              padding: '0.75rem 0',
+              duration: 0.3
+            });
+          }
+        });
+      }
+    },
+
+    initFooterAnimation() {
+      if (this.$refs.footer) {
+        // Footer animation
+        gsap.from(this.$refs.footer, {
+          scrollTrigger: {
+            trigger: this.$refs.footer,
+            start: 'top 90%',
+            end: 'bottom 100%',
+            toggleActions: 'play none none none'
+          },
+          opacity: 0,
+          y: 30,
+          duration: 0.8,
+          ease: 'power3.out'
+        });
+
+        // Footer sections staggered animation
+        gsap.from('.footer-section', {
+          scrollTrigger: {
+            trigger: this.$refs.footer,
+            start: 'top 85%',
+            end: 'bottom 100%',
+            toggleActions: 'play none none none'
+          },
+          opacity: 0,
+          y: 20,
+          duration: 0.6,
+          stagger: 0.1,
+          ease: 'power3.out'
+        });
+      }
+    },
+
+    setActiveTab(tabId) {
+      // Animate tab change
+      const oldTab = this.activeTab;
+      this.activeTab = tabId;
+
+      // Scroll to top of the section
+      setTimeout(() => {
+        const demoSection = document.getElementById('demo');
+        if (demoSection) {
+          demoSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Initialize welcome animations if switching to welcome tab
+        if (tabId === 'all') {
+          this.initWelcomeAnimation();
+        }
+      }, 100);
+    },
+
+    getWelcomeDescription(tabId) {
+      const descriptions = {
+        'chatbot': 'Integrate powerful conversational AI into your Vue applications with customizable chat interfaces.',
+        'autosuggest': 'Enhance user input with AI-powered suggestions that adapt to context and user behavior.',
+        'smartform': 'Create intelligent forms with AI validation, suggestions, and data analysis capabilities.',
+        'typescript': 'Full TypeScript support with comprehensive type definitions for all components and APIs.'
+      };
+
+      return descriptions[tabId] || '';
     }
   }
 }
