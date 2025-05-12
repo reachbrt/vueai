@@ -492,11 +492,30 @@ You can customize the appearance of the autosuggest component using CSS variable
 
 Check out our [interactive demo](https://aivue-demo.netlify.app/autosuggest) to see the autosuggest components in action.
 
-## Related Packages
+## 📦 Related Packages
 
-- [@aivue/core](https://www.npmjs.com/package/@aivue/core) - Core AI functionality for Vue.js components
-- [@aivue/chatbot](https://www.npmjs.com/package/@aivue/chatbot) - AI-powered chat components for Vue.js
-- [@aivue/smartform](https://www.npmjs.com/package/@aivue/smartform) - AI-powered form validation for Vue.js
+<div class="related-packages">
+  <a href="https://www.npmjs.com/package/@aivue/core" class="package-card" target="_blank">
+    <h4><span class="package-icon">🧠</span> @aivue/core</h4>
+    <div class="package-content">
+      <p>Core AI functionality for Vue.js components</p>
+    </div>
+  </a>
+
+  <a href="https://www.npmjs.com/package/@aivue/chatbot" class="package-card" target="_blank">
+    <h4><span class="package-icon">💬</span> @aivue/chatbot</h4>
+    <div class="package-content">
+      <p>AI-powered chat components for Vue.js</p>
+    </div>
+  </a>
+
+  <a href="https://www.npmjs.com/package/@aivue/smartform" class="package-card" target="_blank">
+    <h4><span class="package-icon">📝</span> @aivue/smartform</h4>
+    <div class="package-content">
+      <p>AI-powered form validation for Vue.js</p>
+    </div>
+  </a>
+</div>
 
 ## License
 

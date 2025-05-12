@@ -94,9 +94,8 @@ import '@aivue/chatbot/style.css'
 
 <div class="quick-start-section">
   <div class="step-container">
-    <div class="step-number">1</div>
+    <h3><span class="step-number">1</span> Set up the AI Client</h3>
     <div class="step-content">
-      <h3>Set up the AI Client</h3>
       <p>First, create an AI client using <code>@aivue/core</code>:</p>
 
 ```javascript
@@ -113,9 +112,8 @@ export const aiClient = new AIClient({
   </div>
 
   <div class="step-container">
-    <div class="step-number">2</div>
+    <h3><span class="step-number">2</span> Use the AiChatWindow Component</h3>
     <div class="step-content">
-      <h3>Use the AiChatWindow Component</h3>
       <p>Import and use the component in your Vue application:</p>
 
 ```vue
@@ -153,9 +151,8 @@ import { aiClient } from './ai-client.js';
   </div>
 
   <div class="step-container">
-    <div class="step-number">3</div>
+    <h3><span class="step-number">3</span> That's it!</h3>
     <div class="step-content">
-      <h3>That's it!</h3>
       <p>You now have a fully functional AI chat interface in your Vue application. The component handles all the complexity of managing the chat state, sending messages to the AI provider, and displaying the responses.</p>
 
       <div class="demo-link">
@@ -845,25 +842,22 @@ If you encounter errors related to missing Vue functions like `createElementBloc
 
 <div class="related-packages">
   <a href="https://www.npmjs.com/package/@aivue/core" class="package-card" target="_blank">
-    <div class="package-icon">🧠</div>
+    <h4><span class="package-icon">🧠</span> @aivue/core</h4>
     <div class="package-content">
-      <h4>@aivue/core</h4>
       <p>Core AI functionality for Vue.js components</p>
     </div>
   </a>
 
   <a href="https://www.npmjs.com/package/@aivue/autosuggest" class="package-card" target="_blank">
-    <div class="package-icon">✨</div>
+    <h4><span class="package-icon">✨</span> @aivue/autosuggest</h4>
     <div class="package-content">
-      <h4>@aivue/autosuggest</h4>
       <p>AI-powered suggestion components for Vue.js</p>
     </div>
   </a>
 
   <a href="https://www.npmjs.com/package/@aivue/smartform" class="package-card" target="_blank">
-    <div class="package-icon">📝</div>
+    <h4><span class="package-icon">📝</span> @aivue/smartform</h4>
     <div class="package-content">
-      <h4>@aivue/smartform</h4>
       <p>AI-powered form validation for Vue.js</p>
     </div>
   </a>
