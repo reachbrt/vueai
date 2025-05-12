@@ -140,6 +140,25 @@
 
       <section v-if="activeTab === 'chatbot'" class="component-section">
         <div class="demo-container">
+          <div class="component-hero">
+            <div class="component-hero-content">
+              <h2 class="component-hero-title">AI Chatbot</h2>
+              <p class="component-hero-description">
+                Integrate powerful conversational AI into your Vue applications with customizable chat interfaces.
+                Support for streaming responses, markdown formatting, and multiple themes.
+              </p>
+              <div class="component-hero-features">
+                <div class="hero-feature"><span class="feature-icon">💬</span> Conversational UI</div>
+                <div class="hero-feature"><span class="feature-icon">🔄</span> Streaming Responses</div>
+                <div class="hero-feature"><span class="feature-icon">📝</span> Markdown Support</div>
+                <div class="hero-feature"><span class="feature-icon">🎨</span> Multiple Themes</div>
+              </div>
+            </div>
+            <div class="component-hero-image">
+              <img src="./assets/images/chatbot-illustration.svg" alt="AI Chatbot Illustration" />
+            </div>
+          </div>
+
           <div v-if="!hasValidApiKey" class="api-key-warning">
             Please enter a valid OpenAI API key above to use the chatbot.
           </div>
@@ -271,6 +290,25 @@
 
       <section v-if="activeTab === 'autosuggest'" class="component-section">
         <div class="demo-container">
+          <div class="component-hero">
+            <div class="component-hero-content">
+              <h2 class="component-hero-title">AI Autosuggest</h2>
+              <p class="component-hero-description">
+                Enhance user input with AI-powered suggestions that adapt to context and user behavior.
+                Perfect for search boxes, form inputs, and any text entry field.
+              </p>
+              <div class="component-hero-features">
+                <div class="hero-feature"><span class="feature-icon">✨</span> Smart Suggestions</div>
+                <div class="hero-feature"><span class="feature-icon">⚡</span> Real-time Updates</div>
+                <div class="hero-feature"><span class="feature-icon">🔍</span> Context-aware</div>
+                <div class="hero-feature"><span class="feature-icon">🎛️</span> Customizable</div>
+              </div>
+            </div>
+            <div class="component-hero-image">
+              <img src="./assets/images/autosuggest-illustration.svg" alt="AI Autosuggest Illustration" />
+            </div>
+          </div>
+
           <div v-if="!hasValidApiKey" class="api-key-warning">
             Please enter a valid OpenAI API key above to use the autosuggest component.
           </div>
@@ -293,6 +331,25 @@
 
       <section v-if="activeTab === 'smartform'" class="component-section">
         <div class="demo-container">
+          <div class="component-hero">
+            <div class="component-hero-content">
+              <h2 class="component-hero-title">AI Smart Form</h2>
+              <p class="component-hero-description">
+                Create intelligent forms with AI validation, suggestions, and data analysis capabilities.
+                Includes the "Fix with AI" feature to automatically correct form errors.
+              </p>
+              <div class="component-hero-features">
+                <div class="hero-feature"><span class="feature-icon">📝</span> Smart Forms</div>
+                <div class="hero-feature"><span class="feature-icon">✅</span> AI Validation</div>
+                <div class="hero-feature"><span class="feature-icon">🪄</span> Fix with AI</div>
+                <div class="hero-feature"><span class="feature-icon">💡</span> Intelligent Feedback</div>
+              </div>
+            </div>
+            <div class="component-hero-image">
+              <img src="./assets/images/smartform-illustration.svg" alt="AI Smart Form Illustration" />
+            </div>
+          </div>
+
           <div v-if="!hasValidApiKey" class="api-key-warning">
             Please enter a valid OpenAI API key above to use the smart form component.
           </div>
@@ -306,6 +363,7 @@
 
             <p class="component-description">
               The Smart Form component provides AI-powered form validation and analysis, helping users complete forms with intelligent feedback.
+              When validation errors occur, the "Fix with AI" button appears to automatically correct the form data.
             </p>
 
             <SmartFormDemo :aiClient="aiClient" />
