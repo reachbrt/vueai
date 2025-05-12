@@ -3,23 +3,83 @@
     <!-- Hero Section with GSAP Animation -->
     <div class="hero-section">
       <div class="hero-content">
-        <h1 class="hero-title" ref="heroTitle">Vue AI Components</h1>
-        <p class="hero-subtitle" ref="heroSubtitle">Powerful AI-powered components for Vue.js applications</p>
+        <div class="hero-logo" ref="heroLogo">
+          <span class="logo-text">AI<span class="logo-accent">Vue</span></span>
+        </div>
+        <h1 class="hero-title" ref="heroTitle">Modern AI Components for Vue.js</h1>
+        <p class="hero-subtitle" ref="heroSubtitle">Enhance your Vue applications with powerful AI capabilities</p>
+
+        <!-- Package Cards -->
+        <div class="package-cards" ref="packageCards">
+          <div class="package-card chatbot">
+            <div class="package-icon">💬</div>
+            <div class="package-details">
+              <h3>@aivue/chatbot</h3>
+              <p>AI-powered chat interfaces</p>
+              <span class="package-version">v1.4.9</span>
+            </div>
+          </div>
+
+          <div class="package-card autosuggest">
+            <div class="package-icon">✨</div>
+            <div class="package-details">
+              <h3>@aivue/autosuggest</h3>
+              <p>Smart input suggestions</p>
+              <span class="package-version">v1.2.9</span>
+            </div>
+          </div>
+
+          <div class="package-card smartform">
+            <div class="package-icon">📝</div>
+            <div class="package-details">
+              <h3>@aivue/smartform</h3>
+              <p>Intelligent form validation</p>
+              <span class="package-version">v1.2.9</span>
+            </div>
+          </div>
+
+          <div class="package-card core">
+            <div class="package-icon">🔷</div>
+            <div class="package-details">
+              <h3>@aivue/core</h3>
+              <p>Core AI functionality</p>
+              <span class="package-version">v1.2.9</span>
+            </div>
+          </div>
+        </div>
+
         <div class="hero-cta" ref="heroCta">
           <a href="https://github.com/reachbrt/vueai" target="_blank" class="hero-button">
+            <span class="button-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+              </svg>
+            </span>
             GitHub
           </a>
           <a href="#demo" class="hero-button primary" @click.prevent="scrollToDemo">
+            <span class="button-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </span>
             Try Demo
           </a>
         </div>
       </div>
+
       <div class="hero-visual" ref="heroVisual">
+        <div class="hero-backdrop"></div>
         <div class="floating-shapes">
           <div class="shape shape-1"></div>
           <div class="shape shape-2"></div>
           <div class="shape shape-3"></div>
           <div class="shape shape-4"></div>
+          <div class="shape shape-5"></div>
+          <div class="shape shape-6"></div>
+        </div>
+        <div class="hero-illustration">
+          <img src="./assets/images/hero-illustration.svg" alt="AI Components Illustration" />
         </div>
       </div>
     </div>
@@ -638,12 +698,19 @@ export default {
       // Hero section animation timeline
       const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
+      // Logo animation
+      heroTl.from(this.$refs.heroLogo, {
+        opacity: 0,
+        y: 30,
+        duration: 0.8
+      });
+
       // Animate hero title
       heroTl.from(this.$refs.heroTitle, {
         y: 50,
         opacity: 0,
         duration: 1
-      });
+      }, "-=0.4");
 
       // Animate hero subtitle
       heroTl.from(this.$refs.heroSubtitle, {
@@ -652,19 +719,27 @@ export default {
         duration: 1
       }, '-=0.7');
 
+      // Package cards animation with stagger
+      heroTl.from('.package-card', {
+        opacity: 0,
+        y: 30,
+        duration: 0.6,
+        stagger: 0.1
+      }, "-=0.7");
+
       // Animate CTA buttons
       heroTl.from(this.$refs.heroCta, {
         y: 20,
         opacity: 0,
         duration: 0.8
-      }, '-=0.7');
+      }, '-=0.4');
 
       // Animate hero visual
-      heroTl.from(this.$refs.heroVisual, {
-        x: 50,
+      heroTl.from('.hero-illustration', {
         opacity: 0,
-        duration: 1.2
-      }, '-=1');
+        scale: 0.9,
+        duration: 1
+      }, '-=0.8');
 
       // Animate floating shapes
       gsap.to('.shape-1', {
@@ -708,6 +783,48 @@ export default {
         yoyo: true,
         ease: 'sine.inOut',
         delay: 0.7
+      });
+
+      gsap.to('.shape-5', {
+        y: 10,
+        x: -10,
+        rotation: 20,
+        duration: 7.5,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut',
+        delay: 0.3
+      });
+
+      gsap.to('.shape-6', {
+        y: -10,
+        x: 10,
+        rotation: -20,
+        duration: 8.5,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut',
+        delay: 0.6
+      });
+
+      // Hover animations for package cards
+      const packageCards = document.querySelectorAll('.package-card');
+      packageCards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+          gsap.to(card, {
+            y: -5,
+            boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+            duration: 0.3
+          });
+        });
+
+        card.addEventListener('mouseleave', () => {
+          gsap.to(card, {
+            y: 0,
+            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+            duration: 0.3
+          });
+        });
       });
     },
 
