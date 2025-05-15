@@ -7,6 +7,7 @@
   <p>
     <a href="https://www.npmjs.com/package/@aivue/autosuggest"><img src="https://img.shields.io/npm/v/@aivue/autosuggest.svg?style=flat-square" alt="npm version"></a>
     <a href="https://www.npmjs.com/package/@aivue/autosuggest"><img src="https://img.shields.io/npm/dm/@aivue/autosuggest.svg?style=flat-square" alt="npm downloads"></a>
+    <a href="https://www.npmjs.com/package/@aivue/autosuggest"><img src="https://img.shields.io/npm/d18m/%40aivue%2Fautosuggest" alt="NPM Downloads"></a>
     <a href="https://github.com/reachbrt/vueai/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/@aivue/autosuggest.svg?style=flat-square" alt="MIT License"></a>
     <a href="https://codecov.io/gh/reachbrt/vueai"><img src="https://codecov.io/gh/reachbrt/vueai/graph/badge.svg?token=8LYV3M14ZG" alt="codecov"></a>
     <a href="https://app.netlify.com/sites/aivue/deploys"><img src="https://api.netlify.com/api/v1/badges/5cb37fa7-9ee1-4af6-9ff4-d34ff0322ded/deploy-status" alt="Netlify Status"></a>
