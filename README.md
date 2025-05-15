@@ -6,6 +6,7 @@
   <p>
     <a href="https://www.npmjs.com/package/@aivue/core"><img src="https://img.shields.io/npm/v/@aivue/core.svg?style=flat-square" alt="npm version"></a>
     <a href="https://www.npmjs.com/package/@aivue/core"><img src="https://img.shields.io/npm/dm/@aivue/core.svg?style=flat-square" alt="npm downloads"></a>
+    <a href="https://www.npmjs.com/package/@aivue/core"><img src="https://img.shields.io/npm/d18m/%40aivue%2Fcore" alt="NPM Downloads"></a>
     <a href="https://github.com/reachbrt/vueai/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/@aivue/core.svg?style=flat-square" alt="MIT License"></a>
     <a href="https://codecov.io/gh/reachbrt/vueai"><img src="https://codecov.io/gh/reachbrt/vueai/graph/badge.svg?token=8LYV3M14ZG" alt="codecov"></a>
     <a href="https://app.netlify.com/sites/aivue/deploys"><img src="https://api.netlify.com/api/v1/badges/5cb37fa7-9ee1-4af6-9ff4-d34ff0322ded/deploy-status" alt="Netlify Status"></a>
@@ -142,7 +143,7 @@ vueai/
   <div class="component-card">
     <div class="card-header">
       <img src="demo/src/assets/images/chatbot-illustration.svg" width="60" height="60" alt="Chatbot">
-      <h3>@aivue/chatbot <a href="https://www.npmjs.com/package/@aivue/chatbot"><img src="https://img.shields.io/npm/v/@aivue/chatbot.svg?style=flat-square" alt="npm version"></a></h3>
+      <h3>@aivue/chatbot <a href="https://www.npmjs.com/package/@aivue/chatbot"><img src="https://img.shields.io/npm/v/@aivue/chatbot.svg?style=flat-square" alt="npm version"></a> <a href="https://www.npmjs.com/package/@aivue/chatbot"><img src="https://img.shields.io/npm/d18m/%40aivue%2Fchatbot" alt="NPM Downloads"></a></h3>
     </div>
     <div class="card-features">
       <ul>
@@ -188,7 +189,7 @@ const aiClient = new AIClient({
   <div class="component-card">
     <div class="card-header">
       <img src="demo/src/assets/images/autosuggest-illustration.svg" width="60" height="60" alt="Autosuggest">
-      <h3>@aivue/autosuggest <a href="https://www.npmjs.com/package/@aivue/autosuggest"><img src="https://img.shields.io/npm/v/@aivue/autosuggest.svg?style=flat-square" alt="npm version"></a></h3>
+      <h3>@aivue/autosuggest <a href="https://www.npmjs.com/package/@aivue/autosuggest"><img src="https://img.shields.io/npm/v/@aivue/autosuggest.svg?style=flat-square" alt="npm version"></a> <a href="https://www.npmjs.com/package/@aivue/autosuggest"><img src="https://img.shields.io/npm/d18m/%40aivue%2Fautosuggest" alt="NPM Downloads"></a></h3>
     </div>
     <div class="card-features">
       <ul>
@@ -236,7 +237,7 @@ function handleSelect(suggestion) {
   <div class="component-card">
     <div class="card-header">
       <img src="demo/src/assets/images/smartform-illustration.svg" width="60" height="60" alt="SmartForm">
-      <h3>@aivue/smartform <a href="https://www.npmjs.com/package/@aivue/smartform"><img src="https://img.shields.io/npm/v/@aivue/smartform.svg?style=flat-square" alt="npm version"></a></h3>
+      <h3>@aivue/smartform <a href="https://www.npmjs.com/package/@aivue/smartform"><img src="https://img.shields.io/npm/v/@aivue/smartform.svg?style=flat-square" alt="npm version"></a> <a href="https://www.npmjs.com/package/@aivue/smartform"><img src="https://img.shields.io/npm/d18m/%40aivue%2Fsmartform" alt="NPM Downloads"></a></h3>
     </div>
     <div class="card-features">
       <ul>
@@ -302,7 +303,7 @@ function handleSubmit(data) {
 <div class="component-card core-card">
   <div class="card-header">
     <img src="demo/src/assets/images/hero-illustration.svg" width="60" height="60" alt="Core">
-    <h3>@aivue/core <a href="https://www.npmjs.com/package/@aivue/core"><img src="https://img.shields.io/npm/v/@aivue/core.svg?style=flat-square" alt="npm version"></a></h3>
+    <h3>@aivue/core <a href="https://www.npmjs.com/package/@aivue/core"><img src="https://img.shields.io/npm/v/@aivue/core.svg?style=flat-square" alt="npm version"></a> <a href="https://www.npmjs.com/package/@aivue/core"><img src="https://img.shields.io/npm/d18m/%40aivue%2Fcore" alt="NPM Downloads"></a></h3>
   </div>
   <div class="card-description">
     <p>Our core package provides a unified interface for working with multiple AI providers, complete with an automatic fallback mechanism that ensures your components work even without API keys.</p>
