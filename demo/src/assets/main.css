@@ -1,9 +1,9 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 /* Import other CSS files */
 @import './demo.css';
 @import './hero.css';
 @import './aivue.css';
 @import './elegant-ui.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
