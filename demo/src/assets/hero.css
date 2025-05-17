@@ -40,7 +40,10 @@
   background: linear-gradient(90deg, #1e40af, #3b82f6);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
   line-height: 1.2;
+  text-shadow: 0 2px 10px rgba(59, 130, 246, 0.1);
 }
 
 .hero-subtitle {
@@ -251,16 +254,16 @@
   .hero-section {
     flex-direction: column;
   }
-  
+
   .hero-content {
     max-width: 100%;
     padding: 1rem;
   }
-  
+
   .hero-title {
     font-size: 2.5rem;
   }
-  
+
   .package-cards {
     grid-template-columns: 1fr;
   }
