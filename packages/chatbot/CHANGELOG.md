@@ -2,6 +2,19 @@
 
 All notable changes to the @aivue/chatbot package will be documented in this file.
 
+## [1.5.4] - 2025-05-21
+
+### Changed
+- Updated dependency on @aivue/core to version 1.3.4
+- Improved compatibility with Ollama models
+
+## [1.5.2] - 2025-05-15
+
+### Added
+- Support for Ollama local models
+- Enhanced streaming capabilities
+- Improved error handling
+
 ## [1.1.2] - 2023-07-25
 
 ### Fixed

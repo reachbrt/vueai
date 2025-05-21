@@ -2,6 +2,21 @@
 
 All notable changes to the @aivue/core package will be documented in this file.
 
+## [1.3.4] - 2025-05-21
+
+### Fixed
+- Added proper Ollama API integration
+- Fixed JSON parsing for Ollama's streaming response format
+- Updated model defaults to work with latest Ollama models (llama3.2)
+- Improved error handling for Ollama API calls
+
+## [1.3.2] - 2025-05-15
+
+### Added
+- Support for Ollama local models
+- Enhanced streaming capabilities
+- Improved error handling
+
 ## [1.1.2] - 2023-07-25
 
 ### Fixed
