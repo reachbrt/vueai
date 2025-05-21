@@ -268,15 +268,6 @@ export class AIClient {
     const url = `${this.baseUrl || 'http://localhost:11434'}/api/chat`;
     const model = this.model || 'llama3';
 
-    // Format messages for Ollama API
-    // Ollama expects a single 'prompt' with the conversation history
-    const formattedMessages = messages.map(msg => {
-      if (msg.role === 'user') return `User: ${msg.content}`;
-      if (msg.role === 'assistant') return `Assistant: ${msg.content}`;
-      if (msg.role === 'system') return `System: ${msg.content}`;
-      return msg.content;
-    }).join('\n\n');
-
     try {
       const response = await fetch(url, {
         method: 'POST',
@@ -285,8 +276,7 @@ export class AIClient {
         },
         body: JSON.stringify({
           model: model,
-          prompt: formattedMessages,
-          stream: false,
+          messages: messages,
           options: {
             temperature: options?.temperature || 0.7,
             top_p: options?.topP || 1,
@@ -304,7 +294,7 @@ export class AIClient {
       }
 
       const data = await response.json();
-      return data.message?.content || data.response || '';
+      return data.message?.content || '';
     } catch (error) {
       console.error('Error calling Ollama API:', error);
       throw error;
@@ -315,14 +305,6 @@ export class AIClient {
     const url = `${this.baseUrl || 'http://localhost:11434'}/api/chat`;
     const model = this.model || 'llama3';
 
-    // Format messages for Ollama API
-    const formattedMessages = messages.map(msg => {
-      if (msg.role === 'user') return `User: ${msg.content}`;
-      if (msg.role === 'assistant') return `Assistant: ${msg.content}`;
-      if (msg.role === 'system') return `System: ${msg.content}`;
-      return msg.content;
-    }).join('\n\n');
-
     try {
       const response = await fetch(url, {
         method: 'POST',
@@ -331,7 +313,7 @@ export class AIClient {
         },
         body: JSON.stringify({
           model: model,
-          prompt: formattedMessages,
+          messages: messages,
           stream: true,
           options: {
             temperature: options?.temperature || 0.7,
@@ -368,7 +350,7 @@ export class AIClient {
           for (const line of lines) {
             try {
               const parsed = JSON.parse(line);
-              const content = parsed.message?.content || parsed.response || '';
+              const content = parsed.message?.content || '';
               if (content) {
                 callbacks.onToken?.(content);
                 completeText += content;

@@ -49,7 +49,7 @@
             id="model"
             v-model="model"
             type="text"
-            placeholder="llama3"
+            placeholder="llama3.2"
           />
           <p class="help-text">Available models: llama3.2, gemma3:1b</p>
         </div>
