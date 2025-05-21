@@ -265,13 +265,126 @@ export class AIClient {
 
   // Ollama implementation
   private async callOllama(messages: Message[], options?: ChatOptions): Promise<string> {
-    // Implement Ollama API call
-    return this.getFallbackResponse(messages);
+    const url = `${this.baseUrl || 'http://localhost:11434'}/api/chat`;
+    const model = this.model || 'llama3';
+
+    // Format messages for Ollama API
+    // Ollama expects a single 'prompt' with the conversation history
+    const formattedMessages = messages.map(msg => {
+      if (msg.role === 'user') return `User: ${msg.content}`;
+      if (msg.role === 'assistant') return `Assistant: ${msg.content}`;
+      if (msg.role === 'system') return `System: ${msg.content}`;
+      return msg.content;
+    }).join('\n\n');
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          model: model,
+          prompt: formattedMessages,
+          stream: false,
+          options: {
+            temperature: options?.temperature || 0.7,
+            top_p: options?.topP || 1,
+            frequency_penalty: options?.frequencyPenalty || 0,
+            presence_penalty: options?.presencePenalty || 0,
+            stop: options?.stopSequences || [],
+            num_predict: options?.maxTokens || 1024
+          }
+        })
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Ollama API error: ${response.status} ${response.statusText} - ${errorText}`);
+      }
+
+      const data = await response.json();
+      return data.message?.content || data.response || '';
+    } catch (error) {
+      console.error('Error calling Ollama API:', error);
+      throw error;
+    }
   }
 
   private async streamOllama(messages: Message[], callbacks: StreamCallbacks, options?: ChatOptions): Promise<void> {
-    // Implement Ollama streaming
-    await this.streamFallbackResponse(callbacks);
+    const url = `${this.baseUrl || 'http://localhost:11434'}/api/chat`;
+    const model = this.model || 'llama3';
+
+    // Format messages for Ollama API
+    const formattedMessages = messages.map(msg => {
+      if (msg.role === 'user') return `User: ${msg.content}`;
+      if (msg.role === 'assistant') return `Assistant: ${msg.content}`;
+      if (msg.role === 'system') return `System: ${msg.content}`;
+      return msg.content;
+    }).join('\n\n');
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          model: model,
+          prompt: formattedMessages,
+          stream: true,
+          options: {
+            temperature: options?.temperature || 0.7,
+            top_p: options?.topP || 1,
+            frequency_penalty: options?.frequencyPenalty || 0,
+            presence_penalty: options?.presencePenalty || 0,
+            stop: options?.stopSequences || [],
+            num_predict: options?.maxTokens || 1024
+          }
+        })
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Ollama API error: ${response.status} ${response.statusText} - ${errorText}`);
+      }
+
+      if (!response.body) {
+        throw new Error('Response body is null');
+      }
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder('utf-8');
+      let completeText = '';
+
+      try {
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          const chunk = decoder.decode(value, { stream: true });
+          const lines = chunk.split('\n').filter(line => line.trim() !== '');
+
+          for (const line of lines) {
+            try {
+              const parsed = JSON.parse(line);
+              const content = parsed.message?.content || parsed.response || '';
+              if (content) {
+                callbacks.onToken?.(content);
+                completeText += content;
+              }
+            } catch (e) {
+              console.warn('Error parsing Ollama stream message:', e);
+            }
+          }
+        }
+      } finally {
+        callbacks.onComplete?.(completeText);
+      }
+    } catch (error) {
+      console.error('Error streaming from Ollama API:', error);
+      callbacks.onError?.(error as Error);
+    }
   }
 
   // Fallback implementations
