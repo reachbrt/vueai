@@ -465,6 +465,12 @@
           <TypeScriptExample />
         </div>
       </section>
+
+      <section v-if="activeTab === 'ollama'" class="component-section">
+        <div class="demo-container">
+          <OllamaDemo />
+        </div>
+      </section>
     </main>
 
     <footer class="elegant-footer" ref="footer">
@@ -548,6 +554,7 @@ import NavBar from './components/NavBar.vue';
 import AutosuggestDemo from './components/AutosuggestDemo.vue';
 import SmartFormDemo from './components/SmartFormDemo.vue';
 import TypeScriptExample from './components/TypeScriptExample.vue';
+import OllamaDemo from './components/OllamaDemo.vue';
 import { AiChatWindow, AiChatToggle } from '@aivue/chatbot';
 import { AIClient } from '@aivue/core';
 import { gsap } from 'gsap';
@@ -560,6 +567,7 @@ export default {
     AutosuggestDemo,
     SmartFormDemo,
     TypeScriptExample,
+    OllamaDemo,
     AiChatWindow,
     AiChatToggle
   },
@@ -605,6 +613,11 @@ export default {
           id: 'typescript',
           name: 'TypeScript',
           icon: '🔷'
+        },
+        {
+          id: 'ollama',
+          name: 'Ollama',
+          icon: '🤖'
         }
       ],
       packages: {
@@ -620,6 +633,21 @@ export default {
             { icon: '📝', text: 'Markdown Support' },
             { icon: '🎨', text: 'Multiple Themes' },
             { icon: '📱', text: 'Responsive Design' },
+            { icon: '🔌', text: 'Easy Integration' }
+          ]
+        },
+        ollama: {
+          name: 'Ollama Integration',
+          npmName: '@aivue/core',
+          version: '1.3.2',
+          description: 'Connect to local Ollama models for privacy-focused AI without requiring API keys.',
+          github: 'https://github.com/reachbrt/vueai/tree/main/packages/core',
+          features: [
+            { icon: '🤖', text: 'Local AI Models' },
+            { icon: '🔒', text: 'Privacy-Focused' },
+            { icon: '🚀', text: 'No API Key Required' },
+            { icon: '💻', text: 'Run on Your Hardware' },
+            { icon: '🔄', text: 'Streaming Support' },
             { icon: '🔌', text: 'Easy Integration' }
           ]
         },
@@ -1081,7 +1109,8 @@ export default {
         'chatbot': 'Integrate powerful conversational AI into your Vue applications with customizable chat interfaces.',
         'autosuggest': 'Enhance user input with AI-powered suggestions that adapt to context and user behavior.',
         'smartform': 'Create intelligent forms with AI validation, suggestions, and data analysis capabilities.',
-        'typescript': 'Full TypeScript support with comprehensive type definitions for all components and APIs.'
+        'typescript': 'Full TypeScript support with comprehensive type definitions for all components and APIs.',
+        'ollama': 'Connect to local Ollama models for privacy-focused AI without requiring API keys.'
       };
 
       return descriptions[tabId] || '';
