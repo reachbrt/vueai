@@ -36,22 +36,22 @@
       <div class="settings-form">
         <div class="form-group">
           <label for="baseUrl">Base URL:</label>
-          <input 
-            id="baseUrl" 
-            v-model="baseUrl" 
-            type="text" 
+          <input
+            id="baseUrl"
+            v-model="baseUrl"
+            type="text"
             placeholder="http://localhost:11434"
           />
         </div>
         <div class="form-group">
           <label for="model">Model:</label>
-          <input 
-            id="model" 
-            v-model="model" 
-            type="text" 
+          <input
+            id="model"
+            v-model="model"
+            type="text"
             placeholder="llama3"
           />
-          <p class="help-text">Use any model you've pulled in Ollama (e.g., llama3, gemma, mistral)</p>
+          <p class="help-text">Available models: llama3.2, gemma3:1b</p>
         </div>
         <button @click="testConnection" class="test-button" :disabled="isLoading">
           {{ isLoading ? 'Testing...' : 'Test Connection' }}
@@ -73,9 +73,9 @@
         </div>
       </div>
       <div class="chat-input">
-        <textarea 
-          v-model="userInput" 
-          placeholder="Ask Ollama something..." 
+        <textarea
+          v-model="userInput"
+          placeholder="Ask Ollama something..."
           @keydown.enter.prevent="sendMessage"
           :disabled="isLoading"
         ></textarea>
@@ -99,7 +99,7 @@ export default {
   data() {
     return {
       baseUrl: 'http://localhost:11434',
-      model: 'llama3',
+      model: 'llama3.2',
       userInput: '',
       messages: [],
       isLoading: false,
@@ -118,13 +118,13 @@ export default {
     async testConnection() {
       this.isLoading = true;
       this.connectionStatus = null;
-      
+
       try {
         const client = this.createClient();
         const response = await client.chat([
           { role: 'user', content: 'Hello, are you working?' }
         ]);
-        
+
         this.connectionStatus = {
           type: 'success',
           message: 'Successfully connected to Ollama!'
@@ -142,33 +142,33 @@ export default {
     },
     async sendMessage() {
       if (!this.userInput.trim() || this.isLoading) return;
-      
+
       // Add user message
       const userMessage = { role: 'user', content: this.userInput };
       this.messages.push(userMessage);
-      
+
       // Clear input
       const input = this.userInput;
       this.userInput = '';
-      
+
       this.isLoading = true;
-      
+
       try {
         // Create client if not exists
         if (!this.client) {
           this.client = this.createClient();
         }
-        
+
         // Get response
         const response = await this.client.chat([...this.messages]);
-        
+
         // Add assistant message
         this.messages.push({ role: 'assistant', content: response });
       } catch (error) {
         console.error('Chat error:', error);
-        this.messages.push({ 
-          role: 'assistant', 
-          content: `Error: ${error.message}. Please check your Ollama settings and try again.` 
+        this.messages.push({
+          role: 'assistant',
+          content: `Error: ${error.message}. Please check your Ollama settings and try again.`
         });
       } finally {
         this.isLoading = false;
@@ -371,7 +371,7 @@ export default {
   .settings-form {
     grid-template-columns: 1fr;
   }
-  
+
   .test-button {
     grid-column: span 1;
   }
