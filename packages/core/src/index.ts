@@ -293,8 +293,30 @@ export class AIClient {
         throw new Error(`Ollama API error: ${response.status} ${response.statusText} - ${errorText}`);
       }
 
-      const data = await response.json();
-      return data.message?.content || '';
+      // Ollama returns a stream of JSON objects, one per line
+      // We need to read the response as text and parse each line
+      const text = await response.text();
+      const lines = text.split('\n').filter(line => line.trim() !== '');
+
+      // The last line contains the final response with done=true
+      // We don't need to use it, but we can log it for debugging
+      // const lastLine = lines[lines.length - 1];
+      // const lastJson = JSON.parse(lastLine);
+
+      // Collect all content from the stream
+      let fullContent = '';
+      for (const line of lines) {
+        try {
+          const json = JSON.parse(line);
+          if (json.message?.content) {
+            fullContent += json.message.content;
+          }
+        } catch (e) {
+          console.warn('Error parsing Ollama response line:', e);
+        }
+      }
+
+      return fullContent;
     } catch (error) {
       console.error('Error calling Ollama API:', error);
       throw error;
