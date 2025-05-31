@@ -1,6 +1,6 @@
 {
   "name": "vue-ai-components-demo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A demonstration of the @aivue packages for Vue.js",
   "private": true,
   "type": "module",
