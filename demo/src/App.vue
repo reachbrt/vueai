@@ -38,6 +38,15 @@
             </div>
           </div>
 
+          <div class="package-card analytics">
+            <div class="package-icon">📊</div>
+            <div class="package-details">
+              <h3>@aivue/analytics</h3>
+              <p>AI-powered insights</p>
+              <span class="package-version">v1.0.0</span>
+            </div>
+          </div>
+
           <div class="package-card core">
             <div class="package-icon">🔷</div>
             <div class="package-details">
@@ -449,6 +458,12 @@
         </div>
       </section>
 
+      <section v-if="activeTab === 'analytics'" class="component-section">
+        <div class="demo-container">
+          <AnalyticsDemo />
+        </div>
+      </section>
+
       <section v-if="activeTab === 'typescript'" class="component-section">
         <div class="demo-container">
           <div class="component-demo-header">
@@ -553,6 +568,7 @@
 import NavBar from './components/NavBar.vue';
 import AutosuggestDemo from './components/AutosuggestDemo.vue';
 import SmartFormDemo from './components/SmartFormDemo.vue';
+import AnalyticsDemo from './components/AnalyticsDemo.vue';
 import TypeScriptExample from './components/TypeScriptExample.vue';
 import OllamaDemo from './components/OllamaDemo.vue';
 import { AiChatWindow, AiChatToggle } from '@aivue/chatbot';
@@ -566,6 +582,7 @@ export default {
     NavBar,
     AutosuggestDemo,
     SmartFormDemo,
+    AnalyticsDemo,
     TypeScriptExample,
     OllamaDemo,
     AiChatWindow,
@@ -608,6 +625,11 @@ export default {
           id: 'smartform',
           name: 'Smart Form',
           icon: '📝'
+        },
+        {
+          id: 'analytics',
+          name: 'Analytics',
+          icon: '📊'
         },
         {
           id: 'typescript',
@@ -679,6 +701,21 @@ export default {
             { icon: '💡', text: 'Intelligent Feedback' },
             { icon: '🛠️', text: 'Customizable Fields' },
             { icon: '🔌', text: 'Easy Integration' }
+          ]
+        },
+        analytics: {
+          name: '@aivue/analytics',
+          npmName: '@aivue/analytics',
+          version: '1.0.0',
+          description: 'AI-powered analytics and insights for Vue.js applications with real-time dashboards and conversation analysis.',
+          github: 'https://github.com/reachbrt/vueai/tree/main/packages/analytics',
+          features: [
+            { icon: '📊', text: 'Real-time Analytics' },
+            { icon: '🤖', text: 'AI-powered Insights' },
+            { icon: '💬', text: 'Conversation Analysis' },
+            { icon: '📈', text: 'Performance Monitoring' },
+            { icon: '📱', text: 'Beautiful Dashboards' },
+            { icon: '🔒', text: 'Privacy-first Storage' }
           ]
         },
         typescript: {
@@ -1109,6 +1146,7 @@ export default {
         'chatbot': 'Integrate powerful conversational AI into your Vue applications with customizable chat interfaces.',
         'autosuggest': 'Enhance user input with AI-powered suggestions that adapt to context and user behavior.',
         'smartform': 'Create intelligent forms with AI validation, suggestions, and data analysis capabilities.',
+        'analytics': 'Track user interactions, monitor AI usage, and gain valuable insights with AI-powered analytics dashboards.',
         'typescript': 'Full TypeScript support with comprehensive type definitions for all components and APIs.',
         'ollama': 'Connect to local Ollama models for privacy-focused AI without requiring API keys.'
       };
@@ -1242,6 +1280,79 @@ p {
   justify-content: center;
   position: relative;
   z-index: 1;
+}
+
+/* Package Cards */
+.package-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+  max-width: 800px;
+}
+
+.package-card {
+  background: white;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+  border: 1px solid #e2e8f0;
+  cursor: pointer;
+}
+
+.package-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.package-card.chatbot {
+  border-left: 4px solid #3b82f6;
+}
+
+.package-card.autosuggest {
+  border-left: 4px solid #10b981;
+}
+
+.package-card.smartform {
+  border-left: 4px solid #8b5cf6;
+}
+
+.package-card.analytics {
+  border-left: 4px solid #f59e0b;
+}
+
+.package-card.core {
+  border-left: 4px solid #ef4444;
+}
+
+.package-icon {
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+.package-details h3 {
+  font-size: 1.1rem;
+  margin: 0 0 0.5rem 0;
+  color: #1e293b;
+  font-weight: 600;
+}
+
+.package-details p {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin: 0 0 0.75rem 0;
+  line-height: 1.4;
+}
+
+.package-version {
+  font-size: 0.75rem;
+  color: #6b7280;
+  background: #f3f4f6;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.375rem;
+  font-family: monospace;
 }
 
 /* Floating Shapes */

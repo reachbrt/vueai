@@ -11,6 +11,7 @@
     "start": "vite --host localhost --port 8080"
   },
   "dependencies": {
+    "@aivue/analytics": "^1.0.0",
     "@aivue/autosuggest": "^1.2.9",
     "@aivue/chatbot": "^1.4.9",
     "@aivue/core": "^1.2.9",
