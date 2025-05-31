@@ -25,6 +25,9 @@
     "lint": "npm run lint --workspaces",
     "publish:packages": "npm run build:packages && npm publish --access public --workspace @aivue/core && npm publish --access public --workspace @aivue/chatbot && npm publish --access public --workspace @aivue/autosuggest && npm publish --access public --workspace @aivue/smartform && npm publish --access public --workspace @aivue/analytics",
     "publish:github": "npm run build:packages && npm publish --registry=https://npm.pkg.github.com/ --workspace @aivue/core && npm publish --registry=https://npm.pkg.github.com/ --workspace @aivue/chatbot && npm publish --registry=https://npm.pkg.github.com/ --workspace @aivue/autosuggest && npm publish --registry=https://npm.pkg.github.com/ --workspace @aivue/smartform && npm publish --registry=https://npm.pkg.github.com/ --workspace @aivue/analytics",
+    "deploy:netlify": "./scripts/deploy-netlify.sh",
+    "deploy:demo": "cd demo && npm install && npm run build && npx netlify-cli deploy --prod --dir=dist --site=9f08866c-e889-408a-959e-32d8e3f3ab49",
+    "deploy:manual": "cd demo && npm run build && cd dist && zip -r ../aivue-demo-deploy.zip .",
     "publish:all": "./publish-all.sh",
     "demo": "./run-demo.sh"
   },
