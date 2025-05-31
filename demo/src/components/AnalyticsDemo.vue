@@ -72,35 +72,35 @@
     <div class="demo-controls">
       <h3>Try Analytics Features</h3>
       <div class="control-buttons">
-        <button 
-          @click="simulateInteraction" 
+        <button
+          @click="simulateInteraction"
           class="demo-btn interaction-btn"
           v-analytics="{ component: 'analytics-demo', action: 'click', value: 'simulate-interaction' }"
         >
           <span class="btn-icon">👆</span>
           Simulate User Interaction
         </button>
-        
-        <button 
-          @click="simulateAIRequest" 
+
+        <button
+          @click="simulateAIRequest"
           class="demo-btn ai-btn"
           v-analytics="{ component: 'analytics-demo', action: 'click', value: 'simulate-ai' }"
         >
           <span class="btn-icon">🤖</span>
           Simulate AI Request
         </button>
-        
-        <button 
-          @click="generateInsights" 
+
+        <button
+          @click="generateInsights"
           class="demo-btn insights-btn"
           v-analytics="{ component: 'analytics-demo', action: 'click', value: 'generate-insights' }"
         >
           <span class="btn-icon">🧠</span>
           Generate AI Insights
         </button>
-        
-        <button 
-          @click="exportData" 
+
+        <button
+          @click="exportData"
           class="demo-btn export-btn"
           v-analytics="{ component: 'analytics-demo', action: 'click', value: 'export-data' }"
         >
@@ -114,10 +114,32 @@
     <div class="dashboard-section">
       <h3>Live Analytics Dashboard</h3>
       <div class="dashboard-container">
-        <AiAnalyticsDashboard 
-          :ai-client="aiClient"
-          :show-conversation-analytics="true"
-        />
+        <!-- Temporarily disabled due to Chart.js registration issue -->
+        <div class="dashboard-placeholder">
+          <div class="placeholder-content">
+            <h4>📊 Analytics Dashboard</h4>
+            <p>The full analytics dashboard is temporarily disabled due to a Chart.js registration issue.</p>
+            <p>You can still use the demo controls above to see event tracking in action!</p>
+
+            <div class="metrics-preview">
+              <div class="metric-item">
+                <span class="metric-icon">💬</span>
+                <span class="metric-label">Events Tracked:</span>
+                <span class="metric-value">{{ analytics.events.value.length }}</span>
+              </div>
+              <div class="metric-item">
+                <span class="metric-icon">📊</span>
+                <span class="metric-label">Interactions:</span>
+                <span class="metric-value">{{ analytics.metrics.value.totalInteractions }}</span>
+              </div>
+              <div class="metric-item">
+                <span class="metric-icon">🤖</span>
+                <span class="metric-label">AI Requests:</span>
+                <span class="metric-value">{{ analytics.metrics.value.totalAIRequests }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -125,8 +147,8 @@
     <div class="events-section">
       <h3>Real-time Events</h3>
       <div class="events-feed">
-        <div 
-          v-for="event in recentEvents" 
+        <div
+          v-for="event in recentEvents"
           :key="event.id"
           class="event-item"
           :class="`event-${event.type}`"
@@ -227,13 +249,13 @@ export default {
     const simulateAIRequest = async () => {
       const startTime = Date.now();
       const requestId = `demo_${Date.now()}`;
-      
+
       analytics.trackAIRequest('openai', 'gpt-4o', 'Demo AI request', requestId);
-      
+
       try {
         const response = await aiClient.complete('Generate a short demo response about analytics');
         const responseTime = Date.now() - startTime;
-        
+
         analytics.trackAIResponse('openai', 'gpt-4o', response, responseTime, requestId);
       } catch (error) {
         analytics.trackError(error, { component: 'analytics-demo', action: 'simulate-ai-request' });
@@ -590,6 +612,60 @@ export default {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
+.dashboard-placeholder {
+  padding: 60px 40px;
+  text-align: center;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+.placeholder-content h4 {
+  font-size: 24px;
+  margin: 0 0 16px 0;
+  color: #1e293b;
+}
+
+.placeholder-content p {
+  color: #64748b;
+  margin: 0 0 12px 0;
+  line-height: 1.6;
+}
+
+.metrics-preview {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-top: 32px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.metric-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.metric-icon {
+  font-size: 20px;
+}
+
+.metric-label {
+  font-size: 14px;
+  color: #64748b;
+  flex: 1;
+}
+
+.metric-value {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
 .events-feed {
   background: white;
   border-radius: 16px;
@@ -767,15 +843,15 @@ export default {
     gap: 40px;
     padding: 60px 20px;
   }
-  
+
   .component-hero-features {
     grid-template-columns: 1fr;
   }
-  
+
   .demo-controls, .dashboard-section, .events-section {
     padding: 0 20px;
   }
-  
+
   .control-buttons {
     grid-template-columns: 1fr;
   }
