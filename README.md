@@ -60,9 +60,10 @@ npm install @aivue/core
 npm install @aivue/chatbot
 npm install @aivue/autosuggest
 npm install @aivue/smartform
+npm install @aivue/analytics
 
 # Or install all packages at once
-npm install @aivue/core @aivue/chatbot @aivue/autosuggest @aivue/smartform
+npm install @aivue/core @aivue/chatbot @aivue/autosuggest @aivue/smartform @aivue/analytics
 ```
 
 </td>
@@ -131,7 +132,8 @@ vueai/
 │   │   │       └── fallback.ts
 │   ├── chatbot/        # @aivue/chatbot
 │   ├── autosuggest/    # @aivue/autosuggest
-│   └── smartform/      # @aivue/smartform
+│   ├── smartform/      # @aivue/smartform
+│   └── analytics/      # @aivue/analytics
 └── package.json        # Root package.json with workspace configuration
 ```
 
@@ -296,6 +298,58 @@ function handleSubmit(data) {
   </div>
   </div>
 
+  <div class="component-card">
+    <div class="card-header">
+      <img src="demo/src/assets/images/analytics-illustration.svg" width="60" height="60" alt="Analytics">
+      <h3>@aivue/analytics <a href="https://www.npmjs.com/package/@aivue/analytics"><img src="https://img.shields.io/npm/v/@aivue/analytics.svg?style=flat-square" alt="npm version"></a> <a href="https://www.npmjs.com/package/@aivue/analytics"><img src="https://img.shields.io/npm/d18m/%40aivue%2Fanalytics" alt="NPM Downloads"></a></h3>
+    </div>
+    <div class="card-features">
+      <ul>
+        <li>✅ Real-time analytics and insights dashboard</li>
+        <li>✅ AI-powered conversation analysis</li>
+        <li>✅ Performance monitoring and error tracking</li>
+        <li>✅ Beautiful charts and visualizations</li>
+        <li>✅ Privacy-first with local storage by default</li>
+      </ul>
+    </div>
+    <div class="card-code">
+
+```vue
+<template>
+  <div>
+    <!-- Analytics Dashboard -->
+    <AiAnalyticsDashboard
+      :ai-client="aiClient"
+      :show-conversation-analytics="true"
+    />
+
+    <!-- Track interactions automatically -->
+    <button v-analytics="{ component: 'my-app', action: 'click' }">
+      Click me
+    </button>
+  </div>
+</template>
+
+<script setup>
+import { AiAnalyticsDashboard, useAnalytics, vAnalytics } from '@aivue/analytics';
+import { AIClient } from '@aivue/core';
+
+const aiClient = new AIClient({
+  provider: 'openai',
+  apiKey: import.meta.env.VITE_OPENAI_API_KEY
+});
+
+// Set up analytics
+const analytics = useAnalytics({
+  config: { enabled: true, trackInteractions: true },
+  aiClient
+});
+</script>
+```
+
+  </div>
+  </div>
+
 ---
 
 ## 🧠 @aivue/core Shared AI Engine
@@ -412,6 +466,7 @@ npm publish --access public --workspace @aivue/core
 npm publish --access public --workspace @aivue/chatbot
 npm publish --access public --workspace @aivue/autosuggest
 npm publish --access public --workspace @aivue/smartform
+npm publish --access public --workspace @aivue/analytics
 
 # Or use the publish script
 npm run publish:packages
