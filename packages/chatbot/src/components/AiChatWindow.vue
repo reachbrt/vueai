@@ -86,6 +86,34 @@
     <div class="ai-chat-window__input-container">
       <slot name="input" :input="userInput" :send-message="handleSendMessage">
         <div class="ai-chat-window__input-wrapper">
+          <!-- Attachment button -->
+          <button
+            class="ai-chat-window__attachment-button"
+            @click="handleAttachmentClick"
+            :disabled="isLoading"
+            title="Attach file"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M16.5 6v11.5c0 2.21-1.79 4-4 4s-4-1.79-4-4V5c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5v10.5c0 .55-.45 1-1 1s-1-.45-1-1V6H10v9.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V5c0-2.21-1.79-4-4-4S7 2.79 7 5v12.5c0 3.04 2.46 5.5 5.5 5.5s5.5-2.46 5.5-5.5V6h-1.5z"/>
+            </svg>
+          </button>
+
+          <!-- Voice button -->
+          <button
+            class="ai-chat-window__voice-button"
+            @click="handleVoiceClick"
+            :disabled="isLoading"
+            :class="{ 'ai-chat-window__voice-button--recording': isRecording }"
+            title="Voice message"
+          >
+            <svg v-if="!isRecording" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/>
+            </svg>
+            <svg v-else width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M6 6h12v12H6z"/>
+            </svg>
+          </button>
+
           <textarea
             v-model="userInput"
             class="ai-chat-window__input"
@@ -94,13 +122,58 @@
             @keydown.enter.prevent="handleKeyDown"
             ref="inputElement"
           ></textarea>
+
+          <!-- Send button with improved design -->
           <button
             class="ai-chat-window__send-button"
             @click="handleSendMessage"
-            :disabled="isLoading || !userInput.trim()"
+            :disabled="isLoading || (!userInput.trim() && attachments.length === 0)"
+            title="Send message"
           >
-            Send
+            <svg v-if="!isLoading" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+            </svg>
+            <svg v-else width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="ai-chat-window__loading-spinner">
+              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none" opacity="0.3"/>
+              <path d="M12 2a10 10 0 0 1 10 10" stroke="currentColor" stroke-width="4" fill="none"/>
+            </svg>
           </button>
+        </div>
+
+        <!-- File input (hidden) -->
+        <input
+          type="file"
+          ref="fileInput"
+          @change="handleFileSelect"
+          accept="image/*,.pdf,.doc,.docx,.txt"
+          style="display: none"
+          multiple
+        />
+
+        <!-- Attachment preview -->
+        <div v-if="attachments.length > 0" class="ai-chat-window__attachments">
+          <div
+            v-for="(attachment, index) in attachments"
+            :key="index"
+            class="ai-chat-window__attachment-item"
+          >
+            <div class="ai-chat-window__attachment-info">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+              </svg>
+              <span class="ai-chat-window__attachment-name">{{ attachment.name }}</span>
+              <span class="ai-chat-window__attachment-size">({{ formatFileSize(attachment.size) }})</span>
+            </div>
+            <button
+              class="ai-chat-window__attachment-remove"
+              @click="removeAttachment(index)"
+              title="Remove attachment"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+              </svg>
+            </button>
+          </div>
         </div>
       </slot>
     </div>
@@ -252,12 +325,19 @@ const props = defineProps({
 });
 
 // Define emits
-const emit = defineEmits(['message-sent', 'response-received', 'error']);
+const emit = defineEmits(['message-sent', 'response-received', 'error', 'attachments-sent']);
 
 // Local state
 const userInput = ref('');
 const messagesContainer = ref<HTMLElement | null>(null);
 const inputElement = ref<HTMLTextAreaElement | null>(null);
+const fileInput = ref<HTMLInputElement | null>(null);
+
+// Attachment and voice state
+const attachments = ref<File[]>([]);
+const isRecording = ref(false);
+const mediaRecorder = ref<MediaRecorder | null>(null);
+const audioChunks = ref<Blob[]>([]);
 
 // Validate that either client or provider is provided
 if (!props.client && !props.provider) {
@@ -309,13 +389,35 @@ const {
 
 // Handle sending messages
 const handleSendMessage = async () => {
-  if (!userInput.value.trim() || isLoading.value) return;
+  if ((!userInput.value.trim() && attachments.value.length === 0) || isLoading.value) return;
 
   const message = userInput.value;
+  const messageAttachments = [...attachments.value];
+
+  // Clear input and attachments
   userInput.value = '';
+  attachments.value = [];
 
   try {
-    await sendMessage(message);
+    // If there are attachments, include them in the message
+    if (messageAttachments.length > 0) {
+      const attachmentInfo = messageAttachments.map(file => ({
+        name: file.name,
+        size: file.size,
+        type: file.type
+      }));
+
+      const messageWithAttachments = message +
+        (message ? '\n\n' : '') +
+        `📎 Attachments: ${attachmentInfo.map(att => att.name).join(', ')}`;
+
+      await sendMessage(messageWithAttachments);
+
+      // Emit attachment event for custom handling
+      emit('attachments-sent', { attachments: messageAttachments, message });
+    } else {
+      await sendMessage(message);
+    }
   } catch (err) {
     // Error is already handled by the onError callback
   }
@@ -326,6 +428,85 @@ const handleKeyDown = (event: KeyboardEvent) => {
   if (event.key === 'Enter' && !event.shiftKey) {
     event.preventDefault();
     handleSendMessage();
+  }
+};
+
+// Handle attachment click
+const handleAttachmentClick = () => {
+  if (fileInput.value) {
+    fileInput.value.click();
+  }
+};
+
+// Handle file selection
+const handleFileSelect = (event: Event) => {
+  const target = event.target as HTMLInputElement;
+  if (target.files) {
+    const newFiles = Array.from(target.files);
+    attachments.value.push(...newFiles);
+    // Reset the input so the same file can be selected again
+    target.value = '';
+  }
+};
+
+// Remove attachment
+const removeAttachment = (index: number) => {
+  attachments.value.splice(index, 1);
+};
+
+// Format file size
+const formatFileSize = (bytes: number): string => {
+  if (bytes === 0) return '0 Bytes';
+  const k = 1024;
+  const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+};
+
+// Handle voice recording
+const handleVoiceClick = async () => {
+  if (!isRecording.value) {
+    await startRecording();
+  } else {
+    stopRecording();
+  }
+};
+
+// Start voice recording
+const startRecording = async () => {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    mediaRecorder.value = new MediaRecorder(stream);
+    audioChunks.value = [];
+
+    mediaRecorder.value.ondataavailable = (event) => {
+      if (event.data.size > 0) {
+        audioChunks.value.push(event.data);
+      }
+    };
+
+    mediaRecorder.value.onstop = () => {
+      const audioBlob = new Blob(audioChunks.value, { type: 'audio/wav' });
+      const audioFile = new File([audioBlob], `voice-message-${Date.now()}.wav`, { type: 'audio/wav' });
+      attachments.value.push(audioFile);
+
+      // Stop all tracks to release the microphone
+      stream.getTracks().forEach(track => track.stop());
+    };
+
+    mediaRecorder.value.start();
+    isRecording.value = true;
+  } catch (error) {
+    console.error('Error starting recording:', error);
+    emit('error', { error: new Error('Failed to start recording. Please check microphone permissions.') });
+  }
+};
+
+// Stop voice recording
+const stopRecording = () => {
+  if (mediaRecorder.value && isRecording.value) {
+    mediaRecorder.value.stop();
+    isRecording.value = false;
   }
 };
 
@@ -522,12 +703,56 @@ onMounted(() => {
 
 .ai-chat-window__input-wrapper {
   display: flex;
+  align-items: flex-end;
+  gap: 8px;
   position: relative;
+}
+
+.ai-chat-window__attachment-button,
+.ai-chat-window__voice-button {
+  background-color: var(--aivue-chat-input-bg, #ffffff);
+  border: 1px solid var(--aivue-chat-input-border, #e0e0e0);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--aivue-chat-text, #666666);
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.ai-chat-window__attachment-button:hover,
+.ai-chat-window__voice-button:hover {
+  background-color: var(--aivue-chat-button-bg, #2196f3);
+  color: var(--aivue-chat-button-text, #ffffff);
+  border-color: var(--aivue-chat-button-bg, #2196f3);
+}
+
+.ai-chat-window__attachment-button:disabled,
+.ai-chat-window__voice-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ai-chat-window__voice-button--recording {
+  background-color: #f44336;
+  color: white;
+  border-color: #f44336;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
 }
 
 .ai-chat-window__input {
   flex: 1;
-  padding: 10px 14px;
+  padding: 12px 50px 12px 16px;
   border: 1px solid var(--aivue-chat-input-border, #e0e0e0);
   border-radius: 20px;
   resize: none;
@@ -537,17 +762,19 @@ onMounted(() => {
   color: var(--aivue-chat-text, #333333);
   font-family: inherit;
   font-size: 14px;
+  line-height: 1.4;
 }
 
 .ai-chat-window__input:focus {
   outline: none;
   border-color: var(--aivue-chat-button-bg, #2196f3);
+  box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.1);
 }
 
 .ai-chat-window__send-button {
   position: absolute;
-  right: 8px;
-  bottom: 8px;
+  right: 4px;
+  bottom: 4px;
   background-color: var(--aivue-chat-button-bg, #2196f3);
   color: var(--aivue-chat-button-text, #ffffff);
   border: none;
@@ -558,11 +785,87 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.ai-chat-window__send-button:hover:not(:disabled) {
+  background-color: var(--aivue-chat-button-hover, #1976d2);
+  transform: scale(1.05);
 }
 
 .ai-chat-window__send-button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+  transform: none;
+}
+
+.ai-chat-window__loading-spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Attachment styles */
+.ai-chat-window__attachments {
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ai-chat-window__attachment-item {
+  display: flex;
+  align-items: center;
+  background-color: var(--aivue-chat-assistant-bg, #f5f5f5);
+  border: 1px solid var(--aivue-chat-input-border, #e0e0e0);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 12px;
+  max-width: 200px;
+}
+
+.ai-chat-window__attachment-info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+}
+
+.ai-chat-window__attachment-name {
+  font-weight: 500;
+  color: var(--aivue-chat-text, #333333);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ai-chat-window__attachment-size {
+  color: var(--aivue-chat-text, #666666);
+  font-size: 11px;
+}
+
+.ai-chat-window__attachment-remove {
+  background: none;
+  border: none;
+  color: var(--aivue-chat-text, #999999);
+  cursor: pointer;
+  padding: 2px;
+  margin-left: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.ai-chat-window__attachment-remove:hover {
+  background-color: #f44336;
+  color: white;
 }
 
 .ai-chat-window__footer {
