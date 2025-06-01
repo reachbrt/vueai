@@ -15,6 +15,7 @@
     "@aivue/autosuggest": "^1.2.9",
     "@aivue/chatbot": "^1.4.9",
     "@aivue/core": "^1.2.9",
+    "@aivue/image-caption": "workspace:*",
     "@aivue/smartform": "^1.2.9",
     "gsap": "^3.13.0",
     "vue": "^3.5.13"
