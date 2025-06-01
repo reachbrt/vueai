@@ -1,20 +1,17 @@
-<div align="center">
-  <img src="https://raw.githubusercontent.com/reachbrt/vueai/main/demo/src/assets/images/chatbot-illustration.svg" alt="AI Chatbot" width="150" height="150" />
+# @aivue/chatbot
 
-  <h1>@aivue/chatbot</h1>
-  <p>AI-powered chat components for Vue.js applications</p>
+![AI Chatbot](https://raw.githubusercontent.com/reachbrt/vueai/main/demo/src/assets/images/chatbot-illustration.svg)
 
-  <p>
-    <a href="https://www.npmjs.com/package/@aivue/chatbot"><img src="https://img.shields.io/npm/v/@aivue/chatbot.svg?style=flat-square" alt="npm version"></a>
-    <a href="https://www.npmjs.com/package/@aivue/chatbot"><img src="https://img.shields.io/npm/dm/@aivue/chatbot.svg?style=flat-square" alt="npm downloads"></a>
-    <a href="https://www.npmjs.com/package/@aivue/chatbot"><img src="https://img.shields.io/npm/d18m/%40aivue%2Fchatbot" alt="NPM Downloads"></a>
-    <a href="https://github.com/reachbrt/vueai/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/@aivue/chatbot.svg?style=flat-square" alt="MIT License"></a>
-    <a href="https://codecov.io/gh/reachbrt/vueai"><img src="https://codecov.io/gh/reachbrt/vueai/graph/badge.svg?token=8LYV3M14ZG" alt="codecov"></a>
-    <a href="https://app.netlify.com/sites/aivue/deploys"><img src="https://api.netlify.com/api/v1/badges/5cb37fa7-9ee1-4af6-9ff4-d34ff0322ded/deploy-status" alt="Netlify Status"></a>
-  </p>
+**AI-powered chat components for Vue.js applications**
 
-  <p><a href="https://aivue.netlify.app/" target="_blank">📺 Live Demo</a> • <a href="https://github.com/reachbrt/vueai/wiki" target="_blank">📚 Documentation</a> • <a href="https://github.com/reachbrt/vueai/issues/new" target="_blank">🐛 Report Bug</a></p>
-</div>
+[![npm version](https://img.shields.io/npm/v/@aivue/chatbot.svg?style=flat-square)](https://www.npmjs.com/package/@aivue/chatbot)
+[![npm downloads](https://img.shields.io/npm/dm/@aivue/chatbot.svg?style=flat-square)](https://www.npmjs.com/package/@aivue/chatbot)
+[![NPM Downloads](https://img.shields.io/npm/d18m/%40aivue%2Fchatbot)](https://www.npmjs.com/package/@aivue/chatbot)
+[![MIT License](https://img.shields.io/npm/l/@aivue/chatbot.svg?style=flat-square)](https://github.com/reachbrt/vueai/blob/main/LICENSE)
+[![codecov](https://codecov.io/gh/reachbrt/vueai/graph/badge.svg?token=8LYV3M14ZG)](https://codecov.io/gh/reachbrt/vueai)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/5cb37fa7-9ee1-4af6-9ff4-d34ff0322ded/deploy-status)](https://app.netlify.com/sites/aivue/deploys)
+
+[📺 Live Demo](https://aivue.netlify.app/) • [📚 Documentation](https://github.com/reachbrt/vueai/wiki) • [� Report Bug](https://github.com/reachbrt/vueai/issues/new)
 
 ## ✨ Overview
 
@@ -37,52 +34,27 @@
 
 ## 📦 Installation
 
-<div class="installation-section">
-  <div class="installation-tabs">
-    <div class="installation-tab">
-      <div class="tab-header">npm</div>
-      <div class="tab-content">
-
+### npm
 ```bash
 npm install @aivue/chatbot @aivue/core
 ```
 
-      </div>
-    </div>
-
-    <div class="installation-tab">
-      <div class="tab-header">yarn</div>
-      <div class="tab-content">
-
+### yarn
 ```bash
 yarn add @aivue/chatbot @aivue/core
 ```
 
-      </div>
-    </div>
-
-    <div class="installation-tab">
-      <div class="tab-header">pnpm</div>
-      <div class="tab-content">
-
+### pnpm
 ```bash
 pnpm add @aivue/chatbot @aivue/core
 ```
 
-      </div>
-    </div>
-  </div>
-
-  <div class="installation-note">
-    <p>Don't forget to import the CSS:</p>
+**Don't forget to import the CSS:**
 
 ```javascript
 // Import the CSS from the chatbot package
 import '@aivue/chatbot/style.css'
 ```
-
-  </div>
-</div>
 
 ### 🔄 Vue Compatibility
 
@@ -93,11 +65,9 @@ import '@aivue/chatbot/style.css'
 
 ## 🚀 Quick Start
 
-<div class="quick-start-section">
-  <div class="step-container">
-    <h3><span class="step-number">1</span> Set up the AI Client</h3>
-    <div class="step-content">
-      <p>First, create an AI client using <code>@aivue/core</code>:</p>
+### 1. Set up the AI Client
+
+First, create an AI client using `@aivue/core`:
 
 ```javascript
 // ai-client.js
@@ -109,13 +79,10 @@ export const aiClient = new AIClient({
   model: 'gpt-4o' // Specify the model to use
 });
 ```
-    </div>
-  </div>
 
-  <div class="step-container">
-    <h3><span class="step-number">2</span> Use the AiChatWindow Component</h3>
-    <div class="step-content">
-      <p>Import and use the component in your Vue application:</p>
+### 2. Use the AiChatWindow Component
+
+Import and use the component in your Vue application:
 
 ```vue
 <template>
@@ -148,22 +115,14 @@ import { aiClient } from './ai-client.js';
 }
 </style>
 ```
-    </div>
-  </div>
 
-  <div class="step-container">
-    <h3><span class="step-number">3</span> That's it!</h3>
-    <div class="step-content">
-      <p>You now have a fully functional AI chat interface in your Vue application. The component handles all the complexity of managing the chat state, sending messages to the AI provider, and displaying the responses.</p>
+### 3. That's it!
 
-      <div class="demo-link">
-        <a href="https://aivue.netlify.app/" target="_blank">See the live demo →</a>
-      </div>
-    </div>
-  </div>
-</div>
+You now have a fully functional AI chat interface in your Vue application. The component handles all the complexity of managing the chat state, sending messages to the AI provider, and displaying the responses.
 
-### 3. Register Components Globally (Optional)
+[See the live demo →](https://aivue.netlify.app/)
+
+## Register Components Globally (Optional)
 
 If you prefer to register components globally, you can use the provided Vue plugin:
 
@@ -824,48 +783,28 @@ If you encounter errors related to missing Vue functions like `createElementBloc
 
 ## 📺 Live Demo
 
-<div class="demo-section">
-  <div class="demo-card">
-    <div class="demo-image">
-      <img src="https://raw.githubusercontent.com/reachbrt/vueai/main/demo/src/assets/images/chatbot-illustration.svg" alt="AI Chatbot Demo" width="200" height="150" />
-    </div>
-    <div class="demo-content">
-      <h3>Interactive Demo</h3>
-      <p>See the chatbot components in action with our interactive demo. Try different AI providers, customize the appearance, and test all the features.</p>
-      <div class="demo-cta">
-        <a href="https://aivue.netlify.app/" target="_blank" class="demo-button">Launch Demo</a>
-      </div>
-    </div>
-  </div>
-</div>
+![AI Chatbot Demo](https://raw.githubusercontent.com/reachbrt/vueai/main/demo/src/assets/images/chatbot-illustration.svg)
+
+### Interactive Demo
+
+See the chatbot components in action with our interactive demo. Try different AI providers, customize the appearance, and test all the features.
+
+**[Launch Demo →](https://aivue.netlify.app/)**
 
 ## 📦 Related Packages
 
-<div class="related-packages">
-  <a href="https://www.npmjs.com/package/@aivue/core" class="package-card" target="_blank">
-    <h4><span class="package-icon">🧠</span> @aivue/core</h4>
-    <div class="package-content">
-      <p>Core AI functionality for Vue.js components</p>
-    </div>
-  </a>
+### 🧠 [@aivue/core](https://www.npmjs.com/package/@aivue/core)
+Core AI functionality for Vue.js components
 
-  <a href="https://www.npmjs.com/package/@aivue/autosuggest" class="package-card" target="_blank">
-    <h4><span class="package-icon">✨</span> @aivue/autosuggest</h4>
-    <div class="package-content">
-      <p>AI-powered suggestion components for Vue.js</p>
-    </div>
-  </a>
+### ✨ [@aivue/autosuggest](https://www.npmjs.com/package/@aivue/autosuggest)
+AI-powered suggestion components for Vue.js
 
-  <a href="https://www.npmjs.com/package/@aivue/smartform" class="package-card" target="_blank">
-    <h4><span class="package-icon">📝</span> @aivue/smartform</h4>
-    <div class="package-content">
-      <p>AI-powered form validation for Vue.js</p>
-    </div>
-  </a>
-</div>
+### 📝 [@aivue/smartform](https://www.npmjs.com/package/@aivue/smartform)
+AI-powered form validation for Vue.js
+
+### 🖼️ [@aivue/image-caption](https://www.npmjs.com/package/@aivue/image-caption)
+AI-powered image captioning with OpenAI Vision models
 
 ## 📄 License
 
-<div class="license-section">
-  <p>MIT © <a href="https://github.com/reachbrt" target="_blank">Bharatkumar Subramanian</a></p>
-</div>
+MIT © [Bharatkumar Subramanian](https://github.com/reachbrt)
