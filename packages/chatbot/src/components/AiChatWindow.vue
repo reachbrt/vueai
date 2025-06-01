@@ -81,6 +81,17 @@
           <div class="ai-chat-window__error-text">{{ errorText }}</div>
         </slot>
       </div>
+
+      <!-- Processing attachments indicator -->
+      <div v-if="isProcessingAttachments" class="ai-chat-window__processing">
+        <div class="ai-chat-window__processing-text">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="ai-chat-window__loading-spinner">
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none" opacity="0.3"/>
+            <path d="M12 2a10 10 0 0 1 10 10" stroke="currentColor" stroke-width="4" fill="none"/>
+          </svg>
+          Processing attachments...
+        </div>
+      </div>
     </div>
 
     <div class="ai-chat-window__input-container">
@@ -127,7 +138,7 @@
           <button
             class="ai-chat-window__send-button"
             @click="handleSendMessage"
-            :disabled="isLoading || (!userInput.trim() && attachments.length === 0)"
+            :disabled="isLoading || isProcessingAttachments || (!userInput.trim() && attachments.length === 0)"
             title="Send message"
           >
             <svg v-if="!isLoading" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -157,13 +168,40 @@
             :key="index"
             class="ai-chat-window__attachment-item"
           >
+            <div class="ai-chat-window__attachment-preview">
+              <!-- Image preview -->
+              <div v-if="attachment.type.startsWith('image/')" class="ai-chat-window__image-preview">
+                <img :src="getFilePreviewUrl(attachment)" alt="Image preview" />
+                <div class="ai-chat-window__attachment-overlay">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M21,19V5C21,3.89 20.1,3 19,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19M19,19H5V5H19V19M13.96,12.29L11.21,15.83L9.25,13.47L6.5,17H17.5L13.96,12.29Z"/>
+                  </svg>
+                </div>
+              </div>
+
+              <!-- Audio preview -->
+              <div v-else-if="attachment.type.startsWith('audio/')" class="ai-chat-window__audio-preview">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12,3V12.26C11.5,12.09 11,12 10.5,12C8.01,12 6,14.01 6,16.5C6,18.99 8.01,21 10.5,21C12.99,21 15,18.99 15,16.5V7H19V3H12Z"/>
+                </svg>
+                <span class="ai-chat-window__audio-duration">🎤 Voice Message</span>
+              </div>
+
+              <!-- File preview -->
+              <div v-else class="ai-chat-window__file-preview">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                </svg>
+              </div>
+            </div>
+
             <div class="ai-chat-window__attachment-info">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
-              </svg>
               <span class="ai-chat-window__attachment-name">{{ attachment.name }}</span>
               <span class="ai-chat-window__attachment-size">({{ formatFileSize(attachment.size) }})</span>
+              <span v-if="attachment.type.startsWith('image/')" class="ai-chat-window__attachment-type">📸 Will be analyzed</span>
+              <span v-else-if="attachment.type.startsWith('audio/')" class="ai-chat-window__attachment-type">🎤 Will be transcribed</span>
             </div>
+
             <button
               class="ai-chat-window__attachment-remove"
               @click="removeAttachment(index)"
@@ -338,6 +376,7 @@ const attachments = ref<File[]>([]);
 const isRecording = ref(false);
 const mediaRecorder = ref<MediaRecorder | null>(null);
 const audioChunks = ref<Blob[]>([]);
+const isProcessingAttachments = ref(false);
 
 // Validate that either client or provider is provided
 if (!props.client && !props.provider) {
@@ -399,19 +438,12 @@ const handleSendMessage = async () => {
   attachments.value = [];
 
   try {
-    // If there are attachments, include them in the message
+    // If there are attachments, process them and create enhanced message
     if (messageAttachments.length > 0) {
-      const attachmentInfo = messageAttachments.map(file => ({
-        name: file.name,
-        size: file.size,
-        type: file.type
-      }));
-
-      const messageWithAttachments = message +
-        (message ? '\n\n' : '') +
-        `📎 Attachments: ${attachmentInfo.map(att => att.name).join(', ')}`;
-
-      await sendMessage(messageWithAttachments);
+      isProcessingAttachments.value = true;
+      const processedMessage = await processAttachmentsAndMessage(message, messageAttachments);
+      isProcessingAttachments.value = false;
+      await sendMessage(processedMessage);
 
       // Emit attachment event for custom handling
       emit('attachments-sent', { attachments: messageAttachments, message });
@@ -419,8 +451,135 @@ const handleSendMessage = async () => {
       await sendMessage(message);
     }
   } catch (err) {
+    isProcessingAttachments.value = false;
     // Error is already handled by the onError callback
   }
+};
+
+// Process attachments and create enhanced message
+const processAttachmentsAndMessage = async (textMessage: string, files: File[]): Promise<string> => {
+  let enhancedMessage = textMessage;
+
+  for (const file of files) {
+    if (file.type.startsWith('image/')) {
+      // Process image
+      const imageAnalysis = await analyzeImage(file);
+      enhancedMessage += `\n\n📸 Image Analysis:\n${imageAnalysis}`;
+    } else if (file.type.startsWith('audio/')) {
+      // Process audio
+      const audioTranscription = await transcribeAudio(file);
+      enhancedMessage += `\n\n🎤 Audio Transcription:\n${audioTranscription}`;
+    } else {
+      // For other file types, just mention the file
+      enhancedMessage += `\n\n📎 File attached: ${file.name} (${formatFileSize(file.size)})`;
+    }
+  }
+
+  return enhancedMessage;
+};
+
+// Analyze image using OpenAI Vision API
+const analyzeImage = async (imageFile: File): Promise<string> => {
+  try {
+    // Convert image to base64
+    const base64Image = await fileToBase64(imageFile);
+
+    // Get API key from props or environment
+    const apiKey = props.apiKey || (typeof window !== 'undefined' && (window as any).VITE_OPENAI_API_KEY);
+
+    if (!apiKey) {
+      return `Image "${imageFile.name}" uploaded but no API key available for analysis.`;
+    }
+
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'gpt-4o',
+        messages: [
+          {
+            role: 'user',
+            content: [
+              {
+                type: 'text',
+                text: 'Please analyze this image and describe what you see in detail.'
+              },
+              {
+                type: 'image_url',
+                image_url: {
+                  url: base64Image,
+                  detail: 'auto'
+                }
+              }
+            ]
+          }
+        ],
+        max_tokens: 300
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`OpenAI API error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data.choices[0]?.message?.content || 'Unable to analyze image.';
+  } catch (error: any) {
+    console.error('Image analysis error:', error);
+    return `Image "${imageFile.name}" uploaded but analysis failed: ${error?.message || 'Unknown error'}`;
+  }
+};
+
+// Transcribe audio using OpenAI Whisper API
+const transcribeAudio = async (audioFile: File): Promise<string> => {
+  try {
+    // Get API key from props or environment
+    const apiKey = props.apiKey || (typeof window !== 'undefined' && (window as any).VITE_OPENAI_API_KEY);
+
+    if (!apiKey) {
+      return `Audio "${audioFile.name}" uploaded but no API key available for transcription.`;
+    }
+
+    const formData = new FormData();
+    formData.append('file', audioFile);
+    formData.append('model', 'whisper-1');
+
+    const response = await fetch('https://api.openai.com/v1/audio/transcriptions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+      },
+      body: formData
+    });
+
+    if (!response.ok) {
+      throw new Error(`OpenAI Whisper API error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data.text || 'Unable to transcribe audio.';
+  } catch (error: any) {
+    console.error('Audio transcription error:', error);
+    return `Audio "${audioFile.name}" uploaded but transcription failed: ${error?.message || 'Unknown error'}`;
+  }
+};
+
+// Convert file to base64
+const fileToBase64 = (file: File): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+};
+
+// Get file preview URL for display
+const getFilePreviewUrl = (file: File): string => {
+  return URL.createObjectURL(file);
 };
 
 // Handle keyboard events
@@ -696,6 +855,21 @@ onMounted(() => {
   text-align: center;
 }
 
+.ai-chat-window__processing {
+  display: flex;
+  justify-content: center;
+  margin: 16px 0;
+}
+
+.ai-chat-window__processing-text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--aivue-chat-button-bg, #2196f3);
+  font-style: italic;
+  font-size: 14px;
+}
+
 .ai-chat-window__input-container {
   padding: 12px 16px;
   border-top: 1px solid var(--aivue-chat-border, #e0e0e0);
@@ -811,27 +985,91 @@ onMounted(() => {
 
 /* Attachment styles */
 .ai-chat-window__attachments {
-  margin-top: 8px;
+  margin-top: 12px;
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 12px;
 }
 
 .ai-chat-window__attachment-item {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   background-color: var(--aivue-chat-assistant-bg, #f5f5f5);
   border: 1px solid var(--aivue-chat-input-border, #e0e0e0);
-  border-radius: 8px;
-  padding: 8px 12px;
+  border-radius: 12px;
+  padding: 12px;
   font-size: 12px;
-  max-width: 200px;
+  max-width: 280px;
+  position: relative;
+}
+
+.ai-chat-window__attachment-preview {
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.ai-chat-window__image-preview {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: var(--aivue-chat-input-bg, #ffffff);
+}
+
+.ai-chat-window__image-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ai-chat-window__attachment-overlay {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  border-radius: 4px;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ai-chat-window__audio-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  background-color: var(--aivue-chat-button-bg, #2196f3);
+  color: white;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.ai-chat-window__audio-duration {
+  font-size: 10px;
+  margin-top: 4px;
+}
+
+.ai-chat-window__file-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  background-color: var(--aivue-chat-input-bg, #ffffff);
+  border: 2px solid var(--aivue-chat-input-border, #e0e0e0);
+  border-radius: 8px;
+  color: var(--aivue-chat-text, #666666);
 }
 
 .ai-chat-window__attachment-info {
   display: flex;
-  align-items: center;
-  gap: 6px;
+  flex-direction: column;
+  gap: 4px;
   flex: 1;
   min-width: 0;
 }
@@ -842,25 +1080,38 @@ onMounted(() => {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  line-height: 1.2;
 }
 
 .ai-chat-window__attachment-size {
   color: var(--aivue-chat-text, #666666);
   font-size: 11px;
+  line-height: 1.2;
+}
+
+.ai-chat-window__attachment-type {
+  color: var(--aivue-chat-button-bg, #2196f3);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.2;
 }
 
 .ai-chat-window__attachment-remove {
-  background: none;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(255, 255, 255, 0.9);
   border: none;
   color: var(--aivue-chat-text, #999999);
   cursor: pointer;
-  padding: 2px;
-  margin-left: 8px;
+  padding: 4px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
+  width: 24px;
+  height: 24px;
 }
 
 .ai-chat-window__attachment-remove:hover {
