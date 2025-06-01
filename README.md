@@ -21,22 +21,27 @@ A modular AI-powered Vue.js component suite that enhances your applications with
 
 <table>
   <tr>
-    <td align="center" width="25%">
+    <td align="center" width="20%">
       <img src="demo/src/assets/images/chatbot-illustration.svg" width="80" height="80"><br>
       <a href="https://www.npmjs.com/package/@aivue/chatbot"><b>@aivue/chatbot</b></a><br>
       <small>Multi-provider AI chat widget</small>
     </td>
-    <td align="center" width="25%">
+    <td align="center" width="20%">
       <img src="demo/src/assets/images/autosuggest-illustration.svg" width="80" height="80"><br>
       <a href="https://www.npmjs.com/package/@aivue/autosuggest"><b>@aivue/autosuggest</b></a><br>
       <small>Smart autosuggest with semantic ranking</small>
     </td>
-    <td align="center" width="25%">
+    <td align="center" width="20%">
       <img src="demo/src/assets/images/smartform-illustration.svg" width="80" height="80"><br>
       <a href="https://www.npmjs.com/package/@aivue/smartform"><b>@aivue/smartform</b></a><br>
       <small>AI-enhanced forms with dynamic validation</small>
     </td>
-    <td align="center" width="25%">
+    <td align="center" width="20%">
+      <img src="demo/src/assets/images/image-caption-illustration.svg" width="80" height="80"><br>
+      <a href="https://www.npmjs.com/package/@aivue/image-caption"><b>@aivue/image-caption</b></a><br>
+      <small>AI-powered image captioning with OpenAI Vision</small>
+    </td>
+    <td align="center" width="20%">
       <img src="demo/src/assets/images/hero-illustration.svg" width="80" height="80"><br>
       <a href="https://www.npmjs.com/package/@aivue/core"><b>@aivue/core</b></a><br>
       <small>Core AI functionality for Vue.js components</small>
@@ -60,10 +65,11 @@ npm install @aivue/core
 npm install @aivue/chatbot
 npm install @aivue/autosuggest
 npm install @aivue/smartform
+npm install @aivue/image-caption
 npm install @aivue/analytics
 
 # Or install all packages at once
-npm install @aivue/core @aivue/chatbot @aivue/autosuggest @aivue/smartform @aivue/analytics
+npm install @aivue/core @aivue/chatbot @aivue/autosuggest @aivue/smartform @aivue/image-caption @aivue/analytics
 ```
 
 </td>
@@ -133,6 +139,7 @@ vueai/
 │   ├── chatbot/        # @aivue/chatbot
 │   ├── autosuggest/    # @aivue/autosuggest
 │   ├── smartform/      # @aivue/smartform
+│   ├── image-caption/  # @aivue/image-caption
 │   └── analytics/      # @aivue/analytics
 └── package.json        # Root package.json with workspace configuration
 ```
@@ -291,6 +298,51 @@ const formSchema = ref({
 
 function handleSubmit(data) {
   console.log('Form submitted:', data);
+}
+</script>
+```
+
+  </div>
+  </div>
+
+  <div class="component-card">
+    <div class="card-header">
+      <img src="demo/src/assets/images/image-caption-illustration.svg" width="60" height="60" alt="Image Caption">
+      <h3>@aivue/image-caption <a href="https://www.npmjs.com/package/@aivue/image-caption"><img src="https://img.shields.io/npm/v/@aivue/image-caption.svg?style=flat-square" alt="npm version"></a> <a href="https://www.npmjs.com/package/@aivue/image-caption"><img src="https://img.shields.io/npm/d18m/%40aivue%2Fimage-caption" alt="NPM Downloads"></a></h3>
+    </div>
+    <div class="card-features">
+      <ul>
+        <li>✅ OpenAI Vision models (GPT-4o, GPT-4o Mini, GPT-4 Turbo)</li>
+        <li>✅ Drag & drop image upload with preview</li>
+        <li>✅ URL support for remote images</li>
+        <li>✅ Batch processing for multiple images</li>
+        <li>✅ History tracking and export functionality</li>
+      </ul>
+    </div>
+    <div class="card-code">
+
+```vue
+<template>
+  <AiImageCaption
+    :api-key="apiKey"
+    :model="'gpt-4o'"
+    @caption-generated="handleCaption"
+    @caption-error="handleError"
+  />
+</template>
+
+<script setup>
+import { AiImageCaption } from '@aivue/image-caption';
+import '@aivue/image-caption/dist/image-caption.css';
+
+const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
+
+function handleCaption(result) {
+  console.log('Generated caption:', result.caption);
+}
+
+function handleError(error) {
+  console.error('Caption error:', error);
 }
 </script>
 ```
@@ -466,6 +518,7 @@ npm publish --access public --workspace @aivue/core
 npm publish --access public --workspace @aivue/chatbot
 npm publish --access public --workspace @aivue/autosuggest
 npm publish --access public --workspace @aivue/smartform
+npm publish --access public --workspace @aivue/image-caption
 npm publish --access public --workspace @aivue/analytics
 
 # Or use the publish script

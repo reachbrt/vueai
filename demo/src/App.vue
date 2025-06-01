@@ -464,6 +464,17 @@
         </div>
       </section>
 
+      <section v-if="activeTab === 'image-caption'" class="component-section">
+        <div class="demo-container">
+          <div v-if="!hasValidApiKey" class="api-key-warning">
+            Please enter a valid OpenAI API key above to use the image caption component.
+          </div>
+          <div v-else>
+            <ImageCaptionDemo :api-key="apiKey" />
+          </div>
+        </div>
+      </section>
+
       <section v-if="activeTab === 'typescript'" class="component-section">
         <div class="demo-container">
           <div class="component-demo-header">
@@ -569,6 +580,7 @@ import NavBar from './components/NavBar.vue';
 import AutosuggestDemo from './components/AutosuggestDemo.vue';
 import SmartFormDemo from './components/SmartFormDemo.vue';
 import AnalyticsDemo from './components/AnalyticsDemo.vue';
+import ImageCaptionDemo from './components/ImageCaptionDemo.vue';
 import TypeScriptExample from './components/TypeScriptExample.vue';
 import OllamaDemo from './components/OllamaDemo.vue';
 import { AiChatWindow, AiChatToggle } from '@aivue/chatbot';
@@ -583,6 +595,7 @@ export default {
     AutosuggestDemo,
     SmartFormDemo,
     AnalyticsDemo,
+    ImageCaptionDemo,
     TypeScriptExample,
     OllamaDemo,
     AiChatWindow,
@@ -630,6 +643,11 @@ export default {
           id: 'analytics',
           name: 'Analytics',
           icon: '📊'
+        },
+        {
+          id: 'image-caption',
+          name: 'Image Caption',
+          icon: '🖼️'
         },
         {
           id: 'typescript',
@@ -716,6 +734,21 @@ export default {
             { icon: '📈', text: 'Performance Monitoring' },
             { icon: '📱', text: 'Beautiful Dashboards' },
             { icon: '🔒', text: 'Privacy-first Storage' }
+          ]
+        },
+        'image-caption': {
+          name: '@aivue/image-caption',
+          npmName: '@aivue/image-caption',
+          version: '1.0.0',
+          description: 'AI-powered image captioning for Vue.js applications using OpenAI Vision models for intelligent, contextual captions.',
+          github: 'https://github.com/reachbrt/vueai/tree/main/packages/image-caption',
+          features: [
+            { icon: '🖼️', text: 'OpenAI Vision Models' },
+            { icon: '🤖', text: 'GPT-4o & GPT-4 Turbo' },
+            { icon: '📱', text: 'Drag & Drop Upload' },
+            { icon: '🌐', text: 'URL Support' },
+            { icon: '📊', text: 'Batch Processing' },
+            { icon: '📈', text: 'History Tracking' }
           ]
         },
         typescript: {
@@ -1147,6 +1180,7 @@ export default {
         'autosuggest': 'Enhance user input with AI-powered suggestions that adapt to context and user behavior.',
         'smartform': 'Create intelligent forms with AI validation, suggestions, and data analysis capabilities.',
         'analytics': 'Track user interactions, monitor AI usage, and gain valuable insights with AI-powered analytics dashboards.',
+        'image-caption': 'Generate intelligent, contextual captions for images using OpenAI Vision models with drag & drop support.',
         'typescript': 'Full TypeScript support with comprehensive type definitions for all components and APIs.',
         'ollama': 'Connect to local Ollama models for privacy-focused AI without requiring API keys.'
       };
@@ -1320,6 +1354,10 @@ p {
 
 .package-card.analytics {
   border-left: 4px solid #f59e0b;
+}
+
+.package-card.image-caption {
+  border-left: 4px solid #ec4899;
 }
 
 .package-card.core {
