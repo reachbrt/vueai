@@ -184,13 +184,26 @@ const client = new AIClient({
 });
 ```
 
-### Ollama (Local Models)
+### Ollama (Local & Remote Models)
 
 ```javascript
+// Local Ollama instance (no authentication needed)
 const client = new AIClient({
   provider: 'ollama',
   baseURL: 'http://localhost:11434', // Default Ollama endpoint
   model: 'llama3', // or any other model you have pulled in Ollama
+  options: {
+    temperature: 0.7,
+    maxTokens: 1000
+  }
+});
+
+// Remote Ollama instance with Bearer token authentication
+const client = new AIClient({
+  provider: 'ollama',
+  apiKey: 'your-bearer-token', // Bearer token for remote instances
+  baseURL: 'https://your-ollama-server.com', // Remote Ollama endpoint
+  model: 'llama3',
   options: {
     temperature: 0.7,
     maxTokens: 1000
