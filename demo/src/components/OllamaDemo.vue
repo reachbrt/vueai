@@ -4,21 +4,21 @@
       <div class="component-hero-content">
         <h2 class="component-hero-title">Ollama Integration</h2>
         <p class="component-hero-description">
-          Connect to your local Ollama instance to use AI models running on your own machine.
-          No API key required!
+          Connect to your local or remote Ollama instance to use AI models.
+          Supports Bearer token authentication for remote instances!
         </p>
         <div class="component-hero-features">
           <div class="hero-feature">
             <span class="feature-icon">🏠</span>
-            <span>Run models locally</span>
+            <span>Local & Remote</span>
           </div>
           <div class="hero-feature">
             <span class="feature-icon">🔒</span>
-            <span>Privacy-focused</span>
+            <span>Bearer Token Auth</span>
           </div>
           <div class="hero-feature">
             <span class="feature-icon">🚀</span>
-            <span>No API key needed</span>
+            <span>Privacy-focused</span>
           </div>
           <div class="hero-feature">
             <span class="feature-icon">💬</span>
@@ -42,6 +42,17 @@
             type="text"
             placeholder="http://localhost:11434"
           />
+          <p class="help-text">Local: http://localhost:11434 | Remote: https://your-ollama-server.com</p>
+        </div>
+        <div class="form-group">
+          <label for="apiKey">Bearer Token (Optional):</label>
+          <input
+            id="apiKey"
+            v-model="apiKey"
+            type="password"
+            placeholder="your-bearer-token"
+          />
+          <p class="help-text">Required for remote instances with authentication</p>
         </div>
         <div class="form-group">
           <label for="model">Model:</label>
@@ -51,7 +62,7 @@
             type="text"
             placeholder="llama3.2"
           />
-          <p class="help-text">Available models: llama3.2, gemma3:1b</p>
+          <p class="help-text">Available models: llama3.2, gemma3:1b, mistral, etc.</p>
         </div>
         <button @click="testConnection" class="test-button" :disabled="isLoading">
           {{ isLoading ? 'Testing...' : 'Test Connection' }}
@@ -99,6 +110,7 @@ export default {
   data() {
     return {
       baseUrl: 'http://localhost:11434',
+      apiKey: '',
       model: 'llama3.2',
       userInput: '',
       messages: [],
@@ -109,11 +121,18 @@ export default {
   },
   methods: {
     createClient() {
-      return new AIClient({
+      const config = {
         provider: 'ollama',
         baseUrl: this.baseUrl,
         model: this.model
-      });
+      };
+
+      // Add API key if provided
+      if (this.apiKey.trim()) {
+        config.apiKey = this.apiKey.trim();
+      }
+
+      return new AIClient(config);
     },
     async testConnection() {
       this.isLoading = true;
@@ -206,6 +225,10 @@ export default {
   gap: 1rem;
 }
 
+.settings-form .form-group:nth-child(2) {
+  grid-column: span 2;
+}
+
 .form-group {
   margin-bottom: 1rem;
 }
@@ -241,6 +264,7 @@ export default {
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.2s;
+  margin-top: 1rem;
 }
 
 .test-button:hover {

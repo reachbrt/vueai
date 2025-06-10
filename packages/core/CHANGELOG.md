@@ -2,6 +2,18 @@
 
 All notable changes to the @aivue/core package will be documented in this file.
 
+## [1.3.5] - 2025-01-14
+
+### Added
+- Bearer token authentication support for Ollama remote instances
+- Authorization header support for secured Ollama deployments
+- Enhanced Ollama provider with proper API key handling
+
+### Fixed
+- Ollama API calls now properly include Authorization headers when API key is provided
+- Improved error handling for remote Ollama instances
+- Better fallback behavior when authentication fails
+
 ## [1.3.4] - 2025-05-21
 
 ### Fixed

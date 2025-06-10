@@ -268,12 +268,20 @@ export class AIClient {
     const url = `${this.baseUrl || 'http://localhost:11434'}/api/chat`;
     const model = this.model || 'llama3';
 
+    // Prepare headers
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json'
+    };
+
+    // Add Bearer token authentication if API key is provided
+    if (this.apiKey && this.apiKey !== 'local') {
+      headers['Authorization'] = `Bearer ${this.apiKey}`;
+    }
+
     try {
       const response = await fetch(url, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers,
         body: JSON.stringify({
           model: model,
           messages: messages,
@@ -327,12 +335,20 @@ export class AIClient {
     const url = `${this.baseUrl || 'http://localhost:11434'}/api/chat`;
     const model = this.model || 'llama3';
 
+    // Prepare headers
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json'
+    };
+
+    // Add Bearer token authentication if API key is provided
+    if (this.apiKey && this.apiKey !== 'local') {
+      headers['Authorization'] = `Bearer ${this.apiKey}`;
+    }
+
     try {
       const response = await fetch(url, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers,
         body: JSON.stringify({
           model: model,
           messages: messages,

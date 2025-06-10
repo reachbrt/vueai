@@ -417,6 +417,7 @@ const analytics = useAnalytics({
   <div class="card-features">
     <ul>
       <li>✅ Multi-provider support (OpenAI, Claude, Gemini, HuggingFace, Ollama, DeepSeek)</li>
+      <li>✅ Bearer token authentication for remote Ollama instances</li>
       <li>✅ Automatic fallback when API keys aren't available</li>
       <li>✅ Unified API for chat, embeddings, and validation</li>
       <li>✅ TypeScript support with comprehensive type definitions</li>
