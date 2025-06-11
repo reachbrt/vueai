@@ -2,6 +2,7 @@
 import { App } from 'vue';
 import { AIClient } from '@aivue/core';
 import AiChatWindowComponent from './components/AiChatWindow.vue';
+import AiChatWindowEnhancedComponent from './components/AiChatWindowEnhanced.vue';
 import AiChatToggleComponent from './components/AiChatToggle.vue';
 import { useChatEngine as useChatEngineComposable, Message, ChatOptions, ChatState } from './composables/useChatEngine';
 import { formatMarkdown } from './utils/markdown';
@@ -18,6 +19,7 @@ export type { Message, ChatOptions, ChatState };
 
 // Export components with compatibility layer
 export const AiChatWindow = createCompatComponent(AiChatWindowComponent);
+export const AiChatWindowEnhanced = createCompatComponent(AiChatWindowEnhancedComponent);
 export const AiChatToggle = createCompatComponent(AiChatToggleComponent);
 
 // Export composables
@@ -33,6 +35,7 @@ export const AiChatPlugin = createCompatPlugin({
   install(app: App) {
     // Register components globally using the compatibility helper
     registerCompatComponent(app, 'AiChatWindow', AiChatWindowComponent);
+    registerCompatComponent(app, 'AiChatWindowEnhanced', AiChatWindowEnhancedComponent);
     registerCompatComponent(app, 'AiChatToggle', AiChatToggleComponent);
   }
 });
@@ -42,6 +45,7 @@ export const AiChatPlugin = createCompatPlugin({
 // Default export
 export default {
   AiChatWindow,
+  AiChatWindowEnhanced,
   AiChatToggle,
   useChatEngine,
   utils,

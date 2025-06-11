@@ -106,26 +106,71 @@
     </div>
 
     <div id="demo" class="demo-section">
-      <!-- Elegant Tabs Navigation -->
-      <div class="elegant-tabs-container" ref="tabsContainer">
-        <div class="tabs-header">
-          <div class="tabs-logo">
-            <span class="logo-text">AI<span class="logo-accent">Vue</span></span>
+      <!-- Modern Sidebar Layout -->
+      <div class="app-layout">
+        <!-- Left Sidebar -->
+        <aside class="sidebar">
+          <div class="sidebar-header">
+            <div class="logo">
+              <span class="logo-text">AI<span class="logo-accent">Vue</span></span>
+              <span class="logo-subtitle">AI Components for Vue.js</span>
+            </div>
           </div>
-          <div class="tabs-nav">
-            <button
-              v-for="tab in tabs"
-              :key="tab.id"
-              @click="setActiveTab(tab.id)"
-              :class="['tab-button', { active: activeTab === tab.id }]"
-              ref="tabButtons"
-            >
-              <span class="tab-icon">{{ tab.icon }}</span>
-              {{ tab.name }}
-            </button>
+
+          <nav class="sidebar-nav">
+            <div class="nav-section">
+              <h3 class="nav-section-title">Components</h3>
+              <button
+                v-for="tab in tabs"
+                :key="tab.id"
+                @click="setActiveTab(tab.id)"
+                :class="['nav-item', { active: activeTab === tab.id }]"
+              >
+                <span class="nav-icon">{{ tab.icon }}</span>
+                <span class="nav-label">{{ tab.name }}</span>
+                <span v-if="tab.id === 'chatbot'" class="nav-badge">v2.0</span>
+              </button>
+            </div>
+
+            <div class="nav-section">
+              <h3 class="nav-section-title">Resources</h3>
+              <a href="https://github.com/reachbrt/vueai" target="_blank" class="nav-item external">
+                <span class="nav-icon">📚</span>
+                <span class="nav-label">Documentation</span>
+              </a>
+              <a href="https://www.npmjs.com/org/aivue" target="_blank" class="nav-item external">
+                <span class="nav-icon">📦</span>
+                <span class="nav-label">NPM Packages</span>
+              </a>
+              <a href="https://github.com/reachbrt/vueai/issues" target="_blank" class="nav-item external">
+                <span class="nav-icon">🐛</span>
+                <span class="nav-label">Report Issues</span>
+              </a>
+            </div>
+          </nav>
+
+          <!-- Package Info in Sidebar -->
+          <div class="sidebar-footer" v-if="activeTab !== 'all'">
+            <div class="package-info-card">
+              <div class="package-header">
+                <h4>{{ currentPackage.name }}</h4>
+                <span class="package-version">v{{ currentPackage.version }}</span>
+              </div>
+              <p class="package-description">{{ currentPackage.description }}</p>
+              <div class="package-actions">
+                <a :href="`https://www.npmjs.com/package/${currentPackage.npmName}`" target="_blank" class="action-btn npm">
+                  📦 Install
+                </a>
+                <a :href="currentPackage.github" target="_blank" class="action-btn github">
+                  🔗 GitHub
+                </a>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
 
       <!-- API Key Configuration Section -->
       <div class="api-key-section">
@@ -190,9 +235,7 @@
           </div>
         </div>
       </div>
-    </div>
 
-    <main>
       <section v-if="activeTab === 'all'">
         <div class="welcome-section" ref="welcomeSection">
           <h2 class="welcome-title">Welcome to Vue AI Components</h2>
@@ -226,25 +269,27 @@
       </section>
 
       <section v-if="activeTab === 'chatbot'" class="component-section">
-        <div class="demo-container">
-          <div class="component-hero">
-            <div class="component-hero-content">
-              <h2 class="component-hero-title">AI Chatbot</h2>
-              <p class="component-hero-description">
-                Integrate powerful conversational AI into your Vue applications with customizable chat interfaces.
-                Support for streaming responses, markdown formatting, and multiple themes.
-              </p>
-              <div class="component-hero-features">
-                <div class="hero-feature"><span class="feature-icon">💬</span> Conversational UI</div>
-                <div class="hero-feature"><span class="feature-icon">🔄</span> Streaming Responses</div>
-                <div class="hero-feature"><span class="feature-icon">📝</span> Markdown Support</div>
-                <div class="hero-feature"><span class="feature-icon">🎨</span> Multiple Themes</div>
-              </div>
-            </div>
-            <div class="component-hero-image">
-              <img src="./assets/images/chatbot-illustration.svg" alt="AI Chatbot Illustration" />
-            </div>
+        <div class="section-header">
+          <h1 class="section-title">
+            <span class="section-icon">💬</span>
+            AI Chatbot v2.0.0
+          </h1>
+          <p class="section-description">
+            Next-generation AI chat with enterprise features including database storage, voice integration,
+            multi-model AI, analytics, and collaborative capabilities.
+          </p>
+          <div class="section-meta">
+            <span class="meta-badge version">
+              📦 v{{ packages.chatbot.version }}
+            </span>
+            <a :href="`https://www.npmjs.com/package/${packages.chatbot.npmName}`" target="_blank" class="meta-badge npm">
+              📦 npm install {{ packages.chatbot.npmName }}
+            </a>
+            <a :href="packages.chatbot.github" target="_blank" class="meta-badge github">
+              🔗 GitHub
+            </a>
           </div>
+        </div>
 
           <div v-if="!hasValidApiKey" class="api-key-warning">
             Please enter a valid OpenAI API key above to use the chatbot.
@@ -372,8 +417,11 @@
               :system-prompt="chatOptions.systemPrompt"
             />
           </div>
-        </div>
       </section>
+
+
+
+
 
       <section v-if="activeTab === 'autosuggest'" class="component-section">
         <div class="demo-container">
@@ -497,7 +545,7 @@
           <OllamaDemo />
         </div>
       </section>
-    </main>
+    
 
     <footer class="elegant-footer" ref="footer">
       <div class="footer-content">
@@ -572,7 +620,10 @@
         </div>
       </div>
     </footer>
-  </div>
+  </main>
+      </div>
+    </div>
+    </div>
 </template>
 
 <script>
@@ -581,6 +632,8 @@ import AutosuggestDemo from './components/AutosuggestDemo.vue';
 import SmartFormDemo from './components/SmartFormDemo.vue';
 import AnalyticsDemo from './components/AnalyticsDemo.vue';
 import ImageCaptionDemo from './components/ImageCaptionDemo.vue';
+
+
 import TypeScriptExample from './components/TypeScriptExample.vue';
 import OllamaDemo from './components/OllamaDemo.vue';
 import { AiChatWindow, AiChatToggle } from '@aivue/chatbot';
@@ -596,6 +649,8 @@ export default {
     SmartFormDemo,
     AnalyticsDemo,
     ImageCaptionDemo,
+
+
     TypeScriptExample,
     OllamaDemo,
     AiChatWindow,
@@ -629,6 +684,8 @@ export default {
           name: 'Chatbot',
           icon: '💬'
         },
+
+
         {
           id: 'autosuggest',
           name: 'Autosuggest',
@@ -662,20 +719,23 @@ export default {
       ],
       packages: {
         chatbot: {
-          name: '@aivue/chatbot',
+          name: '@aivue/chatbot v2.0.0',
           npmName: '@aivue/chatbot',
-          version: '1.4.9',
-          description: 'AI-powered chat components for Vue.js applications with streaming, markdown support, and customizable UI.',
+          version: '2.0.0',
+          description: 'Next-generation AI chat with enterprise features: database storage, voice integration, multi-model AI, analytics, and collaborative capabilities.',
           github: 'https://github.com/reachbrt/vueai/tree/main/packages/chatbot',
           features: [
             { icon: '💬', text: 'Conversational UI' },
-            { icon: '🔄', text: 'Streaming Responses' },
-            { icon: '📝', text: 'Markdown Support' },
-            { icon: '🎨', text: 'Multiple Themes' },
-            { icon: '📱', text: 'Responsive Design' },
-            { icon: '🔌', text: 'Easy Integration' }
+            { icon: '🗄️', text: 'Database Storage' },
+            { icon: '🎤', text: 'Voice Integration' },
+            { icon: '🤖', text: 'Multi-Model AI' },
+            { icon: '📊', text: 'Analytics & Insights' },
+            { icon: '🧵', text: 'Conversation Threading' },
+            { icon: '📎', text: 'File Attachments' },
+            { icon: '🔒', text: 'Privacy & Security' }
           ]
         },
+
         ollama: {
           name: 'Ollama Integration',
           npmName: '@aivue/core',
@@ -824,7 +884,13 @@ export default {
 
   computed: {
     currentPackage() {
-      return this.packages[this.activeTab] || {};
+      return this.packages[this.activeTab] || {
+        name: 'AIVue Components',
+        version: '2.0.0',
+        description: 'AI-powered Vue.js components for modern applications',
+        npmName: '@aivue/core',
+        github: 'https://github.com/reachbrt/vueai'
+      };
     }
   },
   methods: {
@@ -1207,6 +1273,414 @@ body {
   overflow-x: hidden;
 }
 
+/* App Layout */
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar Styles */
+.sidebar {
+  width: 280px;
+  background: linear-gradient(180deg, #1e293b 0%, #334155 100%);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-header {
+  padding: 24px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo {
+  text-align: center;
+}
+
+.logo-text {
+  font-size: 2rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.logo-accent {
+  color: #fbbf24;
+}
+
+.logo-subtitle {
+  font-size: 0.875rem;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+/* Navigation */
+.sidebar-nav {
+  flex: 1;
+  padding: 20px 0;
+  overflow-y: auto;
+}
+
+.nav-section {
+  margin-bottom: 32px;
+}
+
+.nav-section-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #94a3b8;
+  margin: 0 0 12px 20px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 12px 20px;
+  background: none;
+  border: none;
+  color: #e2e8f0;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.nav-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.nav-item.active {
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: #fbbf24;
+}
+
+.nav-icon {
+  font-size: 1.25rem;
+  margin-right: 12px;
+  width: 24px;
+  text-align: center;
+}
+
+.nav-label {
+  font-weight: 500;
+  flex: 1;
+}
+
+.nav-badge {
+  background: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
+  color: white;
+  font-size: 0.625rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.nav-item.external {
+  opacity: 0.8;
+}
+
+.nav-item.external:hover {
+  opacity: 1;
+}
+
+/* Sidebar Footer */
+.sidebar-footer {
+  padding: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.package-info-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 16px;
+  backdrop-filter: blur(10px);
+}
+
+.package-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.package-header h4 {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: white;
+}
+
+.package-version {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.package-description {
+  font-size: 0.75rem;
+  color: #cbd5e1;
+  margin: 0 0 12px 0;
+  line-height: 1.4;
+}
+
+.package-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.action-btn {
+  flex: 1;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.action-btn.npm {
+  background: #cb3837;
+  color: white;
+}
+
+.action-btn.npm:hover {
+  background: #a02622;
+}
+
+.action-btn.github {
+  background: #24292e;
+  color: white;
+}
+
+.action-btn.github:hover {
+  background: #1a1e22;
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  margin-left: 280px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  position: relative;
+  width: calc(100vw - 280px);
+  overflow-x: hidden;
+}
+
+/* API Key Section */
+.api-key-section {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 40px;
+  margin: 0;
+  border-bottom: 4px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.api-key-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+  opacity: 0.3;
+}
+
+.api-key-container {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.api-key-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+}
+
+.api-key-title h3 {
+  color: white;
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.api-key-subtitle {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.api-key-badge {
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  backdrop-filter: blur(10px);
+}
+
+.api-key-badge.badge-success {
+  background: rgba(34, 197, 94, 0.2);
+  color: #22c55e;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.api-key-badge.badge-warning {
+  background: rgba(251, 191, 36, 0.2);
+  color: #fbbf24;
+  border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.api-key-input {
+  margin-bottom: 20px;
+}
+
+.api-key-input label {
+  display: block;
+  color: white;
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-size: 1rem;
+}
+
+.input-with-icon {
+  position: relative;
+}
+
+.input-with-icon input {
+  width: 100%;
+  padding: 16px 50px 16px 20px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 1rem;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.input-with-icon input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.input-with-icon input:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1);
+}
+
+.input-icon {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.25rem;
+  color: #22c55e;
+}
+
+.input-icon.error {
+  color: #ef4444;
+}
+
+.api-key-status {
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.api-key-status.api-key-valid {
+  background: rgba(34, 197, 94, 0.2);
+  color: #22c55e;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.api-key-status.api-key-invalid {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.api-key-info {
+  display: flex;
+  gap: 16px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.info-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.info-content {
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
+}
+
+.info-content p {
+  margin: 0 0 8px 0;
+}
+
+.info-content p:last-child {
+  margin-bottom: 0;
+}
+
+.info-content a {
+  color: #60a5fa;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.info-content a:hover {
+  text-decoration: underline;
+}
+
 /* Typography */
 h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
@@ -1524,9 +1998,789 @@ p {
 
 /* Demo Section */
 .demo-section {
-  padding: 2rem 2rem 4rem;
+  padding: 0;
+  margin: 0;
+}
+
+/* Package Banner */
+.package-banner {
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  padding: 40px;
+  margin: 0;
+  border-bottom: 4px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.package-banner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+  opacity: 0.5;
+}
+
+.package-info {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.package-name {
+  color: white;
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin: 0 0 16px 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.package-description {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.25rem;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.package-badges {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.package-badge {
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.package-badge.version {
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.package-badge.npm {
+  background: #cb3837;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.package-badge.github {
+  background: #24292e;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.package-badge:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.package-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-top: 32px;
+  position: relative;
+  z-index: 1;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.feature-item:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+.feature-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.feature-text {
+  color: white;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+/* Component Section Styles */
+.component-section {
+  padding: 60px 40px;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  min-height: calc(100vh - 200px);
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.component-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="triangles" width="40" height="40" patternUnits="userSpaceOnUse"><polygon points="20,5 35,35 5,35" fill="none" stroke="rgba(59,130,246,0.05)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23triangles)"/></svg>');
+  opacity: 0.3;
+}
+
+/* Welcome Section */
+.welcome-section {
   max-width: 1200px;
   margin: 0 auto;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.welcome-title {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #1e293b;
+  margin: 0 0 24px 0;
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.welcome-description {
+  font-size: 1.25rem;
+  color: #64748b;
+  line-height: 1.6;
+  margin-bottom: 48px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.welcome-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  margin-bottom: 48px;
+}
+
+.welcome-card {
+  background: white;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.welcome-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+}
+
+.welcome-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.welcome-card-icon {
+  font-size: 3rem;
+  margin-bottom: 16px;
+}
+
+.welcome-card-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 12px 0;
+}
+
+.welcome-card-description {
+  color: #64748b;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.welcome-card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #3b82f6;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.welcome-card-link:hover {
+  color: #2563eb;
+  gap: 12px;
+}
+
+.welcome-github {
+  margin-top: 48px;
+}
+
+.github-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 32px;
+  background: linear-gradient(135deg, #24292e 0%, #1a1e22 100%);
+  color: white;
+  text-decoration: none;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.github-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+}
+
+.section-header {
+  margin-bottom: 48px;
+  padding: 40px;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  border-radius: 20px;
+  border: 1px solid #e2e8f0;
+  position: relative;
+  overflow: hidden;
+}
+
+.section-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="hexagons" width="30" height="30" patternUnits="userSpaceOnUse"><polygon points="15,2 25,8 25,22 15,28 5,22 5,8" fill="none" stroke="rgba(59,130,246,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23hexagons)"/></svg>');
+  opacity: 0.5;
+}
+
+.section-title {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #1e293b;
+  margin: 0 0 16px 0;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.section-icon {
+  font-size: 3rem;
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.section-description {
+  font-size: 1.25rem;
+  color: #475569;
+  margin: 0 0 24px 0;
+  line-height: 1.7;
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+}
+
+.section-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+}
+
+.meta-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: white;
+  border-radius: 25px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #475569;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+}
+
+.meta-badge:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.meta-badge.version {
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  color: white;
+  border: none;
+}
+
+.meta-badge.npm {
+  background: #cb3837;
+  color: white;
+  border: none;
+}
+
+.meta-badge.github {
+  background: #24292e;
+  color: white;
+  border: none;
+}
+
+.demo-container {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.demo-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="waves" width="50" height="50" patternUnits="userSpaceOnUse"><path d="M0,25 Q12.5,10 25,25 T50,25" fill="none" stroke="rgba(59,130,246,0.05)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23waves)"/></svg>');
+  opacity: 0.3;
+}
+
+/* Component Hero Sections */
+.component-hero {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 48px;
+  align-items: center;
+  margin-bottom: 48px;
+  padding: 40px;
+  background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+  border-radius: 20px;
+  border: 1px solid #e2e8f0;
+  position: relative;
+  overflow: hidden;
+}
+
+.component-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="stars" width="25" height="25" patternUnits="userSpaceOnUse"><polygon points="12.5,2 15,10 23,10 17,15 19,23 12.5,18 6,23 8,15 2,10 10,10" fill="rgba(59,130,246,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23stars)"/></svg>');
+  opacity: 0.3;
+}
+
+.component-hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.component-hero-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #1e293b;
+  margin: 0 0 16px 0;
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.component-hero-description {
+  font-size: 1.125rem;
+  color: #475569;
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+
+.component-hero-features {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.hero-feature {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: white;
+  border-radius: 8px;
+  font-weight: 500;
+  color: #374151;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.hero-feature .feature-icon {
+  font-size: 1.25rem;
+}
+
+.component-hero-image {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+
+.component-hero-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+.demo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+.demo-content {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  border: 1px solid #e2e8f0;
+}
+
+.demo-sidebar {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  border: 1px solid #e2e8f0;
+  position: sticky;
+  top: 20px;
+}
+
+.demo-sidebar h3 {
+  margin: 0 0 16px 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.feature-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.feature-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.feature-list li:last-child {
+  border-bottom: none;
+}
+
+.feature-list .icon {
+  font-size: 1.25rem;
+  width: 24px;
+  text-align: center;
+}
+
+.feature-list .text {
+  font-weight: 500;
+  color: #374151;
+}
+
+/* API Key Warning */
+.api-key-warning {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border: 2px solid #f59e0b;
+  border-radius: 16px;
+  padding: 24px;
+  margin: 32px 0;
+  text-align: center;
+  font-weight: 600;
+  color: #92400e;
+  position: relative;
+  overflow: hidden;
+}
+
+.api-key-warning::before {
+  content: '⚠️';
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* Component Demo Headers */
+.component-demo-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 32px 0 24px 0;
+  padding: 20px;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.component-demo-header h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.component-code {
+  background: #1e293b;
+  color: #e2e8f0;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 0.875rem;
+}
+
+.component-description {
+  color: #64748b;
+  line-height: 1.6;
+  margin: 16px 0;
+  font-size: 1rem;
+}
+
+/* Options Grid */
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin: 24px 0;
+  padding: 24px;
+  background: #f8fafc;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.option-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.option-group.checkbox {
+  flex-direction: row;
+  align-items: center;
+}
+
+.option-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.option-group label {
+  font-weight: 600;
+  color: #374151;
+  font-size: 0.875rem;
+}
+
+.styled-input,
+.styled-select,
+.styled-textarea {
+  padding: 12px 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  background: white;
+  font-size: 0.875rem;
+  transition: all 0.3s ease;
+}
+
+.styled-input:focus,
+.styled-select:focus,
+.styled-textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.styled-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.styled-checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #3b82f6;
+}
+
+/* Chat Container */
+.chat-container {
+  margin: 24px 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.chat-container.full-height {
+  height: 600px;
+}
+
+/* Action Buttons */
+.action-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.action-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
+}
+
+.action-icon {
+  font-size: 1rem;
+}
+
+/* Layout Fixes */
+.app-layout {
+  position: relative;
+  overflow-x: hidden;
+}
+
+.sidebar {
+  position: fixed;
+  z-index: 1000;
+}
+
+/* Ensure content doesn't overflow */
+.api-key-container,
+.package-info,
+.section-header,
+.demo-container {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Responsive Design for Sidebar Layout */
+@media (max-width: 1024px) {
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .main-content {
+    margin-left: 0;
+    width: 100vw;
+  }
+
+  .component-hero {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .component-section {
+    padding: 40px 20px;
+  }
+
+  .api-key-section {
+    padding: 30px 20px;
+  }
+
+  .package-banner {
+    padding: 30px 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .welcome-title {
+    font-size: 2rem;
+  }
+
+  .component-hero-title {
+    font-size: 2rem;
+  }
+
+  .section-meta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .demo-container {
+    padding: 24px;
+  }
+
+  .options-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .component-demo-header {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .welcome-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .package-features {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Elegant Tabs */
