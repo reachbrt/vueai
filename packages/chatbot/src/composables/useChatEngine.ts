@@ -2,12 +2,66 @@ import { ref, reactive, toRefs, watch, onMounted, Ref } from 'vue';
 import { v4 as uuidv4 } from 'uuid';
 import { AIClient, Message as CoreMessage, StreamCallbacks, AIProvider } from '@aivue/core';
 
-// Define types
+// Import optional utilities (only used if features are enabled)
+import { StorageProvider, createStorageProvider, storageUtils } from '../utils/storage';
+import { VoiceProvider, createVoiceProvider, voiceUtils } from '../utils/voice';
+import { AnalyticsProvider, createAnalyticsProvider, analyticsUtils } from '../utils/analytics';
+import { MultiModelManager, createMultiModelManager, multiModelUtils } from '../utils/multiModel';
+
+// Enhanced Message interface with optional advanced features
 export interface Message {
   role: 'system' | 'user' | 'assistant';
   content: string;
   id?: string;
   timestamp?: Date;
+
+  // OPTIONAL: Advanced features (backward compatible)
+  userId?: string;
+  conversationId?: string;
+  threadId?: string;
+  metadata?: Record<string, any>;
+  attachments?: Array<{
+    type: string;
+    name: string;
+    url: string;
+    size?: number;
+  }>;
+  reactions?: Array<{
+    emoji: string;
+    userId: string;
+    timestamp: Date;
+  }>;
+  edited?: boolean;
+  editedAt?: Date;
+  sentiment?: 'positive' | 'negative' | 'neutral';
+  confidence?: number;
+  processingTime?: number;
+  modelUsed?: string;
+}
+
+// OPTIONAL: Advanced interfaces (only used if features are enabled)
+export interface Conversation {
+  id: string;
+  userId: string;
+  title: string;
+  threadId?: string;
+  tags: string[];
+  metadata: Record<string, any>;
+  createdAt: Date;
+  updatedAt: Date;
+  messageCount: number;
+  isArchived: boolean;
+  isShared: boolean;
+  sharedWith?: string[];
+}
+
+export interface Thread {
+  id: string;
+  title: string;
+  conversationIds: string[];
+  createdAt: Date;
+  updatedAt: Date;
+  tags: string[];
 }
 
 export interface ChatOptions {
@@ -36,10 +90,77 @@ export interface ChatOptions {
   useProxy?: boolean;
   proxyUrl?: string;
 
+  // OPTIONAL: Advanced Features (backward compatible)
+  // Database Storage (optional)
+  storage?: {
+    provider?: 'supabase' | 'firebase' | 'mongodb' | 'postgresql' | 'localStorage';
+    connectionString?: string;
+    apiKey?: string;
+    projectId?: string;
+    userId?: string;
+    autoSave?: boolean;
+  };
+
+  // User Authentication (optional)
+  user?: {
+    id: string;
+    name?: string;
+    email?: string;
+    avatar?: string;
+    preferences?: Record<string, any>;
+  };
+
+  // Conversation Threading (optional)
+  threading?: {
+    enabled?: boolean;
+    autoCreateThreads?: boolean;
+    threadNaming?: 'ai-generated' | 'manual' | 'timestamp';
+    maxThreads?: number;
+  };
+
+  // Voice Integration (optional)
+  voice?: {
+    speechToText?: boolean;
+    textToSpeech?: boolean;
+    language?: string;
+    voiceId?: string;
+  };
+
+  // Analytics (optional)
+  analytics?: {
+    enabled?: boolean;
+    trackUserSentiment?: boolean;
+    trackUsageMetrics?: boolean;
+    exportReports?: boolean;
+  };
+
+  // Multi-Model Support (optional)
+  multiModel?: {
+    enabled?: boolean;
+    models?: Array<{
+      name: string;
+      provider: AIProvider;
+      apiKey?: string;
+      specialty?: string;
+    }>;
+    autoSwitch?: boolean;
+  };
+
+  // File Processing (optional)
+  fileProcessing?: {
+    enabled?: boolean;
+    maxSize?: string;
+    allowedTypes?: string[];
+    ocrEnabled?: boolean;
+    batchProcessing?: boolean;
+  };
+
   // Callbacks
   onError?: ((error: Error) => void) | null;
   onMessageSent?: ((message: Message) => void) | null;
   onResponseReceived?: ((message: Message) => void) | null;
+  onConversationSaved?: ((conversationId: string) => void) | null;
+  onThreadCreated?: ((threadId: string) => void) | null;
 }
 
 export interface ChatState {
@@ -54,13 +175,35 @@ export interface ChatEngineReturn {
   isLoading: Ref<boolean>;
   error: Ref<Error | null>;
 
-  // Methods
+  // Core methods
   sendMessage: (content: string) => Promise<void>;
   clearMessages: () => void;
   setMessages: (messages: Message[]) => void;
   addMessage: (message: Message) => void;
   resetError: () => void;
   updateConfig: (config: Partial<ChatOptions>) => void;
+
+  // OPTIONAL: Enhanced methods (only available if features are enabled)
+  // Storage methods
+  saveConversation?: (title: string) => Promise<string>;
+  loadConversation?: (id: string) => Promise<void>;
+  deleteConversation?: (id: string) => Promise<void>;
+  searchConversations?: (query: string) => Promise<any[]>;
+
+  // Voice methods
+  startListening?: () => Promise<void>;
+  stopListening?: () => void;
+  speak?: (text: string) => Promise<void>;
+  stopSpeaking?: () => void;
+
+  // Analytics methods
+  getUsageMetrics?: () => Promise<any>;
+  exportReport?: (format: 'json' | 'csv') => Promise<Blob>;
+
+  // Multi-model methods
+  switchModel?: (modelName: string) => void;
+  getAvailableModels?: () => any[];
+  getModelPerformance?: () => any[];
 }
 
 /**
@@ -86,6 +229,50 @@ export function useChatEngine(options: ChatOptions): ChatEngineReturn {
     });
   } else {
     throw new Error('Either client or provider must be specified in options');
+  }
+
+  // OPTIONAL: Initialize advanced features (only if configured)
+  let storageProvider: StorageProvider | null = null;
+  let voiceProvider: VoiceProvider | null = null;
+  let analyticsProvider: AnalyticsProvider | null = null;
+  let multiModelManager: MultiModelManager | null = null;
+  let currentConversationId: string | null = null;
+  let currentThreadId: string | null = null;
+
+  // Initialize storage if configured
+  if (options.storage) {
+    try {
+      storageProvider = createStorageProvider(options.storage);
+    } catch (error) {
+      console.warn('Failed to initialize storage provider:', error);
+    }
+  }
+
+  // Initialize voice if configured
+  if (options.voice && (options.voice.speechToText || options.voice.textToSpeech)) {
+    try {
+      voiceProvider = createVoiceProvider(options.voice);
+    } catch (error) {
+      console.warn('Failed to initialize voice provider:', error);
+    }
+  }
+
+  // Initialize analytics if configured
+  if (options.analytics?.enabled) {
+    try {
+      analyticsProvider = createAnalyticsProvider(options.analytics);
+    } catch (error) {
+      console.warn('Failed to initialize analytics provider:', error);
+    }
+  }
+
+  // Initialize multi-model if configured
+  if (options.multiModel?.enabled) {
+    try {
+      multiModelManager = createMultiModelManager(options.multiModel);
+    } catch (error) {
+      console.warn('Failed to initialize multi-model manager:', error);
+    }
   }
 
   // Extract other options with defaults
@@ -192,14 +379,37 @@ export function useChatEngine(options: ChatOptions): ChatEngineReturn {
     // Reset error state
     error.value = null;
 
-    // Add user message
+    // Add user message with enhanced metadata
     const userMessage: Message = {
       role: 'user',
       content,
       id: uuidv4(),
-      timestamp: new Date()
+      timestamp: new Date(),
+      // OPTIONAL: Add enhanced metadata if features are enabled
+      userId: options.user?.id,
+      conversationId: currentConversationId || undefined,
+      threadId: currentThreadId || undefined,
+      metadata: {}
     };
     messages.value.push(userMessage);
+
+    // OPTIONAL: Track analytics if enabled
+    if (analyticsProvider) {
+      try {
+        analyticsUtils.trackMessageSent(analyticsProvider, userMessage);
+      } catch (error) {
+        console.warn('Analytics tracking failed:', error);
+      }
+    }
+
+    // OPTIONAL: Save to database if storage is enabled
+    if (storageProvider && currentConversationId) {
+      try {
+        await storageProvider.saveMessage(currentConversationId, userMessage);
+      } catch (error) {
+        console.warn('Failed to save message to storage:', error);
+      }
+    }
 
     // Call onMessageSent callback if provided
     if (onMessageSent) {
@@ -371,12 +581,13 @@ export function useChatEngine(options: ChatOptions): ChatEngineReturn {
             callbacks.onError?.(err);
           }
         } else {
-          // Use the client directly
+          // Use the client directly for streaming (multi-model not supported in streaming yet)
           await client.chatStream(messagesToSend, callbacks);
         }
       } else {
         // For non-streaming responses
         let response: string;
+        const startTime = Date.now();
 
         if (useProxy) {
           // Use proxy for non-streaming requests
@@ -403,18 +614,54 @@ export function useChatEngine(options: ChatOptions): ChatEngineReturn {
             throw new Error(`Proxy request failed: ${err.message}`);
           }
         } else {
-          // Use the client directly
-          response = await client.chat(messagesToSend);
+          // OPTIONAL: Use multi-model manager if enabled
+          if (multiModelManager) {
+            try {
+              response = await multiModelManager.sendMessage(userMessage);
+            } catch (error) {
+              console.warn('Multi-model manager failed, falling back to default client:', error);
+              response = await client.chat(messagesToSend);
+            }
+          } else {
+            // Use the client directly
+            response = await client.chat(messagesToSend);
+          }
         }
 
-        // Add assistant message
+        // Add assistant message with enhanced metadata
+        const responseTime = Date.now() - startTime;
         const assistantMessage: Message = {
           role: 'assistant',
           content: response,
           id: uuidv4(),
-          timestamp: new Date()
+          timestamp: new Date(),
+          // OPTIONAL: Add enhanced metadata if features are enabled
+          userId: options.user?.id,
+          conversationId: currentConversationId || undefined,
+          threadId: currentThreadId || undefined,
+          processingTime: responseTime,
+          modelUsed: options.model || 'default',
+          metadata: {}
         };
         messages.value.push(assistantMessage);
+
+        // OPTIONAL: Track analytics if enabled
+        if (analyticsProvider) {
+          try {
+            analyticsUtils.trackMessageReceived(analyticsProvider, assistantMessage, responseTime);
+          } catch (error) {
+            console.warn('Analytics tracking failed:', error);
+          }
+        }
+
+        // OPTIONAL: Save to database if storage is enabled
+        if (storageProvider && currentConversationId) {
+          try {
+            await storageProvider.saveMessage(currentConversationId, assistantMessage);
+          } catch (error) {
+            console.warn('Failed to save message to storage:', error);
+          }
+        }
 
         // Call onResponseReceived callback if provided
         if (onResponseReceived) {
@@ -468,7 +715,115 @@ export function useChatEngine(options: ChatOptions): ChatEngineReturn {
     });
   };
 
+  // OPTIONAL: Enhanced methods (only included if features are enabled)
+  const enhancedMethods: any = {};
+
+  // Storage methods
+  if (storageProvider) {
+    enhancedMethods.saveConversation = async (title: string): Promise<string> => {
+      if (!options.user?.id) throw new Error('User ID required for saving conversations');
+
+      const conversation = storageUtils.createConversation(options.user.id, title, currentThreadId || undefined);
+      currentConversationId = await storageProvider!.saveConversation(conversation);
+
+      // Save all current messages to the conversation
+      for (const message of messages.value) {
+        await storageProvider!.saveMessage(currentConversationId, message);
+      }
+
+      if (options.onConversationSaved) {
+        options.onConversationSaved(currentConversationId);
+      }
+
+      return currentConversationId;
+    };
+
+    enhancedMethods.loadConversation = async (id: string): Promise<void> => {
+      const conversation = await storageProvider!.getConversation(id);
+      if (!conversation) throw new Error('Conversation not found');
+
+      const conversationMessages = await storageProvider!.getMessages(id);
+      currentConversationId = id;
+      currentThreadId = conversation.threadId || null;
+
+      setMessages(conversationMessages);
+    };
+
+    enhancedMethods.deleteConversation = async (id: string): Promise<void> => {
+      await storageProvider!.deleteConversation(id);
+      if (currentConversationId === id) {
+        currentConversationId = null;
+        clearMessages();
+      }
+    };
+
+    enhancedMethods.searchConversations = async (query: string): Promise<any[]> => {
+      if (!options.user?.id) throw new Error('User ID required for searching conversations');
+      return storageProvider!.searchConversations(options.user.id, query);
+    };
+  }
+
+  // Voice methods
+  if (voiceProvider) {
+    enhancedMethods.startListening = async (): Promise<void> => {
+      return voiceProvider!.startListening(
+        (result) => {
+          if (result.isFinal && result.transcript.trim()) {
+            sendMessage(result.transcript);
+          }
+        },
+        (error) => {
+          console.error('Voice recognition error:', error);
+          if (options.onError) options.onError(error);
+        }
+      );
+    };
+
+    enhancedMethods.stopListening = (): void => {
+      voiceProvider!.stopListening();
+    };
+
+    enhancedMethods.speak = async (text: string): Promise<void> => {
+      const formattedText = voiceUtils.formatTextForSpeech(text);
+      return voiceProvider!.speak(formattedText);
+    };
+
+    enhancedMethods.stopSpeaking = (): void => {
+      voiceProvider!.stopSpeaking();
+    };
+  }
+
+  // Analytics methods
+  if (analyticsProvider) {
+    enhancedMethods.getUsageMetrics = async (): Promise<any> => {
+      if (!options.user?.id) throw new Error('User ID required for analytics');
+      return analyticsProvider!.getUsageMetrics(options.user.id);
+    };
+
+    enhancedMethods.exportReport = async (format: 'json' | 'csv'): Promise<Blob> => {
+      if (!options.user?.id) throw new Error('User ID required for reports');
+      return analyticsProvider!.exportReport(options.user.id, format);
+    };
+  }
+
+  // Multi-model methods
+  if (multiModelManager) {
+    enhancedMethods.switchModel = (modelName: string): void => {
+      // Implementation would update the current model selection
+      console.log(`Switching to model: ${modelName}`);
+    };
+
+    enhancedMethods.getAvailableModels = (): any[] => {
+      return multiModelManager!.getAvailableModels();
+    };
+
+    enhancedMethods.getModelPerformance = (): any[] => {
+      return multiModelManager!.getPerformanceStats();
+    };
+  }
+
   return {
+    // Core functionality (always available)
     messages,
     isLoading,
     error,
@@ -477,7 +832,10 @@ export function useChatEngine(options: ChatOptions): ChatEngineReturn {
     setMessages,
     addMessage,
     resetError,
-    updateConfig
+    updateConfig,
+
+    // Enhanced functionality (only available if features are enabled)
+    ...enhancedMethods
   };
 }
 

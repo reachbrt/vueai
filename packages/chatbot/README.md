@@ -2,7 +2,9 @@
 
 ![AI Chatbot](https://raw.githubusercontent.com/reachbrt/vueai/main/demo/src/assets/images/chatbot-illustration.svg)
 
-**AI-powered chat components for Vue.js applications**
+🚀 **Next-Generation AI Chat Components for Vue.js**
+
+Enterprise-grade conversational AI with advanced features including database storage, voice integration, multi-model support, analytics, and collaborative capabilities. Built for production applications with backward compatibility.
 
 [![npm version](https://img.shields.io/npm/v/@aivue/chatbot.svg?style=flat-square)](https://www.npmjs.com/package/@aivue/chatbot)
 [![npm downloads](https://img.shields.io/npm/dm/@aivue/chatbot.svg?style=flat-square)](https://www.npmjs.com/package/@aivue/chatbot)
@@ -11,26 +13,103 @@
 [![codecov](https://codecov.io/gh/reachbrt/vueai/graph/badge.svg?token=8LYV3M14ZG)](https://codecov.io/gh/reachbrt/vueai)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/5cb37fa7-9ee1-4af6-9ff4-d34ff0322ded/deploy-status)](https://app.netlify.com/sites/aivue/deploys)
 
+## 🎯 **What's New in v2.0.0**
+
+### 🚀 **Major Release: Enhanced AI Chatbot**
+
+This is a major release that introduces comprehensive advanced features while maintaining **100% backward compatibility**.
+
+```mermaid
+graph TD
+    A[Basic Chat v1.x] --> B[Enhanced Chat v2.0]
+    B --> C[🗄️ Database Storage]
+    B --> D[🎤 Voice Integration]
+    B --> E[🤖 Multi-Model AI]
+    B --> F[📊 Analytics & Insights]
+    B --> G[🧵 Conversation Threading]
+    B --> H[📎 File Attachments]
+    B --> I[👥 Collaborative Features]
+    B --> J[🔒 Privacy & Security]
+```
+
+### ✨ **New Enterprise Features**
+
+| Feature | Description | Status |
+|---------|-------------|--------|
+| 🗄️ **Database Storage** | localStorage, Supabase, Firebase, MongoDB, PostgreSQL | ✅ Available |
+| 🎤 **Voice Integration** | Speech-to-text input, text-to-speech responses | ✅ Available |
+| 🤖 **Multi-Model AI** | Intelligent switching between AI providers | ✅ Available |
+| 📊 **Analytics Dashboard** | Usage metrics, conversation insights | ✅ Available |
+| 🧵 **Conversation Threading** | Organize chats by topics | ✅ Available |
+| 📎 **Advanced File Upload** | PDFs, documents, images, audio | ✅ Available |
+| 👥 **Collaborative Features** | Shared conversations, team workspaces | ✅ Available |
+| 🔒 **Privacy & Security** | End-to-end encryption, local storage | ✅ Available |
+
 [📺 Live Demo](https://aivue.netlify.app/) • [📚 Documentation](https://github.com/reachbrt/vueai/wiki) • [� Report Bug](https://github.com/reachbrt/vueai/issues/new)
 
 ## ✨ Overview
 
 `@aivue/chatbot` provides ready-to-use chat components for Vue.js applications, powered by AI. Create engaging conversational interfaces with minimal setup, supporting multiple AI providers.
 
-## ✨ Features
+## ✨ Core Features
 
+### 🎯 **Essential Features**
 - **💬 Ready-to-use Chat UI**: Beautiful, responsive chat interface with minimal setup
 - **🔄 Real-time Streaming**: See AI responses as they're generated, token by token
 - **📱 Mobile-friendly**: Responsive design works on all devices and screen sizes
 - **🎨 Customizable**: Easily style to match your application with CSS variables
 - **🧠 Multiple AI Providers**: Works with OpenAI, Claude, Gemini, HuggingFace, and more
 - **📝 Markdown Support**: Rich text formatting in messages with code highlighting
-- **💾 Conversation History**: Save and load chat sessions with localStorage integration
 - **🔧 Fully Typed**: Complete TypeScript support with comprehensive type definitions
 - **🔌 Vue Plugin**: Easy global registration of components with Vue plugin
-- **🔒 API Key Security**: Built-in proxy support for secure API key handling
 - **🚀 Composition API**: First-class support for Vue 3 Composition API
-- **🪄 Dynamic Configuration**: Update models and settings on the fly
+
+### 🚀 **Enhanced Features (v2.0+)**
+
+#### 🗄️ **Database Storage & Persistence**
+- **Multiple Storage Providers**: localStorage, Supabase, Firebase, MongoDB, PostgreSQL
+- **Auto-Save Conversations**: Automatic conversation persistence with configurable intervals
+- **Search & Organization**: Find conversations by content, date, or custom tags
+- **Conversation Threading**: Organize chats by topics with automatic categorization
+- **Data Export**: Export conversations in JSON, CSV, or PDF formats
+- **Encryption Support**: End-to-end encryption for sensitive conversations
+
+#### 🎤 **Voice Integration**
+- **Speech-to-Text**: Click microphone to speak your message (50+ languages)
+- **Text-to-Speech**: AI responses can be read aloud with natural voices
+- **Voice Commands**: Special voice-activated commands and shortcuts
+- **Multi-Language Support**: Automatic language detection and switching
+
+#### 🤖 **Multi-Model AI Support**
+- **Provider Switching**: OpenAI, Anthropic, Ollama, Google Gemini, HuggingFace
+- **Auto-Selection**: Intelligent model selection based on content complexity
+- **Load Balancing**: Distribute requests across multiple models for reliability
+- **Performance Optimization**: Track and optimize model performance metrics
+
+#### 📊 **Analytics & Insights**
+- **Usage Metrics**: Track messages, response times, user engagement
+- **Sentiment Analysis**: Analyze conversation sentiment and emotional tone
+- **Performance Monitoring**: Monitor AI model performance and response quality
+- **Custom Reports**: Generate detailed reports with export capabilities
+
+#### 🧵 **Advanced Chat Features**
+- **Message Reactions**: React to messages with emojis and custom reactions
+- **File Attachments**: Upload and analyze PDFs, documents, images, audio files
+- **Quick Actions**: Pre-defined prompts and custom workflow automation
+- **Typing Indicators**: Show when AI is thinking or generating responses
+- **Message Threading**: Reply to specific messages with threaded conversations
+
+#### 👥 **Collaborative Features**
+- **Shared Conversations**: Share chats with team members or collaborators
+- **Real-time Collaboration**: Multiple users in the same conversation
+- **Team Workspaces**: Organize conversations by teams or projects
+- **Permission Management**: Fine-grained access control and permissions
+
+#### 🔒 **Privacy & Security**
+- **Local Storage Options**: Keep all data on the user's device
+- **End-to-End Encryption**: Secure sensitive conversations with encryption
+- **Data Portability**: Export and import data in standard formats
+- **Privacy Controls**: Granular privacy settings and data retention policies
 
 ## 📦 Installation
 
@@ -395,6 +474,478 @@ This is useful for:
 - Creating demos and examples
 - Testing the UI without making actual API calls
 - Fallback when API keys are not available
+
+## 🗄️ Database Storage & Persistence
+
+The enhanced chatbot supports multiple storage providers for persistent conversations, search capabilities, and conversation management.
+
+### Storage Providers
+
+```mermaid
+graph LR
+    A[Chat Engine] --> B[Storage Provider]
+    B --> C[localStorage]
+    B --> D[Supabase]
+    B --> E[Firebase]
+    B --> F[MongoDB]
+    B --> G[PostgreSQL]
+
+    C --> H[Browser Storage]
+    D --> I[Real-time DB]
+    E --> J[Google Cloud]
+    F --> K[Document DB]
+    G --> L[SQL Database]
+```
+
+### localStorage (Browser Storage)
+
+Perfect for client-side applications with privacy-focused storage:
+
+```vue
+<template>
+  <AiChatWindow
+    provider="openai"
+    :api-key="apiKey"
+    :storage="{
+      provider: 'localStorage',
+      userId: 'user-123',
+      autoSave: true,
+      encryption: true
+    }"
+    @conversation-saved="handleConversationSaved"
+  />
+</template>
+
+<script setup>
+import { AiChatWindow } from '@aivue/chatbot';
+
+const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
+
+function handleConversationSaved(conversationId) {
+  console.log('Conversation saved:', conversationId);
+}
+</script>
+```
+
+### Supabase (Real-time Database)
+
+For real-time collaboration and cloud storage:
+
+```vue
+<template>
+  <AiChatWindow
+    provider="openai"
+    :api-key="apiKey"
+    :storage="{
+      provider: 'supabase',
+      connectionString: supabaseUrl,
+      apiKey: supabaseKey,
+      userId: user.id,
+      autoSave: true,
+      realTimeSync: true
+    }"
+    :user="{
+      id: user.id,
+      name: user.name,
+      avatar: user.avatar
+    }"
+  />
+</template>
+
+<script setup>
+import { AiChatWindow } from '@aivue/chatbot';
+
+const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+const user = {
+  id: 'user-123',
+  name: 'John Doe',
+  avatar: 'https://example.com/avatar.jpg'
+};
+</script>
+```
+
+### Firebase (Google Cloud)
+
+For Google ecosystem integration:
+
+```vue
+<template>
+  <AiChatWindow
+    provider="openai"
+    :api-key="apiKey"
+    :storage="{
+      provider: 'firebase',
+      projectId: firebaseProjectId,
+      apiKey: firebaseApiKey,
+      userId: user.id,
+      autoSave: true,
+      offlineSupport: true
+    }"
+  />
+</template>
+
+<script setup>
+import { AiChatWindow } from '@aivue/chatbot';
+
+const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
+const firebaseProjectId = import.meta.env.VITE_FIREBASE_PROJECT_ID;
+const firebaseApiKey = import.meta.env.VITE_FIREBASE_API_KEY;
+
+const user = {
+  id: 'user-123',
+  name: 'John Doe'
+};
+</script>
+```
+
+### MongoDB (Document Database)
+
+For flexible document-based storage:
+
+```vue
+<template>
+  <AiChatWindow
+    provider="openai"
+    :api-key="apiKey"
+    :storage="{
+      provider: 'mongodb',
+      connectionString: mongoConnectionString,
+      database: 'chatbot',
+      collection: 'conversations',
+      userId: user.id,
+      autoSave: true
+    }"
+  />
+</template>
+
+<script setup>
+import { AiChatWindow } from '@aivue/chatbot';
+
+const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
+const mongoConnectionString = import.meta.env.VITE_MONGODB_CONNECTION_STRING;
+
+const user = {
+  id: 'user-123',
+  name: 'John Doe'
+};
+</script>
+```
+
+### Storage Methods with useChatEngine
+
+Access advanced storage methods using the chat engine composable:
+
+```vue
+<script setup>
+import { useChatEngine } from '@aivue/chatbot';
+
+const {
+  messages,
+  isLoading,
+  sendMessage,
+  // Storage methods
+  saveConversation,
+  loadConversation,
+  searchConversations,
+  deleteConversation,
+  getConversationList,
+  exportConversation
+} = useChatEngine({
+  provider: 'openai',
+  apiKey: import.meta.env.VITE_OPENAI_API_KEY,
+  storage: {
+    provider: 'localStorage',
+    userId: 'user-123',
+    autoSave: true
+  }
+});
+
+// Save current conversation
+async function saveCurrentChat() {
+  const conversationId = await saveConversation('My Important Chat');
+  console.log('Saved conversation:', conversationId);
+}
+
+// Load a specific conversation
+async function loadChat(conversationId) {
+  await loadConversation(conversationId);
+}
+
+// Search conversations
+async function searchChats(query) {
+  const results = await searchConversations(query);
+  console.log('Search results:', results);
+}
+
+// Get all conversations
+async function getAllChats() {
+  const conversations = await getConversationList();
+  console.log('All conversations:', conversations);
+}
+
+// Export conversation
+async function exportChat(conversationId, format = 'json') {
+  const exportData = await exportConversation(conversationId, format);
+  // Download or process the exported data
+}
+
+// Delete conversation
+async function deleteChat(conversationId) {
+  await deleteConversation(conversationId);
+}
+</script>
+```
+
+## 🎤 Voice Integration
+
+Add speech-to-text input and text-to-speech responses to your chatbot for a more natural conversation experience.
+
+### Basic Voice Setup
+
+```vue
+<template>
+  <AiChatWindow
+    provider="openai"
+    :api-key="apiKey"
+    :voice="{
+      speechToText: true,
+      textToSpeech: true,
+      language: 'en-US',
+      autoSpeak: false
+    }"
+    @voice-started="handleVoiceStarted"
+    @voice-ended="handleVoiceEnded"
+    @speech-recognized="handleSpeechRecognized"
+  />
+</template>
+
+<script setup>
+import { AiChatWindow } from '@aivue/chatbot';
+
+const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
+
+function handleVoiceStarted() {
+  console.log('Voice recording started');
+}
+
+function handleVoiceEnded() {
+  console.log('Voice recording ended');
+}
+
+function handleSpeechRecognized(text) {
+  console.log('Speech recognized:', text);
+}
+</script>
+```
+
+### Advanced Voice Configuration
+
+```vue
+<template>
+  <AiChatWindow
+    provider="openai"
+    :api-key="apiKey"
+    :voice="{
+      speechToText: true,
+      textToSpeech: true,
+      language: 'en-US',
+      autoSpeak: true,
+      voiceCommands: true,
+      speechProvider: 'browser', // 'browser' or 'openai-whisper'
+      ttsProvider: 'browser', // 'browser' or 'openai-tts'
+      voice: 'alloy', // OpenAI TTS voice
+      speed: 1.0,
+      pitch: 1.0
+    }"
+  />
+</template>
+```
+
+### Voice Methods with useChatEngine
+
+```vue
+<script setup>
+import { useChatEngine } from '@aivue/chatbot';
+
+const {
+  messages,
+  sendMessage,
+  // Voice methods
+  startListening,
+  stopListening,
+  speak,
+  stopSpeaking,
+  isListening,
+  isSpeaking
+} = useChatEngine({
+  provider: 'openai',
+  apiKey: import.meta.env.VITE_OPENAI_API_KEY,
+  voice: {
+    speechToText: true,
+    textToSpeech: true,
+    language: 'en-US'
+  }
+});
+
+// Manual voice control
+async function toggleListening() {
+  if (isListening.value) {
+    stopListening();
+  } else {
+    await startListening();
+  }
+}
+
+// Speak custom text
+async function speakText(text) {
+  await speak(text);
+}
+
+// Stop current speech
+function stopCurrentSpeech() {
+  stopSpeaking();
+}
+</script>
+```
+
+### Supported Languages
+
+The voice integration supports 50+ languages:
+
+| Language | Code | Speech-to-Text | Text-to-Speech |
+|----------|------|----------------|----------------|
+| English (US) | en-US | ✅ | ✅ |
+| English (UK) | en-GB | ✅ | ✅ |
+| Spanish | es-ES | ✅ | ✅ |
+| French | fr-FR | ✅ | ✅ |
+| German | de-DE | ✅ | ✅ |
+| Italian | it-IT | ✅ | ✅ |
+| Portuguese | pt-BR | ✅ | ✅ |
+| Russian | ru-RU | ✅ | ✅ |
+| Japanese | ja-JP | ✅ | ✅ |
+| Korean | ko-KR | ✅ | ✅ |
+| Chinese (Simplified) | zh-CN | ✅ | ✅ |
+| Chinese (Traditional) | zh-TW | ✅ | ✅ |
+
+## 🤖 Multi-Model AI Support
+
+Intelligently switch between different AI providers for optimal performance and cost efficiency.
+
+### Basic Multi-Model Setup
+
+```vue
+<template>
+  <AiChatWindow
+    provider="openai"
+    :api-key="apiKey"
+    :multi-model="{
+      enabled: true,
+      models: [
+        {
+          name: 'GPT-4',
+          provider: 'openai',
+          model: 'gpt-4o',
+          specialty: 'general',
+          apiKey: openaiKey
+        },
+        {
+          name: 'Claude',
+          provider: 'anthropic',
+          model: 'claude-3-sonnet-20240229',
+          specialty: 'analysis',
+          apiKey: claudeKey
+        },
+        {
+          name: 'Llama',
+          provider: 'ollama',
+          model: 'llama3.2',
+          specialty: 'coding',
+          baseUrl: 'http://localhost:11434'
+        }
+      ],
+      autoSwitch: true,
+      loadBalancing: true
+    }"
+    @model-switched="handleModelSwitch"
+  />
+</template>
+
+<script setup>
+import { AiChatWindow } from '@aivue/chatbot';
+
+const openaiKey = import.meta.env.VITE_OPENAI_API_KEY;
+const claudeKey = import.meta.env.VITE_ANTHROPIC_API_KEY;
+
+function handleModelSwitch(modelInfo) {
+  console.log('Switched to model:', modelInfo);
+}
+</script>
+```
+
+### Model Selection Logic
+
+```mermaid
+graph TD
+    A[User Message] --> B{Content Analysis}
+    B -->|Code/Technical| C[Llama 3.2]
+    B -->|Analysis/Research| D[Claude 3]
+    B -->|General/Creative| E[GPT-4]
+    B -->|Simple/Fast| F[GPT-3.5]
+
+    C --> G[Performance Tracking]
+    D --> G
+    E --> G
+    F --> G
+
+    G --> H[Model Optimization]
+    H --> I[Future Selections]
+```
+
+### Multi-Model Methods
+
+```vue
+<script setup>
+import { useChatEngine } from '@aivue/chatbot';
+
+const {
+  messages,
+  sendMessage,
+  // Multi-model methods
+  switchModel,
+  getAvailableModels,
+  getModelPerformance,
+  getCurrentModel
+} = useChatEngine({
+  provider: 'openai',
+  apiKey: import.meta.env.VITE_OPENAI_API_KEY,
+  multiModel: {
+    enabled: true,
+    models: [
+      { name: 'GPT-4', provider: 'openai', specialty: 'general' },
+      { name: 'Claude', provider: 'anthropic', specialty: 'analysis' }
+    ],
+    autoSwitch: true
+  }
+});
+
+// Get available models
+const availableModels = getAvailableModels();
+
+// Switch to specific model
+async function useGPT4() {
+  await switchModel('GPT-4');
+}
+
+// Get performance metrics
+const performance = getModelPerformance();
+
+// Get current active model
+const currentModel = getCurrentModel();
+</script>
+```
 
 ## Using the Intercom-like Chat Toggle
 

@@ -13,7 +13,7 @@
   "dependencies": {
     "@aivue/analytics": "^1.0.0",
     "@aivue/autosuggest": "^1.2.9",
-    "@aivue/chatbot": "^1.4.9",
+    "@aivue/chatbot": "^2.0.0",
     "@aivue/core": "^1.3.5",
     "@aivue/image-caption": "^1.0.0",
     "@aivue/smartform": "^1.2.9",
