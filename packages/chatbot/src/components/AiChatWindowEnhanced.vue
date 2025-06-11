@@ -234,7 +234,7 @@
             <span></span>
             <span></span>
           </div>
-          <div class="loading-text">{{ loadingText }}</div>
+          <div class="loading-text">AI is thinking...</div>
         </div>
       </div>
     </div>
@@ -517,7 +517,15 @@ const chatOptions: ChatOptions = {
   ...(props.storage && { storage: props.storage }),
   ...(props.voice && { voice: props.voice }),
   ...(props.analytics && { analytics: props.analytics }),
-  ...(props.multiModel && { multiModel: props.multiModel }),
+  ...(props.multiModel && {
+    multiModel: {
+      ...props.multiModel,
+      models: props.multiModel.models?.map(model => ({
+        ...model,
+        provider: model.provider as any
+      }))
+    }
+  }),
 
   // Callbacks
   onMessageSent: (message: Message) => emit('messageSent', message),

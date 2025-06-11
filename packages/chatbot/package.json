@@ -1,6 +1,6 @@
 {
   "name": "@aivue/chatbot",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "AI-powered chat components for Vue.js",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
