@@ -106,68 +106,45 @@
     </div>
 
     <div id="demo" class="demo-section">
-      <!-- Modern Sidebar Layout -->
+      <!-- Modern Top Navigation Layout -->
       <div class="app-layout">
-        <!-- Left Sidebar -->
-        <aside class="sidebar">
-          <div class="sidebar-header">
-            <div class="logo">
+        <!-- Top Navigation -->
+        <header class="top-nav">
+          <div class="nav-container">
+            <div class="nav-brand">
               <span class="logo-text">AI<span class="logo-accent">Vue</span></span>
               <span class="logo-subtitle">AI Components for Vue.js</span>
             </div>
-          </div>
 
-          <nav class="sidebar-nav">
-            <div class="nav-section">
-              <h3 class="nav-section-title">Components</h3>
+            <nav class="nav-tabs">
               <button
                 v-for="tab in tabs"
                 :key="tab.id"
                 @click="setActiveTab(tab.id)"
-                :class="['nav-item', { active: activeTab === tab.id }]"
+                :class="['nav-tab', { active: activeTab === tab.id }]"
               >
-                <span class="nav-icon">{{ tab.icon }}</span>
-                <span class="nav-label">{{ tab.name }}</span>
-                <span v-if="tab.id === 'chatbot'" class="nav-badge">v2.0</span>
+                <span class="tab-icon">{{ tab.icon }}</span>
+                <span class="tab-label">{{ tab.name }}</span>
+                <span v-if="tab.id === 'chatbot'" class="tab-badge">v2.3</span>
               </button>
-            </div>
+            </nav>
 
-            <div class="nav-section">
-              <h3 class="nav-section-title">Resources</h3>
-              <a href="https://github.com/reachbrt/vueai" target="_blank" class="nav-item external">
-                <span class="nav-icon">📚</span>
-                <span class="nav-label">Documentation</span>
+            <div class="nav-actions">
+              <a href="https://github.com/reachbrt/vueai" target="_blank" class="nav-action">
+                <span class="action-icon">📚</span>
+                <span class="action-label">Docs</span>
               </a>
-              <a href="https://www.npmjs.com/org/aivue" target="_blank" class="nav-item external">
-                <span class="nav-icon">📦</span>
-                <span class="nav-label">NPM Packages</span>
+              <a href="https://www.npmjs.com/org/aivue" target="_blank" class="nav-action">
+                <span class="action-icon">📦</span>
+                <span class="action-label">NPM</span>
               </a>
-              <a href="https://github.com/reachbrt/vueai/issues" target="_blank" class="nav-item external">
-                <span class="nav-icon">🐛</span>
-                <span class="nav-label">Report Issues</span>
+              <a href="https://github.com/reachbrt/vueai/issues" target="_blank" class="nav-action">
+                <span class="action-icon">🐛</span>
+                <span class="action-label">Issues</span>
               </a>
-            </div>
-          </nav>
-
-          <!-- Package Info in Sidebar -->
-          <div class="sidebar-footer" v-if="activeTab !== 'all'">
-            <div class="package-info-card">
-              <div class="package-header">
-                <h4>{{ currentPackage.name }}</h4>
-                <span class="package-version">v{{ currentPackage.version }}</span>
-              </div>
-              <p class="package-description">{{ currentPackage.description }}</p>
-              <div class="package-actions">
-                <a :href="`https://www.npmjs.com/package/${currentPackage.npmName}`" target="_blank" class="action-btn npm">
-                  📦 Install
-                </a>
-                <a :href="currentPackage.github" target="_blank" class="action-btn github">
-                  🔗 GitHub
-                </a>
-              </div>
             </div>
           </div>
-        </aside>
+        </header>
 
         <!-- Main Content -->
         <main class="main-content">
@@ -1382,78 +1359,70 @@ body {
 /* App Layout */
 .app-layout {
   display: flex;
+  flex-direction: column;
   min-height: 100vh;
 }
 
-/* Sidebar Styles */
-.sidebar {
-  width: 280px;
-  background: linear-gradient(180deg, #1e293b 0%, #334155 100%);
+/* Top Navigation Styles */
+.top-nav {
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
   color: white;
-  display: flex;
-  flex-direction: column;
-  position: fixed;
-  height: 100vh;
-  left: 0;
+  position: sticky;
   top: 0;
   z-index: 1000;
-  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
-}
-
-.sidebar-header {
-  padding: 24px 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.logo {
-  text-align: center;
+.nav-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  gap: 32px;
 }
 
-.logo-text {
-  font-size: 2rem;
+.nav-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.nav-brand .logo-text {
+  font-size: 1.75rem;
   font-weight: 800;
   background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  display: block;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 
-.logo-accent {
+.nav-brand .logo-accent {
   color: #fbbf24;
 }
 
-.logo-subtitle {
-  font-size: 0.875rem;
+.nav-brand .logo-subtitle {
+  font-size: 0.75rem;
   color: #94a3b8;
   font-weight: 500;
 }
 
-/* Navigation */
-.sidebar-nav {
-  flex: 1;
-  padding: 20px 0;
-  overflow-y: auto;
-}
-
-.nav-section {
-  margin-bottom: 32px;
-}
-
-.nav-section-title {
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #94a3b8;
-  margin: 0 0 12px 20px;
-}
-
-.nav-item {
+/* Navigation Tabs */
+.nav-tabs {
   display: flex;
   align-items: center;
-  width: 100%;
+  gap: 8px;
+  flex: 1;
+  justify-content: center;
+}
+
+.nav-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   padding: 12px 20px;
   background: none;
   border: none;
@@ -1461,43 +1430,45 @@ body {
   text-decoration: none;
   transition: all 0.2s ease;
   cursor: pointer;
+  border-radius: 12px;
   position: relative;
+  font-weight: 500;
 }
 
-.nav-item:hover {
+.nav-tab:hover {
   background: rgba(255, 255, 255, 0.1);
   color: white;
 }
 
-.nav-item.active {
+.nav-tab.active {
   background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
   color: white;
   box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
 }
 
-.nav-item.active::before {
+.nav-tab.active::after {
   content: '';
   position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 4px;
-  background: #fbbf24;
+  bottom: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #3b82f6;
 }
 
-.nav-icon {
-  font-size: 1.25rem;
-  margin-right: 12px;
-  width: 24px;
-  text-align: center;
+.tab-icon {
+  font-size: 1.1rem;
 }
 
-.nav-label {
+.tab-label {
   font-weight: 500;
-  flex: 1;
+  white-space: nowrap;
 }
 
-.nav-badge {
+.tab-badge {
   background: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
   color: white;
   font-size: 0.625rem;
@@ -1508,99 +1479,48 @@ body {
   letter-spacing: 0.05em;
 }
 
-.nav-item.external {
-  opacity: 0.8;
-}
-
-.nav-item.external:hover {
-  opacity: 1;
-}
-
-/* Sidebar Footer */
-.sidebar-footer {
-  padding: 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.package-info-card {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
-  padding: 16px;
-  backdrop-filter: blur(10px);
-}
-
-.package-header {
+/* Navigation Actions */
+.nav-actions {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 8px;
+  gap: 16px;
 }
 
-.package-header h4 {
-  margin: 0;
+.nav-action {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: #e2e8f0;
+  text-decoration: none;
+  transition: all 0.2s ease;
   font-size: 0.875rem;
-  font-weight: 600;
-  color: white;
+  font-weight: 500;
 }
 
-.package-version {
+.nav-action:hover {
   background: rgba(255, 255, 255, 0.2);
   color: white;
-  font-size: 0.75rem;
-  font-weight: 600;
-  padding: 2px 8px;
-  border-radius: 6px;
+  transform: translateY(-1px);
 }
 
-.package-description {
-  font-size: 0.75rem;
-  color: #cbd5e1;
-  margin: 0 0 12px 0;
-  line-height: 1.4;
+.action-icon {
+  font-size: 1rem;
 }
 
-.package-actions {
-  display: flex;
-  gap: 8px;
-}
-
-.action-btn {
-  flex: 1;
-  padding: 6px 12px;
-  border-radius: 6px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-decoration: none;
-  text-align: center;
-  transition: all 0.2s ease;
-}
-
-.action-btn.npm {
-  background: #cb3837;
-  color: white;
-}
-
-.action-btn.npm:hover {
-  background: #a02622;
-}
-
-.action-btn.github {
-  background: #24292e;
-  color: white;
-}
-
-.action-btn.github:hover {
-  background: #1a1e22;
+.action-label {
+  white-space: nowrap;
 }
 
 /* Main Content */
 .main-content {
   flex: 1;
-  margin-left: 280px;
-  min-height: 100vh;
+  min-height: calc(100vh - 80px);
   background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
   position: relative;
-  width: calc(100vw - 280px);
+  width: 100%;
   overflow-x: hidden;
 }
 
@@ -2822,19 +2742,37 @@ p {
   box-sizing: border-box;
 }
 
-/* Responsive Design for Sidebar Layout */
+/* Responsive Design for Top Navigation */
 @media (max-width: 1024px) {
-  .sidebar {
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
+  .nav-container {
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
   }
 
-  .sidebar.open {
-    transform: translateX(0);
+  .nav-tabs {
+    order: 2;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .nav-actions {
+    order: 3;
+    gap: 12px;
+  }
+
+  .nav-tab {
+    padding: 10px 16px;
+    font-size: 0.875rem;
+  }
+
+  .nav-action {
+    padding: 6px 12px;
+    font-size: 0.8rem;
   }
 
   .main-content {
-    margin-left: 0;
     width: 100vw;
   }
 
@@ -2857,6 +2795,39 @@ p {
 }
 
 @media (max-width: 768px) {
+  .nav-container {
+    padding: 12px 16px;
+  }
+
+  .nav-brand .logo-text {
+    font-size: 1.5rem;
+  }
+
+  .nav-brand .logo-subtitle {
+    font-size: 0.7rem;
+  }
+
+  .nav-tabs {
+    gap: 4px;
+  }
+
+  .nav-tab {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+
+  .tab-label {
+    display: none;
+  }
+
+  .nav-actions {
+    gap: 8px;
+  }
+
+  .action-label {
+    display: none;
+  }
+
   .section-title {
     font-size: 2rem;
   }
