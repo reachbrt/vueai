@@ -13,6 +13,16 @@ Enterprise-grade conversational AI with advanced features including database sto
 [![codecov](https://codecov.io/gh/reachbrt/vueai/graph/badge.svg?token=8LYV3M14ZG)](https://codecov.io/gh/reachbrt/vueai)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/5cb37fa7-9ee1-4af6-9ff4-d34ff0322ded/deploy-status)](https://app.netlify.com/sites/aivue/deploys)
 
+## 🎯 **What's New in v2.1.0**
+
+### 🔒 **Proxy Support & Internationalization**
+
+New features for enhanced security and global accessibility:
+
+- **🔒 Proxy Configuration**: Secure API requests through proxy servers
+- **🌍 Language Support**: Full internationalization with customizable texts
+- **🛡️ Enhanced Security**: Better API key protection and request routing
+
 ## 🎯 **What's New in v2.0.0**
 
 ### 🚀 **Major Release: Enhanced AI Chatbot**
@@ -44,6 +54,8 @@ graph TD
 | 📎 **Advanced File Upload** | PDFs, documents, images, audio | ✅ Available |
 | 👥 **Collaborative Features** | Shared conversations, team workspaces | ✅ Available |
 | 🔒 **Privacy & Security** | End-to-end encryption, local storage | ✅ Available |
+| 🔒 **Proxy Support** | Secure API requests through proxy servers | ✅ New in v2.1.0 |
+| 🌍 **Internationalization** | Customizable language texts and localization | ✅ New in v2.1.0 |
 
 [📺 Live Demo](https://aivue.netlify.app/) • [📚 Documentation](https://github.com/reachbrt/vueai/wiki) • [� Report Bug](https://github.com/reachbrt/vueai/issues/new)
 
@@ -474,6 +486,218 @@ This is useful for:
 - Creating demos and examples
 - Testing the UI without making actual API calls
 - Fallback when API keys are not available
+
+## 🔒 Proxy Support & Security (New in v2.1.0)
+
+The Enhanced Chat Window now supports proxy configuration for secure API requests, allowing you to route AI API calls through your own server for enhanced security and control.
+
+### Basic Proxy Configuration
+
+```vue
+<template>
+  <AiChatWindowEnhanced
+    provider="openai"
+    :api-key="apiKey"
+    model="gpt-3.5-turbo"
+    :use-proxy="true"
+    proxy-url="/api/chat"
+    title="Secure AI Assistant"
+    placeholder="Your messages are securely routed..."
+  />
+</template>
+
+<script setup>
+import { AiChatWindowEnhanced } from '@aivue/chatbot';
+
+const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
+</script>
+```
+
+### Advanced Proxy Setup
+
+```vue
+<template>
+  <AiChatWindowEnhanced
+    provider="openai"
+    :api-key="apiKey"
+    model="gpt-4"
+    :use-proxy="true"
+    proxy-url="https://your-api-gateway.com/ai/chat"
+    title="Enterprise AI Chat"
+    :voice="{ speechToText: true, textToSpeech: true }"
+    :analytics="{ enabled: true, trackUsageMetrics: true }"
+  />
+</template>
+```
+
+### Benefits of Proxy Configuration
+
+- **🛡️ Enhanced Security**: Keep API keys on your server, not in client code
+- **📊 Request Monitoring**: Log and monitor all AI API requests
+- **🔄 Load Balancing**: Distribute requests across multiple AI providers
+- **💰 Cost Control**: Implement usage limits and billing controls
+- **🔒 Access Control**: Add authentication and authorization layers
+
+## 🌍 Internationalization & Language Support (New in v2.1.0)
+
+The Enhanced Chat Window now supports full internationalization with customizable language texts, making it easy to create multilingual chat interfaces.
+
+### Basic Language Configuration
+
+```vue
+<template>
+  <AiChatWindowEnhanced
+    provider="openai"
+    :api-key="apiKey"
+    language="es"
+    :texts="{
+      title: 'Asistente IA',
+      placeholder: 'Escribe tu mensaje...',
+      sendButton: 'Enviar',
+      voiceButton: 'Entrada de voz',
+      fileButton: 'Adjuntar archivos',
+      copyButton: 'Copiar',
+      listeningText: 'Escuchando...',
+      dragDropText: 'Arrastra archivos aquí o navega'
+    }"
+  />
+</template>
+
+<script setup>
+import { AiChatWindowEnhanced } from '@aivue/chatbot';
+
+const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
+</script>
+```
+
+### Dynamic Language Switching
+
+```vue
+<template>
+  <div>
+    <select v-model="currentLanguage" @change="updateLanguage">
+      <option value="en">English</option>
+      <option value="es">Español</option>
+      <option value="fr">Français</option>
+      <option value="de">Deutsch</option>
+      <option value="it">Italiano</option>
+    </select>
+
+    <AiChatWindowEnhanced
+      provider="openai"
+      :api-key="apiKey"
+      :language="currentLanguage"
+      :texts="languageTexts[currentLanguage]"
+    />
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue';
+import { AiChatWindowEnhanced } from '@aivue/chatbot';
+
+const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
+const currentLanguage = ref('en');
+
+const languageTexts = {
+  en: {
+    title: 'AI Assistant',
+    placeholder: 'Type your message...',
+    sendButton: 'Send',
+    voiceButton: 'Voice input',
+    fileButton: 'Attach files',
+    // ... more texts
+  },
+  es: {
+    title: 'Asistente IA',
+    placeholder: 'Escribe tu mensaje...',
+    sendButton: 'Enviar',
+    voiceButton: 'Entrada de voz',
+    fileButton: 'Adjuntar archivos',
+    // ... more texts
+  },
+  // ... other languages
+};
+
+function updateLanguage() {
+  // Language texts are automatically updated via reactive binding
+  console.log('Language changed to:', currentLanguage.value);
+}
+</script>
+```
+
+### Supported Languages
+
+The component includes built-in support for:
+
+| Language | Code | Status |
+|----------|------|--------|
+| English | `en` | ✅ Built-in |
+| Spanish | `es` | ✅ Built-in |
+| French | `fr` | ✅ Built-in |
+| German | `de` | ✅ Built-in |
+| Italian | `it` | ✅ Built-in |
+| Portuguese | `pt` | 🔄 Coming Soon |
+| Chinese | `zh` | 🔄 Coming Soon |
+| Japanese | `ja` | 🔄 Coming Soon |
+
+### Customizable Text Properties
+
+You can customize any of these interface texts:
+
+```typescript
+interface LanguageTexts {
+  // Header texts
+  title?: string;
+  modelIndicator?: string;
+
+  // Input area texts
+  placeholder?: string;
+  sendButton?: string;
+  voiceButton?: string;
+  fileButton?: string;
+
+  // Message texts
+  copyButton?: string;
+  retryButton?: string;
+  deleteButton?: string;
+  editButton?: string;
+
+  // Settings texts
+  settingsTitle?: string;
+  conversationsTitle?: string;
+  analyticsTitle?: string;
+
+  // Status texts
+  typing?: string;
+  connecting?: string;
+  error?: string;
+  noMessages?: string;
+
+  // File upload texts
+  dragDropText?: string;
+  fileUploadError?: string;
+  fileSizeError?: string;
+  fileTypeError?: string;
+
+  // Voice texts
+  listeningText?: string;
+  speakingText?: string;
+  voiceError?: string;
+
+  // Analytics texts
+  totalMessages?: string;
+  averageResponseTime?: string;
+  userSatisfaction?: string;
+
+  // Conversation management
+  newConversation?: string;
+  saveConversation?: string;
+  loadConversation?: string;
+  deleteConversation?: string;
+  searchConversations?: string;
+}
+```
 
 ## 🗄️ Database Storage & Persistence
 
