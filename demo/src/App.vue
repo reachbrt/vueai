@@ -416,6 +416,62 @@
               :markdown="chatOptions.markdown"
               :system-prompt="chatOptions.systemPrompt"
             />
+
+            <!-- Enhanced Chat Window Demo -->
+            <div class="component-demo-header">
+              <h3>Enhanced Chat Window with Proxy & Language Support</h3>
+              <div class="component-code">
+                <code>import { AiChatWindowEnhanced } from '@aivue/chatbot';</code>
+              </div>
+            </div>
+
+            <p class="component-description">
+              The Enhanced Chat Window now supports proxy configuration for secure API requests and customizable language texts for internationalization.
+            </p>
+
+            <!-- Enhanced Options -->
+            <div class="options-grid">
+              <div class="option-group checkbox">
+                <div class="styled-checkbox">
+                  <input type="checkbox" id="useProxy" v-model="enhancedChatOptions.useProxy" />
+                  <label for="useProxy">Use Proxy</label>
+                </div>
+              </div>
+
+              <div class="option-group" v-if="enhancedChatOptions.useProxy">
+                <label for="proxyUrl">Proxy URL:</label>
+                <input type="text" id="proxyUrl" v-model="enhancedChatOptions.proxyUrl" class="styled-input" />
+              </div>
+
+              <div class="option-group">
+                <label for="language">Language:</label>
+                <select id="language" v-model="enhancedChatOptions.language" class="styled-select">
+                  <option value="en">English</option>
+                  <option value="es">Español</option>
+                  <option value="fr">Français</option>
+                  <option value="de">Deutsch</option>
+                  <option value="it">Italiano</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="chat-container">
+              <AiChatWindowEnhanced
+                :provider="'openai'"
+                :api-key="apiKey"
+                :model="chatOptions.model"
+                :title="enhancedChatOptions.texts.title"
+                :placeholder="enhancedChatOptions.texts.placeholder"
+                :theme="chatOptions.theme"
+                :use-proxy="enhancedChatOptions.useProxy"
+                :proxy-url="enhancedChatOptions.proxyUrl"
+                :language="enhancedChatOptions.language"
+                :texts="enhancedChatOptions.texts"
+                :show-avatars="chatOptions.showAvatars"
+                :file-upload-enabled="true"
+                :voice="{ speechToText: true, textToSpeech: true }"
+              />
+            </div>
           </div>
       </section>
 
@@ -636,7 +692,7 @@ import ImageCaptionDemo from './components/ImageCaptionDemo.vue';
 
 import TypeScriptExample from './components/TypeScriptExample.vue';
 import OllamaDemo from './components/OllamaDemo.vue';
-import { AiChatWindow, AiChatToggle } from '@aivue/chatbot';
+import { AiChatWindow, AiChatToggle, AiChatWindowEnhanced } from '@aivue/chatbot';
 import { AIClient } from '@aivue/core';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -654,7 +710,8 @@ export default {
     TypeScriptExample,
     OllamaDemo,
     AiChatWindow,
-    AiChatToggle
+    AiChatToggle,
+    AiChatWindowEnhanced
   },
   data() {
     return {
@@ -672,6 +729,45 @@ export default {
         fullHeight: false,
         markdown: true,
         systemPrompt: 'You are a helpful AI assistant. Answer questions concisely and accurately.'
+      },
+      enhancedChatOptions: {
+        useProxy: false,
+        proxyUrl: '/api/chat',
+        language: 'en',
+        texts: {
+          title: 'AI Assistant',
+          placeholder: 'Type your message...',
+          sendButton: 'Send',
+          voiceButton: 'Voice input',
+          fileButton: 'Attach files',
+          copyButton: 'Copy',
+          retryButton: 'Retry',
+          deleteButton: 'Delete',
+          editButton: 'Edit',
+          settingsTitle: 'Settings',
+          conversationsTitle: 'Conversations',
+          analyticsTitle: 'Analytics',
+          typing: 'AI is typing...',
+          connecting: 'Connecting...',
+          error: 'An error occurred',
+          noMessages: 'No messages yet',
+          dragDropText: 'Drop files here or browse',
+          fileUploadError: 'File upload failed',
+          fileSizeError: 'File size too large',
+          fileTypeError: 'File type not supported',
+          listeningText: 'Listening...',
+          speakingText: 'Speaking...',
+          voiceError: 'Voice feature unavailable',
+          quickActionsTitle: 'Quick Actions',
+          totalMessages: 'Total Messages',
+          averageResponseTime: 'Avg Response Time',
+          userSatisfaction: 'User Satisfaction',
+          newConversation: 'New Conversation',
+          saveConversation: 'Save Conversation',
+          loadConversation: 'Load Conversation',
+          deleteConversation: 'Delete Conversation',
+          searchConversations: 'Search conversations...'
+        }
       },
       tabs: [
         {
@@ -1252,6 +1348,189 @@ export default {
       };
 
       return descriptions[tabId] || '';
+    }
+  },
+
+  watch: {
+    'enhancedChatOptions.language': {
+      handler(newLanguage) {
+        // Update texts based on selected language
+        const languageTexts = {
+          en: {
+            title: 'AI Assistant',
+            placeholder: 'Type your message...',
+            sendButton: 'Send',
+            voiceButton: 'Voice input',
+            fileButton: 'Attach files',
+            copyButton: 'Copy',
+            retryButton: 'Retry',
+            deleteButton: 'Delete',
+            editButton: 'Edit',
+            settingsTitle: 'Settings',
+            conversationsTitle: 'Conversations',
+            analyticsTitle: 'Analytics',
+            typing: 'AI is typing...',
+            connecting: 'Connecting...',
+            error: 'An error occurred',
+            noMessages: 'No messages yet',
+            dragDropText: 'Drop files here or browse',
+            fileUploadError: 'File upload failed',
+            fileSizeError: 'File size too large',
+            fileTypeError: 'File type not supported',
+            listeningText: 'Listening...',
+            speakingText: 'Speaking...',
+            voiceError: 'Voice feature unavailable',
+            quickActionsTitle: 'Quick Actions',
+            totalMessages: 'Total Messages',
+            averageResponseTime: 'Avg Response Time',
+            userSatisfaction: 'User Satisfaction',
+            newConversation: 'New Conversation',
+            saveConversation: 'Save Conversation',
+            loadConversation: 'Load Conversation',
+            deleteConversation: 'Delete Conversation',
+            searchConversations: 'Search conversations...'
+          },
+          es: {
+            title: 'Asistente IA',
+            placeholder: 'Escribe tu mensaje...',
+            sendButton: 'Enviar',
+            voiceButton: 'Entrada de voz',
+            fileButton: 'Adjuntar archivos',
+            copyButton: 'Copiar',
+            retryButton: 'Reintentar',
+            deleteButton: 'Eliminar',
+            editButton: 'Editar',
+            settingsTitle: 'Configuración',
+            conversationsTitle: 'Conversaciones',
+            analyticsTitle: 'Analíticas',
+            typing: 'IA está escribiendo...',
+            connecting: 'Conectando...',
+            error: 'Ocurrió un error',
+            noMessages: 'No hay mensajes aún',
+            dragDropText: 'Arrastra archivos aquí o navega',
+            fileUploadError: 'Error al subir archivo',
+            fileSizeError: 'Archivo demasiado grande',
+            fileTypeError: 'Tipo de archivo no soportado',
+            listeningText: 'Escuchando...',
+            speakingText: 'Hablando...',
+            voiceError: 'Función de voz no disponible',
+            quickActionsTitle: 'Acciones Rápidas',
+            totalMessages: 'Mensajes Totales',
+            averageResponseTime: 'Tiempo Promedio de Respuesta',
+            userSatisfaction: 'Satisfacción del Usuario',
+            newConversation: 'Nueva Conversación',
+            saveConversation: 'Guardar Conversación',
+            loadConversation: 'Cargar Conversación',
+            deleteConversation: 'Eliminar Conversación',
+            searchConversations: 'Buscar conversaciones...'
+          },
+          fr: {
+            title: 'Assistant IA',
+            placeholder: 'Tapez votre message...',
+            sendButton: 'Envoyer',
+            voiceButton: 'Entrée vocale',
+            fileButton: 'Joindre des fichiers',
+            copyButton: 'Copier',
+            retryButton: 'Réessayer',
+            deleteButton: 'Supprimer',
+            editButton: 'Modifier',
+            settingsTitle: 'Paramètres',
+            conversationsTitle: 'Conversations',
+            analyticsTitle: 'Analytiques',
+            typing: 'IA tape...',
+            connecting: 'Connexion...',
+            error: 'Une erreur s\'est produite',
+            noMessages: 'Pas encore de messages',
+            dragDropText: 'Déposez les fichiers ici ou parcourez',
+            fileUploadError: 'Échec du téléchargement',
+            fileSizeError: 'Fichier trop volumineux',
+            fileTypeError: 'Type de fichier non pris en charge',
+            listeningText: 'Écoute...',
+            speakingText: 'Parle...',
+            voiceError: 'Fonction vocale indisponible',
+            quickActionsTitle: 'Actions Rapides',
+            totalMessages: 'Messages Totaux',
+            averageResponseTime: 'Temps de Réponse Moyen',
+            userSatisfaction: 'Satisfaction Utilisateur',
+            newConversation: 'Nouvelle Conversation',
+            saveConversation: 'Sauvegarder la Conversation',
+            loadConversation: 'Charger la Conversation',
+            deleteConversation: 'Supprimer la Conversation',
+            searchConversations: 'Rechercher des conversations...'
+          },
+          de: {
+            title: 'KI-Assistent',
+            placeholder: 'Geben Sie Ihre Nachricht ein...',
+            sendButton: 'Senden',
+            voiceButton: 'Spracheingabe',
+            fileButton: 'Dateien anhängen',
+            copyButton: 'Kopieren',
+            retryButton: 'Wiederholen',
+            deleteButton: 'Löschen',
+            editButton: 'Bearbeiten',
+            settingsTitle: 'Einstellungen',
+            conversationsTitle: 'Gespräche',
+            analyticsTitle: 'Analytik',
+            typing: 'KI tippt...',
+            connecting: 'Verbinden...',
+            error: 'Ein Fehler ist aufgetreten',
+            noMessages: 'Noch keine Nachrichten',
+            dragDropText: 'Dateien hier ablegen oder durchsuchen',
+            fileUploadError: 'Datei-Upload fehlgeschlagen',
+            fileSizeError: 'Datei zu groß',
+            fileTypeError: 'Dateityp nicht unterstützt',
+            listeningText: 'Hört zu...',
+            speakingText: 'Spricht...',
+            voiceError: 'Sprachfunktion nicht verfügbar',
+            quickActionsTitle: 'Schnellaktionen',
+            totalMessages: 'Gesamtnachrichten',
+            averageResponseTime: 'Durchschnittliche Antwortzeit',
+            userSatisfaction: 'Benutzerzufriedenheit',
+            newConversation: 'Neues Gespräch',
+            saveConversation: 'Gespräch speichern',
+            loadConversation: 'Gespräch laden',
+            deleteConversation: 'Gespräch löschen',
+            searchConversations: 'Gespräche durchsuchen...'
+          },
+          it: {
+            title: 'Assistente IA',
+            placeholder: 'Digita il tuo messaggio...',
+            sendButton: 'Invia',
+            voiceButton: 'Input vocale',
+            fileButton: 'Allega file',
+            copyButton: 'Copia',
+            retryButton: 'Riprova',
+            deleteButton: 'Elimina',
+            editButton: 'Modifica',
+            settingsTitle: 'Impostazioni',
+            conversationsTitle: 'Conversazioni',
+            analyticsTitle: 'Analitiche',
+            typing: 'IA sta scrivendo...',
+            connecting: 'Connessione...',
+            error: 'Si è verificato un errore',
+            noMessages: 'Nessun messaggio ancora',
+            dragDropText: 'Trascina i file qui o sfoglia',
+            fileUploadError: 'Caricamento file fallito',
+            fileSizeError: 'File troppo grande',
+            fileTypeError: 'Tipo di file non supportato',
+            listeningText: 'In ascolto...',
+            speakingText: 'Parlando...',
+            voiceError: 'Funzione vocale non disponibile',
+            quickActionsTitle: 'Azioni Rapide',
+            totalMessages: 'Messaggi Totali',
+            averageResponseTime: 'Tempo di Risposta Medio',
+            userSatisfaction: 'Soddisfazione Utente',
+            newConversation: 'Nuova Conversazione',
+            saveConversation: 'Salva Conversazione',
+            loadConversation: 'Carica Conversazione',
+            deleteConversation: 'Elimina Conversazione',
+            searchConversations: 'Cerca conversazioni...'
+          }
+        };
+
+        this.enhancedChatOptions.texts = languageTexts[newLanguage] || languageTexts.en;
+      },
+      immediate: true
     }
   }
 }

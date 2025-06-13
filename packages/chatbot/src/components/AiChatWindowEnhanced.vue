@@ -3,7 +3,7 @@
     <!-- Enhanced Header with Features -->
     <div class="chat-header">
       <div class="header-left">
-        <h3 class="chat-title">{{ title }}</h3>
+        <h3 class="chat-title">{{ texts.title || title }}</h3>
         <div v-if="currentModel" class="model-indicator">
           <span class="model-badge">{{ currentModel }}</span>
         </div>
@@ -259,8 +259,8 @@
         >
         
         <div v-if="selectedFiles.length === 0" class="drop-message">
-          Drop files here or 
-          <button @click="$refs.fileInput.click()" class="file-select-btn">browse</button>
+          {{ texts.dragDropText }}
+          <button @click="fileInput?.click()" class="file-select-btn">browse</button>
         </div>
         
         <div v-else class="selected-files">
@@ -283,7 +283,7 @@
             v-model="currentMessage"
             @keydown="handleKeyDown"
             @input="handleInput"
-            :placeholder="placeholder"
+            :placeholder="texts.placeholder || placeholder"
             :disabled="isLoading"
             class="message-input"
             rows="1"
@@ -292,37 +292,37 @@
           <!-- Voice Recording Indicator -->
           <div v-if="isListening" class="voice-recording">
             <div class="recording-indicator"></div>
-            <span>Listening...</span>
+            <span>{{ texts.listeningText }}</span>
           </div>
         </div>
 
         <div class="input-actions">
           <!-- File Upload Button -->
-          <button 
+          <button
             v-if="fileUploadEnabled"
-            @click="$refs.fileInput.click()"
+            @click="fileInput?.click()"
             class="action-btn file-btn"
-            title="Attach files"
+            :title="texts.fileButton"
           >
             📎
           </button>
-          
+
           <!-- Voice Input Button -->
-          <button 
+          <button
             v-if="voiceEnabled"
             @click="toggleListening"
             :class="['action-btn', 'voice-btn', { active: isListening }]"
-            :title="isListening ? 'Stop listening' : 'Voice input'"
+            :title="isListening ? texts.listeningText : texts.voiceButton"
           >
             🎤
           </button>
-          
+
           <!-- Send Button -->
-          <button 
+          <button
             @click="sendMessage"
             :disabled="!canSend"
             class="send-btn"
-            title="Send message"
+            :title="texts.sendButton"
           >
             <span v-if="!isLoading">➤</span>
             <div v-else class="loading-spinner"></div>
@@ -341,21 +341,21 @@
     <!-- Analytics Panel -->
     <div v-if="showAnalytics && analyticsData" class="analytics-panel">
       <div class="analytics-header">
-        <h4>Usage Analytics</h4>
+        <h4>{{ texts.analyticsTitle }}</h4>
         <button @click="showAnalytics = false" class="close-btn">×</button>
       </div>
-      
+
       <div class="analytics-content">
         <div class="metric">
-          <span class="metric-label">Total Messages:</span>
+          <span class="metric-label">{{ texts.totalMessages }}:</span>
           <span class="metric-value">{{ analyticsData.totalMessages }}</span>
         </div>
-        
+
         <div class="metric">
-          <span class="metric-label">Avg Response Time:</span>
+          <span class="metric-label">{{ texts.averageResponseTime }}:</span>
           <span class="metric-value">{{ analyticsData.averageResponseTime.toFixed(2) }}s</span>
         </div>
-        
+
         <div class="metric">
           <span class="metric-label">Conversations:</span>
           <span class="metric-value">{{ analyticsData.totalConversations }}</span>
@@ -369,6 +369,62 @@
 import { ref, computed, onMounted, watch, nextTick } from 'vue';
 import { useChatEngine, type ChatOptions, type Message } from '../composables/useChatEngine';
 
+// Language/Internationalization interface
+interface LanguageTexts {
+  // Header texts
+  title?: string;
+  modelIndicator?: string;
+
+  // Input area texts
+  placeholder?: string;
+  sendButton?: string;
+  voiceButton?: string;
+  fileButton?: string;
+
+  // Message texts
+  copyButton?: string;
+  retryButton?: string;
+  deleteButton?: string;
+  editButton?: string;
+
+  // Settings texts
+  settingsTitle?: string;
+  conversationsTitle?: string;
+  analyticsTitle?: string;
+
+  // Status texts
+  typing?: string;
+  connecting?: string;
+  error?: string;
+  noMessages?: string;
+
+  // File upload texts
+  dragDropText?: string;
+  fileUploadError?: string;
+  fileSizeError?: string;
+  fileTypeError?: string;
+
+  // Voice texts
+  listeningText?: string;
+  speakingText?: string;
+  voiceError?: string;
+
+  // Quick actions
+  quickActionsTitle?: string;
+
+  // Analytics texts
+  totalMessages?: string;
+  averageResponseTime?: string;
+  userSatisfaction?: string;
+
+  // Conversation management
+  newConversation?: string;
+  saveConversation?: string;
+  loadConversation?: string;
+  deleteConversation?: string;
+  searchConversations?: string;
+}
+
 // Props with enhanced options
 interface Props {
   // Core props (backward compatible)
@@ -376,12 +432,21 @@ interface Props {
   apiKey?: string;
   model?: string;
   baseUrl?: string;
+  organizationId?: string;
   title?: string;
   placeholder?: string;
   theme?: 'light' | 'dark';
   height?: string;
   width?: string;
   maxWidth?: string;
+
+  // Proxy configuration (NEW)
+  useProxy?: boolean;
+  proxyUrl?: string;
+
+  // Language/Internationalization (NEW)
+  language?: string;
+  texts?: LanguageTexts;
 
   // Enhanced props (optional)
   user?: {
@@ -454,6 +519,9 @@ const props = withDefaults(defineProps<Props>(), {
   height: '600px',
   width: '100%',
   maxWidth: '800px',
+  useProxy: false,
+  proxyUrl: '/api/chat',
+  language: 'en',
   showAvatars: true,
   showTimestamps: false,
   showCopyButton: true,
@@ -461,7 +529,8 @@ const props = withDefaults(defineProps<Props>(), {
   allowedFileTypes: () => ['.pdf', '.txt', '.doc', '.docx', '.jpg', '.png', '.mp3', '.wav'],
   quickActions: () => [],
   demoMode: false,
-  demoResponses: () => ({})
+  demoResponses: () => ({}),
+  texts: () => ({})
 });
 
 // Emits
@@ -472,6 +541,48 @@ const emit = defineEmits<{
   conversationSaved: [conversationId: string];
   fileUploaded: [files: File[]];
 }>();
+
+// Default language texts
+const defaultTexts: LanguageTexts = {
+  title: 'AI Chat',
+  placeholder: 'Type your message...',
+  sendButton: 'Send',
+  voiceButton: 'Voice input',
+  fileButton: 'Attach files',
+  copyButton: 'Copy',
+  retryButton: 'Retry',
+  deleteButton: 'Delete',
+  editButton: 'Edit',
+  settingsTitle: 'Settings',
+  conversationsTitle: 'Conversations',
+  analyticsTitle: 'Analytics',
+  typing: 'AI is typing...',
+  connecting: 'Connecting...',
+  error: 'An error occurred',
+  noMessages: 'No messages yet',
+  dragDropText: 'Drop files here or browse',
+  fileUploadError: 'File upload failed',
+  fileSizeError: 'File size too large',
+  fileTypeError: 'File type not supported',
+  listeningText: 'Listening...',
+  speakingText: 'Speaking...',
+  voiceError: 'Voice feature unavailable',
+  quickActionsTitle: 'Quick Actions',
+  totalMessages: 'Total Messages',
+  averageResponseTime: 'Avg Response Time',
+  userSatisfaction: 'User Satisfaction',
+  newConversation: 'New Conversation',
+  saveConversation: 'Save Conversation',
+  loadConversation: 'Load Conversation',
+  deleteConversation: 'Delete Conversation',
+  searchConversations: 'Search conversations...'
+};
+
+// Computed texts with fallbacks
+const texts = computed(() => ({
+  ...defaultTexts,
+  ...props.texts
+}));
 
 // Reactive state
 const currentMessage = ref('');
@@ -509,8 +620,13 @@ const chatOptions: ChatOptions = {
   apiKey: props.apiKey,
   model: props.model,
   baseUrl: props.baseUrl,
+  organizationId: props.organizationId,
   demoMode: props.demoMode,
   demoResponses: props.demoResponses,
+
+  // Proxy support (NEW)
+  useProxy: props.useProxy,
+  proxyUrl: props.proxyUrl,
 
   // Enhanced options (only included if provided)
   ...(props.user && { user: props.user }),
