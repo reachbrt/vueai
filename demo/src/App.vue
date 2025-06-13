@@ -2252,6 +2252,8 @@ p {
   bottom: 0;
   background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="triangles" width="40" height="40" patternUnits="userSpaceOnUse"><polygon points="20,5 35,35 5,35" fill="none" stroke="rgba(59,130,246,0.05)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23triangles)"/></svg>');
   opacity: 0.3;
+  pointer-events: none;
+  z-index: -1;
 }
 
 /* Welcome Section */
@@ -2493,6 +2495,8 @@ p {
   bottom: 0;
   background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="waves" width="50" height="50" patternUnits="userSpaceOnUse"><path d="M0,25 Q12.5,10 25,25 T50,25" fill="none" stroke="rgba(59,130,246,0.05)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23waves)"/></svg>');
   opacity: 0.3;
+  pointer-events: none;
+  z-index: -1;
 }
 
 /* Component Hero Sections */
@@ -2703,12 +2707,16 @@ p {
   background: #f8fafc;
   border-radius: 12px;
   border: 1px solid #e2e8f0;
+  position: relative;
+  z-index: 1;
 }
 
 .option-group {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  position: relative;
+  z-index: 2;
 }
 
 .option-group.checkbox {
