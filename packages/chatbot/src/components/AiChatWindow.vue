@@ -49,7 +49,7 @@
                 class="ai-chat-window__copy-button"
                 @click="copyToClipboard(message.content)"
               >
-                Copy
+                {{ texts.copyButton }}
               </button>
             </div>
           </div>
@@ -72,13 +72,13 @@
 
       <div v-if="isLoading" class="ai-chat-window__loading">
         <slot name="loading">
-          <div class="ai-chat-window__loading-text">{{ loadingText }}</div>
+          <div class="ai-chat-window__loading-text">{{ texts.typing || loadingText }}</div>
         </slot>
       </div>
 
       <div v-if="error" class="ai-chat-window__error">
         <slot name="error" :error="error">
-          <div class="ai-chat-window__error-text">{{ errorText }}</div>
+          <div class="ai-chat-window__error-text">{{ texts.error || errorText }}</div>
         </slot>
       </div>
 
@@ -102,7 +102,7 @@
             class="ai-chat-window__attachment-button"
             @click="handleAttachmentClick"
             :disabled="isLoading"
-            title="Attach file"
+            :title="texts.attachButton"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
               <path d="M16.5 6v11.5c0 2.21-1.79 4-4 4s-4-1.79-4-4V5c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5v10.5c0 .55-.45 1-1 1s-1-.45-1-1V6H10v9.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V5c0-2.21-1.79-4-4-4S7 2.79 7 5v12.5c0 3.04 2.46 5.5 5.5 5.5s5.5-2.46 5.5-5.5V6h-1.5z"/>
@@ -115,7 +115,7 @@
             @click="handleVoiceClick"
             :disabled="isLoading"
             :class="{ 'ai-chat-window__voice-button--recording': isRecording }"
-            title="Voice message"
+            :title="isRecording ? texts.listeningText : texts.voiceButton"
           >
             <svg v-if="!isRecording" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/>
@@ -128,7 +128,7 @@
           <textarea
             v-model="userInput"
             class="ai-chat-window__input"
-            :placeholder="placeholder"
+            :placeholder="texts.placeholder || placeholder"
             :disabled="isLoading"
             @keydown.enter.prevent="handleKeyDown"
             ref="inputElement"
@@ -139,7 +139,7 @@
             class="ai-chat-window__send-button"
             @click="handleSendMessage"
             :disabled="isLoading || isProcessingAttachments || (!userInput.trim() && attachments.length === 0)"
-            title="Send message"
+            :title="texts.sendButton"
           >
             <svg v-if="!isLoading" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
               <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
@@ -223,7 +223,7 @@
           class="ai-chat-window__clear-button"
           @click="clearMessages"
         >
-          Clear Chat
+          {{ texts.clearButton }}
         </button>
       </slot>
     </div>
@@ -272,6 +272,16 @@ const props = defineProps({
   proxyUrl: {
     type: String,
     default: '/api/chat'
+  },
+
+  // Language/Internationalization options
+  language: {
+    type: String,
+    default: 'en'
+  },
+  texts: {
+    type: Object as PropType<Record<string, string>>,
+    default: () => ({})
   },
 
   // Demo mode
@@ -382,6 +392,141 @@ const isProcessingAttachments = ref(false);
 if (!props.client && !props.provider) {
   console.error('Either client or provider must be specified in AiChatWindow props');
 }
+
+// Default language texts
+const defaultTexts = {
+  title: 'Chat',
+  placeholder: 'Type a message...',
+  sendButton: 'Send',
+  copyButton: 'Copy',
+  retryButton: 'Retry',
+  clearButton: 'Clear',
+  attachButton: 'Attach file',
+  voiceButton: 'Voice input',
+  typing: 'Thinking...',
+  error: 'An error occurred. Please try again.',
+  noMessages: 'No messages yet',
+  dragDropText: 'Drop files here or browse',
+  fileUploadError: 'File upload failed',
+  fileSizeError: 'File size too large',
+  fileTypeError: 'File type not supported',
+  listeningText: 'Listening...',
+  speakingText: 'Speaking...',
+  voiceError: 'Voice feature unavailable'
+};
+
+// Language texts with built-in translations
+const languageTexts = {
+  en: {
+    title: 'Chat',
+    placeholder: 'Type a message...',
+    sendButton: 'Send',
+    copyButton: 'Copy',
+    retryButton: 'Retry',
+    clearButton: 'Clear',
+    attachButton: 'Attach file',
+    voiceButton: 'Voice input',
+    typing: 'Thinking...',
+    error: 'An error occurred. Please try again.',
+    noMessages: 'No messages yet',
+    dragDropText: 'Drop files here or browse',
+    fileUploadError: 'File upload failed',
+    fileSizeError: 'File size too large',
+    fileTypeError: 'File type not supported',
+    listeningText: 'Listening...',
+    speakingText: 'Speaking...',
+    voiceError: 'Voice feature unavailable'
+  },
+  es: {
+    title: 'Chat',
+    placeholder: 'Escribe un mensaje...',
+    sendButton: 'Enviar',
+    copyButton: 'Copiar',
+    retryButton: 'Reintentar',
+    clearButton: 'Limpiar',
+    attachButton: 'Adjuntar archivo',
+    voiceButton: 'Entrada de voz',
+    typing: 'Pensando...',
+    error: 'Ocurrió un error. Inténtalo de nuevo.',
+    noMessages: 'No hay mensajes aún',
+    dragDropText: 'Arrastra archivos aquí o navega',
+    fileUploadError: 'Error al subir archivo',
+    fileSizeError: 'Archivo demasiado grande',
+    fileTypeError: 'Tipo de archivo no soportado',
+    listeningText: 'Escuchando...',
+    speakingText: 'Hablando...',
+    voiceError: 'Función de voz no disponible'
+  },
+  fr: {
+    title: 'Chat',
+    placeholder: 'Tapez un message...',
+    sendButton: 'Envoyer',
+    copyButton: 'Copier',
+    retryButton: 'Réessayer',
+    clearButton: 'Effacer',
+    attachButton: 'Joindre un fichier',
+    voiceButton: 'Entrée vocale',
+    typing: 'Réflexion...',
+    error: 'Une erreur s\'est produite. Veuillez réessayer.',
+    noMessages: 'Pas encore de messages',
+    dragDropText: 'Déposez les fichiers ici ou parcourez',
+    fileUploadError: 'Échec du téléchargement',
+    fileSizeError: 'Fichier trop volumineux',
+    fileTypeError: 'Type de fichier non pris en charge',
+    listeningText: 'Écoute...',
+    speakingText: 'Parle...',
+    voiceError: 'Fonction vocale indisponible'
+  },
+  de: {
+    title: 'Chat',
+    placeholder: 'Nachricht eingeben...',
+    sendButton: 'Senden',
+    copyButton: 'Kopieren',
+    retryButton: 'Wiederholen',
+    clearButton: 'Löschen',
+    attachButton: 'Datei anhängen',
+    voiceButton: 'Spracheingabe',
+    typing: 'Denkt nach...',
+    error: 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.',
+    noMessages: 'Noch keine Nachrichten',
+    dragDropText: 'Dateien hier ablegen oder durchsuchen',
+    fileUploadError: 'Datei-Upload fehlgeschlagen',
+    fileSizeError: 'Datei zu groß',
+    fileTypeError: 'Dateityp nicht unterstützt',
+    listeningText: 'Hört zu...',
+    speakingText: 'Spricht...',
+    voiceError: 'Sprachfunktion nicht verfügbar'
+  },
+  it: {
+    title: 'Chat',
+    placeholder: 'Digita un messaggio...',
+    sendButton: 'Invia',
+    copyButton: 'Copia',
+    retryButton: 'Riprova',
+    clearButton: 'Cancella',
+    attachButton: 'Allega file',
+    voiceButton: 'Input vocale',
+    typing: 'Pensando...',
+    error: 'Si è verificato un errore. Riprova.',
+    noMessages: 'Nessun messaggio ancora',
+    dragDropText: 'Trascina i file qui o sfoglia',
+    fileUploadError: 'Caricamento file fallito',
+    fileSizeError: 'File troppo grande',
+    fileTypeError: 'Tipo di file non supportato',
+    listeningText: 'In ascolto...',
+    speakingText: 'Parlando...',
+    voiceError: 'Funzione vocale non disponibile'
+  }
+};
+
+// Computed texts with fallbacks
+const texts = computed(() => {
+  const baseTexts = languageTexts[props.language as keyof typeof languageTexts] || languageTexts.en;
+  return {
+    ...baseTexts,
+    ...props.texts
+  };
+});
 
 // Configure chat options
 const chatOptions = computed(() => ({

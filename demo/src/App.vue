@@ -362,6 +362,29 @@
                   <label for="chatMarkdown">Enable Markdown</label>
                 </div>
               </div>
+
+              <div class="option-group checkbox">
+                <div class="styled-checkbox">
+                  <input type="checkbox" id="chatUseProxy" v-model="chatOptions.useProxy" />
+                  <label for="chatUseProxy">Use Proxy</label>
+                </div>
+              </div>
+
+              <div class="option-group" v-if="chatOptions.useProxy">
+                <label for="chatProxyUrl">Proxy URL:</label>
+                <input type="text" id="chatProxyUrl" v-model="chatOptions.proxyUrl" class="styled-input" />
+              </div>
+
+              <div class="option-group">
+                <label for="chatLanguage">Language:</label>
+                <select id="chatLanguage" v-model="chatOptions.language" @change="updateChatLanguage" class="styled-select">
+                  <option value="en">English</option>
+                  <option value="es">Español</option>
+                  <option value="fr">Français</option>
+                  <option value="de">Deutsch</option>
+                  <option value="it">Italiano</option>
+                </select>
+              </div>
             </div>
 
             <div class="option-group full-width">
@@ -391,6 +414,10 @@
                 :streaming="chatOptions.streaming"
                 :markdown="chatOptions.markdown"
                 :system-prompt="chatOptions.systemPrompt"
+                :use-proxy="chatOptions.useProxy"
+                :proxy-url="chatOptions.proxyUrl"
+                :language="chatOptions.language"
+                :texts="chatOptions.texts"
               />
             </div>
 
@@ -728,7 +755,21 @@ export default {
         streaming: true,
         fullHeight: false,
         markdown: true,
-        systemPrompt: 'You are a helpful AI assistant. Answer questions concisely and accurately.'
+        systemPrompt: 'You are a helpful AI assistant. Answer questions concisely and accurately.',
+        useProxy: false,
+        proxyUrl: '/api/chat',
+        language: 'en',
+        texts: {
+          title: 'AI Assistant',
+          placeholder: 'Ask me anything...',
+          sendButton: 'Send',
+          copyButton: 'Copy',
+          clearButton: 'Clear Chat',
+          attachButton: 'Attach file',
+          voiceButton: 'Voice input',
+          typing: 'Thinking...',
+          error: 'An error occurred. Please try again.'
+        }
       },
       enhancedChatOptions: {
         useProxy: false,
@@ -1348,6 +1389,69 @@ export default {
       };
 
       return descriptions[tabId] || '';
+    },
+
+    updateChatLanguage() {
+      // Update texts based on selected language for regular chatbot
+      const languageTexts = {
+        en: {
+          title: 'AI Assistant',
+          placeholder: 'Ask me anything...',
+          sendButton: 'Send',
+          copyButton: 'Copy',
+          clearButton: 'Clear Chat',
+          attachButton: 'Attach file',
+          voiceButton: 'Voice input',
+          typing: 'Thinking...',
+          error: 'An error occurred. Please try again.'
+        },
+        es: {
+          title: 'Asistente IA',
+          placeholder: 'Pregúntame cualquier cosa...',
+          sendButton: 'Enviar',
+          copyButton: 'Copiar',
+          clearButton: 'Limpiar Chat',
+          attachButton: 'Adjuntar archivo',
+          voiceButton: 'Entrada de voz',
+          typing: 'Pensando...',
+          error: 'Ocurrió un error. Inténtalo de nuevo.'
+        },
+        fr: {
+          title: 'Assistant IA',
+          placeholder: 'Demandez-moi n\'importe quoi...',
+          sendButton: 'Envoyer',
+          copyButton: 'Copier',
+          clearButton: 'Effacer le Chat',
+          attachButton: 'Joindre un fichier',
+          voiceButton: 'Entrée vocale',
+          typing: 'Réflexion...',
+          error: 'Une erreur s\'est produite. Veuillez réessayer.'
+        },
+        de: {
+          title: 'KI-Assistent',
+          placeholder: 'Fragen Sie mich alles...',
+          sendButton: 'Senden',
+          copyButton: 'Kopieren',
+          clearButton: 'Chat löschen',
+          attachButton: 'Datei anhängen',
+          voiceButton: 'Spracheingabe',
+          typing: 'Denkt nach...',
+          error: 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.'
+        },
+        it: {
+          title: 'Assistente IA',
+          placeholder: 'Chiedimi qualsiasi cosa...',
+          sendButton: 'Invia',
+          copyButton: 'Copia',
+          clearButton: 'Cancella Chat',
+          attachButton: 'Allega file',
+          voiceButton: 'Input vocale',
+          typing: 'Pensando...',
+          error: 'Si è verificato un errore. Riprova.'
+        }
+      };
+
+      this.chatOptions.texts = languageTexts[this.chatOptions.language] || languageTexts.en;
     }
   },
 
