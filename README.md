@@ -578,3 +578,7 @@ npm run publish:packages
     <p>GitHub: <a href="https://github.com/reachbrt" target="_blank">github.com/reachbrt</a></p>
   </div>
 </div>
+
+## ⭐ Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=reachbrt/vueai&type=Date)](https://star-history.com/#reachbrt/vueai&Date)
