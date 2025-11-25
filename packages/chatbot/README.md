@@ -1630,3 +1630,7 @@ AI-powered image captioning with OpenAI Vision models
 ## 📄 License
 
 MIT © [Bharatkumar Subramanian](https://github.com/reachbrt)
+
+## ⭐ Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=reachbrt/vueai&type=Date)](https://star-history.com/#reachbrt/vueai&Date)
