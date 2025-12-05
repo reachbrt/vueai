@@ -302,6 +302,43 @@ const suggestHashtags = (result) => {
 
 We welcome contributions! Please see our [Contributing Guide](../../CONTRIBUTING.md) for details.
 
+## 📦 Related Packages
+
+Explore the complete @aivue ecosystem:
+
+### 🧠 [@aivue/core](https://www.npmjs.com/package/@aivue/core)
+Core AI functionality for Vue.js components
+
+### 💬 [@aivue/chatbot](https://www.npmjs.com/package/@aivue/chatbot)
+AI-powered chat components for Vue.js
+
+### ✨ [@aivue/autosuggest](https://www.npmjs.com/package/@aivue/autosuggest)
+AI-powered suggestion components for Vue.js
+
+### 📝 [@aivue/smartform](https://www.npmjs.com/package/@aivue/smartform)
+AI-powered form validation for Vue.js
+
+### 🎭 [@aivue/emotion-ui](https://www.npmjs.com/package/@aivue/emotion-ui)
+Emotion-aware UI components with sentiment analysis
+
+### 📄 [@aivue/doc-intelligence](https://www.npmjs.com/package/@aivue/doc-intelligence)
+Document processing and OCR with AI
+
+### 🧠 [@aivue/predictive-input](https://www.npmjs.com/package/@aivue/predictive-input)
+AI-powered predictive text input
+
+### 🔔 [@aivue/smart-notify](https://www.npmjs.com/package/@aivue/smart-notify)
+Intelligent notification system
+
+### 🎤 [@aivue/voice-actions](https://www.npmjs.com/package/@aivue/voice-actions)
+Voice command integration
+
+### 📋 [@aivue/smart-datatable](https://www.npmjs.com/package/@aivue/smart-datatable)
+Advanced data table components
+
+### 📊 [@aivue/analytics](https://www.npmjs.com/package/@aivue/analytics)
+AI-powered analytics and insights
+
 ## 📄 License
 
 MIT License - see [LICENSE](../../LICENSE) for details.

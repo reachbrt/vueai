@@ -362,28 +362,40 @@ Check out our [interactive demo](https://aivue-demo.netlify.app/smartform) to se
 
 ## 📦 Related Packages
 
-<div class="related-packages">
-  <a href="https://www.npmjs.com/package/@aivue/core" class="package-card" target="_blank">
-    <h4><span class="package-icon">🧠</span> @aivue/core</h4>
-    <div class="package-content">
-      <p>Core AI functionality for Vue.js components</p>
-    </div>
-  </a>
+Explore the complete @aivue ecosystem:
 
-  <a href="https://www.npmjs.com/package/@aivue/chatbot" class="package-card" target="_blank">
-    <h4><span class="package-icon">💬</span> @aivue/chatbot</h4>
-    <div class="package-content">
-      <p>AI-powered chat components for Vue.js</p>
-    </div>
-  </a>
+### 🧠 [@aivue/core](https://www.npmjs.com/package/@aivue/core)
+Core AI functionality for Vue.js components
 
-  <a href="https://www.npmjs.com/package/@aivue/autosuggest" class="package-card" target="_blank">
-    <h4><span class="package-icon">✨</span> @aivue/autosuggest</h4>
-    <div class="package-content">
-      <p>AI-powered suggestion components for Vue.js</p>
-    </div>
-  </a>
-</div>
+### 💬 [@aivue/chatbot](https://www.npmjs.com/package/@aivue/chatbot)
+AI-powered chat components for Vue.js
+
+### ✨ [@aivue/autosuggest](https://www.npmjs.com/package/@aivue/autosuggest)
+AI-powered suggestion components for Vue.js
+
+### 🎭 [@aivue/emotion-ui](https://www.npmjs.com/package/@aivue/emotion-ui)
+Emotion-aware UI components with sentiment analysis
+
+### 📄 [@aivue/doc-intelligence](https://www.npmjs.com/package/@aivue/doc-intelligence)
+Document processing and OCR with AI
+
+### 🧠 [@aivue/predictive-input](https://www.npmjs.com/package/@aivue/predictive-input)
+AI-powered predictive text input
+
+### 🔔 [@aivue/smart-notify](https://www.npmjs.com/package/@aivue/smart-notify)
+Intelligent notification system
+
+### 🎤 [@aivue/voice-actions](https://www.npmjs.com/package/@aivue/voice-actions)
+Voice command integration
+
+### 📋 [@aivue/smart-datatable](https://www.npmjs.com/package/@aivue/smart-datatable)
+Advanced data table components
+
+### 🖼️ [@aivue/image-caption](https://www.npmjs.com/package/@aivue/image-caption)
+AI-powered image captioning with OpenAI Vision models
+
+### 📊 [@aivue/analytics](https://www.npmjs.com/package/@aivue/analytics)
+AI-powered analytics and insights
 
 ## License
 
