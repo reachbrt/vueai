@@ -1,6 +1,6 @@
 {
   "name": "@aivue/predictive-input",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "AI-powered predictive text input for Vue 3 - Learns writing patterns, suggests complete sentences with context-aware predictions and multi-language support",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -84,4 +84,3 @@
     "vue": "^3.5.0"
   }
 }
-
