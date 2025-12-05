@@ -1,7 +1,7 @@
 {
   "name": "@aivue/chatbot",
-  "version": "2.4.2",
-  "description": "AI-powered chat components for Vue.js",
+  "version": "2.5.0",
+  "description": "AI-powered chat components for Vue.js with RAG (Retrieval-Augmented Generation) support",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
@@ -46,7 +46,11 @@
     "chat",
     "conversation",
     "ui",
-    "components"
+    "components",
+    "rag",
+    "retrieval-augmented-generation",
+    "knowledge-base",
+    "document-processing"
   ],
   "author": "Bharatkumar Subramanian <reachbrt@gmail.com>",
   "license": "MIT",

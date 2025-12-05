@@ -155,6 +155,16 @@ export interface ChatOptions {
     batchProcessing?: boolean;
   };
 
+  // RAG (Retrieval-Augmented Generation) (optional)
+  rag?: {
+    enabled?: boolean;
+    knowledgeBase?: any[]; // RAGDocument[] from useRAG
+    chunkSize?: number;
+    topK?: number;
+    retrieveContext?: (query: string) => any; // Function to retrieve context
+    contextTemplate?: string; // Custom template for context injection
+  };
+
   // Callbacks
   onError?: ((error: Error) => void) | null;
   onMessageSent?: ((message: Message) => void) | null;
@@ -420,9 +430,33 @@ export function useChatEngine(options: ChatOptions): ChatEngineReturn {
     isLoading.value = true;
 
     try {
+      // OPTIONAL: RAG context injection
+      let enhancedSystemPrompt = systemPrompt;
+      let enhancedUserMessage = content;
+
+      if (options.rag?.enabled && options.rag.retrieveContext) {
+        try {
+          const retrievalResult = options.rag.retrieveContext(content);
+
+          if (retrievalResult.chunks && retrievalResult.chunks.length > 0) {
+            // Build RAG context
+            const contextTemplate = options.rag.contextTemplate ||
+              `Context from knowledge base:\n\n{context}\n\nPlease use the above context to answer the following question. If the context doesn't contain relevant information, you can use your general knowledge but mention that the information is not from the provided documents.`;
+
+            const ragContext = contextTemplate.replace('{context}', retrievalResult.context);
+
+            // Inject context into system prompt
+            enhancedSystemPrompt = `${systemPrompt}\n\n${ragContext}`;
+          }
+        } catch (ragError) {
+          console.warn('RAG context retrieval failed:', ragError);
+          // Continue without RAG context
+        }
+      }
+
       // Prepare messages for the AI
       const messagesToSend: CoreMessage[] = [
-        { role: 'system', content: systemPrompt },
+        { role: 'system', content: enhancedSystemPrompt },
         ...messages.value.filter(msg => msg.role === 'user' || msg.role === 'assistant')
           .map(({ role, content }) => ({ role, content }))
       ];

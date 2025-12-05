@@ -499,9 +499,11 @@
           </div>
       </section>
 
-
-
-
+      <section v-if="activeTab === 'rag'" class="component-section">
+        <div class="demo-container">
+          <RAGDemo />
+        </div>
+      </section>
 
       <section v-if="activeTab === 'autosuggest'" class="component-section">
         <div class="demo-container">
@@ -857,7 +859,7 @@ import PredictiveInputDemo from './components/PredictiveInputDemo.vue';
 import SmartNotifyDemo from './components/SmartNotifyDemo.vue';
 import AnalyticsDemo from './components/AnalyticsDemo.vue';
 import ImageCaptionDemo from './components/ImageCaptionDemo.vue';
-
+import RAGDemo from './components/RAGDemo.vue';
 
 import TypeScriptExample from './components/TypeScriptExample.vue';
 import OllamaDemo from './components/OllamaDemo.vue';
@@ -880,7 +882,7 @@ export default {
     SmartNotifyDemo,
     AnalyticsDemo,
     ImageCaptionDemo,
-
+    RAGDemo,
 
     TypeScriptExample,
     OllamaDemo,
@@ -931,8 +933,11 @@ export default {
           name: 'Chatbot',
           icon: '💬'
         },
-
-
+        {
+          id: 'rag',
+          name: 'RAG',
+          icon: '📚'
+        },
         {
           id: 'autosuggest',
           name: 'Autosuggest',
@@ -1638,6 +1643,7 @@ export default {
     getWelcomeDescription(tabId) {
       const descriptions = {
         'chatbot': 'Integrate powerful conversational AI into your Vue applications with customizable chat interfaces.',
+        'rag': 'Retrieval-Augmented Generation: Upload documents or add URLs to create a knowledge base. The chatbot uses this information to provide accurate, context-aware responses.',
         'autosuggest': 'Enhance user input with AI-powered suggestions that adapt to context and user behavior.',
         'smartform': 'Create intelligent forms with AI validation, suggestions, and data analysis capabilities.',
         'smart-datatable': 'Display and manage data with AI-powered sorting, filtering, search, and insights for data-heavy applications.',

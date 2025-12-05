@@ -60,8 +60,45 @@ graph TD
 | 🔒 **Proxy Support** | Secure API requests through proxy servers | ✅ New in v2.3.0 |
 | 🌍 **Internationalization** | 5 languages with customizable texts | ✅ New in v2.3.0 |
 | 🧹 **Simplified Architecture** | Single component for all features | ✅ New in v2.3.0 |
+| 📚 **RAG Support** | Retrieval-Augmented Generation with knowledge base | ✅ New in v2.5.0 |
 
-[📺 Live Demo](https://aivue.netlify.app/) • [📚 Documentation](https://github.com/reachbrt/vueai/wiki) • [� Report Bug](https://github.com/reachbrt/vueai/issues/new)
+## 🎯 **What's New in v2.5.0**
+
+### 📚 **RAG (Retrieval-Augmented Generation)**
+
+Revolutionary knowledge base integration that allows your chatbot to answer questions based on your documents!
+
+- **📄 Document Upload**: Upload text files, PDFs, and documents to create a knowledge base
+- **🔗 URL Scraping**: Add web pages as knowledge sources
+- **🧠 Smart Retrieval**: Automatically finds relevant information from your documents
+- **💡 Context Injection**: Seamlessly integrates document context into AI responses
+- **💾 Persistent Storage**: Knowledge base saved to localStorage
+- **🎯 Relevance Scoring**: TF-IDF based ranking for accurate context retrieval
+- **🔧 Customizable**: Configure chunk size, overlap, and retrieval parameters
+
+**Quick Example:**
+
+```vue
+<template>
+  <AiChatRAG
+    provider="openai"
+    :api-key="apiKey"
+    model="gpt-4o"
+    :rag-config="{
+      enabled: true,
+      topK: 3,
+      chunkSize: 500
+    }"
+  />
+</template>
+
+<script setup>
+import { AiChatRAG } from '@aivue/chatbot';
+const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
+</script>
+```
+
+[📺 Live Demo](https://aivue.netlify.app/) • [📚 Documentation](https://github.com/reachbrt/vueai/wiki) • [🐛 Report Bug](https://github.com/reachbrt/vueai/issues/new)
 
 ## ✨ Overview
 
@@ -1276,6 +1313,289 @@ function sendMessage() {
     input.value = '';
   }
 }
+</script>
+```
+
+## 📚 RAG (Retrieval-Augmented Generation)
+
+RAG allows your chatbot to answer questions based on your own documents and knowledge base. Upload PDFs, text files, or add URLs, and the chatbot will automatically retrieve relevant information to provide accurate, context-aware responses.
+
+### Quick Start with RAG
+
+The easiest way to use RAG is with the `AiChatRAG` component:
+
+```vue
+<template>
+  <AiChatRAG
+    provider="openai"
+    :api-key="apiKey"
+    model="gpt-4o"
+    title="AI Assistant with Knowledge Base"
+    :rag-config="{
+      chunkSize: 500,
+      topK: 3,
+      storageKey: 'my-knowledge-base'
+    }"
+  />
+</template>
+
+<script setup>
+import { AiChatRAG } from '@aivue/chatbot';
+import '@aivue/chatbot/style.css';
+
+const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
+</script>
+```
+
+### Using the useRAG Composable
+
+For more control, use the `useRAG` composable:
+
+```vue
+<template>
+  <div>
+    <!-- Knowledge Base Management -->
+    <div class="knowledge-base">
+      <h3>📚 Knowledge Base</h3>
+
+      <!-- Upload Files -->
+      <input
+        type="file"
+        @change="handleFileUpload"
+        accept=".txt,.md"
+        multiple
+      />
+
+      <!-- Add URL -->
+      <input
+        v-model="urlInput"
+        type="url"
+        placeholder="Add URL..."
+        @keyup.enter="handleAddUrl"
+      />
+      <button @click="handleAddUrl">Add URL</button>
+
+      <!-- Document List -->
+      <div v-for="doc in knowledgeBase" :key="doc.id">
+        {{ doc.name }} - {{ doc.chunks.length }} chunks
+        <button @click="removeDocument(doc.id)">Remove</button>
+      </div>
+    </div>
+
+    <!-- Chatbot with RAG -->
+    <AiChatWindow
+      provider="openai"
+      :api-key="apiKey"
+      model="gpt-4o"
+      :system-prompt="ragSystemPrompt"
+      @message-sent="handleMessageWithRAG"
+    />
+  </div>
+</template>
+
+<script setup>
+import { ref, computed } from 'vue';
+import { AiChatWindow, useRAG } from '@aivue/chatbot';
+import '@aivue/chatbot/style.css';
+
+const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
+const urlInput = ref('');
+
+// Initialize RAG
+const {
+  knowledgeBase,
+  isProcessing,
+  error,
+  addDocument,
+  addUrl,
+  addText,
+  removeDocument,
+  clearKnowledgeBase,
+  retrieveContext,
+  totalDocuments,
+  totalChunks
+} = useRAG({
+  chunkSize: 500,
+  overlap: 50,
+  topK: 3,
+  storageKey: 'my-rag-kb',
+  autoSave: true
+});
+
+// Enhanced system prompt
+const ragSystemPrompt = computed(() => {
+  if (knowledgeBase.value.length === 0) {
+    return 'You are a helpful assistant.';
+  }
+
+  const docList = knowledgeBase.value.map(d => d.name).join(', ');
+  return `You are a helpful assistant with access to these documents: ${docList}.
+  Use information from these documents to answer questions accurately.`;
+});
+
+// Handle file upload
+async function handleFileUpload(event) {
+  const files = Array.from(event.target.files);
+  for (const file of files) {
+    try {
+      await addDocument(file);
+    } catch (err) {
+      console.error('Failed to add document:', err);
+    }
+  }
+}
+
+// Handle URL addition
+async function handleAddUrl() {
+  if (!urlInput.value.trim()) return;
+
+  try {
+    await addUrl(urlInput.value);
+    urlInput.value = '';
+  } catch (err) {
+    console.error('Failed to add URL:', err);
+  }
+}
+
+// Handle messages with RAG context
+function handleMessageWithRAG(event) {
+  const userMessage = event.message.content;
+
+  // Retrieve relevant context
+  const context = retrieveContext(userMessage);
+
+  if (context.chunks.length > 0) {
+    console.log('RAG Context:', context);
+    // Context is automatically used by the chatbot
+  }
+}
+</script>
+```
+
+### RAG Configuration Options
+
+```typescript
+interface UseRAGOptions {
+  chunkSize?: number;        // Words per chunk (default: 500)
+  overlap?: number;          // Overlapping words (default: 50)
+  topK?: number;             // Number of chunks to retrieve (default: 3)
+  storageKey?: string;       // localStorage key (default: 'aivue-rag-knowledge-base')
+  maxDocumentTokens?: number; // Max tokens per document (default: 100000)
+  autoSave?: boolean;        // Auto-save to localStorage (default: true)
+}
+```
+
+### useRAG API
+
+```typescript
+const {
+  // State
+  knowledgeBase,      // Ref<RAGDocument[]> - All documents
+  isProcessing,       // Ref<boolean> - Processing status
+  error,              // Ref<Error | null> - Error state
+  totalDocuments,     // Ref<number> - Total document count
+  totalChunks,        // Ref<number> - Total chunk count
+
+  // Methods
+  addDocument,        // (file: File) => Promise<RAGDocument>
+  addUrl,             // (url: string, name?: string) => Promise<RAGDocument>
+  addText,            // (text: string, name: string) => Promise<RAGDocument>
+  removeDocument,     // (documentId: string) => void
+  clearKnowledgeBase, // () => void
+  retrieveContext,    // (query: string, topK?: number) => RetrievalResult
+  getDocument         // (documentId: string) => RAGDocument | undefined
+} = useRAG(options);
+```
+
+### Integrating RAG with useChatEngine
+
+You can also integrate RAG directly with the `useChatEngine` composable:
+
+```vue
+<script setup>
+import { useChatEngine, useRAG } from '@aivue/chatbot';
+
+// Initialize RAG
+const { knowledgeBase, retrieveContext } = useRAG({
+  chunkSize: 500,
+  topK: 3
+});
+
+// Initialize chat with RAG
+const { messages, sendMessage } = useChatEngine({
+  provider: 'openai',
+  apiKey: import.meta.env.VITE_OPENAI_API_KEY,
+  model: 'gpt-4o',
+  systemPrompt: 'You are a helpful assistant.',
+
+  // RAG configuration
+  rag: {
+    enabled: true,
+    knowledgeBase: knowledgeBase.value,
+    retrieveContext: (query) => retrieveContext(query),
+    topK: 3,
+    contextTemplate: `Context from knowledge base:\n\n{context}\n\nUse the above context to answer the question.`
+  }
+});
+</script>
+```
+
+### How RAG Works
+
+1. **Document Processing**: Documents are split into chunks (default: 500 words with 50-word overlap)
+2. **Storage**: Chunks are stored in localStorage with metadata
+3. **Retrieval**: When a user asks a question, relevant chunks are retrieved using TF-IDF scoring
+4. **Context Injection**: Retrieved chunks are injected into the AI prompt
+5. **Response Generation**: AI generates a response using both its knowledge and the document context
+
+### Supported Document Types
+
+- **Text Files**: `.txt`, `.md` (directly supported)
+- **URLs**: Web pages (fetched and parsed)
+- **PDFs**: Requires `@aivue/doc-intelligence` package (coming soon)
+
+### Best Practices
+
+1. **Chunk Size**: Use 500-1000 words for balanced context and retrieval
+2. **Overlap**: 50-100 words overlap helps maintain context continuity
+3. **Top-K**: Retrieve 3-5 chunks for optimal context without overwhelming the AI
+4. **Document Quality**: Clean, well-formatted documents work best
+5. **Storage**: Use `storageKey` to persist knowledge base across sessions
+
+### Example: Customer Support Bot
+
+```vue
+<template>
+  <AiChatRAG
+    provider="openai"
+    :api-key="apiKey"
+    model="gpt-4o"
+    title="Customer Support"
+    placeholder="Ask about our products..."
+    system-prompt="You are a customer support assistant. Use the product documentation to answer questions accurately."
+    :rag-config="{
+      chunkSize: 600,
+      topK: 5,
+      storageKey: 'support-docs'
+    }"
+  />
+</template>
+
+<script setup>
+import { AiChatRAG } from '@aivue/chatbot';
+
+const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
+
+// Pre-load documentation
+import { useRAG } from '@aivue/chatbot';
+const { addUrl } = useRAG({ storageKey: 'support-docs' });
+
+// Add documentation URLs
+onMounted(async () => {
+  await addUrl('https://docs.example.com/getting-started');
+  await addUrl('https://docs.example.com/api-reference');
+  await addUrl('https://docs.example.com/troubleshooting');
+});
 </script>
 ```
 
