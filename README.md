@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="vueai-logo.svg" alt="VueAI Logo" width="300" height="120" />
+  <img src="assets/images/vueai-logo.svg" alt="VueAI Logo" width="300" height="120" />
 
   <h1>VueAI - Modern AI Components for Vue.js</h1>
 
