@@ -1,6 +1,6 @@
 {
   "name": "@aivue/image-caption",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "AI-powered image captioning for Vue.js applications using Hugging Face BLIP models",
   "author": "reachbrt",
   "license": "MIT",

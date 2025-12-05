@@ -1,6 +1,6 @@
 {
   "name": "@aivue/doc-intelligence",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "AI-powered document parser and extractor for Vue 3 - Upload PDFs/images, extract structured data from invoices, receipts, forms, and IDs with OCR and entity recognition",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -85,4 +85,3 @@
     "vue": "^3.5.0"
   }
 }
-

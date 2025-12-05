@@ -1,6 +1,6 @@
 {
   "name": "@aivue/smart-datatable",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "AI-powered data table with intelligent sorting, filtering, and insights for Vue.js",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -74,4 +74,3 @@
     "vue": "^3.5.0"
   }
 }
-

@@ -1,6 +1,6 @@
 {
   "name": "@aivue/smart-notify",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "AI-powered smart notification system for Vue 3 - Learns optimal timing, groups intelligently, detects urgency with NLP, and respects user attention",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
