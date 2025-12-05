@@ -50,6 +50,9 @@
             <button @click="addSampleUrl" class="example-btn">
               🔗 Add Sample URL
             </button>
+            <button @click="createSampleFile" class="example-btn">
+              📥 Download Sample File
+            </button>
           </div>
           <p class="example-note">
             After adding documents, try asking questions like:
@@ -58,6 +61,8 @@
             <li>"What is this document about?"</li>
             <li>"Summarize the main points"</li>
             <li>"What are the key features mentioned?"</li>
+            <li>"List all the packages available"</li>
+            <li>"How do I use the RAG feature?"</li>
           </ul>
         </div>
 
@@ -95,6 +100,40 @@
             <li>✅ Configurable chunk size and overlap</li>
             <li>✅ Top-K relevance ranking</li>
           </ul>
+        </div>
+
+        <div class="info-card highlight-card">
+          <h3>🚀 Quick Start Guide</h3>
+          <div class="quick-start-steps">
+            <div class="step">
+              <span class="step-number">1</span>
+              <div class="step-content">
+                <strong>Add Documents</strong>
+                <p>Click "📄 Upload Files" in the Knowledge Base section or use "📥 Download Sample File" button above</p>
+              </div>
+            </div>
+            <div class="step">
+              <span class="step-number">2</span>
+              <div class="step-content">
+                <strong>Upload the File</strong>
+                <p>Select the downloaded file or your own .txt/.md files</p>
+              </div>
+            </div>
+            <div class="step">
+              <span class="step-number">3</span>
+              <div class="step-content">
+                <strong>Ask Questions</strong>
+                <p>Type questions about your documents in the chat</p>
+              </div>
+            </div>
+            <div class="step">
+              <span class="step-number">4</span>
+              <div class="step-content">
+                <strong>Get Answers</strong>
+                <p>AI will retrieve relevant context and provide accurate answers</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -207,6 +246,74 @@ The RAG (Retrieval-Augmented Generation) feature allows you to:
     console.error('Failed to add sample document:', error);
     alert('Failed to add sample document. Please try again.');
   }
+}
+
+function createSampleFile() {
+  const sampleContent = `# Sample Document for RAG Testing
+
+## Introduction
+This is a sample document to demonstrate the RAG (Retrieval-Augmented Generation) capabilities of the @aivue/chatbot package.
+
+## What is RAG?
+RAG stands for Retrieval-Augmented Generation. It's a technique that enhances AI responses by:
+1. Retrieving relevant information from a knowledge base
+2. Augmenting the AI prompt with this context
+3. Generating more accurate and contextual responses
+
+## Key Benefits
+- **Accuracy**: Responses are based on your specific documents
+- **Context**: AI understands your domain-specific information
+- **Flexibility**: Easy to update knowledge base without retraining
+- **Privacy**: Your documents stay in your control
+
+## How to Use
+1. Upload this file or other documents using the "Upload Files" button
+2. Add URLs to web pages you want to include
+3. Ask questions about the content
+4. The AI will retrieve relevant sections and answer based on them
+
+## Example Questions
+After uploading this document, you can ask:
+- "What is RAG?"
+- "What are the key benefits?"
+- "How do I use this feature?"
+- "Explain the RAG process"
+
+## Technical Details
+The RAG implementation uses:
+- **TF-IDF**: For keyword-based retrieval
+- **Chunking**: Documents split into 500-word chunks
+- **Overlap**: 50-word overlap between chunks
+- **Top-K**: Retrieves 3 most relevant chunks by default
+
+## Supported File Types
+- Text files (.txt)
+- Markdown files (.md)
+- Web pages (via URL)
+
+## Best Practices
+1. Keep documents well-structured with clear headings
+2. Use descriptive titles for uploaded files
+3. Break large documents into logical sections
+4. Update knowledge base regularly
+5. Test with various question types
+
+## Conclusion
+RAG is a powerful feature that makes your chatbot smarter by giving it access to your specific knowledge base. Try uploading different types of documents and see how the AI responds!
+`;
+
+  // Create a blob and download it
+  const blob = new Blob([sampleContent], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'sample-rag-document.txt';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+
+  alert('Sample file downloaded! Upload it using the "📄 Upload Files" button to test RAG.');
 }
 
 async function addSampleUrl() {
@@ -399,6 +506,58 @@ async function addSampleUrl() {
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
   font-size: 0.9rem;
   line-height: 1.6;
+}
+
+.highlight-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.highlight-card h3 {
+  color: white;
+  margin-bottom: 1.5rem;
+}
+
+.quick-start-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.step {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.step-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.step-content {
+  flex: 1;
+}
+
+.step-content strong {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-size: 1rem;
+}
+
+.step-content p {
+  margin: 0;
+  font-size: 0.9rem;
+  opacity: 0.95;
+  line-height: 1.5;
 }
 </style>
 
