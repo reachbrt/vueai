@@ -1615,6 +1615,8 @@ See the chatbot components in action with our interactive demo. Try different AI
 
 ## 📦 Related Packages
 
+Explore the complete @aivue ecosystem:
+
 ### 🧠 [@aivue/core](https://www.npmjs.com/package/@aivue/core)
 Core AI functionality for Vue.js components
 
@@ -1624,8 +1626,29 @@ AI-powered suggestion components for Vue.js
 ### 📝 [@aivue/smartform](https://www.npmjs.com/package/@aivue/smartform)
 AI-powered form validation for Vue.js
 
-### 🖼️ [@aivue/image-caption](https://www.npmjs.com/package/@aivue/image-caption)
+### 🎭 [@aivue/emotion-ui](https://www.npmjs.com/package/@aivue/emotion-ui)
+Emotion-aware UI components with sentiment analysis
+
+### � [@aivue/doc-intelligence](https://www.npmjs.com/package/@aivue/doc-intelligence)
+Document processing and OCR with AI
+
+### 🧠 [@aivue/predictive-input](https://www.npmjs.com/package/@aivue/predictive-input)
+AI-powered predictive text input
+
+### 🔔 [@aivue/smart-notify](https://www.npmjs.com/package/@aivue/smart-notify)
+Intelligent notification system
+
+### 🎤 [@aivue/voice-actions](https://www.npmjs.com/package/@aivue/voice-actions)
+Voice command integration
+
+### 📋 [@aivue/smart-datatable](https://www.npmjs.com/package/@aivue/smart-datatable)
+Advanced data table components
+
+### �🖼️ [@aivue/image-caption](https://www.npmjs.com/package/@aivue/image-caption)
 AI-powered image captioning with OpenAI Vision models
+
+### 📊 [@aivue/analytics](https://www.npmjs.com/package/@aivue/analytics)
+AI-powered analytics and insights
 
 ## 📄 License
 
