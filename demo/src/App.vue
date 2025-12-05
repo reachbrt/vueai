@@ -116,18 +116,38 @@
               <span class="logo-subtitle">AI Components for Vue.js</span>
             </div>
 
-            <nav class="nav-tabs">
+            <div class="nav-tabs-wrapper">
               <button
-                v-for="tab in tabs"
-                :key="tab.id"
-                @click="setActiveTab(tab.id)"
-                :class="['nav-tab', { active: activeTab === tab.id }]"
+                class="nav-scroll-btn nav-scroll-left"
+                @click="scrollNavLeft"
+                v-show="showLeftScroll"
+                aria-label="Scroll left"
               >
-                <span class="tab-icon">{{ tab.icon }}</span>
-                <span class="tab-label">{{ tab.name }}</span>
-                <span v-if="tab.id === 'chatbot'" class="tab-badge">v2.3</span>
+                <span>‹</span>
               </button>
-            </nav>
+
+              <nav class="nav-tabs" ref="navTabs" @scroll="handleNavScroll">
+                <button
+                  v-for="tab in tabs"
+                  :key="tab.id"
+                  @click="setActiveTab(tab.id)"
+                  :class="['nav-tab', { active: activeTab === tab.id }]"
+                >
+                  <span class="tab-icon">{{ tab.icon }}</span>
+                  <span class="tab-label">{{ tab.name }}</span>
+                  <span v-if="tab.id === 'chatbot'" class="tab-badge">v2.3</span>
+                </button>
+              </nav>
+
+              <button
+                class="nav-scroll-btn nav-scroll-right"
+                @click="scrollNavRight"
+                v-show="showRightScroll"
+                aria-label="Scroll right"
+              >
+                <span>›</span>
+              </button>
+            </div>
 
             <div class="nav-actions">
               <a href="https://github.com/reachbrt/vueai" target="_blank" class="nav-action">
@@ -512,6 +532,100 @@
         </div>
       </section>
 
+      <section v-if="activeTab === 'smart-datatable'" class="component-section">
+        <div class="demo-container">
+          <div class="component-hero">
+            <div class="component-hero-content">
+              <h2 class="component-hero-title">AI Smart DataTable</h2>
+              <p class="component-hero-description">
+                Display and manage data with AI-powered sorting, filtering, search, and insights.
+                Perfect for dashboards, admin panels, and data-heavy applications.
+              </p>
+              <div class="component-hero-features">
+                <div class="hero-feature">
+                  <span class="hero-feature-icon">🔍</span>
+                  <span class="hero-feature-text">AI Search</span>
+                </div>
+                <div class="hero-feature">
+                  <span class="hero-feature-icon">📊</span>
+                  <span class="hero-feature-text">Data Insights</span>
+                </div>
+                <div class="hero-feature">
+                  <span class="hero-feature-icon">📤</span>
+                  <span class="hero-feature-text">Export Data</span>
+                </div>
+                <div class="hero-feature">
+                  <span class="hero-feature-icon">🎨</span>
+                  <span class="hero-feature-text">Customizable</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="component-demo">
+            <SmartDataTableDemo :aiClient="aiClient" />
+          </div>
+        </div>
+      </section>
+
+      <section v-if="activeTab === 'voice-actions'" class="component-section">
+        <div class="demo-container">
+          <div class="component-hero">
+            <div class="component-hero-content">
+              <h2 class="component-hero-title">AI Voice Command Controller</h2>
+              <p class="component-hero-description">
+                Control your application with voice commands using speech recognition, natural language processing,
+                and AI-powered command execution. Perfect for hands-free operation and accessibility.
+              </p>
+              <div class="component-hero-features">
+                <div class="hero-feature">
+                  <span class="hero-feature-icon">🎤</span>
+                  <span class="hero-feature-text">Speech Recognition</span>
+                </div>
+                <div class="hero-feature">
+                  <span class="hero-feature-icon">🗣️</span>
+                  <span class="hero-feature-text">Voice Feedback</span>
+                </div>
+                <div class="hero-feature">
+                  <span class="hero-feature-icon">🤖</span>
+                  <span class="hero-feature-text">AI Processing</span>
+                </div>
+                <div class="hero-feature">
+                  <span class="hero-feature-icon">🌍</span>
+                  <span class="hero-feature-text">Multi-language</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="component-demo">
+            <VoiceActionsDemo :aiClient="aiClient" />
+          </div>
+        </div>
+      </section>
+
+      <section v-if="activeTab === 'emotion-ui'" class="component-section">
+        <div class="demo-container">
+          <EmotionUIDemo />
+        </div>
+      </section>
+
+      <section v-if="activeTab === 'doc-intelligence'" class="component-section">
+        <div class="demo-container">
+          <DocIntelligenceDemo />
+        </div>
+      </section>
+
+      <section v-if="activeTab === 'predictive-input'" class="component-section">
+        <div class="demo-container">
+          <PredictiveInputDemo :aiClient="aiClient" />
+        </div>
+      </section>
+
+      <section v-if="activeTab === 'smart-notify'" class="component-section">
+        <div class="demo-container">
+          <SmartNotifyDemo />
+        </div>
+      </section>
+
       <section v-if="activeTab === 'analytics'" class="component-section">
         <div class="demo-container">
           <AnalyticsDemo />
@@ -636,6 +750,12 @@
 import NavBar from './components/NavBar.vue';
 import AutosuggestDemo from './components/AutosuggestDemo.vue';
 import SmartFormDemo from './components/SmartFormDemo.vue';
+import SmartDataTableDemo from './components/SmartDataTableDemo.vue';
+import VoiceActionsDemo from './components/VoiceActionsDemo.vue';
+import EmotionUIDemo from './components/EmotionUIDemo.vue';
+import DocIntelligenceDemo from './components/DocIntelligenceDemo.vue';
+import PredictiveInputDemo from './components/PredictiveInputDemo.vue';
+import SmartNotifyDemo from './components/SmartNotifyDemo.vue';
 import AnalyticsDemo from './components/AnalyticsDemo.vue';
 import ImageCaptionDemo from './components/ImageCaptionDemo.vue';
 
@@ -653,6 +773,12 @@ export default {
     NavBar,
     AutosuggestDemo,
     SmartFormDemo,
+    SmartDataTableDemo,
+    VoiceActionsDemo,
+    EmotionUIDemo,
+    DocIntelligenceDemo,
+    PredictiveInputDemo,
+    SmartNotifyDemo,
     AnalyticsDemo,
     ImageCaptionDemo,
 
@@ -668,6 +794,8 @@ export default {
       apiKey: '',
       aiClient: null,
       hasValidApiKey: false,
+      showLeftScroll: false,
+      showRightScroll: false,
       chatOptions: {
         title: 'AI Assistant',
         placeholder: 'Ask me anything...',
@@ -715,6 +843,36 @@ export default {
           id: 'smartform',
           name: 'Smart Form',
           icon: '📝'
+        },
+        {
+          id: 'smart-datatable',
+          name: 'Smart DataTable',
+          icon: '📋'
+        },
+        {
+          id: 'voice-actions',
+          name: 'Voice Actions',
+          icon: '🎤'
+        },
+        {
+          id: 'emotion-ui',
+          name: 'Emotion UI',
+          icon: '🎭'
+        },
+        {
+          id: 'doc-intelligence',
+          name: 'Doc Intelligence',
+          icon: '📄'
+        },
+        {
+          id: 'predictive-input',
+          name: 'Predictive Input',
+          icon: '🧠'
+        },
+        {
+          id: 'smart-notify',
+          name: 'Smart Notify',
+          icon: '🔔'
         },
         {
           id: 'analytics',
@@ -799,6 +957,84 @@ export default {
             { icon: '💡', text: 'Intelligent Feedback' },
             { icon: '🛠️', text: 'Customizable Fields' },
             { icon: '🔌', text: 'Easy Integration' }
+          ]
+        },
+        'smart-datatable': {
+          name: '@aivue/smart-datatable',
+          npmName: '@aivue/smart-datatable',
+          version: '1.0.0',
+          description: 'AI-powered data table with intelligent sorting, filtering, search, and insights for Vue.js applications.',
+          github: 'https://github.com/reachbrt/vueai/tree/main/packages/smart-datatable',
+          features: [
+            { icon: '📋', text: 'Smart DataTable' },
+            { icon: '🔍', text: 'AI Search' },
+            { icon: '📊', text: 'Data Insights' },
+            { icon: '📤', text: 'Export Data' },
+            { icon: '🎨', text: 'Customizable' },
+            { icon: '📱', text: 'Responsive' }
+          ]
+        },
+        'voice-actions': {
+          name: '@aivue/voice-actions',
+          npmName: '@aivue/voice-actions',
+          version: '1.0.0',
+          description: 'AI-powered voice command controller with speech recognition, natural language processing, and custom actions for Vue.js.',
+          github: 'https://github.com/reachbrt/vueai/tree/main/packages/voice-actions',
+          features: [
+            { icon: '🎤', text: 'Speech Recognition' },
+            { icon: '🗣️', text: 'Voice Feedback' },
+            { icon: '🤖', text: 'AI Processing' },
+            { icon: '🔄', text: 'Continuous Mode' },
+            { icon: '🌍', text: 'Multi-language' },
+            { icon: '📊', text: 'Command History' }
+          ]
+        },
+        'doc-intelligence': {
+          name: '@aivue/doc-intelligence',
+          npmName: '@aivue/doc-intelligence',
+          version: '1.0.0',
+          description: 'AI-powered document parser and extractor for Vue 3 - Upload PDFs/images, extract structured data from invoices, receipts, forms, and IDs with OCR and entity recognition.',
+          github: 'https://github.com/reachbrt/vueai/tree/main/packages/doc-intelligence',
+          npm: 'https://www.npmjs.com/package/@aivue/doc-intelligence',
+          features: [
+            { icon: '🔍', text: 'OCR Text Extraction' },
+            { icon: '📋', text: 'Document Type Detection' },
+            { icon: '🎯', text: 'Entity Recognition' },
+            { icon: '📝', text: 'Auto-Generated Forms' },
+            { icon: '🌍', text: 'Multi-Language Support' },
+            { icon: '🔒', text: 'Privacy-First' }
+          ]
+        },
+        'predictive-input': {
+          name: '@aivue/predictive-input',
+          npmName: '@aivue/predictive-input',
+          version: '1.0.0',
+          description: 'AI-powered predictive text input that learns your writing style and suggests complete sentences. Privacy-focused with local processing and offline capability.',
+          github: 'https://github.com/reachbrt/vueai/tree/main/packages/predictive-input',
+          npm: 'https://www.npmjs.com/package/@aivue/predictive-input',
+          features: [
+            { icon: '🧠', text: 'Pattern Learning' },
+            { icon: '🎯', text: 'Context-Aware' },
+            { icon: '🌍', text: 'Multi-Language' },
+            { icon: '🔒', text: 'Privacy-Focused' },
+            { icon: '⚡', text: 'Offline Capable' },
+            { icon: '💾', text: 'Data Export/Import' }
+          ]
+        },
+        'smart-notify': {
+          name: '@aivue/smart-notify',
+          npmName: '@aivue/smart-notify',
+          version: '1.0.0',
+          description: 'AI-powered notification system with intelligent prioritization, timing optimization, and attention-aware delivery. Features smart batching, urgency detection, and offline learning.',
+          github: 'https://github.com/reachbrt/vueai/tree/main/packages/smart-notify',
+          npm: 'https://www.npmjs.com/package/@aivue/smart-notify',
+          features: [
+            { icon: '🔔', text: 'Smart Notifications' },
+            { icon: '🧠', text: 'AI Prioritization' },
+            { icon: '⏰', text: 'Timing Optimization' },
+            { icon: '👁️', text: 'Attention Detection' },
+            { icon: '📦', text: 'Smart Batching' },
+            { icon: '🔒', text: 'Privacy-Focused' }
           ]
         },
         analytics: {
@@ -893,15 +1129,6 @@ export default {
     }
   },
 
-  mounted() {
-    // Initialize GSAP animations
-    this.initHeroAnimation();
-    this.initFeaturesAnimation();
-    this.initWelcomeAnimation();
-    this.initTabsAnimation();
-    this.initFooterAnimation();
-  },
-
   computed: {
     currentPackage() {
       return this.packages[this.activeTab] || {
@@ -914,6 +1141,39 @@ export default {
     }
   },
   methods: {
+    scrollNavLeft() {
+      const navTabs = this.$refs.navTabs;
+      if (navTabs) {
+        navTabs.scrollBy({ left: -200, behavior: 'smooth' });
+      }
+    },
+
+    scrollNavRight() {
+      const navTabs = this.$refs.navTabs;
+      if (navTabs) {
+        navTabs.scrollBy({ left: 200, behavior: 'smooth' });
+      }
+    },
+
+    handleNavScroll() {
+      const navTabs = this.$refs.navTabs;
+      if (!navTabs) return;
+
+      // Check if we can scroll left
+      this.showLeftScroll = navTabs.scrollLeft > 0;
+
+      // Check if we can scroll right
+      const maxScroll = navTabs.scrollWidth - navTabs.clientWidth;
+      this.showRightScroll = navTabs.scrollLeft < maxScroll - 1;
+    },
+
+    checkNavScroll() {
+      // Initial check for scroll buttons visibility
+      this.$nextTick(() => {
+        this.handleNavScroll();
+      });
+    },
+
     updateApiKey() {
       // Simple validation for OpenAI API key format (starts with 'sk-')
       if (this.apiKey && this.apiKey.startsWith('sk-') && this.apiKey.length > 20) {
@@ -1265,6 +1525,12 @@ export default {
         'chatbot': 'Integrate powerful conversational AI into your Vue applications with customizable chat interfaces.',
         'autosuggest': 'Enhance user input with AI-powered suggestions that adapt to context and user behavior.',
         'smartform': 'Create intelligent forms with AI validation, suggestions, and data analysis capabilities.',
+        'smart-datatable': 'Display and manage data with AI-powered sorting, filtering, search, and insights for data-heavy applications.',
+        'voice-actions': 'Control your application with voice commands using speech recognition, natural language processing, and AI-powered execution.',
+        'emotion-ui': 'Create emotionally intelligent interfaces that adapt to user sentiment and provide empathetic responses.',
+        'doc-intelligence': 'Upload PDFs/images and extract structured data from invoices, receipts, forms, and IDs with OCR and entity recognition.',
+        'predictive-input': 'AI-powered text input that learns your writing style and suggests complete sentences with privacy-focused local processing.',
+        'smart-notify': 'Intelligent notification system with AI-powered prioritization, timing optimization, and attention-aware delivery for reduced interruptions.',
         'analytics': 'Track user interactions, monitor AI usage, and gain valuable insights with AI-powered analytics dashboards.',
         'image-caption': 'Generate intelligent, contextual captions for images using OpenAI Vision models with drag & drop support.',
         'typescript': 'Full TypeScript support with comprehensive type definitions for all components and APIs.',
@@ -1336,6 +1602,26 @@ export default {
 
       this.chatOptions.texts = languageTexts[this.chatOptions.language] || languageTexts.en;
     }
+  },
+
+  mounted() {
+    // Initialize GSAP animations
+    this.initHeroAnimation();
+    this.initFeaturesAnimation();
+    this.initWelcomeAnimation();
+    this.initTabsAnimation();
+    this.initFooterAnimation();
+
+    // Check navigation scroll on mount
+    this.checkNavScroll();
+
+    // Add resize listener to update scroll buttons
+    window.addEventListener('resize', this.checkNavScroll);
+  },
+
+  beforeUnmount() {
+    // Clean up resize listener
+    window.removeEventListener('resize', this.checkNavScroll);
   }
 }
 </script>
@@ -1410,13 +1696,96 @@ body {
   font-weight: 500;
 }
 
+/* Navigation Tabs Wrapper */
+.nav-tabs-wrapper {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  max-width: 100%;
+  overflow: hidden;
+}
+
 /* Navigation Tabs */
 .nav-tabs {
   display: flex;
   align-items: center;
   gap: 8px;
   flex: 1;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  padding: 0 8px;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.nav-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+/* Scroll Buttons */
+.nav-scroll-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
   justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.nav-scroll-btn:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+.nav-scroll-btn:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.nav-scroll-left {
+  left: 0;
+}
+
+.nav-scroll-right {
+  right: 0;
+}
+
+/* Add fade effect on edges */
+.nav-tabs-wrapper::before,
+.nav-tabs-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 40px;
+  pointer-events: none;
+  z-index: 5;
+  transition: opacity 0.3s ease;
+}
+
+.nav-tabs-wrapper::before {
+  left: 0;
+  background: linear-gradient(to right, rgba(30, 41, 59, 1), rgba(30, 41, 59, 0));
+}
+
+.nav-tabs-wrapper::after {
+  right: 0;
+  background: linear-gradient(to left, rgba(30, 41, 59, 1), rgba(30, 41, 59, 0));
 }
 
 .nav-tab {
@@ -1433,6 +1802,8 @@ body {
   border-radius: 12px;
   position: relative;
   font-weight: 500;
+  white-space: nowrap;
+  flex-shrink: 0; /* Prevent tabs from shrinking */
 }
 
 .nav-tab:hover {
@@ -2750,10 +3121,14 @@ p {
     padding: 16px;
   }
 
-  .nav-tabs {
+  .nav-tabs-wrapper {
     order: 2;
-    flex-wrap: wrap;
-    justify-content: center;
+    width: 100%;
+  }
+
+  .nav-tabs {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
     gap: 8px;
   }
 
@@ -2809,6 +3184,7 @@ p {
 
   .nav-tabs {
     gap: 4px;
+    padding: 0 4px;
   }
 
   .nav-tab {
@@ -2818,6 +3194,17 @@ p {
 
   .tab-label {
     display: none;
+  }
+
+  .nav-scroll-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 20px;
+  }
+
+  .nav-tabs-wrapper::before,
+  .nav-tabs-wrapper::after {
+    width: 30px;
   }
 
   .nav-actions {

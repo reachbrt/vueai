@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Predictive Input - Full Sentence Test</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #f5f7fa;
+    }
+    h1 {
+      color: #1e293b;
+      border-bottom: 3px solid #667eea;
+      padding-bottom: 10px;
+    }
+    .test-section {
+      background: white;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .test-case {
+      margin: 15px 0;
+      padding: 15px;
+      background: #f8fafc;
+      border-left: 4px solid #667eea;
+      border-radius: 4px;
+    }
+    .test-input {
+      font-weight: bold;
+      color: #667eea;
+      font-size: 16px;
+    }
+    .predictions {
+      margin-top: 10px;
+      padding-left: 20px;
+    }
+    .prediction-item {
+      padding: 8px;
+      margin: 5px 0;
+      background: white;
+      border-radius: 4px;
+      border: 1px solid #e2e8f0;
+    }
+    .prediction-text {
+      color: #1e293b;
+      font-weight: 500;
+    }
+    .confidence {
+      color: #64748b;
+      font-size: 12px;
+      margin-left: 10px;
+    }
+    .status {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-left: 10px;
+    }
+    .pass { background: #dcfce7; color: #166534; }
+    .fail { background: #fee2e2; color: #991b1b; }
+    .summary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 30px;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #e2e8f0;
+      border-radius: 6px;
+      font-size: 14px;
+      margin: 10px 0;
+    }
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+    button {
+      background: #667eea;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    button:hover {
+      background: #5568d3;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧪 Predictive Input - Full Sentence Test</h1>
+  
+  <div class="test-section">
+    <h2>📊 Automated Tests</h2>
+    <div id="test-results"></div>
+  </div>
+
+  <div class="test-section">
+    <h2>✍️ Manual Test</h2>
+    <p>Type a few words and see full sentence predictions:</p>
+    <input type="text" id="manual-input" placeholder="Start typing (e.g., 'I am', 'thank', 'how are')...">
+    <div id="manual-predictions"></div>
+  </div>
+
+  <div id="summary" class="summary" style="display: none;">
+    <h2>🎉 Test Summary</h2>
+    <div id="summary-content"></div>
+  </div>
+
+  <script type="module">
+    // Import from built package
+    import { usePredictiveInput } from './packages/predictive-input/dist/index.mjs';
+
+    const resultsDiv = document.getElementById('test-results');
+    const summaryDiv = document.getElementById('summary');
+    const summaryContent = document.getElementById('summary-content');
+    const manualInput = document.getElementById('manual-input');
+    const manualPredictions = document.getElementById('manual-predictions');
+
+    // Initialize composable
+    const { updatePredictions, train, isTrained } = usePredictiveInput({
+      storageKey: 'test_predictive',
+      enableOffline: false
+    });
+
+    // Test cases
+    const testCases = [
+      { input: 'I am', desc: 'Common phrase start', expected: ['writing', 'looking'] },
+      { input: 'thank', desc: 'Gratitude', expected: ['you'] },
+      { input: 'how are', desc: 'Question', expected: ['you'] },
+      { input: 'please', desc: 'Polite request', expected: ['let', 'send'] },
+      { input: 'I would like', desc: 'Formal request', expected: ['to'] },
+      { input: 'looking forward', desc: 'Email closing', expected: ['to'] },
+      { input: 'what is', desc: 'Question', expected: ['the'] },
+      { input: 'can you', desc: 'Request', expected: ['help', 'please'] }
+    ];
+
+    let passed = 0;
+    let total = testCases.length;
+
+    // Run tests
+    console.log('🧪 Running automated tests...');
+    
+    testCases.forEach((test, index) => {
+      const predictions = updatePredictions('', test.input, test.input.length);
+      
+      const testDiv = document.createElement('div');
+      testDiv.className = 'test-case';
+      
+      const hasPredictions = predictions.length > 0;
+      const status = hasPredictions ? 'PASS' : 'FAIL';
+      const statusClass = hasPredictions ? 'pass' : 'fail';
+      
+      if (hasPredictions) passed++;
+      
+      let html = `
+        <div>
+          <span class="test-input">${index + 1}. "${test.input}"</span>
+          <span class="status ${statusClass}">${status}</span>
+        </div>
+        <div style="color: #64748b; font-size: 13px; margin: 5px 0;">${test.desc}</div>
+      `;
+      
+      if (predictions.length > 0) {
+        html += '<div class="predictions">';
+        predictions.slice(0, 5).forEach((pred, i) => {
+          const fullText = `${test.input} ${pred.text}`;
+          html += `
+            <div class="prediction-item">
+              <span class="prediction-text">${i + 1}. "${fullText}"</span>
+              <span class="confidence">${(pred.confidence * 100).toFixed(1)}% confidence</span>
+            </div>
+          `;
+        });
+        html += '</div>';
+      } else {
+        html += '<div style="color: #991b1b; margin-top: 10px;">❌ No predictions generated</div>';
+      }
+      
+      testDiv.innerHTML = html;
+      resultsDiv.appendChild(testDiv);
+    });
+
+    // Show summary
+    summaryDiv.style.display = 'block';
+    const percentage = ((passed / total) * 100).toFixed(1);
+    summaryContent.innerHTML = `
+      <div style="font-size: 24px; margin-bottom: 10px;">
+        ${passed} / ${total} tests passed (${percentage}%)
+      </div>
+      <div style="font-size: 14px; opacity: 0.9;">
+        ${passed === total ? '✅ All tests passed! Full sentence predictions working!' : 
+          passed > 0 ? '✅ Predictions are working!' : '❌ No predictions generated'}
+      </div>
+    `;
+
+    // Manual test
+    manualInput.addEventListener('input', (e) => {
+      const value = e.target.value;
+      if (value.length < 2) {
+        manualPredictions.innerHTML = '';
+        return;
+      }
+
+      const predictions = updatePredictions('', value, value.length);
+      
+      if (predictions.length > 0) {
+        let html = '<div class="predictions" style="margin-top: 15px;"><strong>Predictions:</strong>';
+        predictions.slice(0, 5).forEach((pred, i) => {
+          const fullText = `${value} ${pred.text}`;
+          html += `
+            <div class="prediction-item">
+              <span class="prediction-text">${i + 1}. "${fullText}"</span>
+              <span class="confidence">${(pred.confidence * 100).toFixed(1)}%</span>
+            </div>
+          `;
+        });
+        html += '</div>';
+        manualPredictions.innerHTML = html;
+      } else {
+        manualPredictions.innerHTML = '<div style="color: #64748b; margin-top: 10px;">No predictions available</div>';
+      }
+    });
+
+    console.log(`✅ Tests complete: ${passed}/${total} passed`);
+  </script>
+</body>
+</html>
