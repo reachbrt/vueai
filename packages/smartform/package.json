@@ -1,6 +1,6 @@
 {
   "name": "@aivue/smartform",
-  "version": "1.3.3",
+  "version": "1.3.4",
   "description": "AI-powered form validation for Vue.js",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
