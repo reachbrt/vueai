@@ -38,21 +38,75 @@
             </div>
           </div>
 
+          <div class="package-card emotion-ui">
+            <div class="package-icon">🎭</div>
+            <div class="package-details">
+              <h3>@aivue/emotion-ui</h3>
+              <p>Emotion-aware components</p>
+              <span class="package-version">v1.0.1</span>
+            </div>
+          </div>
+
+          <div class="package-card doc-intelligence">
+            <div class="package-icon">📄</div>
+            <div class="package-details">
+              <h3>@aivue/doc-intelligence</h3>
+              <p>Document processing & OCR</p>
+              <span class="package-version">v1.0.1</span>
+            </div>
+          </div>
+
+          <div class="package-card predictive-input">
+            <div class="package-icon">🧠</div>
+            <div class="package-details">
+              <h3>@aivue/predictive-input</h3>
+              <p>AI text predictions</p>
+              <span class="package-version">v1.0.2</span>
+            </div>
+          </div>
+
+          <div class="package-card smart-notify">
+            <div class="package-icon">🔔</div>
+            <div class="package-details">
+              <h3>@aivue/smart-notify</h3>
+              <p>Intelligent notifications</p>
+              <span class="package-version">v1.0.0</span>
+            </div>
+          </div>
+
+          <div class="package-card voice-actions">
+            <div class="package-icon">🎤</div>
+            <div class="package-details">
+              <h3>@aivue/voice-actions</h3>
+              <p>Voice command control</p>
+              <span class="package-version">v1.0.0</span>
+            </div>
+          </div>
+
+          <div class="package-card smart-datatable">
+            <div class="package-icon">📋</div>
+            <div class="package-details">
+              <h3>@aivue/smart-datatable</h3>
+              <p>Advanced data tables</p>
+              <span class="package-version">v1.0.0</span>
+            </div>
+          </div>
+
+          <div class="package-card image-caption">
+            <div class="package-icon">🖼️</div>
+            <div class="package-details">
+              <h3>@aivue/image-caption</h3>
+              <p>AI image captioning</p>
+              <span class="package-version">v1.0.0</span>
+            </div>
+          </div>
+
           <div class="package-card analytics">
             <div class="package-icon">📊</div>
             <div class="package-details">
               <h3>@aivue/analytics</h3>
               <p>AI-powered insights</p>
               <span class="package-version">v1.0.0</span>
-            </div>
-          </div>
-
-          <div class="package-card core">
-            <div class="package-icon">🔷</div>
-            <div class="package-details">
-              <h3>@aivue/core</h3>
-              <p>Core AI functionality</p>
-              <span class="package-version">v1.2.9</span>
             </div>
           </div>
         </div>
@@ -705,8 +759,53 @@
             <a href="#" @click.prevent="setActiveTab('smartform')" class="footer-link">
               <span>📝</span> AI Smart Form
             </a>
-            <a href="#" @click.prevent="setActiveTab('typescript')" class="footer-link">
-              <span>🔷</span> TypeScript Support
+            <a href="#" @click.prevent="setActiveTab('emotion-ui')" class="footer-link">
+              <span>🎭</span> Emotion UI
+            </a>
+            <a href="#" @click.prevent="setActiveTab('doc-intelligence')" class="footer-link">
+              <span>📄</span> Doc Intelligence
+            </a>
+            <a href="#" @click.prevent="setActiveTab('predictive-input')" class="footer-link">
+              <span>🧠</span> Predictive Input
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-section">
+          <h3 class="footer-links-title">NPM Packages</h3>
+          <div class="footer-links">
+            <a href="https://www.npmjs.com/package/@aivue/chatbot" target="_blank" class="footer-link">
+              <span>📦</span> @aivue/chatbot
+            </a>
+            <a href="https://www.npmjs.com/package/@aivue/autosuggest" target="_blank" class="footer-link">
+              <span>📦</span> @aivue/autosuggest
+            </a>
+            <a href="https://www.npmjs.com/package/@aivue/smartform" target="_blank" class="footer-link">
+              <span>📦</span> @aivue/smartform
+            </a>
+            <a href="https://www.npmjs.com/package/@aivue/emotion-ui" target="_blank" class="footer-link">
+              <span>📦</span> @aivue/emotion-ui
+            </a>
+            <a href="https://www.npmjs.com/package/@aivue/doc-intelligence" target="_blank" class="footer-link">
+              <span>📦</span> @aivue/doc-intelligence
+            </a>
+            <a href="https://www.npmjs.com/package/@aivue/predictive-input" target="_blank" class="footer-link">
+              <span>📦</span> @aivue/predictive-input
+            </a>
+            <a href="https://www.npmjs.com/package/@aivue/smart-notify" target="_blank" class="footer-link">
+              <span>📦</span> @aivue/smart-notify
+            </a>
+            <a href="https://www.npmjs.com/package/@aivue/voice-actions" target="_blank" class="footer-link">
+              <span>📦</span> @aivue/voice-actions
+            </a>
+            <a href="https://www.npmjs.com/package/@aivue/smart-datatable" target="_blank" class="footer-link">
+              <span>📦</span> @aivue/smart-datatable
+            </a>
+            <a href="https://www.npmjs.com/package/@aivue/image-caption" target="_blank" class="footer-link">
+              <span>📦</span> @aivue/image-caption
+            </a>
+            <a href="https://www.npmjs.com/package/@aivue/analytics" target="_blank" class="footer-link">
+              <span>📦</span> @aivue/analytics
             </a>
           </div>
         </div>
@@ -724,7 +823,7 @@
               <span>🤝</span> Contributing
             </a>
             <a href="https://www.npmjs.com/org/aivue" target="_blank" class="footer-link">
-              <span>📦</span> NPM Packages
+              <span>📦</span> NPM Organization
             </a>
           </div>
         </div>
@@ -989,10 +1088,26 @@ export default {
             { icon: '📊', text: 'Command History' }
           ]
         },
+        'emotion-ui': {
+          name: '@aivue/emotion-ui',
+          npmName: '@aivue/emotion-ui',
+          version: '1.0.1',
+          description: 'AI-powered emotion-aware UI components with real-time sentiment analysis, adaptive styling, and facial/voice emotion detection for Vue.js applications.',
+          github: 'https://github.com/reachbrt/vueai/tree/main/packages/emotion-ui',
+          npm: 'https://www.npmjs.com/package/@aivue/emotion-ui',
+          features: [
+            { icon: '🎭', text: 'Emotion Detection' },
+            { icon: '💬', text: 'Sentiment Analysis' },
+            { icon: '🎨', text: 'Adaptive Styling' },
+            { icon: '😊', text: 'Facial Analysis' },
+            { icon: '🎤', text: 'Voice Analysis' },
+            { icon: '🔒', text: 'Privacy-Focused' }
+          ]
+        },
         'doc-intelligence': {
           name: '@aivue/doc-intelligence',
           npmName: '@aivue/doc-intelligence',
-          version: '1.0.0',
+          version: '1.0.1',
           description: 'AI-powered document parser and extractor for Vue 3 - Upload PDFs/images, extract structured data from invoices, receipts, forms, and IDs with OCR and entity recognition.',
           github: 'https://github.com/reachbrt/vueai/tree/main/packages/doc-intelligence',
           npm: 'https://www.npmjs.com/package/@aivue/doc-intelligence',
@@ -1008,7 +1123,7 @@ export default {
         'predictive-input': {
           name: '@aivue/predictive-input',
           npmName: '@aivue/predictive-input',
-          version: '1.0.0',
+          version: '1.0.2',
           description: 'AI-powered predictive text input that learns your writing style and suggests complete sentences. Privacy-focused with local processing and offline capability.',
           github: 'https://github.com/reachbrt/vueai/tree/main/packages/predictive-input',
           npm: 'https://www.npmjs.com/package/@aivue/predictive-input',
