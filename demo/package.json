@@ -13,7 +13,7 @@
   "dependencies": {
     "@aivue/analytics": "^1.0.0",
     "@aivue/autosuggest": "^1.2.9",
-    "@aivue/chatbot": "^2.5.0",
+    "@aivue/chatbot": "^2.5.1",
     "@aivue/core": "^1.3.5",
     "@aivue/doc-intelligence": "^1.0.1",
     "@aivue/emotion-ui": "^1.0.1",
