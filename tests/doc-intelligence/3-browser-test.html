@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TEST 3: Browser Component Tests - Doc Intelligence</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 2rem;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      overflow: hidden;
+    }
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 2rem;
+      text-align: center;
+    }
+    .header h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    .header p {
+      opacity: 0.9;
+      font-size: 1.1rem;
+    }
+    .content {
+      padding: 2rem;
+    }
+    .test-section {
+      background: #f8f9fa;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid #667eea;
+    }
+    .test-section h2 {
+      color: #1e293b;
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+    }
+    .test-case {
+      background: white;
+      padding: 1rem;
+      margin: 0.75rem 0;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+    }
+    .test-name {
+      font-weight: 600;
+      color: #334155;
+      margin-bottom: 0.5rem;
+    }
+    .test-result {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+    .status {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 12px;
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+    .status.pass { background: #dcfce7; color: #166534; }
+    .status.fail { background: #fee2e2; color: #991b1b; }
+    .status.running { background: #dbeafe; color: #1e40af; }
+    .test-output {
+      background: #f1f5f9;
+      padding: 0.75rem;
+      border-radius: 6px;
+      margin-top: 0.5rem;
+      font-family: 'Courier New', monospace;
+      font-size: 0.875rem;
+      color: #475569;
+    }
+    .summary {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: white;
+      padding: 2rem;
+      border-radius: 12px;
+      text-align: center;
+      margin-top: 2rem;
+    }
+    .summary.failed {
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    }
+    .summary h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .summary-stats {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+    .stat {
+      text-align: center;
+    }
+    .stat-value {
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
+    .stat-label {
+      font-size: 0.875rem;
+      opacity: 0.9;
+      margin-top: 0.25rem;
+    }
+    button {
+      background: #667eea;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.2s;
+    }
+    button:hover {
+      background: #5568d3;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+    button:disabled {
+      background: #94a3b8;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .controls {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🧪 TEST 3: Browser Component Tests</h1>
+      <p>Doc Intelligence Package - Component & API Tests</p>
+    </div>
+    
+    <div class="content">
+      <div class="controls">
+        <button id="runTests" onclick="runAllTests()">▶️ Run All Tests</button>
+        <button onclick="clearResults()">🗑️ Clear Results</button>
+      </div>
+      
+      <div id="testResults"></div>
+      
+      <div id="summary" style="display: none;"></div>
+    </div>
+  </div>
+
+  <script type="module">
+    import {
+      detectDocumentType,
+      extractDates,
+      extractAmounts,
+      extractEmails,
+      extractPhones,
+      extractAllEntities,
+      useDocIntelligence
+    } from '../../packages/doc-intelligence/dist/index.mjs';
+
+    let totalTests = 0;
+    let passedTests = 0;
+    const testResults = [];
+
+    window.clearResults = function() {
+      document.getElementById('testResults').innerHTML = '';
+      document.getElementById('summary').style.display = 'none';
+      totalTests = 0;
+      passedTests = 0;
+      testResults.length = 0;
+    };
+
+    function addTestResult(section, name, passed, output) {
+      totalTests++;
+      if (passed) passedTests++;
+      
+      testResults.push({ section, name, passed, output });
+      
+      let sectionDiv = document.querySelector(`[data-section="${section}"]`);
+      if (!sectionDiv) {
+        sectionDiv = document.createElement('div');
+        sectionDiv.className = 'test-section';
+        sectionDiv.setAttribute('data-section', section);
+        sectionDiv.innerHTML = `<h2>${section}</h2>`;
+        document.getElementById('testResults').appendChild(sectionDiv);
+      }
+      
+      const testDiv = document.createElement('div');
+      testDiv.className = 'test-case';
+      testDiv.innerHTML = `
+        <div class="test-name">${name}</div>
+        <div class="test-result">
+          <span class="status ${passed ? 'pass' : 'fail'}">${passed ? '✅ PASS' : '❌ FAIL'}</span>
+        </div>
+        ${output ? `<div class="test-output">${output}</div>` : ''}
+      `;
+      sectionDiv.appendChild(testDiv);
+    }
+
+    function showSummary() {
+      const summaryDiv = document.getElementById('summary');
+      const percentage = ((passedTests / totalTests) * 100).toFixed(1);
+      const allPassed = passedTests === totalTests;
+      
+      summaryDiv.className = `summary ${allPassed ? '' : 'failed'}`;
+      summaryDiv.innerHTML = `
+        <h2>${allPassed ? '🎉 All Tests Passed!' : '⚠️ Some Tests Failed'}</h2>
+        <div class="summary-stats">
+          <div class="stat">
+            <div class="stat-value">${totalTests}</div>
+            <div class="stat-label">Total Tests</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value">${passedTests}</div>
+            <div class="stat-label">Passed</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value">${totalTests - passedTests}</div>
+            <div class="stat-label">Failed</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value">${percentage}%</div>
+            <div class="stat-label">Pass Rate</div>
+          </div>
+        </div>
+      `;
+      summaryDiv.style.display = 'block';
+    }
+
+    window.runAllTests = async function() {
+      clearResults();
+      document.getElementById('runTests').disabled = true;
+      
+      // Test 1: Document Type Detection
+      const invoiceText = 'INVOICE #123 Bill To: John Doe Total: $100';
+      const result1 = detectDocumentType(invoiceText);
+      addTestResult(
+        '📄 Document Type Detection',
+        'Detect invoice from text',
+        result1.type === 'invoice',
+        `Type: ${result1.type}, Confidence: ${(result1.confidence * 100).toFixed(1)}%`
+      );
+
+      // Test 2: Extract Dates
+      const dateText = 'Invoice Date: 12/04/2024, Due: 01/15/2025';
+      const dates = extractDates(dateText);
+      addTestResult(
+        '🎯 Entity Extraction',
+        'Extract dates from text',
+        dates.length >= 2,
+        `Found ${dates.length} dates: ${dates.map(d => d.value).join(', ')}`
+      );
+
+      // Test 3: Extract Amounts
+      const amountText = 'Total: $1,234.56, Tax: $98.77';
+      const amounts = extractAmounts(amountText);
+      addTestResult(
+        '🎯 Entity Extraction',
+        'Extract monetary amounts',
+        amounts.length >= 2,
+        `Found ${amounts.length} amounts: ${amounts.map(a => a.value).join(', ')}`
+      );
+
+      // Test 4: Extract Emails
+      const emailText = 'Contact: john@example.com, support@test.org';
+      const emails = extractEmails(emailText);
+      addTestResult(
+        '🎯 Entity Extraction',
+        'Extract email addresses',
+        emails.length >= 2,
+        `Found ${emails.length} emails: ${emails.map(e => e.value).join(', ')}`
+      );
+
+      // Test 5: Extract Phones
+      const phoneText = 'Phone: 555-123-4567, Mobile: (555) 987-6543';
+      const phones = extractPhones(phoneText);
+      addTestResult(
+        '🎯 Entity Extraction',
+        'Extract phone numbers',
+        phones.length >= 2,
+        `Found ${phones.length} phones: ${phones.map(p => p.value).join(', ')}`
+      );
+
+      // Test 6: useDocIntelligence Composable
+      const { documents, addDocuments, totalDocuments } = useDocIntelligence({ autoProcess: false });
+      addTestResult(
+        '📦 Composable API',
+        'Initialize useDocIntelligence',
+        documents.value.length === 0 && totalDocuments.value === 0,
+        `Documents: ${documents.value.length}, Total: ${totalDocuments.value}`
+      );
+
+      // Test 7: Add Documents
+      const mockFile = new File(['test'], 'test.txt', { type: 'text/plain' });
+      const newDocs = await addDocuments([mockFile]);
+      addTestResult(
+        '📦 Composable API',
+        'Add documents to queue',
+        newDocs.length === 1 && totalDocuments.value === 1,
+        `Added ${newDocs.length} document(s), Total: ${totalDocuments.value}`
+      );
+
+      // Test 8: Extract All Entities
+      const fullText = `
+        INVOICE #INV-001
+        Date: 12/04/2024
+        Email: billing@company.com
+        Phone: 555-123-4567
+        Total: $1,234.56
+      `;
+      const allEntities = extractAllEntities(fullText);
+      const hasAllTypes = allEntities.dates.length > 0 &&
+                         allEntities.amounts.length > 0 &&
+                         allEntities.emails.length > 0 &&
+                         allEntities.phones.length > 0;
+      addTestResult(
+        '🎯 Entity Extraction',
+        'Extract all entity types',
+        hasAllTypes,
+        `Dates: ${allEntities.dates.length}, Amounts: ${allEntities.amounts.length}, Emails: ${allEntities.emails.length}, Phones: ${allEntities.phones.length}`
+      );
+
+      showSummary();
+      document.getElementById('runTests').disabled = false;
+    };
+
+    // Auto-run tests on load
+    setTimeout(() => runAllTests(), 500);
+  </script>
+</body>
+</html>
+

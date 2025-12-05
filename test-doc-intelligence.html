@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doc Intelligence Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .test-section h2 {
+            color: #2563eb;
+            margin-top: 0;
+        }
+        canvas {
+            border: 2px solid #ddd;
+            margin: 10px 0;
+            display: block;
+        }
+        .results {
+            background: #f9fafb;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 10px 0;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .status.processing {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .status.success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .status.error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+        button:hover {
+            background: #1d4ed8;
+        }
+        button:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Doc Intelligence Package Test</h1>
+    <p style="text-align: center; color: #666;">Testing OCR, Document Type Detection, and Entity Extraction</p>
+
+    <!-- Test 1: Invoice -->
+    <div class="test-section">
+        <h2>📄 Test 1: Invoice Document</h2>
+        <canvas id="invoice-canvas" width="600" height="400"></canvas>
+        <button onclick="testInvoice()" id="test1-btn">Run Test 1</button>
+        <div id="test1-status"></div>
+        <div id="test1-results" class="results"></div>
+    </div>
+
+    <!-- Test 2: Receipt -->
+    <div class="test-section">
+        <h2>🧾 Test 2: Receipt Document</h2>
+        <canvas id="receipt-canvas" width="600" height="400"></canvas>
+        <button onclick="testReceipt()" id="test2-btn">Run Test 2</button>
+        <div id="test2-status"></div>
+        <div id="test2-results" class="results"></div>
+    </div>
+
+    <!-- Test 3: Business Card -->
+    <div class="test-section">
+        <h2>💼 Test 3: Business Card</h2>
+        <canvas id="card-canvas" width="600" height="300"></canvas>
+        <button onclick="testBusinessCard()" id="test3-btn">Run Test 3</button>
+        <div id="test3-status"></div>
+        <div id="test3-results" class="results"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>🚀 Run All Tests</h2>
+        <button onclick="runAllTests()" id="run-all-btn">Run All Tests</button>
+    </div>
+
+    <script type="module">
+        // Import from the built package
+        import { 
+            initializeOCR, 
+            extractTextFromImage, 
+            detectDocumentType,
+            extractAllEntities,
+            terminateOCR 
+        } from './packages/doc-intelligence/dist/index.mjs';
+
+        // Create test documents
+        function createInvoiceImage() {
+            const canvas = document.getElementById('invoice-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            ctx.fillStyle = 'white';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = 'black';
+            ctx.font = 'bold 24px Arial';
+            ctx.fillText('INVOICE', 250, 40);
+            
+            ctx.font = '16px Arial';
+            ctx.fillText('Invoice Number: INV-2024-001', 50, 80);
+            ctx.fillText('Date: December 2, 2024', 50, 110);
+            
+            ctx.fillText('Bill To:', 50, 150);
+            ctx.fillText('John Smith', 50, 175);
+            ctx.fillText('john.smith@example.com', 50, 200);
+            ctx.fillText('123 Main Street, New York, NY 10001', 50, 225);
+            
+            ctx.fillText('Description: Web Development Services', 50, 270);
+            ctx.fillText('Amount: $2,500.00', 50, 300);
+            ctx.fillText('Tax (10%): $250.00', 50, 325);
+            ctx.font = 'bold 18px Arial';
+            ctx.fillText('Total: $2,750.00', 50, 360);
+        }
+
+        function createReceiptImage() {
+            const canvas = document.getElementById('receipt-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            ctx.fillStyle = 'white';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = 'black';
+            ctx.font = 'bold 20px Arial';
+            ctx.fillText('RECEIPT', 260, 40);
+            
+            ctx.font = '14px Arial';
+            ctx.fillText('Coffee Shop & Bakery', 220, 70);
+            ctx.fillText('456 Park Avenue, Boston, MA 02101', 180, 90);
+            ctx.fillText('Phone: (555) 123-4567', 230, 110);
+            
+            ctx.fillText('Date: 12/02/2024  Time: 10:30 AM', 200, 140);
+            ctx.fillText('Receipt #: RCP-789456', 230, 160);
+            
+            ctx.fillText('Items:', 50, 200);
+            ctx.fillText('Cappuccino (Large)         $4.50', 50, 225);
+            ctx.fillText('Croissant                  $3.25', 50, 250);
+            ctx.fillText('Blueberry Muffin           $2.75', 50, 275);
+            
+            ctx.fillText('Subtotal:                 $10.50', 50, 310);
+            ctx.fillText('Tax:                       $0.84', 50, 330);
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('Total:                    $11.34', 50, 360);
+        }
+
+        function createBusinessCardImage() {
+            const canvas = document.getElementById('card-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            ctx.fillStyle = '#1e40af';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold 28px Arial';
+            ctx.fillText('Sarah Johnson', 50, 80);
+            
+            ctx.font = '18px Arial';
+            ctx.fillText('Senior Software Engineer', 50, 115);
+            
+            ctx.font = '16px Arial';
+            ctx.fillText('Email: sarah.johnson@techcorp.com', 50, 160);
+            ctx.fillText('Phone: +1 (555) 987-6543', 50, 190);
+            ctx.fillText('LinkedIn: linkedin.com/in/sarahjohnson', 50, 220);
+            
+            ctx.font = 'bold 20px Arial';
+            ctx.fillText('TechCorp Solutions', 350, 260);
+            ctx.font = '14px Arial';
+            ctx.fillText('www.techcorp.com', 380, 285);
+        }
+
+        // Initialize
+        createInvoiceImage();
+        createReceiptImage();
+        createBusinessCardImage();
+
+        // Make test functions global
+        window.testInvoice = async function() {
+            await runTest('invoice', 'invoice-canvas', 'test1');
+        };
+
+        window.testReceipt = async function() {
+            await runTest('receipt', 'receipt-canvas', 'test2');
+        };
+
+        window.testBusinessCard = async function() {
+            await runTest('business card', 'card-canvas', 'test3');
+        };
+
+        window.runAllTests = async function() {
+            document.getElementById('run-all-btn').disabled = true;
+            await testInvoice();
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            await testReceipt();
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            await testBusinessCard();
+            document.getElementById('run-all-btn').disabled = false;
+        };
+
+        async function runTest(name, canvasId, testId) {
+            const statusDiv = document.getElementById(`${testId}-status`);
+            const resultsDiv = document.getElementById(`${testId}-results`);
+            const btn = document.getElementById(`${testId}-btn`);
+            
+            btn.disabled = true;
+            statusDiv.className = 'status processing';
+            statusDiv.textContent = `⏳ Processing ${name}...`;
+            resultsDiv.textContent = '';
+
+            try {
+                // Initialize OCR
+                await initializeOCR({ lang: 'eng' });
+                
+                // Get canvas as blob
+                const canvas = document.getElementById(canvasId);
+                const blob = await new Promise(resolve => canvas.toBlob(resolve));
+                
+                // Extract text
+                const ocrResult = await extractTextFromImage(blob);
+                
+                // Detect document type
+                const docType = await detectDocumentType(ocrResult.text);
+                
+                // Extract entities
+                const entities = await extractAllEntities(ocrResult.text);
+                
+                // Display results
+                const results = {
+                    'OCR Confidence': `${(ocrResult.confidence * 100).toFixed(1)}%`,
+                    'Extracted Text': ocrResult.text.substring(0, 200) + '...',
+                    'Document Type': `${docType.type} (${(docType.confidence * 100).toFixed(1)}% confidence)`,
+                    'Entities Found': {
+                        'Dates': entities.dates.length,
+                        'Amounts': entities.amounts.length,
+                        'Emails': entities.emails.length,
+                        'Phones': entities.phones.length,
+                        'Names': entities.names.length,
+                        'Addresses': entities.addresses.length,
+                        'Invoice Numbers': entities.invoiceNumbers.length
+                    },
+                    'Sample Entities': {
+                        'Dates': entities.dates.slice(0, 3).map(e => e.value),
+                        'Amounts': entities.amounts.slice(0, 3).map(e => e.value),
+                        'Emails': entities.emails.slice(0, 3).map(e => e.value),
+                        'Phones': entities.phones.slice(0, 3).map(e => e.value)
+                    }
+                };
+                
+                statusDiv.className = 'status success';
+                statusDiv.textContent = `✅ ${name} processed successfully!`;
+                resultsDiv.textContent = JSON.stringify(results, null, 2);
+                
+            } catch (error) {
+                statusDiv.className = 'status error';
+                statusDiv.textContent = `❌ Error: ${error.message}`;
+                resultsDiv.textContent = error.stack;
+            } finally {
+                btn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>
+
