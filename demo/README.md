@@ -1,14 +1,25 @@
 # Vue AI Components Demo
 
-A demonstration of the @aivue packages for Vue.js, showcasing AI-powered components including:
+<div align="center">
+  <a href="https://aivue.netlify.app/"><img src="https://api.netlify.com/api/v1/badges/5cb37fa7-9ee1-4af6-9ff4-d34ff0322ded/deploy-status" alt="Netlify Status"></a>
+</div>
+
+A comprehensive demonstration of the @aivue packages for Vue.js, showcasing AI-powered components including:
 
 - **AI Chatbot**: Conversational AI interface with multiple themes and customization options
 - **AI Autosuggest**: Smart input suggestions powered by AI
 - **AI Smart Form**: Form validation and enhancement with AI
+- **Image Caption**: AI-powered image captioning with OpenAI Vision
+- **Emotion UI**: Emotion-aware UI components with sentiment analysis
+- **Doc Intelligence**: Document processing with OCR and entity extraction
+- **Predictive Input**: AI-powered text predictions and completions
+- **Smart Notify**: Intelligent notification management
+- **Voice Actions**: Voice command integration
+- **Analytics**: AI-powered analytics and insights
 
 ## Live Demo
 
-Check out the live demo at [https://aivue-demo.netlify.app/](https://aivue-demo.netlify.app/)
+Check out the live demo at [https://aivue.netlify.app/](https://aivue.netlify.app/)
 
 ## Running the Demo
 
@@ -200,10 +211,17 @@ const chatOptions: ChatOptions = {
 
 ## Packages Used
 
-- @aivue/chatbot: ^1.4.5
-- @aivue/core: ^1.2.7
-- @aivue/autosuggest: ^1.2.8
-- @aivue/smartform: ^1.2.8
+- [@aivue/core](https://www.npmjs.com/package/@aivue/core): Core AI functionality
+- [@aivue/chatbot](https://www.npmjs.com/package/@aivue/chatbot): Multi-provider AI chat widget
+- [@aivue/autosuggest](https://www.npmjs.com/package/@aivue/autosuggest): Smart autosuggest with semantic ranking
+- [@aivue/smartform](https://www.npmjs.com/package/@aivue/smartform): AI-enhanced forms with dynamic validation
+- [@aivue/image-caption](https://www.npmjs.com/package/@aivue/image-caption): AI-powered image captioning
+- [@aivue/emotion-ui](https://www.npmjs.com/package/@aivue/emotion-ui): Emotion-aware UI components
+- [@aivue/doc-intelligence](https://www.npmjs.com/package/@aivue/doc-intelligence): Document processing with OCR
+- [@aivue/predictive-input](https://www.npmjs.com/package/@aivue/predictive-input): AI-powered text predictions
+- [@aivue/smart-notify](https://www.npmjs.com/package/@aivue/smart-notify): Intelligent notifications
+- [@aivue/voice-actions](https://www.npmjs.com/package/@aivue/voice-actions): Voice command integration
+- [@aivue/analytics](https://www.npmjs.com/package/@aivue/analytics): AI-powered analytics
 - Vue.js: ^3.5.13
 
 ## License

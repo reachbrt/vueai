@@ -21,30 +21,64 @@ A modular AI-powered Vue.js component suite that enhances your applications with
 
 <table>
   <tr>
-    <td align="center" width="20%">
+    <td align="center" width="16.66%">
       <img src="demo/src/assets/images/chatbot-illustration.svg" width="80" height="80"><br>
       <a href="https://www.npmjs.com/package/@aivue/chatbot"><b>@aivue/chatbot</b></a><br>
       <small>Multi-provider AI chat widget</small>
     </td>
-    <td align="center" width="20%">
+    <td align="center" width="16.66%">
       <img src="demo/src/assets/images/autosuggest-illustration.svg" width="80" height="80"><br>
       <a href="https://www.npmjs.com/package/@aivue/autosuggest"><b>@aivue/autosuggest</b></a><br>
       <small>Smart autosuggest with semantic ranking</small>
     </td>
-    <td align="center" width="20%">
+    <td align="center" width="16.66%">
       <img src="demo/src/assets/images/smartform-illustration.svg" width="80" height="80"><br>
       <a href="https://www.npmjs.com/package/@aivue/smartform"><b>@aivue/smartform</b></a><br>
       <small>AI-enhanced forms with dynamic validation</small>
     </td>
-    <td align="center" width="20%">
+    <td align="center" width="16.66%">
       <img src="demo/src/assets/images/image-caption-illustration.svg" width="80" height="80"><br>
       <a href="https://www.npmjs.com/package/@aivue/image-caption"><b>@aivue/image-caption</b></a><br>
-      <small>AI-powered image captioning with OpenAI Vision</small>
+      <small>AI-powered image captioning</small>
     </td>
-    <td align="center" width="20%">
+    <td align="center" width="16.66%">
+      <img src="demo/src/assets/images/hero-illustration.svg" width="80" height="80"><br>
+      <a href="https://www.npmjs.com/package/@aivue/emotion-ui"><b>@aivue/emotion-ui</b></a><br>
+      <small>Emotion-aware UI components</small>
+    </td>
+    <td align="center" width="16.66%">
+      <img src="demo/src/assets/images/hero-illustration.svg" width="80" height="80"><br>
+      <a href="https://www.npmjs.com/package/@aivue/doc-intelligence"><b>@aivue/doc-intelligence</b></a><br>
+      <small>Document processing with OCR</small>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="16.66%">
+      <img src="demo/src/assets/images/hero-illustration.svg" width="80" height="80"><br>
+      <a href="https://www.npmjs.com/package/@aivue/predictive-input"><b>@aivue/predictive-input</b></a><br>
+      <small>AI-powered text predictions</small>
+    </td>
+    <td align="center" width="16.66%">
+      <img src="demo/src/assets/images/hero-illustration.svg" width="80" height="80"><br>
+      <a href="https://www.npmjs.com/package/@aivue/smart-notify"><b>@aivue/smart-notify</b></a><br>
+      <small>Intelligent notifications</small>
+    </td>
+    <td align="center" width="16.66%">
+      <img src="demo/src/assets/images/hero-illustration.svg" width="80" height="80"><br>
+      <a href="https://www.npmjs.com/package/@aivue/voice-actions"><b>@aivue/voice-actions</b></a><br>
+      <small>Voice command integration</small>
+    </td>
+    <td align="center" width="16.66%">
+      <img src="demo/src/assets/images/analytics-illustration.svg" width="80" height="80"><br>
+      <a href="https://www.npmjs.com/package/@aivue/analytics"><b>@aivue/analytics</b></a><br>
+      <small>AI-powered analytics</small>
+    </td>
+    <td align="center" width="16.66%">
       <img src="demo/src/assets/images/hero-illustration.svg" width="80" height="80"><br>
       <a href="https://www.npmjs.com/package/@aivue/core"><b>@aivue/core</b></a><br>
-      <small>Core AI functionality for Vue.js components</small>
+      <small>Core AI functionality</small>
+    </td>
+    <td align="center" width="16.66%">
     </td>
   </tr>
 </table>
@@ -66,10 +100,15 @@ npm install @aivue/chatbot
 npm install @aivue/autosuggest
 npm install @aivue/smartform
 npm install @aivue/image-caption
+npm install @aivue/emotion-ui
+npm install @aivue/doc-intelligence
+npm install @aivue/predictive-input
+npm install @aivue/smart-notify
+npm install @aivue/voice-actions
 npm install @aivue/analytics
 
 # Or install all packages at once
-npm install @aivue/core @aivue/chatbot @aivue/autosuggest @aivue/smartform @aivue/image-caption @aivue/analytics
+npm install @aivue/core @aivue/chatbot @aivue/autosuggest @aivue/smartform @aivue/image-caption @aivue/emotion-ui @aivue/doc-intelligence @aivue/predictive-input @aivue/smart-notify @aivue/voice-actions @aivue/analytics
 ```
 
 </td>
@@ -125,7 +164,7 @@ VITE_DEEPSEEK_API_KEY=your_deepseek_api_key_here
 ```
 vueai/
 ├── packages/
-│   ├── core/           # @aivue/core
+│   ├── core/              # @aivue/core
 │   │   ├── src/
 │   │   │   ├── index.ts
 │   │   │   └── providers/
@@ -136,12 +175,18 @@ vueai/
 │   │   │       ├── ollama.ts
 │   │   │       ├── deepseek.ts
 │   │   │       └── fallback.ts
-│   ├── chatbot/        # @aivue/chatbot
-│   ├── autosuggest/    # @aivue/autosuggest
-│   ├── smartform/      # @aivue/smartform
-│   ├── image-caption/  # @aivue/image-caption
-│   └── analytics/      # @aivue/analytics
-└── package.json        # Root package.json with workspace configuration
+│   ├── chatbot/           # @aivue/chatbot
+│   ├── autosuggest/       # @aivue/autosuggest
+│   ├── smartform/         # @aivue/smartform
+│   ├── image-caption/     # @aivue/image-caption
+│   ├── emotion-ui/        # @aivue/emotion-ui
+│   ├── doc-intelligence/  # @aivue/doc-intelligence
+│   ├── predictive-input/  # @aivue/predictive-input
+│   ├── smart-notify/      # @aivue/smart-notify
+│   ├── voice-actions/     # @aivue/voice-actions
+│   └── analytics/         # @aivue/analytics
+├── demo/                  # Live demo application
+└── package.json           # Root package.json with workspace configuration
 ```
 
 ---
@@ -402,6 +447,166 @@ const analytics = useAnalytics({
   </div>
   </div>
 
+  <div class="component-card">
+    <div class="card-header">
+      <img src="demo/src/assets/images/hero-illustration.svg" width="60" height="60" alt="Emotion UI">
+      <h3>@aivue/emotion-ui <a href="https://www.npmjs.com/package/@aivue/emotion-ui"><img src="https://img.shields.io/npm/v/@aivue/emotion-ui.svg?style=flat-square" alt="npm version"></a> <a href="https://www.npmjs.com/package/@aivue/emotion-ui"><img src="https://img.shields.io/npm/d18m/%40aivue%2Femotion-ui" alt="NPM Downloads"></a></h3>
+    </div>
+    <div class="card-features">
+      <ul>
+        <li>✅ Real-time emotion detection from text input</li>
+        <li>✅ Sentiment analysis with AI-powered insights</li>
+        <li>✅ Emotion-aware UI components (inputs, buttons, notifications)</li>
+        <li>✅ Adaptive styling based on detected emotions</li>
+        <li>✅ Facial and voice analysis support</li>
+      </ul>
+    </div>
+    <div class="card-code">
+
+```vue
+<template>
+  <div>
+    <EmotionAwareInput
+      v-model="message"
+      placeholder="Type your message..."
+      @emotion-detected="handleEmotion"
+    />
+    <EmotionAwareButton
+      :emotion="currentEmotion"
+      @click="handleSubmit"
+    >
+      Send Message
+    </EmotionAwareButton>
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue';
+import { EmotionAwareInput, EmotionAwareButton, useEmotionStore } from '@aivue/emotion-ui';
+import '@aivue/emotion-ui/style.css';
+
+const message = ref('');
+const emotionStore = useEmotionStore();
+const currentEmotion = computed(() => emotionStore.currentEmotion);
+
+function handleEmotion(emotion) {
+  console.log('Detected emotion:', emotion);
+}
+
+function handleSubmit() {
+  console.log('Message:', message.value);
+}
+</script>
+```
+
+  </div>
+  </div>
+
+  <div class="component-card">
+    <div class="card-header">
+      <img src="demo/src/assets/images/hero-illustration.svg" width="60" height="60" alt="Doc Intelligence">
+      <h3>@aivue/doc-intelligence <a href="https://www.npmjs.com/package/@aivue/doc-intelligence"><img src="https://img.shields.io/npm/v/@aivue/doc-intelligence.svg?style=flat-square" alt="npm version"></a> <a href="https://www.npmjs.com/package/@aivue/doc-intelligence"><img src="https://img.shields.io/npm/d18m/%40aivue%2Fdoc-intelligence" alt="NPM Downloads"></a></h3>
+    </div>
+    <div class="card-features">
+      <ul>
+        <li>✅ OCR text extraction from PDFs and images</li>
+        <li>✅ Document type detection (invoice, receipt, ID, etc.)</li>
+        <li>✅ Entity extraction (dates, amounts, emails, etc.)</li>
+        <li>✅ Auto-generated forms from extracted data</li>
+        <li>✅ Support for multiple document formats</li>
+      </ul>
+    </div>
+    <div class="card-code">
+
+```vue
+<template>
+  <div>
+    <DocumentUpload
+      @document-uploaded="handleUpload"
+      :accepted-types="['pdf', 'jpg', 'png']"
+    />
+    <DocumentViewer
+      v-if="document"
+      :document="document"
+      :extracted-text="extractedText"
+    />
+    <ExtractedDataForm
+      v-if="extractedData"
+      :data="extractedData"
+      @submit="handleSubmit"
+    />
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue';
+import { DocumentUpload, DocumentViewer, ExtractedDataForm, useDocIntelligence } from '@aivue/doc-intelligence';
+import '@aivue/doc-intelligence/style.css';
+
+const document = ref(null);
+const { extractText, detectDocumentType, extractEntities } = useDocIntelligence();
+
+async function handleUpload(file) {
+  document.value = file;
+  const text = await extractText(file);
+  const type = await detectDocumentType(text);
+  const entities = await extractEntities(text, type);
+  console.log('Extracted:', { text, type, entities });
+}
+</script>
+```
+
+  </div>
+  </div>
+
+  <div class="component-card">
+    <div class="card-header">
+      <img src="demo/src/assets/images/hero-illustration.svg" width="60" height="60" alt="Predictive Input">
+      <h3>@aivue/predictive-input <a href="https://www.npmjs.com/package/@aivue/predictive-input"><img src="https://img.shields.io/npm/v/@aivue/predictive-input.svg?style=flat-square" alt="npm version"></a> <a href="https://www.npmjs.com/package/@aivue/predictive-input"><img src="https://img.shields.io/npm/d18m/%40aivue%2Fpredictive-input" alt="NPM Downloads"></a></h3>
+    </div>
+    <div class="card-features">
+      <ul>
+        <li>✅ AI-powered text predictions and completions</li>
+        <li>✅ Context-aware suggestions</li>
+        <li>✅ Multiple prediction modes (email, creative, code, etc.)</li>
+        <li>✅ Pattern learning from user behavior</li>
+        <li>✅ Offline n-gram model support</li>
+      </ul>
+    </div>
+    <div class="card-code">
+
+```vue
+<template>
+  <PredictiveInput
+    v-model="text"
+    :ai-client="aiClient"
+    :mode="'email'"
+    :show-predictions="true"
+    @prediction-accepted="handlePrediction"
+  />
+</template>
+
+<script setup>
+import { ref } from 'vue';
+import { AIClient } from '@aivue/core';
+import { PredictiveInput } from '@aivue/predictive-input';
+import '@aivue/predictive-input/style.css';
+
+const text = ref('');
+const aiClient = new AIClient({
+  provider: 'openai',
+  apiKey: import.meta.env.VITE_OPENAI_API_KEY
+});
+
+function handlePrediction(prediction) {
+  console.log('Accepted prediction:', prediction);
+}
+</script>
+```
+
+  </div>
+  </div>
+
 ---
 
 ## 🧠 @aivue/core Shared AI Engine
@@ -520,6 +725,11 @@ npm publish --access public --workspace @aivue/chatbot
 npm publish --access public --workspace @aivue/autosuggest
 npm publish --access public --workspace @aivue/smartform
 npm publish --access public --workspace @aivue/image-caption
+npm publish --access public --workspace @aivue/emotion-ui
+npm publish --access public --workspace @aivue/doc-intelligence
+npm publish --access public --workspace @aivue/predictive-input
+npm publish --access public --workspace @aivue/smart-notify
+npm publish --access public --workspace @aivue/voice-actions
 npm publish --access public --workspace @aivue/analytics
 
 # Or use the publish script
