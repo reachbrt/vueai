@@ -1,6 +1,6 @@
 {
   "name": "@aivue/chatbot",
-  "version": "2.5.3",
+  "version": "2.5.4",
   "description": "AI-powered chat components for Vue.js with RAG (Retrieval-Augmented Generation) support",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
