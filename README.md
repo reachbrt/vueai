@@ -1,18 +1,67 @@
 <div align="center">
   <img src="assets/images/vueai-logo.svg" alt="VueAI Logo" width="300" height="120" />
 
-  <h1>VueAI - Modern AI Components for Vue.js</h1>
+  <h1>🚀 VueAI - Modern AI Components for Vue.js</h1>
 
   <p>
-    <a href="https://www.npmjs.com/package/@aivue/core"><img src="https://img.shields.io/npm/v/@aivue/core.svg?style=flat-square" alt="npm version"></a>
-    <a href="https://www.npmjs.com/package/@aivue/core"><img src="https://img.shields.io/npm/dm/@aivue/core.svg?style=flat-square" alt="npm downloads"></a>
-    <a href="https://www.npmjs.com/package/@aivue/core"><img src="https://img.shields.io/npm/d18m/%40aivue%2Fcore" alt="NPM Downloads"></a>
-    <a href="https://github.com/reachbrt/vueai/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/@aivue/core.svg?style=flat-square" alt="MIT License"></a>
-    <a href="https://codecov.io/gh/reachbrt/vueai"><img src="https://codecov.io/gh/reachbrt/vueai/graph/badge.svg?token=8LYV3M14ZG" alt="codecov"></a>
-    <a href="https://aivue.netlify.app/"><img src="https://api.netlify.com/api/v1/badges/5cb37fa7-9ee1-4af6-9ff4-d34ff0322ded/deploy-status" alt="Netlify Status"></a>
+    <strong>16 Production-Ready AI Components | Multi-Provider Support | Vue 2 & 3 Compatible</strong>
   </p>
 
-  <p><a href="https://aivue.netlify.app/" target="_blank">📺 Live Demo</a> • <a href="https://github.com/reachbrt/vueai/wiki" target="_blank">📚 Documentation</a> • <a href="https://github.com/reachbrt/vueai/issues/new" target="_blank">🐛 Report Bug</a></p>
+  <!-- Primary Badges -->
+  <p>
+    <a href="https://www.npmjs.com/package/@aivue/core"><img src="https://img.shields.io/npm/v/@aivue/core.svg?style=for-the-badge&logo=npm&logoColor=white&color=CB3837" alt="npm version"></a>
+    <a href="https://github.com/reachbrt/vueai/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/@aivue/core.svg?style=for-the-badge&color=green" alt="MIT License"></a>
+    <a href="https://github.com/reachbrt/vueai/stargazers"><img src="https://img.shields.io/github/stars/reachbrt/vueai?style=for-the-badge&logo=github&color=yellow" alt="GitHub Stars"></a>
+    <a href="https://github.com/reachbrt/vueai/network/members"><img src="https://img.shields.io/github/forks/reachbrt/vueai?style=for-the-badge&logo=github&color=blue" alt="GitHub Forks"></a>
+  </p>
+
+  <!-- Secondary Badges -->
+  <p>
+    <a href="https://www.npmjs.com/package/@aivue/core"><img src="https://img.shields.io/npm/dm/@aivue/core.svg?style=flat-square&logo=npm" alt="npm downloads/month"></a>
+    <a href="https://www.npmjs.com/package/@aivue/core"><img src="https://img.shields.io/npm/dt/@aivue/core?style=flat-square&logo=npm&label=total%20downloads" alt="npm total downloads"></a>
+    <a href="https://codecov.io/gh/reachbrt/vueai"><img src="https://img.shields.io/codecov/c/github/reachbrt/vueai?style=flat-square&logo=codecov" alt="codecov"></a>
+    <a href="https://aivue.netlify.app/"><img src="https://img.shields.io/netlify/5cb37fa7-9ee1-4af6-9ff4-d34ff0322ded?style=flat-square&logo=netlify" alt="Netlify Status"></a>
+    <a href="https://github.com/reachbrt/vueai/issues"><img src="https://img.shields.io/github/issues/reachbrt/vueai?style=flat-square&logo=github" alt="GitHub Issues"></a>
+    <a href="https://github.com/reachbrt/vueai/pulls"><img src="https://img.shields.io/github/issues-pr/reachbrt/vueai?style=flat-square&logo=github" alt="GitHub Pull Requests"></a>
+  </p>
+
+  <!-- Technology Badges -->
+  <p>
+    <img src="https://img.shields.io/badge/Vue.js-2%20%26%203-4FC08D?style=flat-square&logo=vue.js&logoColor=white" alt="Vue.js">
+    <img src="https://img.shields.io/badge/TypeScript-Ready-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript">
+    <img src="https://img.shields.io/badge/OpenAI-Supported-412991?style=flat-square&logo=openai&logoColor=white" alt="OpenAI">
+    <img src="https://img.shields.io/badge/Claude-Supported-CC9B7A?style=flat-square&logo=anthropic&logoColor=white" alt="Claude">
+    <img src="https://img.shields.io/badge/Gemini-Supported-4285F4?style=flat-square&logo=google&logoColor=white" alt="Gemini">
+    <img src="https://img.shields.io/badge/Ollama-Supported-000000?style=flat-square&logo=ollama&logoColor=white" alt="Ollama">
+  </p>
+
+  <!-- Social & Community Badges -->
+  <p>
+    <a href="https://github.com/reachbrt/vueai/watchers"><img src="https://img.shields.io/github/watchers/reachbrt/vueai?style=social" alt="GitHub Watchers"></a>
+    <a href="https://twitter.com/intent/tweet?text=Check%20out%20@aivue%20-%2016%20AI-powered%20Vue.js%20components!&url=https://github.com/reachbrt/vueai"><img src="https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Fgithub.com%2Freachbrt%2Fvueai" alt="Tweet"></a>
+    <a href="https://discord.gg/vue"><img src="https://img.shields.io/badge/Discord-Join%20Community-5865F2?style=flat-square&logo=discord&logoColor=white" alt="Discord"></a>
+  </p>
+
+  <!-- Quick Links -->
+  <p>
+    <a href="https://aivue.netlify.app/" target="_blank"><img src="https://img.shields.io/badge/🎨_Live_Demo-Visit-FF6B6B?style=for-the-badge" alt="Live Demo"></a>
+    <a href="https://github.com/reachbrt/vueai/wiki" target="_blank"><img src="https://img.shields.io/badge/📚_Documentation-Read-4ECDC4?style=for-the-badge" alt="Documentation"></a>
+    <a href="https://github.com/reachbrt/vueai/issues/new" target="_blank"><img src="https://img.shields.io/badge/🐛_Report_Bug-Submit-F7B731?style=for-the-badge" alt="Report Bug"></a>
+    <a href="#-quick-start"><img src="https://img.shields.io/badge/⚡_Quick_Start-Begin-95E1D3?style=for-the-badge" alt="Quick Start"></a>
+  </p>
+
+  <!-- Sponsor/Support -->
+  <p>
+    <a href="https://github.com/sponsors/reachbrt"><img src="https://img.shields.io/badge/💖_Sponsor-Support%20Development-EA4AAA?style=for-the-badge" alt="Sponsor"></a>
+  </p>
+
+  ---
+
+  <h3>⭐ If you find this project useful, please consider giving it a star! ⭐</h3>
+
+  <p>
+    <em>Built with ❤️ by <a href="https://github.com/reachbrt">reachbrt</a> | Mentored by Manoj & Thiru</em>
+  </p>
 </div>
 
 ## ✨ Features
@@ -102,6 +151,92 @@ A modular AI-powered Vue.js component suite that enhances your applications with
     </td>
   </tr>
 </table>
+
+---
+
+## 🌟 Why Choose @aivue?
+
+<table>
+<tr>
+<td width="33%" align="center">
+
+### 🎯 **Production Ready**
+Battle-tested components used in real applications. Full TypeScript support, comprehensive tests, and detailed documentation.
+
+</td>
+<td width="33%" align="center">
+
+### 🔌 **Multi-Provider**
+Works with OpenAI, Claude, Gemini, Ollama, DeepSeek, and HuggingFace. Switch providers with one line of code.
+
+</td>
+<td width="33%" align="center">
+
+### ⚡ **Easy Integration**
+Install via npm, add your API key, and start building. Works with Vue 2 & 3, Nuxt, and all modern build tools.
+
+</td>
+</tr>
+<tr>
+<td width="33%" align="center">
+
+### 🎨 **Customizable**
+Full control over styling, behavior, and AI parameters. Built with flexibility in mind.
+
+</td>
+<td width="33%" align="center">
+
+### 📦 **Modular**
+Install only what you need. Each component is a separate package with zero dependencies on others.
+
+</td>
+<td width="33%" align="center">
+
+### 🚀 **Active Development**
+Regular updates, bug fixes, and new features. Community-driven with responsive maintainers.
+
+</td>
+</tr>
+</table>
+
+---
+
+## 📊 Project Stats
+
+<div align="center">
+
+| Metric | Value |
+|--------|-------|
+| 📦 **Total Packages** | 16 packages |
+| 🚀 **Published on npm** | 14 packages |
+| ⭐ **GitHub Stars** | ![GitHub Stars](https://img.shields.io/github/stars/reachbrt/vueai?style=social) |
+| 🍴 **Forks** | ![GitHub Forks](https://img.shields.io/github/forks/reachbrt/vueai?style=social) |
+| 📥 **npm Downloads** | ![npm](https://img.shields.io/npm/dt/@aivue/core) |
+| 🐛 **Open Issues** | ![GitHub Issues](https://img.shields.io/github/issues/reachbrt/vueai) |
+| ✅ **Closed Issues** | ![GitHub Closed Issues](https://img.shields.io/github/issues-closed/reachbrt/vueai) |
+| 🔄 **Pull Requests** | ![GitHub PRs](https://img.shields.io/github/issues-pr/reachbrt/vueai) |
+| 📝 **License** | MIT |
+| 🏗️ **Build Status** | ![Netlify](https://img.shields.io/netlify/5cb37fa7-9ee1-4af6-9ff4-d34ff0322ded) |
+
+</div>
+
+---
+
+## 🎬 See It In Action
+
+<div align="center">
+
+### 🎨 [**Live Demo**](https://aivue.netlify.app/) | 📚 [**Full Documentation**](https://github.com/reachbrt/vueai/wiki) | 💬 [**Join Discord**](https://discord.gg/vue)
+
+<br>
+
+**Try all 16 components with live examples, code snippets, and interactive demos!**
+
+[![Demo Screenshot](https://img.shields.io/badge/🎥_Watch_Demo-Click_Here-FF6B6B?style=for-the-badge)](https://aivue.netlify.app/)
+
+</div>
+
+---
 
 ## 🚀 Quick Start
 
@@ -909,19 +1044,301 @@ npm run publish:packages
   </a>
 </div>
 
+## 🎯 Showcase
+
+<div align="center">
+
+### 🌟 **Who's Using @aivue?**
+
+Are you using @aivue in your project? [**Add your project here!**](https://github.com/reachbrt/vueai/issues/new?title=Showcase:%20My%20Project)
+
+<table>
+<tr>
+<td align="center" width="25%">
+<img src="https://via.placeholder.com/100x100?text=Your+Logo" width="100" height="100"><br>
+<strong>Your Project</strong><br>
+<small>Be the first to showcase!</small>
+</td>
+<td align="center" width="25%">
+<img src="https://via.placeholder.com/100x100?text=Your+Logo" width="100" height="100"><br>
+<strong>Your Project</strong><br>
+<small>Share your success story</small>
+</td>
+<td align="center" width="25%">
+<img src="https://via.placeholder.com/100x100?text=Your+Logo" width="100" height="100"><br>
+<strong>Your Project</strong><br>
+<small>Join our showcase</small>
+</td>
+<td align="center" width="25%">
+<img src="https://via.placeholder.com/100x100?text=Your+Logo" width="100" height="100"><br>
+<strong>Your Project</strong><br>
+<small>Feature your work</small>
+</td>
+</tr>
+</table>
+
+</div>
+
+---
+
+## 🤝 Community & Support
+
+<div align="center">
+
+### 💬 **Join Our Community**
+
+<table>
+<tr>
+<td align="center" width="25%">
+
+[![Discord](https://img.shields.io/badge/Discord-Join%20Chat-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/vue)
+
+**Discord**<br>
+Chat with the community
+
+</td>
+<td align="center" width="25%">
+
+[![GitHub Discussions](https://img.shields.io/badge/GitHub-Discussions-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/reachbrt/vueai/discussions)
+
+**Discussions**<br>
+Ask questions & share ideas
+
+</td>
+<td align="center" width="25%">
+
+[![Twitter](https://img.shields.io/badge/Twitter-Follow-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/intent/follow?screen_name=reachbrt)
+
+**Twitter**<br>
+Get latest updates
+
+</td>
+<td align="center" width="25%">
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/bharatkumarsubramanian/)
+
+**LinkedIn**<br>
+Professional network
+
+</td>
+</tr>
+</table>
+
+### 📢 **Stay Updated**
+
+- 🌟 **Star this repo** to get notifications about new releases
+- 👀 **Watch** for updates on issues and pull requests
+- 🔔 **Follow** [@reachbrt](https://github.com/reachbrt) on GitHub
+- 📧 **Subscribe** to our [newsletter](https://github.com/reachbrt/vueai/discussions) (coming soon!)
+
+</div>
+
+---
+
+## 🎁 Support This Project
+
+<div align="center">
+
+If you find @aivue useful, please consider supporting the project:
+
+<table>
+<tr>
+<td align="center" width="33%">
+
+### ⭐ **Star on GitHub**
+Give us a star to show your support!
+
+[![GitHub Stars](https://img.shields.io/github/stars/reachbrt/vueai?style=social)](https://github.com/reachbrt/vueai/stargazers)
+
+</td>
+<td align="center" width="33%">
+
+### 💖 **Sponsor**
+Support ongoing development
+
+[![Sponsor](https://img.shields.io/badge/Sponsor-❤️-EA4AAA?style=for-the-badge)](https://github.com/sponsors/reachbrt)
+
+</td>
+<td align="center" width="33%">
+
+### 🐦 **Share**
+Spread the word!
+
+[![Tweet](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Fgithub.com%2Freachbrt%2Fvueai)](https://twitter.com/intent/tweet?text=Check%20out%20@aivue%20-%2016%20AI-powered%20Vue.js%20components!&url=https://github.com/reachbrt/vueai)
+
+</td>
+</tr>
+</table>
+
+### 🙏 **Other Ways to Support**
+
+- 📝 Write a blog post or tutorial about @aivue
+- 🎥 Create a video tutorial on YouTube
+- 💬 Answer questions in [Discussions](https://github.com/reachbrt/vueai/discussions)
+- 🐛 Report bugs and suggest features
+- 🔧 Contribute code improvements
+- 📚 Improve documentation
+- 🌍 Translate documentation to other languages
+
+</div>
+
+---
+
+## 🏆 Contributors
+
+<div align="center">
+
+### 👥 **Thanks to all contributors!**
+
+<a href="https://github.com/reachbrt/vueai/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=reachbrt/vueai" />
+</a>
+
+**Want to contribute?** Check out our [Contributing Guide](https://github.com/reachbrt/vueai/wiki/Contributing)!
+
+</div>
+
+---
+
+## 📊 Repository Stats
+
+<div align="center">
+
+![Alt](https://repobeats.axiom.co/api/embed/YOUR_REPOBEATS_TOKEN.svg "Repobeats analytics image")
+
+<table>
+<tr>
+<td align="center">
+
+![GitHub commit activity](https://img.shields.io/github/commit-activity/m/reachbrt/vueai?style=for-the-badge&logo=github)
+
+**Commit Activity**
+
+</td>
+<td align="center">
+
+![GitHub last commit](https://img.shields.io/github/last-commit/reachbrt/vueai?style=for-the-badge&logo=github)
+
+**Last Commit**
+
+</td>
+<td align="center">
+
+![GitHub contributors](https://img.shields.io/github/contributors/reachbrt/vueai?style=for-the-badge&logo=github)
+
+**Contributors**
+
+</td>
+</tr>
+<tr>
+<td align="center">
+
+![GitHub code size](https://img.shields.io/github/languages/code-size/reachbrt/vueai?style=for-the-badge&logo=github)
+
+**Code Size**
+
+</td>
+<td align="center">
+
+![GitHub repo size](https://img.shields.io/github/repo-size/reachbrt/vueai?style=for-the-badge&logo=github)
+
+**Repo Size**
+
+</td>
+<td align="center">
+
+![GitHub language count](https://img.shields.io/github/languages/count/reachbrt/vueai?style=for-the-badge&logo=github)
+
+**Languages**
+
+</td>
+</tr>
+</table>
+
+</div>
+
+---
+
 ## 📄 License
 
-<div class="license-section">
-  <p>MIT © 2025 Bharatkumar Subramanian</p>
+<div align="center">
 
-  <div class="author-info">
-    <h3>Author & Maintainer</h3>
-    <p><strong>Bharatkumar Subramanian</strong></p>
-    <p>Email: <a href="mailto:reachbrt@gmail.com">reachbrt@gmail.com</a></p>
-    <p>GitHub: <a href="https://github.com/reachbrt" target="_blank">github.com/reachbrt</a></p>
-  </div>
+**MIT License** © 2025 [Bharatkumar Subramanian](https://github.com/reachbrt)
+
+[![License](https://img.shields.io/npm/l/@aivue/core.svg?style=for-the-badge&color=green)](https://github.com/reachbrt/vueai/blob/main/LICENSE)
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+### 👨‍💻 **Author & Maintainer**
+
+<table>
+<tr>
+<td align="center">
+<img src="https://github.com/reachbrt.png" width="100" height="100" style="border-radius: 50%"><br>
+<strong>Bharatkumar Subramanian</strong><br>
+<a href="https://github.com/reachbrt">GitHub</a> •
+<a href="https://www.linkedin.com/in/bharatkumarsubramanian/">LinkedIn</a> •
+<a href="mailto:reachbrt@gmail.com">Email</a>
+</td>
+</tr>
+</table>
+
+### 🙏 **Special Thanks**
+
+Huge gratitude to my mentors who guided me through this journey:
+
+- **Manoj** - Main guidance and mentorship
+- **Thiru** - AI sessions and teaching
+
 </div>
+
+---
 
 ## ⭐ Star History
 
+<div align="center">
+
 [![Star History Chart](https://api.star-history.com/svg?repos=reachbrt/vueai&type=Date)](https://star-history.com/#reachbrt/vueai&Date)
+
+</div>
+
+---
+
+## 🔗 Related Projects
+
+<div align="center">
+
+Interested in AI components for other frameworks?
+
+| Framework | Repository | Status |
+|-----------|-----------|--------|
+| **Angular** | [angularai](https://github.com/reachbrt/angularai) | 🚧 Coming Soon |
+| **React** | [reactai](https://github.com/reachbrt/reactai) | 💡 Planned |
+| **Svelte** | [svelteai](https://github.com/reachbrt/svelteai) | 💡 Planned |
+
+</div>
+
+---
+
+<div align="center">
+
+### 🎉 **Thank you for using @aivue!**
+
+<p>
+  <strong>If this project helped you, please consider:</strong><br>
+  ⭐ Starring the repository<br>
+  🐦 Sharing on social media<br>
+  💖 Sponsoring the project<br>
+  🤝 Contributing to the codebase
+</p>
+
+<p>
+  <em>Made with ❤️ by <a href="https://github.com/reachbrt">reachbrt</a></em><br>
+  <em>Mentored by Manoj & Thiru</em>
+</p>
+
+---
+
+**[⬆ Back to Top](#-vueai---modern-ai-components-for-vuejs)**
+
+</div>
