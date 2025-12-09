@@ -101,6 +101,15 @@
             </div>
           </div>
 
+          <div class="package-card spin360">
+            <div class="package-icon">🔄</div>
+            <div class="package-details">
+              <h3>@aivue/360-spin</h3>
+              <p>360° product viewer</p>
+              <span class="package-version">v1.0.0</span>
+            </div>
+          </div>
+
           <div class="package-card analytics">
             <div class="package-icon">📊</div>
             <div class="package-details">
@@ -699,6 +708,12 @@
         </div>
       </section>
 
+      <section v-if="activeTab === '360-spin'" class="component-section">
+        <div class="demo-container">
+          <Spin360Demo />
+        </div>
+      </section>
+
       <section v-if="activeTab === 'typescript'" class="component-section">
         <div class="demo-container">
           <div class="component-demo-header">
@@ -860,6 +875,7 @@ import SmartNotifyDemo from './components/SmartNotifyDemo.vue';
 import AnalyticsDemo from './components/AnalyticsDemo.vue';
 import ImageCaptionDemo from './components/ImageCaptionDemo.vue';
 import RAGDemo from './components/RAGDemo.vue';
+import Spin360Demo from './components/Spin360Demo.vue';
 
 import TypeScriptExample from './components/TypeScriptExample.vue';
 import OllamaDemo from './components/OllamaDemo.vue';
@@ -883,6 +899,7 @@ export default {
     AnalyticsDemo,
     ImageCaptionDemo,
     RAGDemo,
+    Spin360Demo,
 
     TypeScriptExample,
     OllamaDemo,
@@ -987,6 +1004,11 @@ export default {
           id: 'image-caption',
           name: 'Image Caption',
           icon: '🖼️'
+        },
+        {
+          id: '360-spin',
+          name: '360° Spin',
+          icon: '🔄'
         },
         {
           id: 'typescript',
@@ -1185,6 +1207,21 @@ export default {
             { icon: '🌐', text: 'URL Support' },
             { icon: '📊', text: 'Batch Processing' },
             { icon: '📈', text: 'History Tracking' }
+          ]
+        },
+        '360-spin': {
+          name: '@aivue/360-spin',
+          npmName: '@aivue/360-spin',
+          version: '1.0.0',
+          description: 'Interactive 360-degree product image spin component for Vue.js. Perfect for e-commerce product listings, carousels, and detail pages.',
+          github: 'https://github.com/reachbrt/vueai/tree/main/packages/360-spin',
+          features: [
+            { icon: '🔄', text: '360° Product Spin' },
+            { icon: '🎬', text: 'GIF & Frame Sequence' },
+            { icon: '📱', text: 'Mobile Drag-to-Spin' },
+            { icon: '🛍️', text: 'E-commerce Ready' },
+            { icon: '⚡', text: 'Image Preloading' },
+            { icon: '🎨', text: 'Customizable Styling' }
           ]
         },
         typescript: {

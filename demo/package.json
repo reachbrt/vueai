@@ -11,6 +11,7 @@
     "start": "vite --host localhost --port 8080"
   },
   "dependencies": {
+    "@aivue/360-spin": "file:../packages/360-spin",
     "@aivue/analytics": "^1.0.0",
     "@aivue/autosuggest": "^1.2.9",
     "@aivue/chatbot": "^2.5.1",
@@ -19,6 +20,7 @@
     "@aivue/emotion-ui": "^1.0.1",
     "@aivue/image-caption": "^1.0.0",
     "@aivue/predictive-input": "^1.0.2",
+    "@aivue/smart-datatable": "file:../packages/smart-datatable",
     "@aivue/smartform": "^1.2.9",
     "compromise": "^14.14.4",
     "gsap": "^3.13.0",

@@ -7,30 +7,110 @@
 [![codecov](https://codecov.io/gh/reachbrt/vueai/graph/badge.svg?token=8LYV3M14ZG)](https://codecov.io/gh/reachbrt/vueai)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/5cb37fa7-9ee1-4af6-9ff4-d34ff0322ded/deploy-status)](https://aivue.netlify.app/)
 
-> AI-powered data table with intelligent sorting, filtering, and insights for Vue.js
+> **AI-Native Data Table for Vue.js** - The world's first truly AI-powered datatable that understands your data, not just displays it.
+
+## 🚀 What Makes This Different?
+
+Unlike traditional datatables that just display data, `@aivue/smart-datatable` is **AI-native** - it talks to LLM APIs and truly understands your table data:
+
+- 🗣️ **Natural Language Querying** - "show orders from India last 30 days where total > 500"
+- 🧠 **Auto-Insights** - One-click AI analysis with trends, outliers, and recommendations
+- 🤖 **Row Agents** - AI operations on individual rows (explain, predict, generate content)
+- ✨ **AI Transformations** - Intelligent data cleaning, enrichment, and standardization
+- 💬 **Chat Interface** - Conversational queries about your data
+- 📋 **OpenAPI Integration** - Auto-generate columns from API schemas
 
 ## ✨ Features
 
+### 🤖 **AI-Native Features**
+
+#### 1. Natural Language Querying
+Transform how users interact with data - no more complex filter UIs:
+```vue
+<SmartDataTable
+  :data="orders"
+  :ai-client="aiClient"
+  :ai-search="true"
+/>
+```
+Users can type: *"show only orders from India last 30 days where total > 500"*
+
+#### 2. Auto-Insights & Summaries
+One-click AI analysis of your data:
+```vue
+<SmartDataTable
+  :ai-insights="true"
+  :ai-client="aiClient"
+/>
+```
+Get instant insights on trends, outliers, patterns, and actionable recommendations.
+
+#### 3. AI Row Agents
+Execute AI operations on individual rows:
+```vue
+<SmartDataTable
+  :row-agents="[
+    {
+      id: 'explain',
+      label: 'Explain Record',
+      promptTemplate: 'Explain this order: {{customer}} ordered {{product}} for ${{total}}'
+    },
+    {
+      id: 'predict',
+      label: 'Predict Delivery',
+      promptTemplate: 'Predict delivery date for order {{id}} to {{country}}'
+    }
+  ]"
+/>
+```
+
+#### 4. AI Data Transformations
+Intelligent data cleaning and enrichment:
+```vue
+<SmartDataTable
+  :ai-transformations="[
+    {
+      id: 'standardize',
+      label: 'Standardize Country Names',
+      scope: 'column',
+      targetColumn: 'country'
+    }
+  ]"
+/>
+```
+
+#### 5. Chat with Your Table
+Conversational data analysis:
+```vue
+<SmartDataTable
+  :show-chat="true"
+  :ai-client="aiClient"
+/>
+```
+Ask questions like: *"What is the average order value per country?"*
+
+#### 6. OpenAPI Integration
+Auto-generate columns from API schemas:
+```vue
+<SmartDataTable
+  :ai-infer-columns="true"
+  :open-api-config="{
+    schemaUrl: 'https://api.example.com/openapi.json',
+    operationId: 'getOrders'
+  }"
+/>
+```
+
 ### 🎯 **Core Features**
 - 📊 **Smart Data Display** - Beautiful, responsive table with modern design
-- 🔍 **AI-Powered Search** - Natural language search with intelligent filtering
 - 📈 **Intelligent Sorting** - Multi-column sorting with type detection
 - 🎨 **Customizable Columns** - Show/hide columns, custom formatters
 - 📱 **Responsive Design** - Works perfectly on all devices
-
-### 🤖 **AI Features**
-- 💡 **Data Insights** - Get AI-powered insights about your data
-- 🔎 **Smart Search** - Natural language queries to find data
-- 📊 **Pattern Detection** - AI identifies trends and patterns
-- 💬 **Recommendations** - Get suggestions based on your data
-
-### 🛠️ **Advanced Features**
 - ✅ **Row Selection** - Single and multi-select with bulk actions
 - 📤 **Export Data** - Export to CSV, JSON, or Excel
 - 🎯 **Custom Actions** - Add custom row actions
 - 🎨 **Themes** - Light and dark theme support
 - 📄 **Pagination** - Smart pagination with customizable page sizes
-- 🔧 **Flexible API** - Extensive customization options
 
 ## 📦 Installation
 
@@ -40,47 +120,146 @@ npm install @aivue/smart-datatable @aivue/core
 
 ## 🚀 Quick Start
 
+### Three Integration Levels
+
+#### 1️⃣ Zero-Config (Simplest)
+Just pass data and enable AI - columns are auto-generated!
+
 ```vue
 <template>
   <SmartDataTable
-    :data="users"
+    :data="orders"
+    :ai-client="aiClient"
+    :ai-search="true"
+    :ai-insights="true"
+  />
+</template>
+
+<script setup>
+import { SmartDataTable } from '@aivue/smart-datatable';
+import { AIClient } from '@aivue/core';
+
+const aiClient = new AIClient({
+  provider: 'openai',
+  apiKey: 'your-api-key'
+});
+
+const orders = [
+  { id: 1, customer: 'Acme Corp', total: 5000, country: 'USA' },
+  { id: 2, customer: 'Tech Inc', total: 3000, country: 'India' }
+];
+</script>
+```
+
+#### 2️⃣ Config-Driven (Recommended)
+Full control with AI features:
+
+```vue
+<template>
+  <SmartDataTable
+    :data="orders"
     :columns="columns"
     :ai-client="aiClient"
-    title="Users"
+    :ai-search="true"
+    :ai-insights="true"
+    :row-agents="rowAgents"
+    :ai-transformations="transformations"
+    :show-chat="true"
+    title="Sales Orders"
     :pagination="true"
     :selectable="true"
-    @row-click="handleRowClick"
+    @ai-query="handleAiQuery"
+    @ai-insight="handleAiInsight"
   />
 </template>
 
 <script setup>
 import { ref } from 'vue';
-import { AIClient } from '@aivue/core';
 import { SmartDataTable } from '@aivue/smart-datatable';
-import '@aivue/smart-datatable/style.css';
+import { AIClient } from '@aivue/core';
+import '@aivue/smart-datatable/dist/smart-datatable.css';
 
 const aiClient = new AIClient({
   provider: 'openai',
-  apiKey: import.meta.env.VITE_OPENAI_API_KEY
+  apiKey: import.meta.env.VITE_OPENAI_API_KEY,
+  model: 'gpt-4'
 });
 
-const users = ref([
-  { id: 1, name: 'John Doe', email: 'john@example.com', role: 'Admin', status: 'Active' },
-  { id: 2, name: 'Jane Smith', email: 'jane@example.com', role: 'User', status: 'Active' },
-  { id: 3, name: 'Bob Johnson', email: 'bob@example.com', role: 'User', status: 'Inactive' }
+const orders = ref([
+  { id: 'ORD-001', customer: 'Acme Corp', total: 5000, country: 'USA', status: 'delivered' },
+  { id: 'ORD-002', customer: 'Tech Inc', total: 3000, country: 'India', status: 'shipped' }
 ]);
 
-const columns = ref([
-  { key: 'id', label: 'ID', sortable: true },
-  { key: 'name', label: 'Name', sortable: true },
-  { key: 'email', label: 'Email', sortable: true },
-  { key: 'role', label: 'Role', sortable: true },
+const columns = [
+  { key: 'id', label: 'Order ID', sortable: true },
+  { key: 'customer', label: 'Customer', sortable: true },
+  { key: 'total', label: 'Total', sortable: true, type: 'number' },
+  { key: 'country', label: 'Country', sortable: true },
   { key: 'status', label: 'Status', sortable: true }
-]);
+];
 
-function handleRowClick(row) {
-  console.log('Row clicked:', row);
+const rowAgents = [
+  {
+    id: 'explain',
+    label: 'Explain Order',
+    icon: '📝',
+    promptTemplate: 'Explain this order: {{customer}} ordered for ${{total}}, status: {{status}}'
+  },
+  {
+    id: 'predict',
+    label: 'Predict Delivery',
+    icon: '📅',
+    promptTemplate: 'Predict delivery date for order {{id}} to {{country}}'
+  }
+];
+
+const transformations = [
+  {
+    id: 'standardize-countries',
+    label: 'Standardize Country Names',
+    scope: 'column',
+    targetColumn: 'country',
+    promptTemplate: 'Standardize these country names to ISO format: {{values}}'
+  }
+];
+
+function handleAiQuery(result) {
+  console.log('AI Query Result:', result);
 }
+
+function handleAiInsight(insights) {
+  console.log('AI Insights:', insights);
+}
+</script>
+```
+
+#### 3️⃣ Advanced (Full Control)
+Custom AI client and interceptors:
+
+```vue
+<script setup>
+import { useAiTableQuery, useAiInsights } from '@aivue/smart-datatable';
+
+// Create custom AI client
+const customAiClient = {
+  async chat(messages, options) {
+    // Your custom AI implementation
+    const response = await fetch('your-ai-endpoint', {
+      method: 'POST',
+      body: JSON.stringify({ messages, ...options })
+    });
+    return await response.text();
+  }
+};
+
+// Use composables directly for full control
+const { queryToFilter, applyFilter } = useAiTableQuery({
+  aiClient: customAiClient,
+  schema: tableSchema,
+  onQueryResult: (result) => {
+    // Custom handling
+  }
+});
 </script>
 ```
 

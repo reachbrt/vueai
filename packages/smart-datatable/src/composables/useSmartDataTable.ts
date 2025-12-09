@@ -87,7 +87,7 @@ export function useSmartDataTable(options: UseSmartDataTableOptions) {
         { role: 'user', content: prompt }
       ]);
 
-      return response.content;
+      return response; // AIClient.chat() returns string directly
     } finally {
       loading.value = false;
     }
