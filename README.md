@@ -17,8 +17,8 @@
 
   <!-- Secondary Badges -->
   <p>
-    <a href="https://www.npmjs.com/package/@aivue/core"><img src="https://img.shields.io/npm/dm/@aivue/core.svg?style=flat-square&logo=npm" alt="npm downloads/month"></a>
-    <a href="https://www.npmjs.com/package/@aivue/core"><img src="https://img.shields.io/npm/dt/@aivue/core?style=flat-square&logo=npm&label=total%20downloads" alt="npm total downloads"></a>
+    <a href="https://npm-stat.com/charts.html?package=%40aivue%2Fcore&package=%40aivue%2Fchatbot&package=%40aivue%2Fautosuggest&package=%40aivue%2Fsmartform&package=%40aivue%2Fimage-caption&package=%40aivue%2Femotion-ui&package=%40aivue%2Fdoc-intelligence&package=%40aivue%2Fanalytics&package=%40aivue%2F360-spin&package=%40aivue%2Fpredictive-input&package=%40aivue%2Fsmart-datatable&package=%40aivue%2Fsmart-notify&package=%40aivue%2Fvoice-actions&from=2020-01-01"><img src="https://img.shields.io/badge/downloads-15%20packages%20combined-CB3837?style=flat-square&logo=npm&label=npm%20downloads" alt="All @aivue packages downloads"></a>
+    <a href="https://www.npmjs.com/search?q=%40aivue"><img src="https://img.shields.io/badge/15%20packages-view%20all-CB3837?style=flat-square&logo=npm&label=npm%20packages" alt="All @aivue packages"></a>
     <a href="https://codecov.io/gh/reachbrt/vueai"><img src="https://img.shields.io/codecov/c/github/reachbrt/vueai?style=flat-square&logo=codecov" alt="codecov"></a>
     <a href="https://aivue.netlify.app/"><img src="https://img.shields.io/netlify/5cb37fa7-9ee1-4af6-9ff4-d34ff0322ded?style=flat-square&logo=netlify" alt="Netlify Status"></a>
     <a href="https://github.com/reachbrt/vueai/issues"><img src="https://img.shields.io/github/issues/reachbrt/vueai?style=flat-square&logo=github" alt="GitHub Issues"></a>
@@ -1332,8 +1332,7 @@ Interested in AI components for other frameworks?
 </p>
 
 <p>
-  <em>Made with ❤️ by <a href="https://github.com/reachbrt">reachbrt</a></em><br>
-  <em>Mentored by <a href="https://www.instagram.com/the_ai_dude/?hl=en">Manoj (@the_ai_dude)</a></em>
+  <em>Made with ❤️ by <a href="https://github.com/reachbrt">reachbrt</a></em>
 </p>
 
 ---
