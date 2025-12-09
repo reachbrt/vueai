@@ -1,6 +1,6 @@
 {
   "name": "@aivue/smart-datatable",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "AI-Native Data Table for Vue.js - Natural language querying, auto-insights, row agents, and intelligent transformations",
   "main": "dist/index.js",
   "module": "dist/index.mjs",

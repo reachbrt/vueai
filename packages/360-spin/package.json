@@ -1,6 +1,6 @@
 {
   "name": "@aivue/360-spin",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Interactive 360-degree product image spin component for Vue.js",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -68,4 +68,3 @@
     "vue-tsc": "^2.2.10"
   }
 }
-

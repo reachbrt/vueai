@@ -1,6 +1,6 @@
 {
   "name": "@aivue/emotion-ui",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Emotion-aware UI components for Vue 3 that adapt based on user sentiment detected from text, voice, and interaction patterns",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
