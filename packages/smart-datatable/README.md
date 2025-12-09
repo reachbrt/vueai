@@ -4,8 +4,8 @@
 [![npm downloads](https://img.shields.io/badge/downloads-188%2Fmonth-CB3837?style=flat-square&logo=npm)](https://www.npmjs.com/package/@aivue/smart-datatable)
 [![NPM Downloads](https://img.shields.io/npm/d18m/%40aivue%2Fsmart-datatable)](https://www.npmjs.com/package/@aivue/smart-datatable)
 [![MIT License](https://img.shields.io/npm/l/@aivue/smart-datatable.svg?style=flat-square)](https://github.com/reachbrt/vueai/blob/main/LICENSE)
-[![codecov](https://codecov.io/gh/reachbrt/vueai/graph/badge.svg?token=8LYV3M14ZG)](https://codecov.io/gh/reachbrt/vueai)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/5cb37fa7-9ee1-4af6-9ff4-d34ff0322ded/deploy-status)](https://aivue.netlify.app/)
+
+[![Netlify Status](https://img.shields.io/netlify/5cb37fa7-9ee1-4af6-9ff4-d34ff0322ded?style=flat-square&logo=netlify)](https://aivue.netlify.app/)
 
 > **AI-Native Data Table for Vue.js** - The world's first truly AI-powered datatable that understands your data, not just displays it.
 
