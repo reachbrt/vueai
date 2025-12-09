@@ -60,7 +60,7 @@
   <h3>⭐ If you find this project useful, please consider giving it a star! ⭐</h3>
 
   <p>
-    <em>Built with ❤️ by <a href="https://github.com/reachbrt">reachbrt</a> | Mentored by Manoj & Thiru</em>
+    <em>Built with ❤️ by <a href="https://github.com/reachbrt">reachbrt</a> | Mentored by Manoj</em>
   </p>
 </div>
 
@@ -1285,10 +1285,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ### 🙏 **Special Thanks**
 
-Huge gratitude to my mentors who guided me through this journey:
+Huge gratitude to my mentor who guided me through this journey:
 
 - **Manoj** - Main guidance and mentorship
-- **Thiru** - AI sessions and teaching
 
 </div>
 
@@ -1334,7 +1333,7 @@ Interested in AI components for other frameworks?
 
 <p>
   <em>Made with ❤️ by <a href="https://github.com/reachbrt">reachbrt</a></em><br>
-  <em>Mentored by Manoj & Thiru</em>
+  <em>Mentored by Manoj</em>
 </p>
 
 ---
