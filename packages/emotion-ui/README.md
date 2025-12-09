@@ -1,7 +1,7 @@
 # @aivue/emotion-ui
 
 [![npm version](https://img.shields.io/npm/v/@aivue/emotion-ui.svg)](https://www.npmjs.com/package/@aivue/emotion-ui)
-[![npm downloads](https://img.shields.io/npm/dm/@aivue/emotion-ui.svg)](https://www.npmjs.com/package/@aivue/emotion-ui)
+[![npm downloads](https://img.shields.io/badge/downloads-274%2Fmonth-CB3837?style=flat-square&logo=npm)](https://www.npmjs.com/package/@aivue/emotion-ui)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/9f08866c-e889-408a-959e-32d8e3f3ab49/deploy-status)](https://aivue.netlify.app/)
 

@@ -1,7 +1,7 @@
 # @aivue/smart-datatable
 
 [![npm version](https://img.shields.io/npm/v/@aivue/smart-datatable.svg?style=flat-square)](https://www.npmjs.com/package/@aivue/smart-datatable)
-[![npm downloads](https://img.shields.io/npm/dm/@aivue/smart-datatable.svg?style=flat-square)](https://www.npmjs.com/package/@aivue/smart-datatable)
+[![npm downloads](https://img.shields.io/badge/downloads-188%2Fmonth-CB3837?style=flat-square&logo=npm)](https://www.npmjs.com/package/@aivue/smart-datatable)
 [![NPM Downloads](https://img.shields.io/npm/d18m/%40aivue%2Fsmart-datatable)](https://www.npmjs.com/package/@aivue/smart-datatable)
 [![MIT License](https://img.shields.io/npm/l/@aivue/smart-datatable.svg?style=flat-square)](https://github.com/reachbrt/vueai/blob/main/LICENSE)
 [![codecov](https://codecov.io/gh/reachbrt/vueai/graph/badge.svg?token=8LYV3M14ZG)](https://codecov.io/gh/reachbrt/vueai)

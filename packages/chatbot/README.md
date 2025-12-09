@@ -7,7 +7,7 @@
 Enterprise-grade conversational AI with advanced features including database storage, voice integration, multi-model support, analytics, and collaborative capabilities. Built for production applications with backward compatibility.
 
 [![npm version](https://img.shields.io/npm/v/@aivue/chatbot.svg?style=flat-square)](https://www.npmjs.com/package/@aivue/chatbot)
-[![npm downloads](https://img.shields.io/npm/dm/@aivue/chatbot.svg?style=flat-square)](https://www.npmjs.com/package/@aivue/chatbot)
+[![npm downloads](https://img.shields.io/badge/downloads-501%2Fmonth-CB3837?style=flat-square&logo=npm)](https://www.npmjs.com/package/@aivue/chatbot)
 [![NPM Downloads](https://img.shields.io/npm/d18m/%40aivue%2Fchatbot)](https://www.npmjs.com/package/@aivue/chatbot)
 [![MIT License](https://img.shields.io/npm/l/@aivue/chatbot.svg?style=flat-square)](https://github.com/reachbrt/vueai/blob/main/LICENSE)
 [![codecov](https://codecov.io/gh/reachbrt/vueai/graph/badge.svg?token=8LYV3M14ZG)](https://codecov.io/gh/reachbrt/vueai)

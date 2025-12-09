@@ -3,7 +3,7 @@
 > Interactive 360-degree product image spin component for Vue.js
 
 [![npm version](https://img.shields.io/npm/v/@aivue/360-spin.svg)](https://www.npmjs.com/package/@aivue/360-spin)
-[![npm downloads](https://img.shields.io/npm/dm/@aivue/360-spin.svg)](https://www.npmjs.com/package/@aivue/360-spin)
+[![npm downloads](https://img.shields.io/badge/downloads-0%2Fmonth-CB3837?style=flat-square&logo=npm)](https://www.npmjs.com/package/@aivue/360-spin)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## ✨ Features

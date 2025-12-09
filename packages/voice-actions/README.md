@@ -3,7 +3,7 @@
 [![npm version](https://img.shields.io/npm/v/@aivue/voice-actions.svg)](https://www.npmjs.com/package/@aivue/voice-actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/your-badge-id/deploy-status)](https://aivue.netlify.app/)
-[![npm downloads](https://img.shields.io/npm/dm/@aivue/voice-actions.svg)](https://www.npmjs.com/package/@aivue/voice-actions)
+[![npm downloads](https://img.shields.io/badge/downloads-185%2Fmonth-CB3837?style=flat-square&logo=npm)](https://www.npmjs.com/package/@aivue/voice-actions)
 
 > 🎤 AI-powered voice command controller with speech recognition, natural language processing, and custom actions for Vue.js
 

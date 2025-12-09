@@ -1,7 +1,7 @@
 # @aivue/analytics
 
 [![npm version](https://img.shields.io/npm/v/@aivue/analytics.svg?style=flat-square)](https://www.npmjs.com/package/@aivue/analytics)
-[![npm downloads](https://img.shields.io/npm/dm/@aivue/analytics.svg?style=flat-square)](https://www.npmjs.com/package/@aivue/analytics)
+[![npm downloads](https://img.shields.io/badge/downloads-97%2Fmonth-CB3837?style=flat-square&logo=npm)](https://www.npmjs.com/package/@aivue/analytics)
 [![codecov](https://codecov.io/gh/reachbrt/vueai/branch/main/graph/badge.svg)](https://codecov.io/gh/reachbrt/vueai)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/your-badge-id/deploy-status)](https://app.netlify.com/sites/aivue-demo/deploys)
 

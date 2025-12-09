@@ -3,7 +3,7 @@
 > AI-powered document parser and extractor for Vue 3 - Upload PDFs/images, extract structured data from invoices, receipts, forms, and IDs with OCR and entity recognition
 
 [![npm version](https://img.shields.io/npm/v/@aivue/doc-intelligence.svg)](https://www.npmjs.com/package/@aivue/doc-intelligence)
-[![npm downloads](https://img.shields.io/npm/dm/@aivue/doc-intelligence.svg)](https://www.npmjs.com/package/@aivue/doc-intelligence)
+[![npm downloads](https://img.shields.io/badge/downloads-285%2Fmonth-CB3837?style=flat-square&logo=npm)](https://www.npmjs.com/package/@aivue/doc-intelligence)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## ✨ Features

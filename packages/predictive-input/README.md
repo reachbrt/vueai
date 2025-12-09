@@ -5,7 +5,7 @@
 Transform your text inputs with intelligent, AI-powered predictions. Get smart text completions and suggestions powered by your AI provider.
 
 [![npm version](https://img.shields.io/npm/v/@aivue/predictive-input.svg)](https://www.npmjs.com/package/@aivue/predictive-input)
-[![npm downloads](https://img.shields.io/npm/dm/@aivue/predictive-input.svg)](https://www.npmjs.com/package/@aivue/predictive-input)
+[![npm downloads](https://img.shields.io/badge/downloads-283%2Fmonth-CB3837?style=flat-square&logo=npm)](https://www.npmjs.com/package/@aivue/predictive-input)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ---

@@ -31,14 +31,14 @@ jobs:
       - name: Check for changes
         id: git-check
         run: |
-          git diff --exit-code README.md || echo "changed=true" >> $GITHUB_OUTPUT
-      
+          git diff --exit-code README.md packages/*/README.md || echo "changed=true" >> $GITHUB_OUTPUT
+
       - name: Commit and push if changed
         if: steps.git-check.outputs.changed == 'true'
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add README.md
-          git commit -m "chore: Update npm download statistics [skip ci]"
+          git add README.md packages/*/README.md
+          git commit -m "chore: Update npm download statistics for all packages [skip ci]"
           git push
 

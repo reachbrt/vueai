@@ -106,15 +106,68 @@ async function main() {
   
   // Save the updated README
   fs.writeFileSync(readmePath, readme, 'utf8');
-  
-  console.log('✅ README.md updated with latest download counts!');
+
+  console.log('✅ Main README.md updated with latest download counts!');
   console.log(`   Monthly: ${formatNumber(totalMonthly)}/month`);
-  console.log(`   Total: ${formatNumber(totalAll)}`);
-  
+  console.log(`   Total: ${formatNumber(totalAll)}\n`);
+
+  // Update individual package READMEs
+  console.log('Updating individual package READMEs...\n');
+
+  let packagesUpdated = 0;
+  packages.forEach((pkg, i) => {
+    const packageName = pkg.split('/')[1]; // Extract package name from @aivue/packagename
+    const packageReadmePath = path.join(__dirname, `../../packages/${packageName}/README.md`);
+
+    if (fs.existsSync(packageReadmePath)) {
+      let packageReadme = fs.readFileSync(packageReadmePath, 'utf8');
+      let updated = false;
+
+      // Pattern 1: Update monthly downloads badge (npm/dm with .svg and style=flat-square)
+      const monthlyPattern1 = new RegExp(`https://img\\.shields\\.io/npm/dm/${pkg.replace('/', '\\/')}(\\.svg)?\\?style=flat-square`, 'g');
+
+      // Pattern 2: Update monthly downloads badge (npm/dm with .svg, no style)
+      const monthlyPattern2 = new RegExp(`https://img\\.shields\\.io/npm/dm/${pkg.replace('/', '\\/')}(\\.svg)?(?!\\?)`, 'g');
+
+      // Pattern 3: Update 18-month downloads badge (npm/d18m)
+      const d18mPattern = new RegExp(`https://img\\.shields\\.io/npm/d18m/${pkg.replace('/', '%2F')}`, 'g');
+
+      // Create new badge URLs
+      const newMonthlyBadge = `https://img.shields.io/badge/downloads-${formatNumber(monthlyDownloads[i])}%2Fmonth-CB3837?style=flat-square&logo=npm`;
+      const newTotalBadge = `https://img.shields.io/badge/total-${formatNumber(totalDownloads[i])}-CB3837?style=flat-square&logo=npm`;
+
+      // Try to update monthly badge (pattern 1)
+      if (packageReadme.match(monthlyPattern1)) {
+        packageReadme = packageReadme.replace(monthlyPattern1, newMonthlyBadge);
+        updated = true;
+      }
+      // Try to update monthly badge (pattern 2)
+      else if (packageReadme.match(monthlyPattern2)) {
+        packageReadme = packageReadme.replace(monthlyPattern2, newMonthlyBadge);
+        updated = true;
+      }
+
+      // Try to update total downloads badge
+      if (packageReadme.match(d18mPattern)) {
+        packageReadme = packageReadme.replace(d18mPattern, newTotalBadge);
+        updated = true;
+      }
+
+      if (updated) {
+        fs.writeFileSync(packageReadmePath, packageReadme, 'utf8');
+        console.log(`   ✅ ${pkg}: ${formatNumber(monthlyDownloads[i])}/month | ${formatNumber(totalDownloads[i])} total`);
+        packagesUpdated++;
+      }
+    }
+  });
+
+  console.log(`\n✅ Updated ${packagesUpdated} package README files!`);
+
   // Output for GitHub Actions
   if (process.env.GITHUB_OUTPUT) {
     fs.appendFileSync(process.env.GITHUB_OUTPUT, `monthly_downloads=${totalMonthly}\n`);
     fs.appendFileSync(process.env.GITHUB_OUTPUT, `total_downloads=${totalAll}\n`);
+    fs.appendFileSync(process.env.GITHUB_OUTPUT, `packages_updated=${packagesUpdated}\n`);
   }
 }
 
