@@ -79,6 +79,26 @@ A modular AI-powered Vue.js component suite that enhances your applications with
       <small>Core AI functionality</small>
     </td>
     <td align="center" width="16.66%">
+      <img src="demo/src/assets/images/hero-illustration.svg" width="80" height="80"><br>
+      <a href="https://www.npmjs.com/package/@aivue/smart-datatable"><b>@aivue/smart-datatable</b></a><br>
+      <small>AI-native data table</small>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="16.66%">
+      <img src="demo/src/assets/images/hero-illustration.svg" width="80" height="80"><br>
+      <a href="https://www.npmjs.com/package/@aivue/360-spin"><b>@aivue/360-spin</b></a><br>
+      <small>360° product viewer</small>
+    </td>
+    <td align="center" width="16.66%">
+    </td>
+    <td align="center" width="16.66%">
+    </td>
+    <td align="center" width="16.66%">
+    </td>
+    <td align="center" width="16.66%">
+    </td>
+    <td align="center" width="16.66%">
     </td>
   </tr>
 </table>
@@ -106,9 +126,11 @@ npm install @aivue/predictive-input
 npm install @aivue/smart-notify
 npm install @aivue/voice-actions
 npm install @aivue/analytics
+npm install @aivue/smart-datatable
+npm install @aivue/360-spin
 
 # Or install all packages at once
-npm install @aivue/core @aivue/chatbot @aivue/autosuggest @aivue/smartform @aivue/image-caption @aivue/emotion-ui @aivue/doc-intelligence @aivue/predictive-input @aivue/smart-notify @aivue/voice-actions @aivue/analytics
+npm install @aivue/core @aivue/chatbot @aivue/autosuggest @aivue/smartform @aivue/image-caption @aivue/emotion-ui @aivue/doc-intelligence @aivue/predictive-input @aivue/smart-notify @aivue/voice-actions @aivue/analytics @aivue/smart-datatable @aivue/360-spin
 ```
 
 </td>
@@ -184,7 +206,9 @@ vueai/
 │   ├── predictive-input/  # @aivue/predictive-input
 │   ├── smart-notify/      # @aivue/smart-notify
 │   ├── voice-actions/     # @aivue/voice-actions
-│   └── analytics/         # @aivue/analytics
+│   ├── analytics/         # @aivue/analytics
+│   ├── smart-datatable/   # @aivue/smart-datatable
+│   └── 360-spin/          # @aivue/360-spin
 ├── demo/                  # Live demo application
 └── package.json           # Root package.json with workspace configuration
 ```
@@ -607,6 +631,113 @@ function handlePrediction(prediction) {
   </div>
   </div>
 
+  <div class="component-card">
+    <div class="card-header">
+      <img src="demo/src/assets/images/hero-illustration.svg" width="60" height="60" alt="Smart DataTable">
+      <h3>@aivue/smart-datatable <a href="https://www.npmjs.com/package/@aivue/smart-datatable"><img src="https://img.shields.io/npm/v/@aivue/smart-datatable.svg?style=flat-square" alt="npm version"></a> <a href="https://www.npmjs.com/package/@aivue/smart-datatable"><img src="https://img.shields.io/npm/d18m/%40aivue%2Fsmart-datatable" alt="NPM Downloads"></a></h3>
+    </div>
+    <div class="card-features">
+      <ul>
+        <li>✅ Natural language search with AI</li>
+        <li>✅ Chat can execute filter commands</li>
+        <li>✅ Auto-insights and summaries</li>
+        <li>✅ Row-level AI agents</li>
+        <li>✅ AI-powered data transformations</li>
+        <li>✅ Smart type conversion and filtering</li>
+      </ul>
+    </div>
+    <div class="card-code">
+
+```vue
+<template>
+  <SmartDataTable
+    :data="products"
+    :columns="columns"
+    :ai-client="aiClient"
+    :ai-search="true"
+    :ai-insights="true"
+    :show-chat="true"
+    title="Products"
+    :pagination="true"
+    :selectable="true"
+  />
+</template>
+
+<script setup>
+import { AIClient } from '@aivue/core';
+import { SmartDataTable } from '@aivue/smart-datatable';
+import '@aivue/smart-datatable/style.css';
+
+const aiClient = new AIClient({
+  provider: 'openai',
+  apiKey: import.meta.env.VITE_OPENAI_API_KEY,
+  model: 'gpt-4o'
+});
+
+const products = ref([
+  { id: 1, name: 'Product A', price: 99.99, category: 'Electronics' },
+  { id: 2, name: 'Product B', price: 149.99, category: 'Clothing' }
+]);
+
+const columns = [
+  { key: 'id', label: 'ID', sortable: true },
+  { key: 'name', label: 'Name', sortable: true },
+  { key: 'price', label: 'Price', sortable: true },
+  { key: 'category', label: 'Category', sortable: true }
+];
+</script>
+```
+
+  </div>
+  </div>
+
+  <div class="component-card">
+    <div class="card-header">
+      <img src="demo/src/assets/images/hero-illustration.svg" width="60" height="60" alt="360 Spin">
+      <h3>@aivue/360-spin <a href="https://www.npmjs.com/package/@aivue/360-spin"><img src="https://img.shields.io/npm/v/@aivue/360-spin.svg?style=flat-square" alt="npm version"></a> <a href="https://www.npmjs.com/package/@aivue/360-spin"><img src="https://img.shields.io/npm/d18m/%40aivue%2F360-spin" alt="NPM Downloads"></a></h3>
+    </div>
+    <div class="card-features">
+      <ul>
+        <li>✅ True 360° product rotation</li>
+        <li>✅ Frame sequence support</li>
+        <li>✅ GIF animation support</li>
+        <li>✅ Mobile drag-to-spin</li>
+        <li>✅ Auto-play and hover triggers</li>
+        <li>✅ Image preloading</li>
+      </ul>
+    </div>
+    <div class="card-code">
+
+```vue
+<template>
+  <Ai360Spin
+    :images="productImages"
+    :frame-count="36"
+    :auto-play="true"
+    :loop="true"
+    :speed="100"
+    width="600px"
+    height="600px"
+  />
+</template>
+
+<script setup>
+import { ref } from 'vue';
+import { Ai360Spin } from '@aivue/360-spin';
+import '@aivue/360-spin/style.css';
+
+const productImages = ref([
+  '/images/product-001.jpg',
+  '/images/product-002.jpg',
+  '/images/product-003.jpg',
+  // ... 36 frames total
+]);
+</script>
+```
+
+  </div>
+  </div>
+
 ---
 
 ## 🧠 @aivue/core Shared AI Engine
@@ -731,6 +862,8 @@ npm publish --access public --workspace @aivue/predictive-input
 npm publish --access public --workspace @aivue/smart-notify
 npm publish --access public --workspace @aivue/voice-actions
 npm publish --access public --workspace @aivue/analytics
+npm publish --access public --workspace @aivue/smart-datatable
+npm publish --access public --workspace @aivue/360-spin
 
 # Or use the publish script
 npm run publish:packages
