@@ -61,3 +61,6 @@ temp
 
 # Local Netlify folder
 .netlify
+
+# Promotion and marketing materials (not for GitHub)
+PROMOTION_STRATEGY.md
