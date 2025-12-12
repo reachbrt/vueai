@@ -5,6 +5,35 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2025-12-12
+
+### Added - 🤖 AI 360° Generation
+- **NEW: `Ai360Generator` Component** - Upload a single product image and generate 360° views using AI
+- **OpenAI DALL-E 3 Integration** - High-quality AI-generated frames at different angles
+- **Stability AI Support** - Alternative AI provider for 360° generation
+- **GPT-4 Vision Analysis** - Automatic product analysis for better generation results
+- **AI360Generator Utility Class** - Programmatic API for AI generation
+- **Customizable Generation Options**:
+  - Frame count: 12, 24, 36, or 72 frames
+  - Background color: white, transparent, black, or custom
+  - Quality settings: standard, high, ultra
+  - Image size options
+- **Real-time Progress Tracking** - Live updates during generation
+- **Frame Download** - Export all generated frames
+- **Interactive Preview** - View generated 360° immediately with Ai360Spin
+- **API Key Management** - Secure storage in localStorage
+
+### Enhanced
+- Updated TypeScript types for AI generation features
+- Extended documentation with AI generation examples
+- Added comprehensive README section for AI features
+- Improved package description to highlight AI capabilities
+
+### Breaking Changes
+- Major version bump to 2.0.0 due to new AI features
+- New exports: `Ai360Generator` component and `AI360Generator` class
+- New types: `AIProvider`, `BackgroundColor`, `AI360GeneratorConfig`, etc.
+
 ## [1.0.2] - 2025-12-09
 
 ### Changed

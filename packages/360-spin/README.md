@@ -1,6 +1,6 @@
 # @aivue/360-spin
 
-> Interactive 360-degree product image spin component for Vue.js
+> Interactive 360-degree product image spin component for Vue.js with AI-powered generation
 
 [![npm version](https://img.shields.io/npm/v/@aivue/360-spin.svg)](https://www.npmjs.com/package/@aivue/360-spin)
 [![npm downloads](https://img.shields.io/badge/downloads-0%2Fmonth-CB3837?style=flat-square&logo=npm)](https://www.npmjs.com/package/@aivue/360-spin)
@@ -8,6 +8,7 @@
 
 ## ✨ Features
 
+### 360° Viewer
 - 🖼️ **Static to Animated**: Show static product image by default, animate on hover/tap
 - 🎬 **Multiple Modes**: Support for GIF animations or frame sequences
 - 📱 **Mobile Optimized**: Touch and drag to spin on mobile devices
@@ -16,6 +17,15 @@
 - ⚡ **Performance**: Preloading and optimized frame rendering
 - 🎨 **Customizable**: Full control over styling and behavior
 - ♿ **Accessible**: Keyboard navigation and screen reader support
+
+### 🤖 AI 360° Generator (NEW!)
+- 📤 **Upload & Generate**: Upload a single product image and AI generates 360° views
+- 🎨 **OpenAI DALL-E 3**: High-quality AI-generated frames at different angles
+- 🔄 **Stability AI Support**: Alternative AI provider for generation
+- 🎯 **Customizable**: Choose frame count (12/24/36/72), background color, quality
+- 📊 **Real-time Progress**: Track generation progress with live updates
+- 💾 **Download Frames**: Export all generated frames for use elsewhere
+- 🔍 **Vision Analysis**: GPT-4 Vision analyzes your product for better results
 
 ## 📦 Installation
 
@@ -89,9 +99,76 @@ const frameUrls = [
 </template>
 ```
 
+### 🤖 AI 360° Generator
+
+Generate 360-degree product views from a single image using AI:
+
+```vue
+<template>
+  <Ai360Generator
+    provider="openai"
+    api-key="your-openai-api-key"
+    :auto-save-api-key="true"
+    :show-frame-preview="true"
+    @frames-generated="handleFramesGenerated"
+    @generation-complete="handleComplete"
+  />
+</template>
+
+<script setup>
+import { Ai360Generator } from '@aivue/360-spin';
+import '@aivue/360-spin/360-spin.css';
+
+function handleFramesGenerated(frames) {
+  console.log('Generated frames:', frames);
+  // Use frames with Ai360Spin component
+}
+
+function handleComplete(frames) {
+  console.log('Generation complete!', frames.length, 'frames');
+}
+</script>
+```
+
+### Programmatic AI Generation
+
+Use the AI generator utility directly:
+
+```typescript
+import { AI360Generator } from '@aivue/360-spin';
+
+const generator = new AI360Generator(
+  {
+    provider: 'openai',
+    apiKey: 'your-api-key',
+    frameCount: 36,
+    backgroundColor: 'white',
+    quality: 80,
+    useVisionAnalysis: true
+  },
+  (progress) => {
+    console.log(`Progress: ${progress.percentage}%`);
+    console.log(`Status: ${progress.status}`);
+    console.log(`Frame ${progress.currentFrame}/${progress.totalFrames}`);
+  }
+);
+
+// Generate from File
+const file = document.querySelector('input[type="file"]').files[0];
+const result = await generator.generate(file);
+console.log('Generated frames:', result.frames);
+console.log('Product description:', result.productDescription);
+
+// Or generate from base64 image
+const base64Image = 'data:image/jpeg;base64,...';
+const result = await generator.generate(base64Image);
+```
+
 ## 📖 API Reference
 
-### Props
+### Ai360Spin Component
+
+#### Props
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
@@ -113,7 +190,7 @@ const frameUrls = [
 | `containerClass` | `string` | `''` | CSS class for container |
 | `imageClass` | `string` | `''` | CSS class for images |
 
-### Events
+#### Events
 
 | Event | Payload | Description |
 |-------|---------|-------------|
@@ -122,6 +199,51 @@ const frameUrls = [
 | `loaded` | `void` | Fired when images are loaded |
 | `error` | `Error` | Fired on loading error |
 | `frame-change` | `number` | Fired when frame changes (frames mode) |
+
+### Ai360Generator Component
+
+#### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `provider` | `'openai' \| 'stability'` | `'openai'` | AI provider for generation |
+| `apiKey` | `string` | `''` | API key (can be saved in localStorage) |
+| `autoSaveApiKey` | `boolean` | `true` | Auto-save API key to localStorage |
+| `showFramePreview` | `boolean` | `true` | Show preview grid of generated frames |
+
+#### Events
+
+| Event | Payload | Description |
+|-------|---------|-------------|
+| `frames-generated` | `string[]` | Emitted when user clicks "Use These Frames" |
+| `generation-start` | `void` | Emitted when generation starts |
+| `generation-complete` | `string[]` | Emitted when generation completes |
+| `generation-error` | `Error` | Emitted on generation error |
+
+### AI360Generator Class
+
+#### Constructor Options
+
+```typescript
+interface AI360GeneratorConfig {
+  provider?: 'openai' | 'stability';
+  apiKey: string;
+  frameCount?: number; // Default: 36
+  backgroundColor?: 'white' | 'transparent' | 'black' | 'custom';
+  customBackgroundColor?: string;
+  quality?: number; // 0-100, Default: 80
+  imageSize?: '1024x1024' | '1024x1792' | '1792x1024';
+  model?: string; // Default: 'dall-e-3' for OpenAI
+  useVisionAnalysis?: boolean; // Default: true
+  promptTemplate?: string; // Custom prompt template
+}
+```
+
+#### Methods
+
+- `generate(imageFile: File | string): Promise<AI360GenerationResult>`
+  - Generates 360° frames from a single image
+  - Returns frames, product description, and metadata
 
 ## 🎨 Styling
 
