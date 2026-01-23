@@ -1,0 +1,67 @@
+{
+  "name": "@aivue/tabular-intelligence",
+  "version": "1.5.1",
+  "description": "Tabular Foundation Model (TFM) integration for structured data analysis in Vue.js",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "npm run clean && vite build",
+    "dev": "vite build --watch",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "vue",
+    "ai",
+    "tabular",
+    "foundation-model",
+    "tfm",
+    "data-analysis",
+    "machine-learning",
+    "statistics",
+    "anomaly-detection",
+    "clustering",
+    "prediction",
+    "datatable"
+  ],
+  "author": "reachbrt",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/reachbrt/vueai.git",
+    "directory": "packages/tabular-intelligence"
+  },
+  "homepage": "https://github.com/reachbrt/vueai#readme",
+  "bugs": {
+    "url": "https://github.com/reachbrt/vueai/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "vue": "^2.6.0 || ^3.0.0"
+  },
+  "dependencies": {
+    "@aivue/core": "^1.3.13"
+  },
+  "devDependencies": {
+    "@types/node": "^20.16.0",
+    "@vitejs/plugin-vue": "^5.0.0",
+    "typescript": "^5.3.0",
+    "vite": "^6.3.5",
+    "vite-plugin-dts": "^4.5.3",
+    "vue": "^3.5.0"
+  }
+}

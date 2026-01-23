@@ -16,7 +16,7 @@
             <div class="package-details">
               <h3>@aivue/chatbot</h3>
               <p>AI-powered chat interfaces</p>
-              <span class="package-version">v1.4.9</span>
+              <span class="package-version">v2.5.5</span>
             </div>
           </div>
 
@@ -25,7 +25,7 @@
             <div class="package-details">
               <h3>@aivue/autosuggest</h3>
               <p>Smart input suggestions</p>
-              <span class="package-version">v1.2.9</span>
+              <span class="package-version">v1.3.6</span>
             </div>
           </div>
 
@@ -34,7 +34,7 @@
             <div class="package-details">
               <h3>@aivue/smartform</h3>
               <p>Intelligent form validation</p>
-              <span class="package-version">v1.2.9</span>
+              <span class="package-version">v1.3.6</span>
             </div>
           </div>
 
@@ -125,6 +125,33 @@
               <h3>@aivue/browser-llm</h3>
               <p>Local AI in browser</p>
               <span class="package-version">v1.0.0</span>
+            </div>
+          </div>
+
+          <div class="package-card mcp" @click="setActiveTab('mcp')">
+            <div class="package-icon">🔌</div>
+            <div class="package-details">
+              <h3>@aivue/mcp-client</h3>
+              <p>MCP Client</p>
+              <span class="package-version">v1.0.0</span>
+            </div>
+          </div>
+
+          <div class="package-card hierarchical-memory" @click="setActiveTab('hierarchical-memory')">
+            <div class="package-icon">🧠</div>
+            <div class="package-details">
+              <h3>@aivue/hierarchical-memory</h3>
+              <p>H-MEM style memory trees</p>
+              <span class="package-version">v1.0.0</span>
+            </div>
+          </div>
+
+          <div class="package-card tabular-intelligence" @click="setActiveTab('tabular-intelligence')">
+            <div class="package-icon">📊</div>
+            <div class="package-details">
+              <h3>@aivue/tabular-intelligence</h3>
+              <p>TFM for data analysis</p>
+              <span class="package-version">v1.4.0</span>
             </div>
           </div>
         </div>
@@ -717,6 +744,24 @@
         </div>
       </section>
 
+      <section v-if="activeTab === 'mcp'" class="component-section">
+        <div class="demo-container">
+          <MCPDemo />
+        </div>
+      </section>
+
+      <section v-if="activeTab === 'hierarchical-memory'" class="component-section">
+        <div class="demo-container">
+          <HierarchicalMemoryDemo />
+        </div>
+      </section>
+
+      <section v-if="activeTab === 'tabular-intelligence'" class="component-section">
+        <div class="demo-container">
+          <TabularIntelligenceDemo />
+        </div>
+      </section>
+
       <section v-if="activeTab === 'image-caption'" class="component-section">
         <div class="demo-container">
           <div v-if="!hasValidApiKey" class="api-key-warning">
@@ -897,6 +942,9 @@ import ImageCaptionDemo from './components/ImageCaptionDemo.vue';
 import RAGDemo from './components/RAGDemo.vue';
 import Spin360Demo from './components/Spin360Demo.vue';
 import BrowserLLMDemo from './components/BrowserLLMDemo.vue';
+import MCPDemo from './components/MCPDemo.vue';
+import HierarchicalMemoryDemo from './components/HierarchicalMemoryDemo.vue';
+import TabularIntelligenceDemo from './components/TabularIntelligenceDemo.vue';
 
 import TypeScriptExample from './components/TypeScriptExample.vue';
 import OllamaDemo from './components/OllamaDemo.vue';
@@ -922,6 +970,9 @@ export default {
     ImageCaptionDemo,
     RAGDemo,
     Spin360Demo,
+    MCPDemo,
+    HierarchicalMemoryDemo,
+    TabularIntelligenceDemo,
 
     TypeScriptExample,
     OllamaDemo,
@@ -1046,13 +1097,18 @@ export default {
           id: 'ollama',
           name: 'Ollama',
           icon: '🤖'
+        },
+        {
+          id: 'mcp',
+          name: 'MCP',
+          icon: '🔌'
         }
       ],
       packages: {
         chatbot: {
-          name: '@aivue/chatbot v2.0.0',
+          name: '@aivue/chatbot v2.5.5',
           npmName: '@aivue/chatbot',
-          version: '2.0.0',
+          version: '2.5.5',
           description: 'Next-generation AI chat with enterprise features: database storage, voice integration, multi-model AI, analytics, and collaborative capabilities.',
           github: 'https://github.com/reachbrt/vueai/tree/main/packages/chatbot',
           features: [
@@ -1070,7 +1126,7 @@ export default {
         ollama: {
           name: 'Ollama Integration',
           npmName: '@aivue/core',
-          version: '1.3.2',
+          version: '1.3.13',
           description: 'Connect to local Ollama models for privacy-focused AI without requiring API keys.',
           github: 'https://github.com/reachbrt/vueai/tree/main/packages/core',
           features: [
@@ -1085,7 +1141,7 @@ export default {
         autosuggest: {
           name: '@aivue/autosuggest',
           npmName: '@aivue/autosuggest',
-          version: '1.2.9',
+          version: '1.3.6',
           description: 'AI-powered suggestion components for Vue.js that enhance user input with contextual suggestions.',
           github: 'https://github.com/reachbrt/vueai/tree/main/packages/autosuggest',
           features: [
@@ -1100,7 +1156,7 @@ export default {
         smartform: {
           name: '@aivue/smartform',
           npmName: '@aivue/smartform',
-          version: '1.2.9',
+          version: '1.3.6',
           description: 'AI-powered form validation and analysis for Vue.js applications with intelligent feedback.',
           github: 'https://github.com/reachbrt/vueai/tree/main/packages/smartform',
           features: [
@@ -1269,7 +1325,7 @@ export default {
         typescript: {
           name: 'TypeScript Support',
           npmName: '@aivue/core',
-          version: '1.2.8',
+          version: '1.3.13',
           description: 'Full TypeScript support with comprehensive type definitions for all components and APIs.',
           github: 'https://github.com/reachbrt/vueai/tree/main/packages/core',
           features: [
@@ -1279,6 +1335,51 @@ export default {
             { icon: '🔒', text: 'Type Safety' },
             { icon: '📚', text: 'Documentation' },
             { icon: '🔌', text: 'Easy Integration' }
+          ]
+        },
+        mcp: {
+          name: '@aivue/mcp-client',
+          npmName: '@aivue/mcp-client',
+          version: '1.0.0',
+          description: 'Official Model Context Protocol (MCP) client for Vue.js. Follows MCP architecture: Host App → MCP Client → MCP Server. Supports tools/list, tools/call, resources/list, and resources/read.',
+          github: 'https://github.com/reachbrt/vueai/tree/main/packages/mcp',
+          features: [
+            { icon: '🔌', text: 'Official MCP Architecture' },
+            { icon: '🛠️', text: 'Tools List & Call' },
+            { icon: '📦', text: 'Resources List & Read' },
+            { icon: '💬', text: 'Prompts Support' },
+            { icon: '🌐', text: 'HTTP/SSE Transport' },
+            { icon: '🔒', text: 'Framework-Agnostic' }
+          ]
+        },
+        'hierarchical-memory': {
+          name: '@aivue/hierarchical-memory',
+          npmName: '@aivue/hierarchical-memory',
+          version: '1.0.0',
+          description: 'Hierarchical memory trees (H-MEM style) for LLM tools and agents. Multi-level tree of summaries and references optimized for tables and documents.',
+          github: 'https://github.com/reachbrt/vueai/tree/main/packages/hierarchical-memory',
+          features: [
+            { icon: '🌳', text: 'Multi-Level Memory Tree' },
+            { icon: '🔍', text: 'Semantic Retrieval' },
+            { icon: '🤖', text: 'LLM Integration' },
+            { icon: '📊', text: 'Table & Doc Support' },
+            { icon: '⬆️', text: 'Promote/Demote Nodes' },
+            { icon: '📝', text: 'Auto Summarization' }
+          ]
+        },
+        'tabular-intelligence': {
+          name: '@aivue/tabular-intelligence',
+          npmName: '@aivue/tabular-intelligence',
+          version: '1.4.0',
+          description: 'Tabular Foundation Model (TFM) integration for structured data analysis. Connect to any TFM API for descriptive stats, anomaly detection, clustering, and predictions.',
+          github: 'https://github.com/reachbrt/vueai/tree/main/packages/tabular-intelligence',
+          features: [
+            { icon: '📊', text: 'Descriptive Statistics' },
+            { icon: '🚨', text: 'Anomaly Detection' },
+            { icon: '🎯', text: 'Clustering & Segmentation' },
+            { icon: '🔮', text: 'Predictions' },
+            { icon: '📈', text: 'Correlation Analysis' },
+            { icon: '🔄', text: 'Local Fallback' }
           ]
         }
       },

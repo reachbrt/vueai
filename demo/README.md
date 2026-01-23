@@ -21,6 +21,43 @@ A comprehensive demonstration of the @aivue packages for Vue.js, showcasing AI-p
 
 Check out the live demo at [https://aivue.netlify.app/](https://aivue.netlify.app/)
 
+## 📦 Package Management
+
+### Keeping Packages Up-to-Date
+
+The demo always uses the **latest published versions** from npm. To update all @aivue packages:
+
+#### Method 1: Using npm script (Recommended)
+```bash
+npm run update:all
+```
+
+#### Method 2: Using the update script
+```bash
+npm run update-packages
+# or
+./update-packages.sh
+```
+
+#### Method 3: Manual update for specific package
+```bash
+npm install @aivue/tabular-intelligence@latest
+npm install @aivue/chatbot@latest
+# ... etc
+```
+
+### Check Current Versions
+
+To see all installed @aivue package versions:
+```bash
+npm list --depth=0 | grep @aivue
+```
+
+To check the latest version available on npm:
+```bash
+npm view @aivue/tabular-intelligence version
+```
+
 ## Running the Demo
 
 You can run the demo in several ways:

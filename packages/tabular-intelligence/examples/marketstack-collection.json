@@ -1,0 +1,184 @@
+{
+  "info": {
+    "name": "MarketStack API",
+    "description": "Stock market data API - Real-time and historical stock prices",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "End of Day Data",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://api.marketstack.com/v1/eod?access_key={{access_key}}&symbols={{symbols}}&limit={{limit}}",
+          "protocol": "https",
+          "host": ["api", "marketstack", "com"],
+          "path": ["v1", "eod"],
+          "query": [
+            {
+              "key": "access_key",
+              "value": "{{access_key}}",
+              "description": "Your MarketStack API key"
+            },
+            {
+              "key": "symbols",
+              "value": "{{symbols}}",
+              "description": "Stock symbols (comma-separated)"
+            },
+            {
+              "key": "limit",
+              "value": "{{limit}}",
+              "description": "Number of results to return"
+            }
+          ]
+        },
+        "description": "Get end of day stock prices for specified symbols"
+      }
+    },
+    {
+      "name": "Intraday Data",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://api.marketstack.com/v1/intraday?access_key={{access_key}}&symbols={{symbols}}&interval={{interval}}",
+          "protocol": "https",
+          "host": ["api", "marketstack", "com"],
+          "path": ["v1", "intraday"],
+          "query": [
+            {
+              "key": "access_key",
+              "value": "{{access_key}}"
+            },
+            {
+              "key": "symbols",
+              "value": "{{symbols}}"
+            },
+            {
+              "key": "interval",
+              "value": "{{interval}}",
+              "description": "Time interval (1min, 5min, 15min, 30min, 1hour)"
+            }
+          ]
+        },
+        "description": "Get intraday stock prices with specified interval"
+      }
+    },
+    {
+      "name": "Tickers",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://api.marketstack.com/v1/tickers?access_key={{access_key}}&limit={{limit}}",
+          "protocol": "https",
+          "host": ["api", "marketstack", "com"],
+          "path": ["v1", "tickers"],
+          "query": [
+            {
+              "key": "access_key",
+              "value": "{{access_key}}"
+            },
+            {
+              "key": "limit",
+              "value": "{{limit}}"
+            }
+          ]
+        },
+        "description": "Get list of available stock tickers"
+      }
+    },
+    {
+      "name": "Exchanges",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://api.marketstack.com/v1/exchanges?access_key={{access_key}}",
+          "protocol": "https",
+          "host": ["api", "marketstack", "com"],
+          "path": ["v1", "exchanges"],
+          "query": [
+            {
+              "key": "access_key",
+              "value": "{{access_key}}"
+            }
+          ]
+        },
+        "description": "Get list of supported stock exchanges"
+      }
+    },
+    {
+      "name": "Dividends",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://api.marketstack.com/v1/dividends?access_key={{access_key}}&symbols={{symbols}}",
+          "protocol": "https",
+          "host": ["api", "marketstack", "com"],
+          "path": ["v1", "dividends"],
+          "query": [
+            {
+              "key": "access_key",
+              "value": "{{access_key}}"
+            },
+            {
+              "key": "symbols",
+              "value": "{{symbols}}"
+            }
+          ]
+        },
+        "description": "Get dividend data for specified symbols"
+      }
+    },
+    {
+      "name": "Splits",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://api.marketstack.com/v1/splits?access_key={{access_key}}&symbols={{symbols}}",
+          "protocol": "https",
+          "host": ["api", "marketstack", "com"],
+          "path": ["v1", "splits"],
+          "query": [
+            {
+              "key": "access_key",
+              "value": "{{access_key}}"
+            },
+            {
+              "key": "symbols",
+              "value": "{{symbols}}"
+            }
+          ]
+        },
+        "description": "Get stock split data for specified symbols"
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "access_key",
+      "value": "YOUR_MARKETSTACK_API_KEY",
+      "type": "string"
+    },
+    {
+      "key": "symbols",
+      "value": "AAPL",
+      "type": "string"
+    },
+    {
+      "key": "limit",
+      "value": "10",
+      "type": "string"
+    },
+    {
+      "key": "interval",
+      "value": "1hour",
+      "type": "string"
+    }
+  ]
+}
+

@@ -8,7 +8,9 @@
     "dev": "vite --host localhost --port 8080",
     "build": "vite build",
     "preview": "vite preview",
-    "start": "vite --host localhost --port 8080"
+    "start": "vite --host localhost --port 8080",
+    "update-packages": "bash update-packages.sh",
+    "update:all": "npm update @aivue/360-spin @aivue/analytics @aivue/autosuggest @aivue/browser-llm @aivue/chatbot @aivue/core @aivue/doc-intelligence @aivue/emotion-ui @aivue/image-caption @aivue/predictive-input @aivue/smart-datatable @aivue/smartform @aivue/tabular-intelligence"
   },
   "dependencies": {
     "@aivue/360-spin": "^2.0.1",
@@ -16,13 +18,16 @@
     "@aivue/autosuggest": "^1.2.9",
     "@aivue/browser-llm": "^1.0.0",
     "@aivue/chatbot": "^2.5.1",
-    "@aivue/core": "^1.3.5",
+    "@aivue/core": "^1.3.13",
     "@aivue/doc-intelligence": "^1.0.1",
     "@aivue/emotion-ui": "^1.0.1",
+    "@aivue/hierarchical-memory": "^1.0.0",
     "@aivue/image-caption": "^1.0.0",
+    "@aivue/mcp-client": "^1.0.0",
     "@aivue/predictive-input": "^1.0.2",
     "@aivue/smart-datatable": "^2.0.3",
     "@aivue/smartform": "^1.2.9",
+    "@aivue/tabular-intelligence": "^1.5.0",
     "@mlc-ai/web-llm": "^0.2.80",
     "compromise": "^14.14.4",
     "gsap": "^3.13.0",

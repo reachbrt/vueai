@@ -1,0 +1,68 @@
+{
+  "name": "@aivue/hierarchical-memory",
+  "version": "1.0.0",
+  "description": "Hierarchical memory trees (H-MEM style) for LLM tools and agents, optimized for tables and documents",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./hierarchical-memory.css": "./dist/hierarchical-memory.css",
+    "./dist/hierarchical-memory.css": "./dist/hierarchical-memory.css"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "npm run clean && vite build && npm run postbuild",
+    "dev": "vite build --watch",
+    "clean": "rm -rf dist",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run build",
+    "postbuild": "cp README.md dist/ 2>/dev/null || true"
+  },
+  "keywords": [
+    "vue",
+    "ai",
+    "llm",
+    "memory",
+    "hierarchical",
+    "h-mem",
+    "hiagent",
+    "context",
+    "tree",
+    "semantic",
+    "rag",
+    "retrieval"
+  ],
+  "author": "reachbrt",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/reachbrt/vueai.git",
+    "directory": "packages/hierarchical-memory"
+  },
+  "peerDependencies": {
+    "vue": "^2.6.0 || ^3.0.0"
+  },
+  "dependencies": {
+    "@aivue/core": "file:../core"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.0",
+    "@vue/test-utils": "^2.4.0",
+    "typescript": "^5.0.0",
+    "vite": "^5.0.0",
+    "vite-plugin-dts": "^3.7.0",
+    "vitest": "^1.0.0",
+    "vue": "^3.4.0"
+  }
+}
+

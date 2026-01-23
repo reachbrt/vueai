@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCP Connection Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        pre {
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>MCP Connection Test</h1>
+    
+    <div>
+        <button onclick="testConnection()">Test Connection</button>
+        <button onclick="testToolsList()">Test Tools List</button>
+    </div>
+    
+    <div id="status"></div>
+    <div id="result"></div>
+
+    <script>
+        const MCP_URL = 'http://localhost:3000/mcp';
+        
+        async function sendMCPRequest(method, params) {
+            const request = {
+                jsonrpc: '2.0',
+                id: Date.now(),
+                method: method,
+                params: params
+            };
+            
+            console.log('Sending request:', request);
+            
+            try {
+                const response = await fetch(MCP_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(request)
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error: ${response.status} ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                console.log('Response:', data);
+                return data;
+            } catch (error) {
+                console.error('Request failed:', error);
+                throw error;
+            }
+        }
+        
+        async function testConnection() {
+            const statusDiv = document.getElementById('status');
+            const resultDiv = document.getElementById('result');
+            
+            statusDiv.innerHTML = '<div class="status">Connecting...</div>';
+            resultDiv.innerHTML = '';
+            
+            try {
+                const response = await sendMCPRequest('initialize', {
+                    protocolVersion: '2024-11-05',
+                    capabilities: {},
+                    clientInfo: {
+                        name: '@aivue/mcp-client',
+                        version: '1.0.0'
+                    }
+                });
+                
+                if (response.result) {
+                    statusDiv.innerHTML = '<div class="status success">✅ Connected successfully!</div>';
+                    resultDiv.innerHTML = '<h3>Server Info:</h3><pre>' + JSON.stringify(response.result, null, 2) + '</pre>';
+                } else if (response.error) {
+                    statusDiv.innerHTML = '<div class="status error">❌ Error: ' + response.error.message + '</div>';
+                }
+            } catch (error) {
+                statusDiv.innerHTML = '<div class="status error">❌ Connection failed: ' + error.message + '</div>';
+            }
+        }
+        
+        async function testToolsList() {
+            const statusDiv = document.getElementById('status');
+            const resultDiv = document.getElementById('result');
+            
+            statusDiv.innerHTML = '<div class="status">Fetching tools...</div>';
+            resultDiv.innerHTML = '';
+            
+            try {
+                const response = await sendMCPRequest('tools/list', {});
+                
+                if (response.result) {
+                    statusDiv.innerHTML = '<div class="status success">✅ Tools fetched successfully!</div>';
+                    resultDiv.innerHTML = '<h3>Available Tools:</h3><pre>' + JSON.stringify(response.result, null, 2) + '</pre>';
+                } else if (response.error) {
+                    statusDiv.innerHTML = '<div class="status error">❌ Error: ' + response.error.message + '</div>';
+                }
+            } catch (error) {
+                statusDiv.innerHTML = '<div class="status error">❌ Request failed: ' + error.message + '</div>';
+            }
+        }
+    </script>
+</body>
+</html>
+
