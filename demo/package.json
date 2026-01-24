@@ -27,7 +27,7 @@
     "@aivue/predictive-input": "^1.0.5",
     "@aivue/smart-datatable": "^2.0.3",
     "@aivue/smartform": "^1.3.6",
-    "@aivue/tabular-intelligence": "^2.0.0",
+    "@aivue/tabular-intelligence": "^2.0.1",
     "@mlc-ai/web-llm": "^0.2.80",
     "compromise": "^14.14.4",
     "gsap": "^3.13.0",

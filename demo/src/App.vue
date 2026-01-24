@@ -151,7 +151,7 @@
             <div class="package-details">
               <h3>@aivue/tabular-intelligence</h3>
               <p>Data Science Toolkit</p>
-              <span class="package-version">v2.0.0</span>
+              <span class="package-version">v2.0.1</span>
             </div>
           </div>
         </div>
