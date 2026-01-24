@@ -1,0 +1,194 @@
+/**
+ * @aivue/guided-form - Main Styles
+ * Tailwind-based styles for guided form components
+ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base styles */
+@layer base {
+  .guided-form {
+    @apply w-full max-w-2xl mx-auto;
+  }
+
+  .guided-form-step {
+    @apply min-h-screen flex flex-col justify-center p-4 md:p-8;
+  }
+
+  .guided-form-question {
+    @apply text-2xl md:text-3xl font-bold text-gray-900 mb-4;
+  }
+
+  .guided-form-subtitle {
+    @apply text-lg text-gray-600 mb-6;
+  }
+
+  .guided-form-help {
+    @apply text-sm text-gray-500 mb-4;
+  }
+}
+
+/* Component styles */
+@layer components {
+  /* Input fields */
+  .guided-form-input {
+    @apply w-full px-4 py-3 text-lg border-2 border-gray-300 rounded-lg
+           focus:border-primary-500 focus:ring-2 focus:ring-primary-200
+           transition-all duration-200 outline-none;
+  }
+
+  .guided-form-input:focus {
+    @apply shadow-lg;
+  }
+
+  .guided-form-input.error {
+    @apply border-red-500 focus:border-red-500 focus:ring-red-200;
+  }
+
+  .guided-form-textarea {
+    @apply guided-form-input min-h-[120px] resize-y;
+  }
+
+  /* Buttons */
+  .guided-form-button {
+    @apply px-6 py-3 text-lg font-semibold rounded-lg
+           transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+
+  .guided-form-button-primary {
+    @apply guided-form-button bg-primary-600 text-white hover:bg-primary-700
+           focus:ring-primary-500 shadow-md hover:shadow-lg;
+  }
+
+  .guided-form-button-secondary {
+    @apply guided-form-button bg-gray-200 text-gray-700 hover:bg-gray-300
+           focus:ring-gray-500;
+  }
+
+  .guided-form-button-disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
+
+  /* Options */
+  .guided-form-option {
+    @apply w-full p-4 text-left border-2 border-gray-300 rounded-lg
+           hover:border-primary-500 hover:bg-primary-50
+           transition-all duration-200 cursor-pointer;
+  }
+
+  .guided-form-option.selected {
+    @apply border-primary-600 bg-primary-100;
+  }
+
+  .guided-form-option-label {
+    @apply text-lg font-medium text-gray-900;
+  }
+
+  .guided-form-option-description {
+    @apply text-sm text-gray-600 mt-1;
+  }
+
+  /* Progress */
+  .guided-form-progress {
+    @apply fixed top-0 left-0 right-0 h-1 bg-gray-200 z-50;
+  }
+
+  .guided-form-progress-bar {
+    @apply h-full bg-primary-600 transition-all duration-300;
+  }
+
+  .guided-form-progress-text {
+    @apply text-sm text-gray-500 text-center mt-2;
+  }
+
+  /* Navigation */
+  .guided-form-nav {
+    @apply fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200
+           p-4 flex justify-between items-center shadow-lg z-40;
+  }
+
+  /* Validation */
+  .guided-form-error {
+    @apply text-red-600 text-sm mt-2 flex items-center gap-2;
+  }
+
+  .guided-form-error-icon {
+    @apply w-4 h-4;
+  }
+
+  /* AI Assistance */
+  .guided-form-ai-hint {
+    @apply bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4;
+  }
+
+  .guided-form-ai-hint-title {
+    @apply text-sm font-semibold text-blue-900 mb-2;
+  }
+
+  .guided-form-ai-hint-content {
+    @apply text-sm text-blue-800;
+  }
+
+  .guided-form-ai-button {
+    @apply text-sm text-primary-600 hover:text-primary-700 font-medium
+           flex items-center gap-1 cursor-pointer;
+  }
+
+  /* Rating */
+  .guided-form-rating {
+    @apply flex gap-2;
+  }
+
+  .guided-form-rating-star {
+    @apply w-8 h-8 cursor-pointer text-gray-300 hover:text-yellow-400
+           transition-colors duration-150;
+  }
+
+  .guided-form-rating-star.filled {
+    @apply text-yellow-400;
+  }
+
+  /* Yes/No Chips */
+  .guided-form-yesno {
+    @apply flex gap-4;
+  }
+
+  .guided-form-chip {
+    @apply px-8 py-4 text-lg font-semibold rounded-full border-2
+           cursor-pointer transition-all duration-200;
+  }
+
+  .guided-form-chip.yes {
+    @apply border-green-500 text-green-700 hover:bg-green-50;
+  }
+
+  .guided-form-chip.yes.selected {
+    @apply bg-green-500 text-white;
+  }
+
+  .guided-form-chip.no {
+    @apply border-red-500 text-red-700 hover:bg-red-50;
+  }
+
+  .guided-form-chip.no.selected {
+    @apply bg-red-500 text-white;
+  }
+}
+
+/* Animations */
+@layer utilities {
+  .slide-in {
+    animation: slideIn 0.3s ease-out;
+  }
+
+  .slide-out {
+    animation: slideOut 0.3s ease-in;
+  }
+
+  .fade-in {
+    animation: fadeIn 0.2s ease-out;
+  }
+}
+
