@@ -1,8 +1,9 @@
 /**
  * Vue Composable for Tabular Intelligence
+ * Compatible with Vue 2.6+ and Vue 3.x
  */
 
-import { ref, computed, Ref } from 'vue';
+import { ref, computed, Ref } from 'vue-demi';
 import { TabularIntelligence } from '../core/TabularIntelligence';
 import type {
   TFMConfig,

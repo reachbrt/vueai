@@ -72,8 +72,22 @@ See [POSTMAN-INTEGRATION.md](./POSTMAN-INTEGRATION.md) for detailed documentatio
 ## 📦 Installation
 
 ```bash
-npm install @aivue/tabular-intelligence
+# npm
+npm install @aivue/tabular-intelligence @aivue/core
+
+# yarn
+yarn add @aivue/tabular-intelligence @aivue/core
+
+# pnpm
+pnpm add @aivue/tabular-intelligence @aivue/core
 ```
+
+### 🔄 Vue Compatibility
+
+- **✅ Vue 2**: Compatible with Vue 2.6.0 and higher
+- **✅ Vue 3**: Compatible with all Vue 3.x versions
+
+> The package automatically detects which version of Vue you're using and provides the appropriate compatibility layer. This means you can use the same package regardless of whether your project is using Vue 2 or Vue 3.
 
 ## 🚀 Quick Start
 

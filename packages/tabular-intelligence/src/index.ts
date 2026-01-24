@@ -3,17 +3,31 @@
  * Tabular Foundation Model (TFM) integration for Vue.js
  */
 
-// Core
-export { TabularIntelligence } from './core/TabularIntelligence';
+// Import Vue compatibility utilities from core
+import {
+  createCompatComponent,
+  registerCompatComponent,
+  createCompatPlugin
+} from '@aivue/core';
 
-// Composables
-export { useTabularIntelligence } from './composables/useTabularIntelligence';
+// Import core classes and composables
+import { TabularIntelligence } from './core/TabularIntelligence';
+import { useTabularIntelligence } from './composables/useTabularIntelligence';
+
+// Export core classes and composables
+export { TabularIntelligence };
+export { useTabularIntelligence };
 export type { UseTabularIntelligenceOptions, UseTabularIntelligenceReturn } from './composables/useTabularIntelligence';
 
-// Components
-export { default as QuestionInput } from './components/QuestionInput.vue';
-export { default as AnswerDisplay } from './components/AnswerDisplay.vue';
-export { default as QuestionHistory } from './components/QuestionHistory.vue';
+// Import components
+import QuestionInputComponent from './components/QuestionInput.vue';
+import AnswerDisplayComponent from './components/AnswerDisplay.vue';
+import QuestionHistoryComponent from './components/QuestionHistory.vue';
+
+// Export components with compatibility layer
+export const QuestionInput = createCompatComponent(QuestionInputComponent);
+export const AnswerDisplay = createCompatComponent(AnswerDisplayComponent);
+export const QuestionHistory = createCompatComponent(QuestionHistoryComponent);
 
 // Utils
 export { inferSchema, inferColumnType, calculateStats, detectAnomalies } from './utils/helpers';
@@ -130,3 +144,46 @@ export {
   smartSample
 } from './advanced/streaming';
 
+// ============================================================================
+// VUE PLUGIN
+// ============================================================================
+
+import { App } from 'vue';
+
+/**
+ * Vue Plugin for Tabular Intelligence
+ * Provides global component registration with Vue 2/3 compatibility
+ */
+export const TabularIntelligencePlugin = createCompatPlugin({
+  install(app: App) {
+    // Register components globally using the compatibility helper
+    registerCompatComponent(app, 'QuestionInput', QuestionInputComponent);
+    registerCompatComponent(app, 'AnswerDisplay', AnswerDisplayComponent);
+    registerCompatComponent(app, 'QuestionHistory', QuestionHistoryComponent);
+  }
+});
+
+// ============================================================================
+// DEFAULT EXPORT
+// ============================================================================
+
+export default {
+  // Core
+  TabularIntelligence,
+
+  // Composables
+  useTabularIntelligence,
+
+  // Components
+  QuestionInput,
+  AnswerDisplay,
+  QuestionHistory,
+
+  // Plugin
+  TabularIntelligencePlugin,
+
+  // Re-export compatibility utilities for advanced users
+  createCompatComponent,
+  registerCompatComponent,
+  createCompatPlugin
+};
