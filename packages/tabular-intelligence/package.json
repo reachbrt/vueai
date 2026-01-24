@@ -1,7 +1,7 @@
 {
   "name": "@aivue/tabular-intelligence",
-  "version": "1.5.1",
-  "description": "Tabular Foundation Model (TFM) integration for structured data analysis in Vue.js",
+  "version": "2.0.0",
+  "description": "The most comprehensive tabular data analysis package for Vue.js - Advanced AI, ML, Statistical Analysis, and Data Science capabilities",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",

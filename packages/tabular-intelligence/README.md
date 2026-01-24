@@ -1,25 +1,48 @@
 # @aivue/tabular-intelligence
 
-> Tabular Foundation Model (TFM) integration for structured data analysis in Vue.js
+> **The Most Comprehensive Tabular Data Analysis Package for Vue.js**
+> Advanced AI, ML, Statistical Analysis, and Data Science capabilities in one powerful package
 
 [![npm version](https://img.shields.io/npm/v/@aivue/tabular-intelligence.svg)](https://www.npmjs.com/package/@aivue/tabular-intelligence)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Downloads](https://img.shields.io/npm/dm/@aivue/tabular-intelligence.svg)](https://www.npmjs.com/package/@aivue/tabular-intelligence)
 
-## 🎯 Features
+## 🚀 What's New in v2.0
 
-- 🔌 **Generic TFM Client** - Connect to any HTTP-based Tabular Foundation Model API
-- 💬 **Natural Language Q&A** - Ask questions about your data in plain English
-- 📮 **Postman Collection Integration** - Import Postman collections and query API data with AI
-- 📊 **Descriptive Statistics** - Mean, median, mode, std dev, percentiles, distributions
-- 🚨 **Anomaly Detection** - Statistical and ML-based outlier detection
-- 🎯 **Segmentation & Clustering** - K-means, DBSCAN, hierarchical clustering
-- 🔮 **Predictions** - Time series forecasting and predictive modeling
-- 📈 **Correlation Analysis** - Pearson correlation matrices and significance testing
-- 🤖 **AI Summaries** - Generate intelligent summaries of your data
-- 🌐 **Table Extraction** - Extract data from HTML tables or Vue data grids
-- 🔄 **Local Fallback** - Built-in statistical analysis when API is unavailable
-- 🎨 **Vue Integration** - Reactive composables for seamless Vue.js integration
-- 📦 **Smart DataTable Ready** - Designed to work with @aivue/smart-datatable
+**Tabular Intelligence is now a complete data science toolkit!** We've added 15+ advanced features that make it completely different from @aivue/smart-datatable:
+
+- 📊 **Data Quality Profiling** - Comprehensive data quality assessment and profiling
+- 🧹 **Smart Data Cleaning** - Intelligent missing value imputation and outlier handling
+- 🔧 **Feature Engineering** - Automated feature generation and selection
+- ⏰ **Time Series Analysis** - Forecasting, trend detection, seasonality analysis
+- 🤖 **AutoML** - Automated model selection and hyperparameter tuning
+- 🔍 **Model Explainability** - SHAP values, feature importance, counterfactuals
+- 📈 **Statistical Testing** - A/B testing, hypothesis testing, significance tests
+- 📊 **Visualization Recommendations** - Smart chart suggestions based on data
+- 🔗 **Multi-Table Analysis** - Table joins, relationship detection, cross-table queries
+- 📝 **Auto Reporting** - Generate comprehensive insights and reports
+- 🔒 **Privacy & Compliance** - PII detection, anonymization, GDPR/CCPA compliance
+- 📦 **Data Versioning** - Snapshots, lineage tracking, transformation pipelines
+- 🌊 **Streaming Data** - Real-time data processing and monitoring
+- 🎯 **Smart Sampling** - Intelligent data sampling strategies
+
+## 🎯 Core Features
+
+### 🔌 Foundation & Integration
+- **Generic TFM Client** - Connect to any HTTP-based Tabular Foundation Model API
+- **Natural Language Q&A** - Ask questions about your data in plain English
+- **Postman Collection Integration** - Import Postman collections and query API data with AI
+- **Table Extraction** - Extract data from HTML tables or Vue data grids
+- **Local Fallback** - Built-in statistical analysis when API is unavailable
+- **Vue Integration** - Reactive composables for seamless Vue.js integration
+
+### 📊 Statistical Analysis
+- **Descriptive Statistics** - Mean, median, mode, std dev, percentiles, distributions
+- **Anomaly Detection** - Statistical and ML-based outlier detection
+- **Segmentation & Clustering** - K-means, DBSCAN, hierarchical clustering
+- **Predictions** - Time series forecasting and predictive modeling
+- **Correlation Analysis** - Pearson correlation matrices and significance testing
+- **AI Summaries** - Generate intelligent summaries of your data
 
 ### 💬 Q&A Capabilities
 
@@ -259,6 +282,396 @@ intelligence.loadFromVueGrid(
   ],
   { inferTypes: true }
 );
+```
+
+## 🚀 Advanced Features
+
+### 📊 Data Quality Profiling
+
+Comprehensive data quality assessment and profiling:
+
+```typescript
+import { profileData, assessDataQuality, detectDataIssues, suggestCleaningSteps } from '@aivue/tabular-intelligence';
+
+// Profile your data
+const profile = await profileData(data, {
+  includeDistributions: true,
+  detectDataTypes: true,
+  findPatterns: true
+});
+
+// Assess data quality
+const qualityReport = await assessDataQuality(data);
+console.log('Quality Score:', qualityReport.overallScore); // 0-100
+
+// Detect specific issues
+const issues = await detectDataIssues(data);
+// Returns: missing values, outliers, duplicates, type mismatches, etc.
+
+// Get cleaning recommendations
+const recommendations = await suggestCleaningSteps(data);
+// Returns prioritized list of cleaning actions
+```
+
+### 🧹 Smart Data Cleaning
+
+Intelligent missing value imputation and outlier handling:
+
+```typescript
+import { imputeMissingValues, handleOutliers } from '@aivue/tabular-intelligence';
+
+// Impute missing values
+const imputationResult = await imputeMissingValues(data, {
+  strategy: 'knn', // 'mean' | 'median' | 'mode' | 'knn' | 'iterative' | 'ai'
+  columns: ['age', 'income']
+});
+
+// Handle outliers
+const outlierResult = await handleOutliers(data, {
+  method: 'cap', // 'remove' | 'cap' | 'transform'
+  strategy: 'iqr', // 'iqr' | 'zscore' | 'isolation_forest'
+  columns: ['price', 'quantity']
+});
+```
+
+### 🔧 Feature Engineering
+
+Automated feature generation and selection:
+
+```typescript
+import { autoGenerateFeatures, analyzeFeatureImportance, selectBestFeatures } from '@aivue/tabular-intelligence';
+
+// Auto-generate features
+const engineeringResult = await autoGenerateFeatures(data, {
+  targetColumn: 'sales',
+  maxFeatures: 50,
+  includeInteractions: true,
+  includePolynomials: true,
+  includeAggregations: true
+});
+
+// Analyze feature importance
+const importance = await analyzeFeatureImportance(data, 'sales');
+
+// Select best features
+const selection = await selectBestFeatures(data, {
+  targetColumn: 'sales',
+  k: 10, // Select top 10 features
+  method: 'correlation'
+});
+```
+
+### ⏰ Time Series Analysis
+
+Forecasting, trend detection, and seasonality analysis:
+
+```typescript
+import { forecastTimeSeries, detectTrends, detectSeasonality, detectChangePoints } from '@aivue/tabular-intelligence';
+
+// Forecast time series
+const forecast = await forecastTimeSeries(data, {
+  dateColumn: 'date',
+  valueColumn: 'sales',
+  horizon: 30, // Forecast 30 periods ahead
+  method: 'exponential_smoothing', // 'arima' | 'prophet' | 'exponential_smoothing' | 'lstm'
+  seasonality: 'auto',
+  confidence: 0.95
+});
+
+// Detect trends
+const trends = await detectTrends(data, {
+  dateColumn: 'date',
+  valueColumn: 'sales'
+});
+
+// Detect seasonality
+const seasonality = await detectSeasonality(data, {
+  dateColumn: 'date',
+  valueColumn: 'sales'
+});
+
+// Detect change points
+const changePoints = await detectChangePoints(data, {
+  dateColumn: 'date',
+  valueColumn: 'sales',
+  sensitivity: 0.8
+});
+```
+
+### 🤖 AutoML
+
+Automated model selection and hyperparameter tuning:
+
+```typescript
+import { autoTrain, compareModels, tuneHyperparameters } from '@aivue/tabular-intelligence';
+
+// Auto-train best model
+const autoMLResult = await autoTrain(data, {
+  targetColumn: 'churn',
+  taskType: 'classification', // 'classification' | 'regression'
+  metric: 'accuracy',
+  timeLimit: 300, // 5 minutes
+  models: ['linear', 'tree', 'ensemble', 'neural']
+});
+
+// Compare multiple models
+const comparison = await compareModels(data, {
+  targetColumn: 'price',
+  taskType: 'regression',
+  models: ['linear', 'tree', 'ensemble'],
+  crossValidation: 5
+});
+
+// Tune hyperparameters
+const tuningResult = await tuneHyperparameters(data, {
+  targetColumn: 'sales',
+  model: 'ensemble',
+  parameterGrid: {
+    n_estimators: [50, 100, 200],
+    max_depth: [5, 10, 15]
+  }
+});
+```
+
+### 🔍 Model Explainability
+
+SHAP values, feature importance, and counterfactuals:
+
+```typescript
+import { explainPrediction, getFeatureImportance, getPartialDependence, generateCounterfactuals } from '@aivue/tabular-intelligence';
+
+// Explain a specific prediction
+const explanation = await explainPrediction(data, {
+  rowIndex: 0,
+  targetColumn: 'churn',
+  model: 'ensemble'
+});
+
+// Get feature importance
+const importance = await getFeatureImportance(data, 'churn');
+
+// Get partial dependence plot
+const pdp = await getPartialDependence(data, {
+  feature: 'age',
+  targetColumn: 'churn'
+});
+
+// Generate counterfactuals
+const counterfactuals = await generateCounterfactuals(data, {
+  rowIndex: 0,
+  desiredOutcome: 0, // Want churn = 0
+  targetColumn: 'churn',
+  maxChanges: 3
+});
+```
+
+### 📈 Statistical Testing & A/B Testing
+
+Hypothesis testing and significance tests:
+
+```typescript
+import { analyzeABTest, testSignificance, calculateSampleSize } from '@aivue/tabular-intelligence';
+
+// Analyze A/B test
+const abTestResult = await analyzeABTest({
+  controlGroup: controlData,
+  treatmentGroup: treatmentData,
+  metric: 'conversion_rate',
+  confidenceLevel: 0.95
+});
+
+// Test statistical significance
+const significanceTest = await testSignificance({
+  test: 'ttest', // 'ttest' | 'chi2' | 'anova' | 'mann_whitney' | 'kruskal_wallis'
+  groups: [group1, group2],
+  metric: 'revenue',
+  alpha: 0.05
+});
+
+// Calculate required sample size
+const sampleSize = await calculateSampleSize({
+  effect: 0.2, // Effect size
+  power: 0.8,
+  alpha: 0.05
+});
+```
+
+### 📊 Visualization Recommendations
+
+Smart chart suggestions based on your data:
+
+```typescript
+import { recommendVisualizations, generateChartSpec, detectPatterns } from '@aivue/tabular-intelligence';
+
+// Get visualization recommendations
+const recommendations = await recommendVisualizations(data, {
+  columns: ['date', 'sales', 'category'],
+  purpose: 'exploration' // 'exploration' | 'presentation' | 'analysis'
+});
+
+// Generate chart specification
+const chartSpec = await generateChartSpec({
+  type: 'line',
+  xColumn: 'date',
+  yColumn: 'sales',
+  groupBy: 'category',
+  data
+});
+
+// Detect patterns in charts
+const patterns = await detectPatterns('line', data);
+```
+
+### 🔗 Multi-Table Analysis
+
+Table joins, relationship detection, and cross-table queries:
+
+```typescript
+import { joinTables, detectRelationships, analyzeCrossTables, inferDatabaseSchema } from '@aivue/tabular-intelligence';
+
+// Join two tables
+const joined = await joinTables({
+  leftTable: customers,
+  rightTable: orders,
+  leftKey: 'customer_id',
+  rightKey: 'customer_id',
+  joinType: 'inner' // 'inner' | 'left' | 'right' | 'outer'
+});
+
+// Detect relationships between tables
+const relationships = await detectRelationships({
+  customers: customersData,
+  orders: ordersData,
+  products: productsData
+});
+
+// Analyze across multiple tables
+const crossTableAnalysis = await analyzeCrossTables({
+  tables: { customers, orders, products },
+  relationships,
+  question: 'What is the total revenue by customer segment?'
+});
+
+// Infer database schema
+const schema = await inferDatabaseSchema({
+  customers: customersData,
+  orders: ordersData
+});
+```
+
+### 📝 Auto Reporting & Insights
+
+Generate comprehensive reports and insights:
+
+```typescript
+import { generateReport, generateExecutiveSummary, generateInsights } from '@aivue/tabular-intelligence';
+
+// Generate comprehensive report
+const report = await generateReport(data, {
+  format: 'markdown', // 'markdown' | 'html' | 'pdf' | 'json'
+  sections: ['summary', 'stats', 'anomalies', 'trends', 'recommendations'],
+  includeCharts: true
+});
+
+// Generate executive summary
+const summary = await generateExecutiveSummary(data);
+
+// Generate automated insights
+const insights = await generateInsights(data, {
+  maxInsights: 10,
+  priority: 'high'
+});
+```
+
+### 🔒 Privacy & Compliance
+
+PII detection, anonymization, and compliance checking:
+
+```typescript
+import { detectPII, anonymizeData, checkCompliance } from '@aivue/tabular-intelligence';
+
+// Detect PII
+const piiDetection = await detectPII(data);
+console.log('PII Columns:', piiDetection.piiColumns);
+console.log('Risk Level:', piiDetection.riskLevel);
+
+// Anonymize data
+const anonymized = await anonymizeData(data, {
+  method: 'hashing', // 'masking' | 'hashing' | 'generalization' | 'differential_privacy' | 'tokenization'
+  columns: ['email', 'phone', 'ssn']
+});
+
+// Check compliance
+const complianceReport = await checkCompliance(data, 'GDPR'); // 'GDPR' | 'CCPA' | 'HIPAA' | 'SOC2'
+console.log('Compliant:', complianceReport.compliant);
+console.log('Score:', complianceReport.score);
+```
+
+### 📦 Data Versioning & Pipelines
+
+Snapshots, lineage tracking, and transformation pipelines:
+
+```typescript
+import { createSnapshot, compareSnapshots, createPipeline, executePipeline } from '@aivue/tabular-intelligence';
+
+// Create data snapshot
+const snapshot1 = await createSnapshot(data, 'Before Cleaning');
+
+// ... perform transformations ...
+
+const snapshot2 = await createSnapshot(cleanedData, 'After Cleaning');
+
+// Compare snapshots
+const diff = await compareSnapshots(snapshot1.id, snapshot2.id);
+
+// Create transformation pipeline
+const pipeline = await createPipeline([
+  { operation: 'impute_missing', params: { strategy: 'mean' } },
+  { operation: 'handle_outliers', params: { method: 'cap' } },
+  { operation: 'normalize', params: { method: 'minmax' } }
+]);
+
+// Execute pipeline
+const result = await executePipeline(pipeline, data);
+```
+
+### 🌊 Streaming & Real-time Data
+
+Real-time data processing and monitoring:
+
+```typescript
+import { connectStream, detectStreamingAnomalies, calculateWindowedAggregations, smartSample } from '@aivue/tabular-intelligence';
+
+// Connect to streaming source
+const stream = await connectStream({
+  source: 'websocket', // 'websocket' | 'sse' | 'polling'
+  url: 'wss://api.example.com/stream',
+  updateInterval: 1000
+});
+
+// Detect anomalies in real-time
+const anomalies = await detectStreamingAnomalies(streamData, {
+  columns: ['temperature', 'pressure'],
+  threshold: 3,
+  method: 'statistical'
+});
+
+// Calculate windowed aggregations
+const aggregations = await calculateWindowedAggregations(streamData, {
+  windowType: 'tumbling', // 'tumbling' | 'sliding' | 'session'
+  windowSize: 100,
+  aggregations: [
+    { column: 'value', function: 'avg', alias: 'avg_value' },
+    { column: 'value', function: 'max', alias: 'max_value' }
+  ]
+});
+
+// Smart sampling
+const sample = await smartSample(largeDataset, {
+  size: 1000,
+  method: 'stratified', // 'random' | 'stratified' | 'systematic' | 'cluster'
+  preserveDistribution: true
+});
 ```
 
 ## 📖 API Reference

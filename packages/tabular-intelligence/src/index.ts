@@ -22,33 +22,111 @@ export { extractFromDOM, normalizeVueData } from './utils/tableExtractor';
 export { parsePostmanCollection, replaceVariables, type ParsedCollection, type ParsedEndpoint } from './utils/postmanParser';
 export { executeAPIRequest, executeMultipleRequests, convertToTabular, type APIRequestOptions, type APIResponse } from './utils/apiClient';
 
-// Types
-export type {
-  TFMProvider,
-  TFMConfig,
-  TableColumn,
-  TableSchema,
-  AnalysisType,
-  AnalysisRequest,
-  AnalysisOptions,
-  AnalysisResult,
-  DescriptiveStats,
-  Anomaly,
-  Cluster,
-  Prediction,
-  CorrelationMatrix,
-  TFMRequest,
-  TFMResponse,
-  Question,
-  Answer,
-  QARequest,
-  QAResponse,
-  QAHistory,
-  TableExtractionOptions,
-  ExtractedTable,
-  AISummary,
-  APIDataSource,
-  APIQueryRequest,
-  APIQueryResponse,
-} from './types';
+// Types - Export all types
+export * from './types';
+
+// ============================================================================
+// ADVANCED FEATURES
+// ============================================================================
+
+// Data Quality & Profiling
+export {
+  profileData,
+  assessDataQuality,
+  detectDataIssues,
+  suggestCleaningSteps
+} from './quality/profiling';
+
+// Data Cleaning & Preprocessing
+export { imputeMissingValues } from './preprocessing/imputation';
+export { handleOutliers } from './preprocessing/outliers';
+
+// Time Series Analysis
+export {
+  forecastTimeSeries,
+  detectTrends,
+  detectSeasonality,
+  detectChangePoints
+} from './advanced/timeseries';
+
+// AutoML Capabilities
+export {
+  autoTrain,
+  compareModels,
+  tuneHyperparameters
+} from './advanced/automl';
+
+// Feature Engineering
+export {
+  autoGenerateFeatures,
+  createFeatures,
+  analyzeFeatureImportance,
+  selectBestFeatures
+} from './advanced/featureEngineering';
+
+// Model Explainability
+export {
+  explainPrediction,
+  getFeatureImportance,
+  getPartialDependence,
+  generateCounterfactuals
+} from './advanced/explainability';
+
+// Statistical Testing & A/B Testing
+export {
+  analyzeABTest,
+  testSignificance,
+  calculateSampleSize
+} from './advanced/statistical';
+
+// Visualization Recommendations
+export {
+  recommendVisualizations,
+  generateChartSpec,
+  detectPatterns
+} from './advanced/visualization';
+
+// Multi-Table Analysis
+export {
+  joinTables,
+  detectRelationships,
+  analyzeCrossTables,
+  inferDatabaseSchema
+} from './advanced/multitable';
+
+// Reporting & Insights
+export {
+  generateReport,
+  generateExecutiveSummary,
+  generateInsights
+} from './advanced/reporting';
+
+// Privacy & Compliance
+export {
+  detectPII,
+  anonymizeData,
+  checkCompliance
+} from './advanced/privacy';
+
+// Data Versioning & Pipelines
+export {
+  createSnapshot,
+  compareSnapshots,
+  trackLineage,
+  addTransformation,
+  createPipeline,
+  executePipeline,
+  savePipeline,
+  loadPipeline
+} from './advanced/versioning';
+
+// Streaming & Real-time
+export {
+  connectStream,
+  monitorAnomalies,
+  streamingAggregation,
+  detectStreamingAnomalies,
+  calculateWindowedAggregations,
+  smartSample
+} from './advanced/streaming';
 
