@@ -43,7 +43,7 @@
             <div class="package-details">
               <h3>@aivue/emotion-ui</h3>
               <p>Emotion-aware components</p>
-              <span class="package-version">v1.0.1</span>
+              <span class="package-version">v1.0.4</span>
             </div>
           </div>
 
@@ -52,7 +52,7 @@
             <div class="package-details">
               <h3>@aivue/doc-intelligence</h3>
               <p>Document processing & OCR</p>
-              <span class="package-version">v1.0.1</span>
+              <span class="package-version">v1.0.4</span>
             </div>
           </div>
 
@@ -61,7 +61,7 @@
             <div class="package-details">
               <h3>@aivue/predictive-input</h3>
               <p>AI text predictions</p>
-              <span class="package-version">v1.0.2</span>
+              <span class="package-version">v1.0.5</span>
             </div>
           </div>
 
@@ -88,7 +88,7 @@
             <div class="package-details">
               <h3>@aivue/smart-datatable</h3>
               <p>Advanced data tables</p>
-              <span class="package-version">v1.0.0</span>
+              <span class="package-version">v2.0.3</span>
             </div>
           </div>
 
@@ -97,7 +97,7 @@
             <div class="package-details">
               <h3>@aivue/image-caption</h3>
               <p>AI image captioning</p>
-              <span class="package-version">v1.0.0</span>
+              <span class="package-version">v1.0.3</span>
             </div>
           </div>
 
@@ -106,7 +106,7 @@
             <div class="package-details">
               <h3>@aivue/360-spin</h3>
               <p>360° product viewer</p>
-              <span class="package-version">v1.0.0</span>
+              <span class="package-version">v2.0.1</span>
             </div>
           </div>
 
@@ -115,7 +115,7 @@
             <div class="package-details">
               <h3>@aivue/analytics</h3>
               <p>AI-powered insights</p>
-              <span class="package-version">v1.0.0</span>
+              <span class="package-version">v1.0.3</span>
             </div>
           </div>
 
@@ -150,8 +150,8 @@
             <div class="package-icon">📊</div>
             <div class="package-details">
               <h3>@aivue/tabular-intelligence</h3>
-              <p>TFM for data analysis</p>
-              <span class="package-version">v1.4.0</span>
+              <p>Data Science Toolkit</p>
+              <span class="package-version">v2.0.0</span>
             </div>
           </div>
         </div>
