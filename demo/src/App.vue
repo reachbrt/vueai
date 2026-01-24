@@ -154,6 +154,15 @@
               <span class="package-version">v2.0.1</span>
             </div>
           </div>
+
+          <div class="package-card guided-form" @click="setActiveTab('guided-form')">
+            <div class="package-icon">🎯</div>
+            <div class="package-details">
+              <h3>@aivue/guided-form</h3>
+              <p>AI-assisted conversational forms</p>
+              <span class="package-version">v1.0.0</span>
+            </div>
+          </div>
         </div>
 
         <div class="hero-cta" ref="heroCta">
@@ -762,6 +771,12 @@
         </div>
       </section>
 
+      <section v-if="activeTab === 'guided-form'" class="component-section">
+        <div class="demo-container">
+          <GuidedFormDemo />
+        </div>
+      </section>
+
       <section v-if="activeTab === 'image-caption'" class="component-section">
         <div class="demo-container">
           <div v-if="!hasValidApiKey" class="api-key-warning">
@@ -945,6 +960,7 @@ import BrowserLLMDemo from './components/BrowserLLMDemo.vue';
 import MCPDemo from './components/MCPDemo.vue';
 import HierarchicalMemoryDemo from './components/HierarchicalMemoryDemo.vue';
 import TabularIntelligenceDemo from './components/TabularIntelligenceDemo.vue';
+import GuidedFormDemo from './components/GuidedFormDemo.vue';
 
 import TypeScriptExample from './components/TypeScriptExample.vue';
 import OllamaDemo from './components/OllamaDemo.vue';
@@ -973,6 +989,7 @@ export default {
     MCPDemo,
     HierarchicalMemoryDemo,
     TabularIntelligenceDemo,
+    GuidedFormDemo,
 
     TypeScriptExample,
     OllamaDemo,
@@ -1102,6 +1119,11 @@ export default {
           id: 'mcp',
           name: 'MCP',
           icon: '🔌'
+        },
+        {
+          id: 'guided-form',
+          name: 'Guided Form',
+          icon: '🎯'
         }
       ],
       packages: {
